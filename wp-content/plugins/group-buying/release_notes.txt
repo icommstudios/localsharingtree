@@ -1,0 +1,34 @@
+Version 4.6
+-----------
+
+- New error reporting functionality
+- Admin area for logs and errors
+- New add-ons management screen
+- Gifting has moved from a default feature to an add-on so it can be easily disabled.
+- Multiple image uploading for deal submissions
+- Welcome page for new installs
+- Multiple payment processor selection bug fix, happens during checkout under certain circumstances
+- Payments can be manually captured if an attempt failed
+- Void payments with ability for notes
+- New UI for transaction data
+- User page has account info and links
+- Allow admins to view all individual vouchers
+
+Developer info
+- New file/folder layout for all classes
+- GB Router used for all page callbacks
+
+4.6.1 - Hot fix, fix false positive for page check (including login page) under some setups.
+
+4.6.2 - Registration form submission bug fix.
+
+4.6.3.1 - Better Records conversion, fix for voucher filtering and fix force login issues.
+
+Version: 4.5
+------------
+
+- Destroyer now clears out deal purchases
+- Paypal Adaptive Payments improvements
+- Add reports for Share & Earn credits
+- Log IPs for purchases and registration, show IPs in account reports
+- Support for deal import from third party sites

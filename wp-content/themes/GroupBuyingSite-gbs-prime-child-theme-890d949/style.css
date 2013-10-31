@@ -1,0 +1,162 @@
+/*
+Theme Name: Blank Child Theme
+Theme URI: http://groupbuyingsite.com
+Description: This theme will be identical to the Prime Theme until you add modifications.
+Author: Group Buying Site
+Author URI: http://groupbuyingsite.com
+Version: 1.0
+template: prime-theme
+*/
+
+/* 
+Add your custom styles below:
+*/
+
+.text-center {
+	text-align: center;
+}
+
+#menu-item-1048 a, #menu-item-1103 a, #menu-item-1105 a {
+	color: #23668e;
+}
+
+.alert {
+	background: #eee;
+	padding:10px;
+	font-family: sans-serif;
+	color: #333;
+}
+
+#deal_countdown, .the_time, #progress_bar {
+display: none;
+}
+
+.close {
+	float: left;
+	margin: 20px 2% 0;
+	width: 10%;
+	font-size: 24px;
+}
+
+#message_banner {
+	background: #333;
+	-moz-opacity: 0.90;
+	opacity: 0.90;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=90);
+}
+
+#message_banner .gb-message {
+	float:left;
+	width:70%;
+}
+
+#message_banner:hover .close {
+	color: #000;
+}
+
+.fancybox_message_banner {
+	min-width: 600px;
+}
+.fancybox_message_banner {
+	background-color: #1c5d27;
+	color: #ffffff;	
+	width: 100%;
+	height: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.fancybox_message_banner .gb-message {
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 1.4em;
+	line-height: 2em;
+	font-weight: bold;
+	padding: 5px 10px;
+	margin-bottom: 0;
+}
+
+/* Phone-sized devices and the like */
+@media only screen and (max-width: 680px) {
+	.fancybox_message_banner {
+		min-width: 100px;
+	}
+	
+}
+
+#login_wrap {
+	
+	border: 1px solid rgba(0,0,0,0.2);
+	position: absolute;
+	padding: 14px 20px 2px;
+	top: 30px;
+	right: 0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #ccc;
+	background-color: rgba(0,0,0,0.05);
+	box-shadow: none;
+}
+
+#login_wrap a {
+	color: #fff;
+	text-shadow: none;
+}
+
+#navigation ul.sub-menu {
+z-index: 200;
+}
+
+#location {
+	height: 50px;
+	margin-top: 20px;
+	overflow: visible;
+	position: absolute;
+	right: 200px;
+	top: 1px;
+	padding: 20px 20px 10px 20px;
+	cursor: pointer;
+	white-space: nowrap;
+	z-index: 300;
+}
+
+.mini_header {
+	padding: 0px;
+	margin-bottom: 10px;
+	width: 100%;
+	float: none;
+}
+
+
+.home #subscription_form {
+	background: none;
+	width: 96%;
+	float: none;
+	min-height: 0px;
+	padding: 60px 2% 20px;
+}
+
+.home #email_address {
+	margin: 10px auto 0 auto;
+	}
+
+.button, input.form-submit, input.button-primary, .cart-claimed a {
+-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+#gb_subscription_form span.submit {
+	float: none;
+	margin-right: 0px;
+}
+
+.merchant-title a {
+	color:white;
+}
+
+.checkout-controls {
+    display: inline-block;
+    clear: none;
+}
+
+.form-submit { background-size:cover; }
+

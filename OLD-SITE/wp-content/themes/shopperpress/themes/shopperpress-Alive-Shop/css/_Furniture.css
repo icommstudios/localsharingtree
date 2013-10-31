@@ -1,0 +1,79 @@
+/*
+main colors;
+
+1. 71482d
+2. e9e9e9
+3. #fff3e7
+*/
+
+/* =============================================================================
+   Gallery Styles
+   ========================================================================== */
+	
+	ul.display li  {   border: 5px solid #F1F1F1; }
+	ul.display li:hover, #SearchContent .featured { border: 5px solid #71482d;  }
+	ul.display li:hover h2 a, #SearchContent .featured h2 a { color: #71482d; } 
+	.actions .add-box {  background:#666;; }
+	ul.display li:hover .actions .add-box, ul.thumb_view li:hover  .actions .add-box {	background: #71482d;		}
+	.actions { background:#ddd; color:#444; }
+	.itembox { border: 0px }
+	
+	
+    h1 { color: #71482d; }
+    h3 { color: #71482d; }	
+    ul.display li h2 a { color: #71482d; }
+	a { color: #71482d; }
+	#page { background:#fff; }
+	#hpages { background: transparent; }
+	#hpages a { color:#000; }
+	
+	/* ===================== GENERAL ======================== */ 
+
+	body { background: #71482d url(../images/_Furniture/bg.jpg) top center fixed;   color: #000000;  margin: +0px auto; font-family:Arial, Helvetica, sans-serif; }
+
+	/* ===================== _HEADER STYLES ======================== */  
+ 	
+	.menu { background: #422714;}	
+	.menu li { line-height:30px; background: url(../images/_Furniture/menu_spacer.png) top right no-repeat; }	
+	.menu li a { text-shadow: 0px 0px 0px 0px #000 !important; color:#ffffff; font-weight:normal;  text-transform: uppercase; }
+	.menu li:hover { background: url(../images/_Furniture/menu_spacer.png) top right no-repeat; color:#2b2c2c; }
+	.menu .dropdown_1column, .menu .dropdown_2columns, .menu .dropdown_3columns, .menu .dropdown_4columns, .menu .dropdown_5columns { background: #fff3e7; } 
+	.menu .dropdown_1column, .menu .dropdown_2columns, .menu .dropdown_3columns, .menu .dropdown_4columns, .menu .dropdown_5columns { border:0px; }
+	.menu li:hover div a, .menu div li:hover a, .menu li ul li:hover { color:#ffffff;}
+	 	
+	.menu li:hover div a { color:#71482d !important; font-weight:normal;  text-transform: uppercase;  }	 
+	
+	#submenubar {background: #efefef;border-top: 1px solid #333;}	
+	#searchBox .searchBtn { background: url(../images/_Furniture/SideSearchBtn.gif) no-repeat; }
+	
+	/* ===================== _HEADER STYLES ======================== */  
+	
+	
+	#PPTHomePage .content_block img {border:0px; }
+ 
+	 
+	/* Extra color styles for page objects */
+	#ProductPurchaseBlock .itemboxinner { background: #fff3e7;}
+	#icon-sidebar-ProductPurchaseBlock { background: #71482d; }
+	ul.display .featured h1 a, ul.display .featured a, ul.display .featured h2 b { color: #71482d; }
+	
+	.itembox h2, .itembox h1 { background: #71482d; color:#fff; }
+	
+/* ===================== HOME PAGE STYLE FIXES ======================== */  
+	
+#newblock ul.thumb_view li { margin-right: 5px !important;width: 160px; }
+#newblock ul.thumb_view li .img-box {width: 158px; }
+#newblock ul.thumb_view li .img-box img {max-width: 148px;}
+#newblock ul.thumb_view .actions {width: 160px; }
+#newblock .actions .add-box { display:none; }
+#newblock .actions .price-box{ text-align:center; width: 160px; }
+#newblock ul.thumb_view li {min-height: 230px;}
+#PPTHomePage .full #newblock ul.thumb_view li {margin-right: 5px;}
+
+	/* ===================== FOOTER STYLES // 7.1.1 ======================== */  	
+	
+	#footer {background: #EFEFEF;border-top: 1px solid #DDD;}
+		#footer .left3cols, #footer .middle2cols, #footer .middle3cols, #footer .right3cols { margin-top:0px; }
+			#copyright { background:#666; }
+			#copyright p {  padding:10px; color:#fff;  margin-bottom:0px; }
+				#copyright p a { color:#fff; }

@@ -1,0 +1,31 @@
+Version 4.5.1.3
+---------------
+
+* Notifications prior_check update to resolve notifications not being sent under limited circumstances.
+
+Version 4.5.1.2
+---------------
+
+* Bug fix for some PHP incompatibilities with object conditioning.
+
+Version 4.5.1.1
+---------------
+
+* Bug fix for some PHP incompatibilities with array_map and multidimensional arrays.
+
+Version 4.5.1
+-------------
+
+- AP bug fixes and additional variables for filters
+
+
+Version: 4.5
+------------
+
+http://groupbuyingsite.com/4-5-external-deal-aggregation-adaptive-payments-reports-ip-logging/
+
+- Destroyer now clears out deal purchases
+- Paypal Adaptive Payments improvements
+- Add reports for Share & Earn credits
+- Log IPs for purchases and registration, show IPs in account reports
+- Support for deal import from third party sites

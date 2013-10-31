@@ -1,0 +1,114 @@
+[13-Sep-2013 14:01:48 UTC] PHP Notice:  wp_enqueue_script was called <strong>incorrectly</strong>. Scripts and styles should not be registered or enqueued until the <code>wp_enqueue_scripts</code>, <code>admin_enqueue_scripts</code>, or <code>login_enqueue_scripts</code> hooks. Please see <a href="http://codex.wordpress.org/Debugging_in_WordPress">Debugging in WordPress</a> for more information. (This message was added in version 3.3.) in /var/www/vhosts/localsharingtree.com/httpdocs/test/wp-includes/functions.php on line 3012
+[13-Sep-2013 14:01:55 UTC] PHP Notice:  wp_enqueue_script was called <strong>incorrectly</strong>. Scripts and styles should not be registered or enqueued until the <code>wp_enqueue_scripts</code>, <code>admin_enqueue_scripts</code>, or <code>login_enqueue_scripts</code> hooks. Please see <a href="http://codex.wordpress.org/Debugging_in_WordPress">Debugging in WordPress</a> for more information. (This message was added in version 3.3.) in /var/www/vhosts/localsharingtree.com/httpdocs/test/wp-includes/functions.php on line 3012
+[13-Sep-2013 14:02:07 UTC] PHP Notice:  wp_enqueue_script was called <strong>incorrectly</strong>. Scripts and styles should not be registered or enqueued until the <code>wp_enqueue_scripts</code>, <code>admin_enqueue_scripts</code>, or <code>login_enqueue_scripts</code> hooks. Please see <a href="http://codex.wordpress.org/Debugging_in_WordPress">Debugging in WordPress</a> for more information. (This message was added in version 3.3.) in /var/www/vhosts/localsharingtree.com/httpdocs/test/wp-includes/functions.php on line 3012
+[13-Sep-2013 14:02:09 UTC] PHP Notice:  wp_enqueue_script was called <strong>incorrectly</strong>. Scripts and styles should not be registered or enqueued until the <code>wp_enqueue_scripts</code>, <code>admin_enqueue_scripts</code>, or <code>login_enqueue_scripts</code> hooks. Please see <a href="http://codex.wordpress.org/Debugging_in_WordPress">Debugging in WordPress</a> for more information. (This message was added in version 3.3.) in /var/www/vhosts/localsharingtree.com/httpdocs/test/wp-includes/functions.php on line 3012
+[13-Sep-2013 14:02:34 UTC] PHP Notice:  wp_enqueue_script was called <strong>incorrectly</strong>. Scripts and styles should not be registered or enqueued until the <code>wp_enqueue_scripts</code>, <code>admin_enqueue_scripts</code>, or <code>login_enqueue_scripts</code> hooks. Please see <a href="http://codex.wordpress.org/Debugging_in_WordPress">Debugging in WordPress</a> for more information. (This message was added in version 3.3.) in /var/www/vhosts/localsharingtree.com/httpdocs/test/wp-includes/functions.php on line 3012
+[13-Sep-2013 14:02:34 UTC] PHP Notice:  wp_enqueue_script was called <strong>incorrectly</strong>. Scripts and styles should not be registered or enqueued until the <code>wp_enqueue_scripts</code>, <code>admin_enqueue_scripts</code>, or <code>login_enqueue_scripts</code> hooks. Please see <a href="http://codex.wordpress.org/Debugging_in_WordPress">Debugging in WordPress</a> for more information. (This message was added in version 3.3.) in /var/www/vhosts/localsharingtree.com/httpdocs/test/wp-includes/functions.php on line 3012
+[16-Sep-2013 15:01:49 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' ' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' OR deals_posts.post_status = 'draft' OR deals_posts.post_status = 'pending' OR deals_posts.post_status = 'private')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), the_post, WP_Query->the_post, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[16-Sep-2013 15:01:49 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish'' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), the_post, WP_Query->the_post, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[16-Sep-2013 15:01:49 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' ' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' OR deals_posts.post_status = 'draft' OR deals_posts.post_status = 'pending' OR deals_posts.post_status = 'private')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), dynamic_sidebar, call_user_func_array, WP_Widget->display_callback, GroupBuying_RecentDeals->widget, wp_reset_query, wp_reset_postdata, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[16-Sep-2013 15:01:49 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish'' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), dynamic_sidebar, call_user_func_array, WP_Widget->display_callback, GroupBuying_RecentDeals->widget, wp_reset_query, wp_reset_postdata, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[17-Sep-2013 18:28:57 UTC] deals Array
+(
+    [264] => Array
+        (
+            [0] => Array
+                (
+                    [deal_id] => 264
+                    [quantity] => 1
+                    [data] => Array
+                        (
+                        )
+
+                    [price] => 29
+                    [unit_price] => 29
+                    [payment_method] => Array
+                        (
+                            [Account Credit (Balance)] => 29
+                        )
+
+                )
+
+        )
+
+)
+
+[17-Sep-2013 18:28:57 UTC] item Array
+(
+    [0] => Array
+        (
+            [deal_id] => 264
+            [quantity] => 1
+            [data] => Array
+                (
+                )
+
+            [price] => 29
+            [unit_price] => 29
+            [payment_method] => Array
+                (
+                    [Account Credit (Balance)] => 29
+                )
+
+        )
+
+)
+
+[17-Sep-2013 18:28:57 UTC] deals Array
+(
+    [45] => Array
+        (
+            [0] => Array
+                (
+                    [deal_id] => 45
+                    [quantity] => 1
+                    [data] => Array
+                        (
+                        )
+
+                    [price] => 10
+                    [unit_price] => 10
+                    [payment_method] => Array
+                        (
+                            [Account Credit (Balance)] => 10
+                        )
+
+                )
+
+        )
+
+)
+
+[17-Sep-2013 18:28:57 UTC] item Array
+(
+    [0] => Array
+        (
+            [deal_id] => 45
+            [quantity] => 1
+            [data] => Array
+                (
+                )
+
+            [price] => 10
+            [unit_price] => 10
+            [payment_method] => Array
+                (
+                    [Account Credit (Balance)] => 10
+                )
+
+        )
+
+)
+
+[25-Sep-2013 23:30:12 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' ' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' OR deals_posts.post_status = 'draft' OR deals_posts.post_status = 'pending' OR deals_posts.post_status = 'private')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), the_post, WP_Query->the_post, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[25-Sep-2013 23:30:12 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish'' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), the_post, WP_Query->the_post, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[25-Sep-2013 23:30:12 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' ' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' OR deals_posts.post_status = 'draft' OR deals_posts.post_status = 'pending' OR deals_posts.post_status = 'private')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), dynamic_sidebar, call_user_func_array, WP_Widget->display_callback, GroupBuying_RecentDeals->widget, wp_reset_query, wp_reset_postdata, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[25-Sep-2013 23:30:12 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish'' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), dynamic_sidebar, call_user_func_array, WP_Widget->display_callback, GroupBuying_RecentDeals->widget, wp_reset_query, wp_reset_postdata, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[26-Sep-2013 14:26:20 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' ' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' OR deals_posts.post_status = 'draft' OR deals_posts.post_status = 'pending' OR deals_posts.post_status = 'private')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), the_post, WP_Query->the_post, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[26-Sep-2013 14:26:20 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish'' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), the_post, WP_Query->the_post, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[26-Sep-2013 14:26:20 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' ' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' OR deals_posts.post_status = 'draft' OR deals_posts.post_status = 'pending' OR deals_posts.post_status = 'private')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), dynamic_sidebar, call_user_func_array, WP_Widget->display_callback, GroupBuying_RecentDeals->widget, wp_reset_query, wp_reset_postdata, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[26-Sep-2013 14:26:20 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish'' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/prime-theme/gbs/merchant.php'), dynamic_sidebar, call_user_func_array, WP_Widget->display_callback, GroupBuying_RecentDeals->widget, wp_reset_query, wp_reset_postdata, setup_postdata, do_action_ref_array, call_user_func_array, Group_Buying_Merchants_Dashboard->view_biz_dash, Group_Buying_Controller::load_view_to_string, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[18-Oct-2013 14:39:32 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' ' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' OR deals_posts.post_status = 'draft' OR deals_posts.post_status = 'pending' OR deals_posts.post_status = 'private')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array, call_user_func_array, GB_Router->parse_request, GB_Route->execute, GB_Route->get_page, call_user_func_array, Group_Buying_Merchants_Dashboard::on_biz_dash_page, Group_Buying_Merchants_Dashboard->view_dashboard, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[18-Oct-2013 14:39:32 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish'' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array, call_user_func_array, GB_Router->parse_request, GB_Route->execute, GB_Route->get_page, call_user_func_array, Group_Buying_Merchants_Dashboard::on_biz_dash_page, Group_Buying_Merchants_Dashboard->view_dashboard, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[18-Oct-2013 14:44:43 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' ' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'future' OR deals_posts.post_status = 'draft' OR deals_posts.post_status = 'pending' OR deals_posts.post_status = 'private')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array, call_user_func_array, GB_Router->parse_request, GB_Route->execute, GB_Route->get_page, call_user_func_array, Group_Buying_Merchants_Dashboard::on_biz_dash_page, Group_Buying_Merchants_Dashboard->view_dashboard, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts
+[18-Oct-2013 14:44:43 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish'' at line 1 for query SELECT   deals_posts.* FROM deals_posts  WHERE 1=1  AND deals_posts.ID IN () AND deals_posts.post_type = 'gb_deal' AND (deals_posts.post_status = 'publish')  ORDER BY deals_posts.post_date DESC  made by require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array, call_user_func_array, GB_Router->parse_request, GB_Route->execute, GB_Route->get_page, call_user_func_array, Group_Buying_Merchants_Dashboard::on_biz_dash_page, Group_Buying_Merchants_Dashboard->view_dashboard, Group_Buying_Controller::load_view, include('/themes/prime-theme/gbs/merchant/dashboard.php'), WP_Query->__construct, WP_Query->query, WP_Query->get_posts

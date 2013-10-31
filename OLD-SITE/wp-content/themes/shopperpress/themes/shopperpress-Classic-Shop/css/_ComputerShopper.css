@@ -1,0 +1,113 @@
+/* =============================================================================
+   Gallery Styles
+   ========================================================================== */
+	
+	ul.display li  {   border: 5px solid #F1F1F1; }
+	ul.display li:hover, #SearchContent .featured { border: 5px solid #ce4001;  }
+	ul.display li:hover h2 a, #SearchContent .featured h2 a { color: #ce4001; } 
+	.actions .add-box {  background:#666;; }
+	ul.display li:hover .actions .add-box, ul.thumb_view li:hover  .actions .add-box {	background: #ce4001;		}
+	.actions { background:#ddd; color:#444; }
+	.itembox { border: 0px }
+
+    h1 { color: #ce4001; }
+    h3 { color: #ce4001; }	
+	
+	
+    ul.display li h2 a { color: #ce4001; }
+	a { color: #ce4001; }
+  .itemboxinner { background:#fff; }
+  
+ 	 	 .left2cols { margin-left:0px; margin-right:20px; }
+	 .left3cols { margin-left:0px; } .middle3cols { margin-left:10px; background: white; } .right3cols { margin-left:10px;  }		
+	 
+	 .middle2cols { margin-left: 0px; margin-right:20px;}
+	#PPTHomePage #page { background:#fff; }
+	 
+	 #searchBox { margin-left:5px; } 
+	 
+	 ul.display li { background:#fff; }
+  
+/* ===================== COLUMN WIDTHS ======================== */ 
+
+	body {  background: #ececec;  }
+	.wrapper { border:0px;  } 
+	#page,#content { background: transparent; padding:0px; }
+	#content { width:962px }
+	.rfield { color:#ececec; }
+	#searchBox { padding-left:0px;}	
+ 
+ 	
+	/* ===================== _HEADER STYLES ======================== */ 
+ 
+	#header {   background: #fff url('../images/_ComputerShopper/header.png') bottom repeat-x; border:2px solid #fff;  }	
+ 	 
+	#hpages { background:#fff; }	
+	#hpages ul li { border-right: 1px solid #ddd; }
+	#hpages ul li a { color:#666; }
+		#hpages a { color:#666; }	
+		
+	/* ===================== MENU STYLES ======================== */ 
+	
+	.menu {   background: #cc3e01 url(../images/_ComputerShopper/menu.png) repeat-x;  border:2px solid #fff; border-top:0px; border-bottom:0px; }	 
+	.menu li { background:url(../images/_ComputerShopper/menu-spacer.png) top right no-repeat; }
+	.menu li a {  color:#fff; }
+	.menu li:hover { background:url(../images/_ComputerShopper/menu-spacer.png) top right no-repeat; } 
+ 
+	/* ===================== SUB MENU STYLES ======================== */ 
+	
+	#submenubar { background:#ddd;   border:2px solid #fff; }	
+	#AdvancedSearchBox { background:#ffe8dd; }
+
+	/* ===================== CONTENT CONTAINER ======================== */ 
+		
+	#content { margin-top:10px; }
+	.breadcrumbs { margin-top:-5px;  }
+		
+	/* ===================== MENU STYLES ======================== */ 
+	
+	.itembox { border: 1px solid #E2E2E2; }
+	.itembox h2,.itembox h1 {  background:#fff url(../images/_ComputerShopper/sidebar-bg.png); border-bottom:1px solid #ddd; color:#030303; } 
+	
+	/* ===================== GALLERY PAGE STYLES ======================== */ 
+		
+ 	 
+	.content_block img { border:0px; }
+	
+	.middle3cols ul.thumb_view li { margin-right: 6px; }
+	
+	/* ===================== FOOTER STYLES ======================== */ 
+	
+	#footer { background:#1d1d1d;   margin-top:10px; border:2px solid #1d1d1d; }
+	#PPTHomePage #footer { margin-top:0px; }
+
+	/* ===================== SINGLE PAGE STYLES ======================== */ 
+		
+		
+	#icon-sidebar-ProductPurchaseBlock {  background: #cc3e01 url(../images/_ComputerShopper/basket_put.png) no-repeat 10px center; padding-left:36px; color:#fff; }
+	.b1 { background:#fff; padding:5px; border:1px solid #dbdbdb; width:666px; margin-right:0px }
+ 
+ 
+	#ProductPurchaseBlock .itemboxinner { background:#ffe8dd; }
+ 	#page #hor-zebra { background:transparent; }
+ 
+	
+	/* ===================== HOME PAGE ======================== */ 	
+	
+	#PPTHomePage .RowWrapper { margin-top:25px; }
+	#PPTHomePage .Row460 { float:left; width:460px; margin-left:15px; border-bottom:1px solid #eee; margin-bottom:10px; }
+	#PPTHomePage .Row460 p { margin-left:10px; margin-top:10px; }
+	#PPTHomePage .Rowa { float:left; width:90px; height:90px; }
+	#PPTHomePage .Rowb { float:left; width:270px; height:90px; margin-right:10px; }
+	#PPTHomePage .Rowb { color:#666;}
+	#PPTHomePage .Rowc { float:left; width:80px; height:90px; }
+	#PPTHomePage .Rowc1 { height:80px; overflow:hidden; }
+	#PPTHomePage .Rowc img { max-width:80px; max-height:80px;}
+	#PPTHomePage .imageBorder { border:5px solid #F1EFEE; }
+	.homepad { margin-left:10px; }		
+	#footer .first_col { color:#fff; }
+
+ 	/* ===================== FOOTER ======================== */ 	
+ 
+	#footer, #footer h1, #footer h3 { color:#CCC; }
+	#footer a { color:#fff; }

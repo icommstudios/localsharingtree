@@ -1,0 +1,1 @@
+Templates for this add-on are found under group-buying/views/*

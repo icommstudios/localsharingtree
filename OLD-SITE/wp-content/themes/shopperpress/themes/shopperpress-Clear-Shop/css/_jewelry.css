@@ -1,0 +1,104 @@
+/* =============================================================================
+   Gallery Styles
+   ========================================================================== */
+	
+	ul.display li  {   border: 5px solid #F1F1F1; }
+	ul.display li:hover, #SearchContent .featured { border: 5px solid #404040;  }
+	ul.display li:hover h2 a, #SearchContent .featured h2 a { color: #404040; } 
+	.actions .add-box {  background:#666;; }
+	ul.display li:hover .actions .add-box, ul.thumb_view li:hover  .actions .add-box {	background: #404040;		}
+	.actions { background:#ddd; color:#444; }
+	.itembox { border: 0px }
+	
+			
+		 #sidebar .greybg, #sidebar-left .greybg { background:none; }
+	#PPTHomePage #content { padding-top:10px !important; }
+/*
+main colors;
+
+1. 404040
+2. fdf9d6
+*/
+
+
+    h1 { color: #404040; }
+    h3 { color: #404040; }	
+    ul.display li h2 a { color: #404040; }
+	a { color: #404040; }
+	#hpages a { color:#666; }
+
+#fpages ul li {   border-right: 1px solid #ccc; } 
+#fpages ul li a {  color: #666; font-size:12px; }
+
+
+	/* ===================== COLUMN WIDTHS ======================== */ 
+
+	body {  background:#ffffff; }
+	.wrapper { background: transparent;   } 
+	.rfield { color:#fff; }
+ 
+	/* ===================== _HEADER STYLES ======================== */ 
+ 
+	#header {  background: transparent; }
+	
+	.menu {   background: #fff url(../images/_jewelry/menu.gif) repeat-x;    -moz-border-radius:8px;    -webkit-border-radius:8px;  border-radius:8px 8px 8px 8px;   }	
+	.menu li { line-height:30px; background: url(../images/_jewelry/menu_spacer.png) top right no-repeat; }
+	.menu li a { font-size:13px; text-transform:uppercase; color:#666; font-weight:normal; text-shadow: 0px 0px 0px 0px #000 !important;   }
+	.menu li li { color:#fff; }
+	.menu li:hover { background: url(../images/_jewelry/menu_spacer.png) top right no-repeat; color:#000; }
+	.menu li:hover a { color: #000; }
+	.menu .dropdown_1column, .menu .dropdown_2columns, .menu .dropdown_3columns, .menu .dropdown_4columns, .menu .dropdown_5columns { background: #efefef; }
+	.menu .dropdown_1column, .menu .dropdown_2columns, .menu .dropdown_3columns, .menu .dropdown_4columns, .menu .dropdown_5columns { border:0px; }
+	
+	#s { border:1px solid #ccc; color:#ccc; }	
+	#submenubar {height: 45px;background: #fff;border-top: 0px;}
+ 
+
+ 
+ 	/* HEADER PAGES NAV */
+	#hpages { background:#fff; }	
+	#hpages ul li { border-right: 1px solid #ddd; }
+	#hpages ul li a { color:#666; }
+	
+	/* MAIN BOX COLORS*/
+	.itembox { border: 0px solid #E2E2E2; }
+	.itembox h2.title,.itembox h1.title {  background:#404040; border-bottom:0px; color:#fff;  border-radius:8px 8px 8px 8px;    -moz-border-radius:8px 8px 8px 8px;    -webkit-border-radius:8px 8px 8px 8px; } 
+	.left3cols .itemboxinner { background:#fff;  }
+	ul.thumb_view li:hover, ul.display li:hover, #SearchContent .featured { background: #efefef; } 
+
+	/* ===================== SLIDERS  ======================== */ 
+	
+	
+	ul.display li.featured, ul.display li.featured:hover {border: 0px solid #404040;background: #fdf9d6 url(../images/_jewelry/_gallerypage_highlighted.png) bottom right no-repeat;}
+
+	/* ===================== HOME SEARCH ======================== */ 	
+		 
+	#PPTHomePage .itembox h2 { background:none; color:#666; border-bottom:1px dotted #666; text-transform:uppercase;  }
+	.homepad { margin-left:10px; }		
+	.hmail { width:980px; }
+	.hmail1 { float:left; width:271px; margin-right:8px; height:600px; }
+	.hmail2 {  float:left; width:690px;}
+	.hmail3 {  float:left; width:240px; margin-top:10px; }
+	.hmail4 { float:right;   margin-top:10px; }
+
+	.featured-itemImage span { background-color: #404040; border-radius: 0 0 15px 15px;    -moz-border-radius:0 0 15px 15px;    -webkit-border-radius:0 0 15px 15px; }
+	.featured-itemImage span strong {color: #FFF; }
+	.featured-itemImage span b {color: #efefef; }
+	.home-welcometext-inner { background:#404040; padding:10px; margin-top:10px; margin-bottom:10px; }
+			
+	/* ===================== SIDEBAR.PHP ======================== */ 	
+	
+	#icon-sidebar-ProductPurchaseBlock { background: #404040; border-radius:8px 8px 0px 0px;    -moz-border-radius:8px 8px 0px 0px;    -webkit-border-radius:8px 8px 0px 0px; }
+	#ProductPurchaseBlock .itemboxinner {background: #ececec;}	
+	#icon-sidebar-basket h2 { background: #404040; }
+	#icon-sidebar-basket .itemboxinner { background: #fff; }
+	#icon-sidebar-basket .btnCheckout { background: #666; }
+	
+	
+	
+	/* ===================== FOOTER.PHP ======================== */ 	
+
+	#footer {background: #efefef;background-image: none;border-radius:5px 15px 15px 15px;    -moz-border-radius:15px 15px 15px 15px;    -webkit-border-radius:15px 15px 15px 15px;margin-top:20px;color:#666;}
+	#footer p { color:#666; }
+	#footer h3 { color:#333; font-size:20px; }
+	#footer a { text-decoration:underline; color:#404040; font-size:16px; }
