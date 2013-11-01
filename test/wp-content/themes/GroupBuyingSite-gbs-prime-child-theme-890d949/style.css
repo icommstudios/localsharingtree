@@ -1,4 +1,4 @@
-/**
+/* *
  * Theme Name: Blank Child Theme
  * Theme URI: http://groupbuyingsite.com
  * Description: This theme will be identical to the Prime Theme until you add modifications.
@@ -6,9 +6,9 @@
  * Author URI: http://groupbuyingsite.com
  * Version: 1.0
  * template: prime-theme
- */
-/* ===[ Add your custom styles below: ]=== */
-
+   ================================================== */
+/* ===[ Add your custom styles below: ]===
+   ================================================== */
 .video-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -83,7 +83,8 @@
     padding: 5px 10px;
     margin-bottom: 0;
 }
-/* ===[ Phone-sized devices and the like ]=== */
+/* ===[ Phone-sized devices and the like ]===
+   ================================================== */
 @media only screen and (max-width: 680px) { 
     .fancybox_message_banner {
         min-width: 100px
@@ -160,27 +161,26 @@ input.button-primary,
     background-size: cover
 }
 a.mainImg {
+    margin: 0 2%
+}
+div.row {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+@media (min-width: 768px) and (max-width: 979px) { 
+    #logo {
+        max-width: 65%
+    }
+    #logo img {
+        max-width: 90%;
+        width: auto;
+    }
+    a.mainImg {
         margin: 0 2%
     }
-	div.row {
-		width: 100%;
-		margin: 0 auto;
-		text-align: center;
- }
- 
- @media (min-width: 768px) and (max-width: 979px) { 
-   #logo {
-max-width: 65%;
-}
-    #logo img {
-max-width: 90%;
-width: auto;
-}
-    a.mainImg {
-        margin: 0 2%;
-    }
-	a.mainImg img {
-       max-width: 33.3%;
+    a.mainImg img {
+        max-width: 33.3%
     }
     .container.main {
         width: 90%
@@ -188,54 +188,52 @@ width: auto;
     .mini_header img {
         max-width: 90%
     }
-	#header_wrap {
-	padding: 0 1em;
-	}
-	#navigation {
-	padding: 0;
-	}
-	#footer img {
-	max-width:50%;
-	width: auto;
+    #header_wrap {
+        padding: 0 1em
+    }
+    #navigation {
+        padding: 0
+    }
+    #footer img {
+        max-width: 50%;
+        width: auto;
+    }
+    .widget {
+        padding: 0;
+        margin: 1em 0;
+    }
 }
-.widget {
-padding: 0;
-margin: 1em 0;
-}
-}
-  @media (max-width: 959px) {
-	
+@media (max-width: 959px) { 
     #navigation {
         padding: 0px
     }
     #navigation select {
         width: 70%;
         margin: 5px;
-    }  
-	.font_large {
-font-size: 1.25em;
-}
-#login_wrap {
-	top: 70px;
-}
-.header_cart {
-	display: inline-block;
-	margin-left: -32px;
-}
-#header {
-min-height: 160px;
-}
-#location {
-	position: absolute;
-left: 0;
-top: 50px;
-}
-.header_meta {
-display: block;
-}
+    }
+    .font_large {
+        font-size: 1.25em
+    }
+    #login_wrap {
+        top: 70px
+    }
+    .header_cart {
+        display: inline-block;
+        margin-left: -32px;
+    }
+    #header {
+        min-height: 160px
+    }
+    #location {
+        position: absolute;
+        left: 0;
+        top: 50px;
+    }
+    .header_meta {
+        display: block
+    }
 }
 @media (max-width: 767px) { 
- 
     a.mainImg img {
         max-width: 50%;
         width: auto;
@@ -246,32 +244,28 @@ display: block;
     .container.main {
         width: 90%
     }
-	img {
-    width: auto;
-height: auto;
-max-width: 70%;
-vertical-align: middle;
-margin-bottom: 1em;
-}
-#footer img {
-	max-width:50%;
-	width: auto;
-}
-.widget {
-padding: 0;
-margin: 1em 0;
-}
-#navigation {
-padding: 4px 0;
-}
-
-
-#logo img {
-max-width: 100%;
-width: auto;
-
-}
-
+    img {
+        width: auto;
+        height: auto;
+        max-width: 70%;
+        vertical-align: middle;
+        margin-bottom: 1em;
+    }
+    #footer img {
+        max-width: 50%;
+        width: auto;
+    }
+    .widget {
+        padding: 0;
+        margin: 1em 0;
+    }
+    #navigation {
+        padding: 4px 0
+    }
+    #logo img {
+        max-width: 100%;
+        width: auto;
+    }
 }
 @media (max-width: 680px) { 
     #subscribe_dd {
@@ -289,58 +283,58 @@ width: auto;
         width: 70%;
         margin: 5px;
     }
-	#logo {
-max-width: 100%;
-padding: 5px 10px;
+    #logo {
+        max-width: 100%;
+        padding: 5px 10px;
+    }
 }
+@media (min-width: 690px) and (max-width: 767px) { 
+    #logo {
+        margin: 10px 0;
+        float: left;
+        max-width: 80%;
+    }
 }
- @media (min-width: 690px) and (max-width: 767px) {
-	 #logo {
-margin: 10px 0;
-float: left;
-max-width: 80%; 
- }
- }
 @media (max-width: 480px) { 
-#header {
- min-height: 140px;
-}
-#location .current_location {
-width: 0px;
-overflow: hidden;
-border: 1px solid rgba(0,0,0,0.2);
-background-color: rgba(0,0,0,0.05);
-border-radius: 4px;
-background-position: -43px -243px;
-}
-#locations_header_wrap {
-left: 20px;
-top: 40px;
-width: 170px;
-}
-#logo {
-max-width: 100%;
-}
-#logo img {
-max-width: 120%;
-margin-bottom: 0;
-}
-img {
-width: auto;
-height: auto;
-max-width: 100%;
-}
-  #navigation select {
+    #header {
+        min-height: 140px
+    }
+    #location .current_location {
+        width: 0px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.2);
+        background-color: rgba(0,0,0,0.05);
+        border-radius: 4px;
+        background-position: -43px -243px;
+    }
+    #locations_header_wrap {
+        left: 20px;
+        top: 40px;
+        width: 170px;
+    }
+    #logo {
+        max-width: 100%
+    }
+    #logo img {
+        max-width: 120%;
+        margin-bottom: 0;
+    }
+    img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+    }
+    #navigation select {
         width: 40%;
         margin: 5px;
     }
-#footer .footer_widget_wrap {
-padding-top: 1em;
-}
-.legal {
-text-align: center;
-}
-#subscription_form_wrap {
-min-width: 100%;
-}
+    #footer .footer_widget_wrap {
+        padding-top: 1em
+    }
+    .legal {
+        text-align: center
+    }
+    #subscription_form_wrap {
+        min-width: 100%
+    }
 }
