@@ -1,162 +1,385 @@
-/*
-Theme Name: Blank Child Theme
-Theme URI: http://groupbuyingsite.com
-Description: This theme will be identical to the Prime Theme until you add modifications.
-Author: Group Buying Site
-Author URI: http://groupbuyingsite.com
-Version: 1.0
-template: prime-theme
-*/
+/* *
+ * Theme Name: Blank Child Theme
+ * Theme URI: http://groupbuyingsite.com
+ * Description: This theme will be identical to the Prime Theme until you add modifications.
+ * Author: Group Buying Site
+ * Author URI: http://groupbuyingsite.com
+ * Version: 1.0
+ * template: prime-theme
+   ================================================== */
+/* ===[ Add your custom styles below: ]===
+   ================================================== */
 
-/* 
-Add your custom styles below:
-*/
+ /* Page Navigation */
+.pagination {
+margin: 20px 0;
+}
+.pagination ul {
+display: inline-block;
+margin-left: 0;
+margin-bottom: 0;
+border-radius: 5px;
+}
+.pagination ul>li {
+display: inline;
+}
+.pagination ul>li:first-child>a, .pagination ul>li:first-child>span {
+border-left-width: 1px;
+border-radius: 5px 0 0 5px;
+}
+.pagination ul>li:last-child>a, .pagination ul>li:last-child>span {
+border-rigth-width: 1px;
+border-radius: 0 5px 5px 0;
+}
+.pagination ul>li>a, .pagination ul>li>span {
+float: left;
+padding: 4px 12px;
+line-height: 20px;
+text-decoration: none;
+background-color: #ffffff;
+border: 1px solid #dddddd;
+border-left-width: 0;
+}
 
+ 
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 .text-center {
-	text-align: center;
+    text-align: center
 }
 
-#menu-item-1048 a, #menu-item-1103 a, #menu-item-1105 a {
-	color: #23668e;
+li#menu-item-1048 a,
+li#menu-item-1103 a,
+li#menu-item-1105 a,
+li#menu-item-18553 a,
+li#menu-item-1048 a:hover,
+li#menu-item-1103 a:hover,
+li#menu-item-1105 a:hover,
+li#menu-item-18553 a:hover {
+    color: #23668e;
+    text-shadow: none;
 }
-
 .alert {
-	background: #eee;
-	padding:10px;
-	font-family: sans-serif;
-	color: #333;
+    background: #eee;
+    padding: 10px;
+    font-family: sans-serif;
+    color: #333;
 }
 
-#deal_countdown, .the_time, #progress_bar {
-display: none;
+.container.main {
+    margin-top: 30px;
 }
 
+#deal_countdown,
+.the_time,
+#progress_bar {
+    display: none
+}
 .close {
-	float: left;
-	margin: 20px 2% 0;
-	width: 10%;
-	font-size: 24px;
+    float: left;
+    margin: 20px 2% 0;
+    width: 10%;
+    font-size: 24px;
 }
-
 #message_banner {
-	background: #333;
-	-moz-opacity: 0.90;
-	opacity: 0.90;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=90);
+    background: #333;
+    -moz-opacity: 0.90;
+    opacity: 0.90;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha"(Opacity=90);
 }
-
 #message_banner .gb-message {
-	float:left;
-	width:70%;
+    float: left;
+    width: 70%;
 }
-
 #message_banner:hover .close {
-	color: #000;
-}
-
-.fancybox_message_banner {
-	min-width: 600px;
+    color: #000
 }
 .fancybox_message_banner {
-	background-color: #1c5d27;
-	color: #ffffff;	
-	width: 100%;
-	height: 100%;
-	padding-top: 10px;
-	padding-bottom: 10px;
+    min-width: 600px
+}
+.fancybox_message_banner {
+    background-color: #1c5d27;
+    color: #ffffff;
+    width: 100%;
+    height: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .fancybox_message_banner .gb-message {
-	text-align: center;
-	text-transform: uppercase;
-	font-size: 1.4em;
-	line-height: 2em;
-	font-weight: bold;
-	padding: 5px 10px;
-	margin-bottom: 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.4em;
+    line-height: 2em;
+    font-weight: bold;
+    padding: 5px 10px;
+    margin-bottom: 0;
 }
-
-/* Phone-sized devices and the like */
-@media only screen and (max-width: 680px) {
-	.fancybox_message_banner {
-		min-width: 100px;
-	}
-	
+/* ===[ Phone-sized devices and the like ]===
+   ================================================== */
+@media only screen and (max-width: 680px) { 
+    .fancybox_message_banner {
+        min-width: 100px
+    }
 }
-
 #login_wrap {
-	
-	border: 1px solid rgba(0,0,0,0.2);
-	position: absolute;
-	padding: 14px 20px 2px;
-	top: 30px;
-	right: 0;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	background-color: #ccc;
-	background-color: rgba(0,0,0,0.05);
-	box-shadow: none;
+    border: 1px solid rgba(0,0,0,0.2);
+    position: absolute;
+    padding: 14px 20px 2px;
+    top: 30px;
+    right: 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #ccc;
+    background-color: rgba(0,0,0,0.05);
+    box-shadow: none;
 }
-
 #login_wrap a {
-	color: #fff;
-	text-shadow: none;
+    color: #fff;
+    text-shadow: none;
 }
-
 #navigation ul.sub-menu {
-z-index: 200;
+    z-index: 200
 }
-
 #location {
-	height: 50px;
-	margin-top: 20px;
-	overflow: visible;
-	position: absolute;
-	right: 200px;
-	top: 1px;
-	padding: 20px 20px 10px 20px;
-	cursor: pointer;
-	white-space: nowrap;
-	z-index: 300;
+    height: 50px;
+    margin-top: 20px;
+    overflow: visible;
+    position: absolute;
+    right: 200px;
+    top: 1px;
+    padding: 20px 20px 10px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    z-index: 300;
 }
-
 .mini_header {
-	padding: 0px;
-	margin-bottom: 10px;
-	width: 100%;
-	float: none;
+    padding: 0px;
+    margin-bottom: 10px;
+    width: 100%;
+    float: none;
 }
-
-
 .home #subscription_form {
-	background: none;
-	width: 96%;
-	float: none;
-	min-height: 0px;
-	padding: 60px 2% 20px;
+    background: none;
+    width: 96%;
+    float: none;
+    min-height: 0px;
+    padding: 60px 2% 20px;
 }
-
 .home #email_address {
-	margin: 10px auto 0 auto;
-	}
-
-.button, input.form-submit, input.button-primary, .cart-claimed a {
--moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+    margin: 10px auto 0 auto
 }
-
+.button,
+input.form-submit,
+input.button-primary,
+.cart-claimed a {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
 #gb_subscription_form span.submit {
-	float: none;
-	margin-right: 0px;
+    float: none;
+    margin-right: 0px;
 }
-
 .merchant-title a {
-	color:white;
+    color: white
 }
-
 .checkout-controls {
     display: inline-block;
     clear: none;
 }
-
-.form-submit { background-size:cover; }
-
+.form-submit {
+    background-size: cover
+}
+a.mainImg {
+    margin: 0 2%
+}
+div.row {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+@media (min-width: 768px) and (max-width: 979px) { 
+    #logo {
+        max-width: 65%
+    }
+    #logo img {
+        max-width: 90%;
+        width: auto;
+    }
+    a.mainImg {
+        margin: 0 2%
+    }
+    a.mainImg img {
+        max-width: 33.3%
+    }
+    .container.main {
+        width: 90%
+    }
+    .mini_header img {
+        max-width: 90%
+    }
+    #header_wrap {
+        padding: 0 1em
+    }
+    #navigation {
+        padding: 0
+    }
+    #footer img {
+        max-width: 50%;
+        width: auto;
+    }
+    .widget {
+        padding: 0;
+        margin: 1em 0;
+    }
+}
+@media (max-width: 959px) { 
+    #navigation {
+        padding: 0px
+    }
+    #navigation select {
+        width: 70%;
+        margin: 5px;
+    }
+    .font_large {
+        font-size: 1.25em
+    }
+    #login_wrap {
+        top: 70px
+    }
+    .header_cart {
+        display: inline-block;
+        margin-left: -32px;
+    }
+    #header {
+        min-height: 160px
+    }
+    #location {
+        position: absolute;
+        left: 0;
+        top: 50px;
+    }
+    .header_meta {
+        display: block
+    }
+}
+@media (max-width: 767px) { 
+    a.mainImg img {
+        max-width: 50%;
+        width: auto;
+        height: auto;
+        margin: 1% auto;
+        display: block;
+    }
+    .container.main {
+        width: 90%
+    }
+    img {
+        width: auto;
+        height: auto;
+        max-width: 70%;
+        vertical-align: middle;
+        margin-bottom: 1em;
+    }
+    #footer img {
+        max-width: 50%;
+        width: auto;
+    }
+    .widget {
+        padding: 0;
+        margin: 1em 0;
+    }
+    #navigation {
+        padding: 4px 0
+    }
+    #logo img {
+        max-width: 100%;
+        width: auto;
+    }
+}
+@media (max-width: 680px) { 
+    #subscribe_dd {
+        padding: 8px 20px 0px
+    }
+    #subscription_form_wrap #gb_subscription {
+        position: relative;
+        top: 3px;
+        right: 0px;
+    }
+    #navigation {
+        padding: 0px
+    }
+    #navigation select {
+        width: 70%;
+        margin: 5px;
+    }
+    #logo {
+        max-width: 100%;
+        padding: 5px 10px;
+    }
+}
+@media (min-width: 690px) and (max-width: 767px) { 
+    #logo {
+        margin: 10px 0;
+        float: left;
+        max-width: 80%;
+    }
+}
+@media (max-width: 480px) { 
+    #header {
+        min-height: 140px
+    }
+    #location .current_location {
+        width: 0px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.2);
+        background-color: rgba(0,0,0,0.05);
+        border-radius: 4px;
+        background-position: -43px -243px;
+    }
+    #locations_header_wrap {
+        left: 20px;
+        top: 40px;
+        width: 170px;
+    }
+    #logo {
+        max-width: 100%
+    }
+    #logo img {
+        max-width: 120%;
+        margin-bottom: 0;
+    }
+    img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+    }
+    #navigation select {
+        width: 40%;
+        margin: 5px;
+    }
+    #footer .footer_widget_wrap {
+        padding-top: 1em
+    }
+    .legal {
+        text-align: center
+    }
+    #subscription_form_wrap {
+        min-width: 100%
+    }
+}

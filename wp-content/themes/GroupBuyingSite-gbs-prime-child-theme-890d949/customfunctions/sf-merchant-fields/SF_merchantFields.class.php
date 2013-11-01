@@ -311,7 +311,7 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 		
 		$fields['ein'] = array(
 			'weight' => 51,
-			'label' => self::__('EIN # (Tax Identification Number)'),
+			'label' => self::__('Tax Identification Number (EIN or SSN)'),
 			'type' => 'text',
 			'required' => TRUE,
 			'default' => self::get_meta_value( $merchant_id, 'ein' ),

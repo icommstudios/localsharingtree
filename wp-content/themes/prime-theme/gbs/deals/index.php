@@ -24,7 +24,7 @@
 				<?php endwhile; ?>
 
 				<?php global $wp_query; if ( $wp_query->max_num_pages > 1 ) : ?>
-					<?php get_template_part( 'inc/loop-nav', 'inc/index-nav' ); ?>
+					<?php wp_pagination(); ?>
 				<?php endif; ?>
 			</div><!-- #content -->
 
