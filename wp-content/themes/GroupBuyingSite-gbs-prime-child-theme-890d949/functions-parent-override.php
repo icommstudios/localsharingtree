@@ -341,6 +341,43 @@ function custom_admin_footer_scripts() {
     <?php	
 }
 
+// Cart remove on click - Add jquery functions
+add_action('wp_footer', 'cart_add_remove_item_onclick');
+function cart_add_remove_item_onclick() {
+	if ( gb_on_cart_page() ) {
+		?>
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$('#gb_cart .cart-remove input[type=checkbox]').change(function() {
+		  //Click the update button
+		  $('#gb_cart input[name=gb_cart_action-update]').click();
+		});
+	
+	});
+	
+	function removeCartItem(key) {
+		jQuery('#gb_cart #removekey_' + key).prop('checked', true);
+		jQuery('#gb_cart input[name=gb_cart_action-update]').click();
+		return false;
+	}
+	
+</script>      
+		<?php
+	}
+}
+
+//Change Cart line items - add Remove link
+add_filter('gb_cart_items', 'custom_cart_items', 10 , 2); 
+function custom_cart_items($items, $cart) {
+    
+	foreach ($items as $key => $item) {
+		$new_remove = '<input style="display: none;" type="checkbox" value="remove" id="removekey_'.$key.'" name="items['.$key.'][remove]" /><a class="alt_button remove_button" href="#remove'.$key.'" onClick="removeCartItem(\''.$key.'\'); return false;">Remove</a>';
+		$items[$key]['remove'] = $new_remove;
+	}
+    return $items;
+}
+
+
 // Add Page number navigation
 
 function wp_pagination() {
