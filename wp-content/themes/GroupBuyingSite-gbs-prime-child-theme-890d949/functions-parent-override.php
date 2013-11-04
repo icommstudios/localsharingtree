@@ -356,7 +356,7 @@ function cart_add_remove_item_onclick() {
 	});
 	
 	function removeCartItem(key) {
-		jQuery('#gb_cart #removekey_' + key).prop('checked', true);
+		jQuery('#gb_cart #removekey_' + key + ' input').prop('checked', true);
 		jQuery('#gb_cart input[name=gb_cart_action-update]').click();
 		return false;
 	}
@@ -371,7 +371,7 @@ add_filter('gb_cart_items', 'custom_cart_items', 10 , 2);
 function custom_cart_items($items, $cart) {
     
 	foreach ($items as $key => $item) {
-		$new_remove = '<input style="display: none;" type="checkbox" value="remove" id="removekey_'.$key.'" name="items['.$key.'][remove]" /><a class="alt_button remove_button" href="#remove'.$key.'" onClick="removeCartItem(\''.$key.'\'); return false;">Remove</a>';
+		$new_remove = '<span id="removekey_'.$key.'" style="display: none;">'.$items[$key]['remove'].'</span><a class="alt_button remove_button" href="#remove'.$key.'" onClick="removeCartItem(\''.$key.'\'); return false;">Remove</a>';
 		$items[$key]['remove'] = $new_remove;
 	}
     return $items;
