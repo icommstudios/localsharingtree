@@ -40,8 +40,8 @@ jQuery(document).ready(function() {
         }
         else {
             jQuery('.gb_credit_card_field_wrap').fadeIn();
-        };
-    });
+        }
+    }).filter(':checked').trigger('click');
 
 });
 </script>

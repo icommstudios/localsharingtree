@@ -1,0 +1,1 @@
+Template tags for this add-on are stored under group-buying/template-tags/addons/*

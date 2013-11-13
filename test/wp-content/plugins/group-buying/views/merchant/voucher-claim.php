@@ -15,7 +15,7 @@
 					</label>
 				</td>
 				<td class="gb-form-field gb-form-field-text">
-					<input type="text" name="<?php echo $claim_arg ?>" id="<?php echo $claim_arg ?>" value="<?php if ( isset( $_GET['gb_voucher_claim'] )&&$_GET['gb_voucher_claim']!='' ) echo $_GET['gb_voucher_claim'] ?>" />
+					<input type="text" name="<?php echo $claim_arg ?>" id="<?php echo $claim_arg ?>" value="<?php if ( isset( $_GET['gb_voucher_claim'] )&&$_GET['gb_voucher_claim']!='' ) echo $_GET['gb_voucher_claim'] ?>" required/>
 				</td>
 			</tr>
 			<tr>

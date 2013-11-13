@@ -78,4 +78,24 @@ class GB_Router_Utility {
 	public static function init() {
 		do_action( self::PLUGIN_INIT_HOOK );
 	}
+
+	/**
+	 * Determine if the page loaded is the router page checked for.
+	 * 
+	 * @return boolean 
+	 */
+	public function is_on_page( $router = '' ) {
+		$query_var = get_query_var( self::QUERY_VAR );
+		if ( $query_var == $router ) {
+			return TRUE;
+		}
+		if ( $query_var == '' ) {
+			// Possibly checked before get_query_var function can work.
+			global $wp;
+			if ( isset( $wp->query_vars[self::QUERY_VAR] ) && $wp->query_vars[self::QUERY_VAR] == $router ) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
 }

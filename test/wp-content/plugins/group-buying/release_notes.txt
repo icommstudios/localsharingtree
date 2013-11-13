@@ -1,28 +1,31 @@
-Version 4.5.1.3
----------------
+Version 4.6
+-----------
 
-* Notifications prior_check update to resolve notifications not being sent under limited circumstances.
+- New error reporting functionality
+- Admin area for logs and errors
+- New add-ons management screen
+- Gifting has moved from a default feature to an add-on so it can be easily disabled.
+- Multiple image uploading for deal submissions
+- Welcome page for new installs
+- Multiple payment processor selection bug fix, happens during checkout under certain circumstances
+- Payments can be manually captured if an attempt failed
+- Void payments with ability for notes
+- New UI for transaction data
+- User page has account info and links
+- Allow admins to view all individual vouchers
 
-Version 4.5.1.2
----------------
+Developer info
+- New file/folder layout for all classes
+- GB Router used for all page callbacks
 
-* Bug fix for some PHP incompatibilities with object conditioning.
+4.6.1 - Hot fix, fix false positive for page check (including login page) under some setups.
 
-Version 4.5.1.1
----------------
+4.6.2 - Registration form submission bug fix.
 
-* Bug fix for some PHP incompatibilities with array_map and multidimensional arrays.
-
-Version 4.5.1
--------------
-
-- AP bug fixes and additional variables for filters
-
+4.6.3.1 - Better Records conversion, fix for voucher filtering and fix force login issues.
 
 Version: 4.5
 ------------
-
-http://groupbuyingsite.com/4-5-external-deal-aggregation-adaptive-payments-reports-ip-logging/
 
 - Destroyer now clears out deal purchases
 - Paypal Adaptive Payments improvements

@@ -1,0 +1,1 @@
+This directory with meta-boxes for payment processors if for legacy compatibility only. If you're creating a new payment processor (or a developer for one) use the meta-box views under /controllers/payment-processing/payment-processors/views/meta-boxes*.

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Group Buying Plugin
-Version: 4.5.1.3
+Version: 4.6.3.1
 Plugin URI: http://groupbuyingsite.com/feature-tour/
 Description: Allows for groupon like functionality. By installing this plugin you agree to the <a href="http://groupbuyingsite.com/tos/" title="I agree">terms and conditions</a> of GroupBuyingSite.
 Author: GroupBuyingSite.com
@@ -71,103 +71,205 @@ function group_buying_load() {
 		gb_deactivate_plugin();
 		return; // already loaded, or a name collision
 	}
-	// router plugin dependency
+	//////////////////////////////
+	// router plugin dependency //
+	//////////////////////////////
 	require_once GB_PATH.'/controllers/router/gb-router.php';
 
-	// base classes
-	require_once GB_PATH.'/groupBuying.class.php';
-	require_once GB_PATH.'/models/groupBuyingModel.class.php';
-	require_once GB_PATH.'/models/groupBuyingPostType.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingController.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingPaymentProcessors.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingOffsiteProcessors.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingCreditCardProcessors.class.php';
+	//////////////////
+	// base classes //
+	//////////////////
+	require_once GB_PATH.'/Group_Buying.class.php';
+	require_once GB_PATH.'/models/Group_Buying_Model.class.php';
+	require_once GB_PATH.'/models/Group_Buying_Post_Type.class.php';
+	require_once GB_PATH.'/controllers/Group_Buying_Controller.class.php';
+	require_once GB_PATH.'/controllers/payment-processing/Payment_Processors.class.php';
+	require_once GB_PATH.'/controllers/payment-processing/Offsite_Processors.class.php';
+	require_once GB_PATH.'/controllers/payment-processing/Credit_Card_Processors.class.php';
+	require_once GB_PATH.'/controllers/payment-processing/Hybrid_Payment_Processor.class.php';
 
+	////////////
+	// models //
+	////////////
+	require_once GB_PATH.'/models/Deal.class.php';
+	require_once GB_PATH.'/models/Account.class.php';
+	require_once GB_PATH.'/models/Cart.class.php';
+	// require_once GB_PATH.'/models/Gift.class.php'; // Made an add-on in 4.6
+	require_once GB_PATH.'/models/Merchant.class.php';
+	require_once GB_PATH.'/models/Notification.class.php';
+	require_once GB_PATH.'/models/Payment.class.php';
+	require_once GB_PATH.'/models/Purchase.class.php';
+	require_once GB_PATH.'/models/Record.class.php';
+	require_once GB_PATH.'/models/Report.class.php';
+	require_once GB_PATH.'/models/Voucher.class.php';
 
-	// models
-	require_once GB_PATH.'/models/groupBuyingDeal.class.php';
-	require_once GB_PATH.'/models/groupBuyingAccount.class.php';
-	require_once GB_PATH.'/models/groupBuyingCart.class.php';
-	require_once GB_PATH.'/models/groupBuyingGift.class.php';
-	require_once GB_PATH.'/models/groupBuyingMerchant.class.php';
-	require_once GB_PATH.'/models/groupBuyingNotification.class.php';
-	require_once GB_PATH.'/models/groupBuyingPayment.class.php';
-	require_once GB_PATH.'/models/groupBuyingPurchase.class.php';
-	require_once GB_PATH.'/models/groupBuyingReport.class.php';
-	require_once GB_PATH.'/models/groupBuyingRecord.class.php';
-	require_once GB_PATH.'/models/groupBuyingVoucher.class.php';
+	/////////////////
+	// controllers //
+	/////////////////
 
-	// controllers
-	require_once GB_PATH.'/controllers/groupBuyingAccounts.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingAffiliates.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingCarts.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingCheckouts.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingDeals.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingGifts.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingMerchants.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingNotifications.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingPayments.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingPurchases.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingReports.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingRecords.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingShipping.class.php'; // v. 3.4
-	require_once GB_PATH.'/controllers/groupBuyingTax.class.php'; // v. 3.4
-	require_once GB_PATH.'/controllers/groupBuyingUI.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingUpdateCheck.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingUpgrades.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingVouchers.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingAdminPurchases.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingAddons.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingFeeds.class.php';
-	require_once GB_PATH.'/controllers/groupBuyingHelp.class.php'; // v. 3.4
-	require_once GB_PATH.'/controllers/groupBuyingDestroyer.class.php'; // v. 3.9
-	require_once GB_PATH.'/controllers/groupBuyingAPI.class.php'; // v. 4.1
+	// accounts
+	require_once GB_PATH.'/controllers/accounts/Accounts.class.php';
+	require_once GB_PATH.'/controllers/accounts/Accounts_Checkout.class.php';
+	require_once GB_PATH.'/controllers/accounts/Accounts_Edit_Profile.class.php';
+	require_once GB_PATH.'/controllers/accounts/Accounts_Login.class.php';
+	require_once GB_PATH.'/controllers/accounts/Accounts_Registration.class.php';
+	require_once GB_PATH.'/controllers/accounts/Accounts_Retrieve_Password.class.php';
+	require_once GB_PATH.'/controllers/accounts/Accounts_Upgrade.class.php';
 
-	// payment processors
-	require_once GB_PATH.'/controllers/payment_processors/groupBuyingAccountBalance.class.php';
-	require_once GB_PATH.'/controllers/payment_processors/groupBuyingCredits.class.php';
-	require_once GB_PATH.'/controllers/payment_processors/groupBuyingHybridPaymentProcessor.class.php';
-	require_once GB_PATH.'/controllers/payment_processors/groupBuyingPaypal.class.php';
-	//require_once GB_PATH.'/controllers/payment_processors/groupBuyingPaypalHybrid.class.php';
-	require_once GB_PATH.'/controllers/payment_processors/groupBuyingPaypalWPP.class.php';
-	require_once GB_PATH.'/controllers/payment_processors/groupBuyingPaypalAP.class.php';
-	require_once GB_PATH.'/controllers/payment_processors/groupBuyingAuthorize.net.class.php';
-	require_once GB_PATH.'/controllers/payment_processors/groupBuyingNMI.net.class.php';
+	// admin
+	require_once GB_PATH.'/controllers/admin/Admin_Purchases.class.php';
+	require_once GB_PATH.'/controllers/admin/Destroyer.class.php'; // v. 3.9
+	require_once GB_PATH.'/controllers/admin/Help.class.php'; // v. 3.4
+
+	// affiliates
+	require_once GB_PATH.'/controllers/affiliates/Affiliates.class.php';
+
+	// carts
+	require_once GB_PATH.'/controllers/carts/Carts.class.php';
+
+	// checkouts
+	require_once GB_PATH.'/controllers/checkouts/Checkouts.class.php';
+
+	// deals
+	require_once GB_PATH.'/controllers/deals/Deals.class.php';
+	require_once GB_PATH.'/controllers/deals/Deals_Edit.class.php';
+	require_once GB_PATH.'/controllers/deals/Deals_Preview.class.php';
+	require_once GB_PATH.'/controllers/deals/Deals_Submit.class.php';
+	require_once GB_PATH.'/controllers/deals/Deals_Upgrade.class.php';
+
+	// dev
+	require_once GB_PATH.'/controllers/developer/Dev_Logs.class.php'; // v. 4.6
+
+	// feeds
+	require_once GB_PATH.'/controllers/feeds/Feeds.class.php';
+
+	// gifts
+	// require_once GB_PATH.'/controllers/Gifts.class.php'; // Made an add-on in 4.6
+
+	// merchants
+	require_once GB_PATH.'/controllers/merchants/Merchants.class.php';
+	require_once GB_PATH.'/controllers/merchants/Merchants_Dashboard.class.php';
+	require_once GB_PATH.'/controllers/merchants/Merchants_Edit.class.php';
+	require_once GB_PATH.'/controllers/merchants/Merchants_Registration.class.php';
+	require_once GB_PATH.'/controllers/merchants/Merchants_Upgrade.class.php';
+	require_once GB_PATH.'/controllers/merchants/Merchants_Voucher_Claim.class.php';
+
+	// notifications
+	require_once GB_PATH.'/controllers/notifications/Notifications.class.php';
+
+	// payments
+	require_once GB_PATH.'/controllers/payments/Payments.class.php';
+
+	// purchases
+	require_once GB_PATH.'/controllers/purchases/Purchases.class.php';
+
+	// reports
+	require_once GB_PATH.'/controllers/reports/Reports.class.php';
+
+	// records
+	require_once GB_PATH.'/controllers/records/Records.class.php';
+	require_once GB_PATH.'/controllers/records/Records_Upgrade.class.php';
+
+	// shipping
+	require_once GB_PATH.'/controllers/shipping/Shipping.class.php'; // v. 3.4
+
+	// tax
+	require_once GB_PATH.'/controllers/tax/Tax.class.php'; // v. 3.4
+
+	// ui
+	require_once GB_PATH.'/controllers/Group_Buying_UI.class.php';
+
+	// updates
+	require_once GB_PATH.'/controllers/updates/Update_Check.class.php';
+
+	// upgrades
+	require_once GB_PATH.'/controllers/upgrades/Upgrades.class.php';
+
+	// vouchers
+	require_once GB_PATH.'/controllers/vouchers/Vouchers.class.php';
+
+	// widgets
+	require_once GB_PATH.'/controllers/widgets/Widgets.class.php';
+
+	// add-ons
+	require_once GB_PATH.'/add-ons/Addons.class.php';
+
+	////////////////////////
+	// payment processors //
+	////////////////////////
+
+	// balance
+	require_once GB_PATH.'/controllers/payment-processing/payment-processors/Account_Balance_Payments.class.php';
+	require_once GB_PATH.'/controllers/payment-processing/payment-processors/Affiliate_Credit_Payments.class.php';
+	// offsite
+	require_once GB_PATH.'/controllers/payment-processing/payment-processors/Paypal.class.php';
+	require_once GB_PATH.'/controllers/payment-processing/payment-processors/Paypal_AP.class.php';
+	// credit cards
+	require_once GB_PATH.'/controllers/payment-processing/payment-processors/Paypal_WPP.class.php';
+	require_once GB_PATH.'/controllers/payment-processing/payment-processors/Authorize_Net.class.php';
+	require_once GB_PATH.'/controllers/payment-processing/payment-processors/NMI.class.php';
 	do_action( 'gb_register_processors' );
 
-	// template tags
-	require_once GB_PATH.'/template_tags/account.php';
-	require_once GB_PATH.'/template_tags/affiliate.php';
-	require_once GB_PATH.'/template_tags/cart.php';
-	require_once GB_PATH.'/template_tags/checkout.php';
-	require_once GB_PATH.'/template_tags/deals.php';
-	require_once GB_PATH.'/template_tags/deprecated.php';
-	require_once GB_PATH.'/template_tags/forms.php';
-	require_once GB_PATH.'/template_tags/location.php';
-	require_once GB_PATH.'/template_tags/merchant.php';
-	require_once GB_PATH.'/template_tags/payment.php';
-	require_once GB_PATH.'/template_tags/reports.php';
-	require_once GB_PATH.'/template_tags/ui.php';
-	require_once GB_PATH.'/template_tags/utility.php';
-	require_once GB_PATH.'/template_tags/voucher.php';
-	require_once GB_PATH.'/template_tags/gifts.php';
+	///////////////////
+	// template tags //
+	///////////////////
 
-	// router plugin dependency
-	require_once GB_PATH.'/controllers/syndication-service/group-buying-aggregator.php';
+	require_once GB_PATH.'/template-tags/account.php';
+	require_once GB_PATH.'/template-tags/affiliate.php';
+	require_once GB_PATH.'/template-tags/cart.php';
+	require_once GB_PATH.'/template-tags/checkout.php';
+	require_once GB_PATH.'/template-tags/deals.php';
+	require_once GB_PATH.'/template-tags/deprecated.php';
+	require_once GB_PATH.'/template-tags/forms.php';
+	require_once GB_PATH.'/template-tags/location.php';
+	require_once GB_PATH.'/template-tags/merchant.php';
+	require_once GB_PATH.'/template-tags/payment.php';
+	require_once GB_PATH.'/template-tags/reports.php';
+	require_once GB_PATH.'/template-tags/ui.php';
+	require_once GB_PATH.'/template-tags/utility.php';
+	require_once GB_PATH.'/template-tags/voucher.php';
+	// require_once GB_PATH.'/template-tags/gifts.php'; // Made an add-on in 4.6
 
-	// initialize objects
+	//////////////////////////
+	// syndication service //
+	//////////////////////////
+
+	// require_once GB_PATH.'/controllers/syndication-service/group-buying-aggregator.php'; // Made an add-on in 4.6
+
+	////////////
+	// admin //
+	////////////
+
+	require_once GB_PATH.'/controllers/admin/tables/Accounts_Table.class.php';
+	require_once GB_PATH.'/controllers/admin/tables/Gifts_Table.class.php';
+	require_once GB_PATH.'/controllers/admin/tables/Notifications_Table.class.php';
+	require_once GB_PATH.'/controllers/admin/tables/Payments_Table.class.php';
+	require_once GB_PATH.'/controllers/admin/tables/Purchases_Table.class.php';
+	require_once GB_PATH.'/controllers/admin/tables/Records_Table.class.php';
+	require_once GB_PATH.'/controllers/admin/tables/Vouchers_Table.class.php';
+
+
+	/////////////////////////
+	// initialize objects //
+	/////////////////////////
+
+
+	// development classes load last
+	Group_Buying_Record::init();
+	Group_Buying_Records::init();
+	Group_Buying_Dev_Logs::init();
+
 	// models
 	Group_Buying_Post_Type::init(); // initialize query caching
 	Group_Buying_Deal::init();
 	Group_Buying_Account::init();
 	Group_Buying_Cart::init();
-	Group_Buying_Gift::init();
+	// Group_Buying_Gift::init();  // Made an add-on in 4.6
 	Group_Buying_Merchant::init();
 	Group_Buying_Notification::init();
 	Group_Buying_Payment::init();
 	Group_Buying_Purchase::init();
-	Group_Buying_Record::init();
-	//Group_Buying_Report::init();
+	// Group_Buying_Report::init(); // nothing to initiate
 	Group_Buying_Voucher::init();
 
 
@@ -175,19 +277,29 @@ function group_buying_load() {
 	Group_Buying_Update_Check::init();
 	Group_Buying_Controller::init();
 	Group_Buying_Deals::init();
+		Group_Buying_Deals_Submit::init();
+		Group_Buying_Deals_Preview::init();
 	Group_Buying_Accounts::init();
+		Group_Buying_Accounts_Login::init();
+		Group_Buying_Accounts_Registration::init();
+		Group_Buying_Accounts_Edit_Profile::init();
+		Group_Buying_Accounts_Retrieve_Password::init();
+		Group_Buying_Accounts_Checkout::init();
+	Group_Buying_Merchants::init();
+		Group_Buying_Merchants_Registration::init();
+		Group_Buying_Merchants_Edit::init();
+		Group_Buying_Merchants_Dashboard::init();
+		Group_Buying_Merchants_Voucher_Claim::init();
 	Group_Buying_Carts::init();
 	Group_Buying_Checkouts::init();
-	Group_Buying_Merchants::init();
 	Group_Buying_Notifications::init();
 	Group_Buying_Vouchers::init();
-	Group_Buying_Gifts::init();
+	// Group_Buying_Gifts::init(); // Made an add-on in 4.6
 	Group_Buying_Offsite_Processors::init();
 	Group_Buying_Payment_Processors::init();
 	Group_Buying_Purchases::init();
 	Group_Buying_Payments::init();
 	Group_Buying_Reports::init();
-	Group_Buying_Records::init();
 	Group_Buying_Core_Shipping::init();
 	Group_Buying_Core_Tax::init();
 	Group_Buying_UI::init();
@@ -198,7 +310,7 @@ function group_buying_load() {
 	Group_Buying_Feeds::init();
 	Group_Buying_Help::init();
 	Group_Buying_Destroy::init();
-	Group_Buying_API::init();
+	Group_Buying_Widgets::init();
 }
 
 

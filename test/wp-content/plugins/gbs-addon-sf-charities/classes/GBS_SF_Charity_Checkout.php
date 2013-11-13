@@ -12,7 +12,7 @@ class GB_SF_Charities_Checkout extends Group_Buying_Controller {
 		self::register_review_pane();
 		
 		// Process payment page
-		add_action( 'gb_checkout_action_'.Group_Buying_Checkouts::PAYMENT_PAGE, array( get_class(), 'process_payment_page' ), 5, 1 );
+		add_action( 'gb_checkout_action_'.Group_Buying_Checkouts::PAYMENT_PAGE, array( get_class(), 'process_payment_page' ), 11, 1 );
 
 		// Save charity record for purchase
 		add_action( 'completing_checkout', array( get_class(), 'save_charity' ), 10, 1 );

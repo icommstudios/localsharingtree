@@ -48,8 +48,8 @@
 			get_template_part( 'inc/navigation', 'header' );
 		} ?>
 
-	<div id="message_banner" class="container background_alt cloak">
-		<span class="close">X</span><?php gb_display_messages(); ?>
+	<div id="trigger_fancybox_message_banner" class="container background_alt cloak">
+		<?php gb_display_messages(); ?>
 	</div>
 
 	<div id="wrapper" class="clearfix">

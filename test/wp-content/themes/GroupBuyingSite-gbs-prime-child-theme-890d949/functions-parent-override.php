@@ -6,8 +6,8 @@
  *
  */
 
-
 // Include Custom functions
+
 require_once('customfunctions/sf-additional-notifications/SF_AdditionalNotifications.class.php');
 require_once('customfunctions/sf-account-fields/SF_AccountFields.class.php');
 require_once('customfunctions/sf-merchant-fields/SF_merchantFields.class.php');
@@ -55,9 +55,27 @@ unset($fields['guest_purchase']);
 return $fields;
 }
 
+//Relace scripts
+add_action( 'wp_print_scripts', 'custom_gbs_scripts_changes', 50 );
+function custom_gbs_scripts_changes() {
+	wp_dequeue_script( 'gbs-jquery-template');
+	wp_deregister_script( 'gbs-jquery-template');
+}
+add_action( 'init', 'custom_gbs_theme_register_scripts' );
+function custom_gbs_theme_register_scripts() {
+	wp_register_script( 'custom-gbs-jquery-template', get_stylesheet_directory_uri().'/js/custom-jquery.template.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-tabs' ), gb_ptheme_current_version(), false );
+}
+add_action( 'wp_enqueue_scripts', 'custom_wp_enqueue_scripts' );
+function custom_wp_enqueue_scripts() {
+	wp_enqueue_script('custom-gbs-jquery-template');
+}
+
+
 //Custom footer scripts
 add_action('wp_footer', 'custom_footer_scripts');
 function custom_footer_scripts() {
+	//Message banner close X 
+	// (NOT USED NOW - Replaced with messages that appear in lighboxes - see: js/custom-jquery.template.js)
 	?>
     <script type="text/javascript">
 	/* After page is complete */
@@ -68,7 +86,44 @@ function custom_footer_scripts() {
 	});
 	</script>
     <?php	
+	//Add popup for requiring login before adding to cart
+	if ( !is_user_logged_in() ) { 
+	/*
+	?>
+    <script type="text/javascript">
+		//On click show lighbox for login
+		jQuery(window).load(function() {
+			jQuery("#trigger_fancybox_message_banner").fancybox({
+				'content': '<div class="fancybox_message_banner" style="display: block; !important">' + jQuery("#trigger_fancybox_message_banner").html() + '</div>',
+				'hideOnOverlayClick': true,
+				'hideOnContentClick': false,
+				'showCloseButton': true,
+				'autoDimensions': true,
+				'autoScale': true,
+				'overlayColor': '#000000',
+				'width': 700,
+				'height': 200,
+				'overlayOpacity': 0.8,
+				'padding': 0
+			});
+		});
+	</script>
+    <?php
+	*/
+	}
 }
+
+//Require Login before Adding to cart
+add_action( 'parse_request', 'custom_force_login_before_cart', 1, 1);
+function custom_force_login_before_cart(WP $wp) {
+	if ( !is_user_logged_in() ) {
+		if ( gb_on_cart_page() || gb_on_checkout_page() ) {
+			Group_Buying_Controller::set_message( gb__( 'In order to Purchase a Deal, You Must Register as a User, or Log In First.' ) );
+			Group_Buying_Controller::login_required();
+		}
+	}
+}
+
 
 //Change home from Subscription Landing
 remove_action( 'pre_gbs_head', 'gb_redirect_from_home' );
@@ -238,26 +293,113 @@ function custom_gb_voucher_preview_content( $content, $deal_id ) {
 	return $content;
 }
 
+//Add Admin option to Redeem voucher
+add_filter('gb_mngt_vouchers_columns', 'custom_gb_mngt_vouchers_columns', 10, 1);
+function custom_gb_mngt_vouchers_columns($columns) {
+	//Rebuild claimed column (keep existing functionality)
+	unset($columns['claimed']);
+	$columns['claimed_custom'] = gb__( 'Redeemed' );
+	return $columns;	
+}
+add_filter('gb_mngt_vouchers_column_claimed_custom', 'custom_gb_mngt_vouchers_column_claimed', 0, 1);
+function custom_gb_mngt_vouchers_column_claimed($item) {
+	$voucher = Group_Buying_Voucher::get_instance( $item->ID );
+	$claim_date = $voucher->get_claimed_date();
+	$status = '';
+	if ( $claim_date ) {
+		$status = '<p>' . mysql2date( get_option( 'date_format' ).' @ '.get_option( 'time_format' ), $claim_date ) . '</p>';
+		$status .= '<p><span id="'.$item->ID.'_unclaim_result"></span><a href="javascript:void(0)" class="gb_unclaim button disabled" id="'.$item->ID.'_unclaim" ref="'.$item->ID.'">'.gb__( 'Remove Redemption' ).'</a></p>';
+	} else {
+		//Add claim option
+		$status = '<p><span id="'.$item->ID.'_claim_result"></span><a href="javascript:void(0)" class="gb_claim button disabled" id="'.$item->ID.'_claim" ref="'.$item->ID.'">'.gb__( 'Mark as Redeemed' ).'</a></p>';
+	}
+	return $status;
+}
+add_action('admin_footer', 'custom_admin_footer_scripts');
+function custom_admin_footer_scripts() {
+	//Add claim ajax call (unclaim already exists in GBS)
+	?>
+    <script type="text/javascript" charset="utf-8">
+			jQuery(document).ready(function($){
+				jQuery(".gb_claim").on('click', function(event) {
+					event.preventDefault();
+						if(confirm("Are you sure you want to mark as Redeemed?")){
+							var $claim_button = $( this ),
+							claim_voucher_id = $claim_button.attr( 'ref' );
+							$( "#"+claim_voucher_id+"_claim" ).fadeOut('slow');
+							$.post( ajaxurl, { action: 'gb_mark_voucher', voucher_id: claim_voucher_id, mark_voucher: 1 },
+								function( data ) {
+										$( "#"+claim_voucher_id+"_claim_result" ).append( '<?php gb_e( "Voucher marked as Redeemed." ) ?>' ).fadeIn();
+									}
+								);
+						} else {
+							// nothing to do.
+						}
+				});
+			});
+		</script>
+    <?php	
+}
+
+// Cart remove on click - Add jquery functions
+add_action('wp_footer', 'cart_add_remove_item_onclick');
+function cart_add_remove_item_onclick() {
+	if ( gb_on_cart_page() ) {
+		?>
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$('#gb_cart .cart-remove input[type=checkbox]').change(function() {
+		  //Click the update button
+		  $('#gb_cart input[name=gb_cart_action-update]').click();
+		});
+	
+	});
+	
+	function removeCartItem(key) {
+		jQuery('#gb_cart #removekey_' + key + ' input').prop('checked', true);
+		jQuery('#gb_cart input[name=gb_cart_action-update]').click();
+		return false;
+	}
+	
+</script>      
+		<?php
+	}
+}
+
+//Change Cart line items - add Remove link
+add_filter('gb_cart_items', 'custom_cart_items', 10 , 2); 
+function custom_cart_items($items, $cart) {
+    
+	foreach ($items as $key => $item) {
+		$new_remove = '<span id="removekey_'.$key.'" style="display: none;">'.$items[$key]['remove'].'</span><a class="alt_button remove_button" href="#remove'.$key.'" onClick="removeCartItem(\''.$key.'\'); return false;">Remove</a>';
+		$items[$key]['remove'] = $new_remove;
+	}
+    return $items;
+}
+
 
 // Add Page number navigation
+function wp_pagination($this_query = null) {
+	global $wp_query;
+	if ( !$this_query ) {
+		$this_query = $wp_query;
+	}
+	$big = 12345678;
+	$page_format = paginate_links( array(
+		'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+		'format' => '?paged=%#%',
+		'current' => max( 1, get_query_var('paged') ),
+		'total' => $this_query->max_num_pages,
+		'type'  => 'array'
+	) );
+	if( is_array($page_format) ) {
+				$paged = ( get_query_var('paged') == 0 ) ? 1 : get_query_var('paged');
+				echo '<div class="pagination"><ul>';
+				echo '<li><span>'. $paged . ' of ' . $this_query->max_num_pages .'</span></li>';
+				foreach ( $page_format as $page ) {
+						echo "<li>$page</li>";
+				}
+			   echo '</ul></div>';
+	}
+}
 
-function wp_pagination() {
-global $wp_query;
-$big = 12345678;
-$page_format = paginate_links( array(
-    'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-    'format' => '?paged=%#%',
-    'current' => max( 1, get_query_var('paged') ),
-    'total' => $wp_query->max_num_pages,
-    'type'  => 'array'
-) );
-if( is_array($page_format) ) {
-            $paged = ( get_query_var('paged') == 0 ) ? 1 : get_query_var('paged');
-            echo '<div><ul>';
-            echo '<li><span>'. $paged . ' of ' . $wp_query->max_num_pages .'</span></li>';
-            foreach ( $page_format as $page ) {
-                    echo "<li>$page</li>";
-            }
-           echo '</ul></div>';
-}
-}

@@ -9,40 +9,41 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
  
 	class SF_Featured_Deals extends Group_Buying_Controller {
 		
-		public static $todays_deal_path;
+		//public static $todays_deal_path;
 		
 		public static function init() {
-			//self::get_instance();
 			
 			// Location field
 			add_action ( 'gb_location_edit_form_fields', array( get_class(), 'location_input_metabox' ), 11, 2 );
 			add_action ( 'edited_terms', array( get_class(), 'save_location_meta_data' ) );
 			
 			//Change latest deal
-			add_filter('get_gbs_latest_deal_link', array( get_class(), 'custom_get_gbs_latest_deal_link'), 999, 3);
+			add_filter( 'get_gbs_latest_deal_link', array( get_class(), 'custom_get_gbs_latest_deal_link'), 999, 3);
 			
 			//Change dropdown to add location link
 			add_filter( 'gb_list_locations_link', array( get_class(), 'custom_gb_list_locations_link'), 10, 2 );
 			
 			//Handle Locations (set defaults)
 			add_action('wp',  array( get_class(), 'default_location_handler'), 11);
+			add_action('template_redirect',  array( get_class(), 'redirect_featured_deal'), 0);
 			
 			// Callback to override todays deal url (bugfix, not correclty using the user's location)
-			self::$todays_deal_path = trailingslashit( get_option( Group_Buying_UI::TODAYSDEAL_PATH_OPTION, 'todays-deal' ) );
-			self::register_path_callback( self::$todays_deal_path, array( get_class(), 'todays_deal' ), Group_Buying_UI::TODAYSDEAL_PATH_OPTION );
+			//self::$todays_deal_path = trailingslashit( get_option( Group_Buying_UI::TODAYSDEAL_PATH_OPTION, 'todays-deal' ) );
+			//self::register_path_callback( self::$todays_deal_path, array( get_class(), 'todays_deal' ), Group_Buying_UI::TODAYSDEAL_PATH_OPTION );
 		}
 		
 		//Bugfix, send todays deal page to home page (same as todays deal)
-		public function todays_deal() {
-			$featured_deal = site_url('/'); //Send to home page / featured deal
-			$featured_deal = add_query_arg( array('featured' => 1), $featured_deal ); // See child theme functions for handling of ?featured=1
-			wp_redirect( $featured_deal );
-			exit();
+		public function redirect_featured_deal() {
+			if ( $_GET['featured'] == 1) {
+				$featured_deal_link = gb_get_latest_deal_link();
+				wp_redirect( $featured_deal_link );
+				exit();
+			}
 		}
 		
 		//Change location drop down links to include query arg
 		public static function custom_gb_list_locations_link($link, $slug) {
-			
+			$featured_deal = add_query_arg( array('location' => $slug), $link );
 			return $link;
 		}
 		

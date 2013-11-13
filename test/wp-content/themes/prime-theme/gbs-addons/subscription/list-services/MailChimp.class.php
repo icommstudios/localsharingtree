@@ -204,7 +204,9 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 		}
 		if ( null == $account || !is_a( $account, 'Group_Buying_Account' ) ) {
 			$user = get_user_by( 'email', $email );
-			$account = Group_Buying_Account::get_instance( $user->ID );
+			if ( is_a( $user, 'WP_User' ) ) {
+				$account = Group_Buying_Account::get_instance( $user->ID );
+			}
 		}
 
 		self::init_mc();
@@ -212,30 +214,31 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 		if ( is_array( $locations ) ) {
 			$groups = implode( ",", $locations );
 			foreach ( $locations as $location ) {
-				// Add the location just in case it's not their already.
+				// Add the location just in case it's not there already.
 				$response = self::$api->listInterestGroupAdd( self::$list_id, $location, self::$group_id );
 				//logs
 			}
 		} else {
 			$groups = $locations;
-			// Add the location just in case it's not their already.
+			// Add the location just in case it's not there already.
 			$response = self::$api->listInterestGroupAdd( self::$list_id, $locations, self::$group_id );
 		}
 
 		// default merge variables
 		$merge_vars = array(
-			'FNAME' => $account->get_name( 'first' ),
-			'LNAME' => $account->get_name( 'last' ),
 			'GROUPINGS' => array(
 				array( 'id' => self::$group_id, 'groups' => $groups ),
 
 			),
 			//'MC_LOCATION'=>array('LATITUDE'=>34.0413, 'LONGITUDE'=>-84.3473),
-
 		);
+		if ( $account ) {
+			$merge_vars['FNAME'] = $account->get_name( 'first' );
+			$merge_vars['LNAME'] = $account->get_name( 'last' );
+		}
 		$merge_vars = apply_filters( 'subscribe_mc_groupins', $merge_vars, self::$group_id );
 		//logs
-		if ( GBS_DEV ) error_log( "merge_vars: " . print_r( $merge_vars, true ) );
+		do_action( 'gb_log', 'subscribe - merge_vars', $merge_vars );
 
 		// subscribe the email already.
 		$retval = self::$api->listSubscribe(
@@ -250,9 +253,9 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 		);
 
 		//logs
-		if ( GBS_DEV ) error_log( "retval: " . print_r( $retval, true ) );
-		if ( GBS_DEV ) error_log( "error code: " . print_r( self::$api->errorCode, true ) );
-		if ( GBS_DEV ) error_log( "error: " . print_r( self::$api->errorMessage, true ) );
+		do_action( 'gb_log', 'subscribe - retval: ', $retval );
+		do_action( 'gb_log', 'subscribe - error code: ', self::$api->errorCode );
+		do_action( 'gb_log', 'subscribe - error: ', self::$api->errorMessage );
 		return $response;
 	}
 

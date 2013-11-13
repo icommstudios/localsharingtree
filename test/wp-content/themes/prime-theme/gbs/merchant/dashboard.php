@@ -1,14 +1,18 @@
 <?php
 
+$merchants_deal_ids = array();
+$account_merchant_id = gb_account_merchant_id();
+if ( $account_merchant_id ) {
+	$merchants_deal_ids = gb_get_merchants_deal_ids( $account_merchant_id );
+}
 // Pending deals
-	if ( gb_account_merchant_id() && function_exists('gb_deal_preview_available') ) {
+	if ( !empty( $merchants_deal_ids ) && function_exists('gb_deal_preview_available') ) {
 		$deals= null;
 		$args=array(
 			'post_type' => gb_get_deal_post_type(),
-			'post__in' => gb_get_merchants_deal_ids(gb_account_merchant_id()),
+			'post__in' => $merchants_deal_ids,
 			'post_status' => array('pending','draft','future','private'),
 			'posts_per_page' => -1, // return this many
-			
 		);
 		$deals = new WP_Query($args);
 		if ($deals->have_posts()) {
@@ -60,11 +64,12 @@
 	<?php
 	
 	// Purchase history
-		if ( gb_account_merchant_id() ) {
+		if ( $account_merchant_id && !empty( $merchants_deal_ids ) ) {
+
 			$deals= null;
 			$args=array(
 				'post_type' => gb_get_deal_post_type(),
-				'post__in' => gb_get_merchants_deal_ids(gb_account_merchant_id()),
+				'post__in' => $merchants_deal_ids,
 				'post_status' => 'publish',
 				'posts_per_page' => -1, // return this many
 				
@@ -111,10 +116,15 @@
 					</tbody>
 				</table><!-- End .purchase-table -->
 				<?php
-			} else {
-				echo '<p>'.gb__('No sales info.').'</p>';
 			}
-		} else {
+		}
+		elseif ( !is_array( $merchants_deal_ids ) ) {
+			echo '<p>'.gb__('No associated deals were found for this merchant.').'</p>';
+		}
+		elseif ( $account_merchant_id ) {
+			echo '<p>'.gb__('No sales info.').'</p>';
+		} 
+		else {
 			echo '<p>'.gb__('Restricted to Businesses.').'</p>';
 		}
 	?>

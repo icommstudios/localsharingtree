@@ -53,7 +53,7 @@ get_header(); ?>
 				<?php endwhile; ?>
                 
 				<?php if (  $deal_query->max_num_pages > 1 ) : ?>
-					<?php wp_pagination(); ?>
+					<?php wp_pagination($deal_query); ?>
 				<?php endif; ?>
                 
 				<?php wp_reset_query(); ?>

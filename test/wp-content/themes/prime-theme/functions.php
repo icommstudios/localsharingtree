@@ -5,8 +5,8 @@
  */
 define( 'GBS_THEME_NAME', 'Prime' );
 define( 'GBS_THEME_SLUG', 'prime_theme' ); // theme slug for updater
-define( 'GBS_THEME_VERSION', '2.4' );
-define( 'GB_THEME_COMPAT_VERSION', '3.8' );
+define( 'GBS_THEME_VERSION', '2.6.3' );
+define( 'GB_THEME_COMPAT_VERSION', '4.6.4.2' );
 define( 'GB_THEME_CHILD_THEME', 'https://github.com/GroupBuyingSite/gbs-prime-child-theme/zipball/master' );
 
 define( 'SS_BASE_URL', get_template_directory_uri() . '/' );
@@ -50,10 +50,10 @@ function gbs_theme_register_styles() {
 
 	if ( !is_admin() ) {
 		wp_register_style( 'template_style', get_template_directory_uri().'/style.css', null , gb_ptheme_current_version(), 'screen' );
-		wp_register_style( 'media_queries_style', get_template_directory_uri().'/style-media-queries.css', null, gb_ptheme_current_version() );
+		wp_register_style( 'media_queries_style', get_template_directory_uri().'/style-media-queries.css', array( 'template_style' ), gb_ptheme_current_version() );
 		// Register Child Theme Style automatically.
 		if ( TEMPLATEPATH != STYLESHEETPATH ) {
-			wp_register_style( 'gbs_child_style', get_bloginfo( 'stylesheet_url' ), null, gb_ptheme_current_version() );
+			wp_register_style( 'gbs_child_style', get_bloginfo( 'stylesheet_url' ), array( 'template_style', 'media_queries_style', 'custom_css' ), gb_ptheme_current_version() );
 		}
 	}
 
@@ -65,6 +65,7 @@ function gbs_theme_enqueue_styles() {
 	if ( !is_admin() ) {
 		wp_enqueue_style( 'template_style' );
 		wp_enqueue_style( 'media_queries_style' );
+		// Child Theme Stylesheet
 		if ( TEMPLATEPATH != STYLESHEETPATH  ) {
 			wp_enqueue_style( 'gbs_child_style' );
 		}
@@ -72,6 +73,17 @@ function gbs_theme_enqueue_styles() {
 
 }
 add_action( 'wp_enqueue_scripts', 'gbs_theme_enqueue_styles' );
+
+// add ie conditional html5 shim to header
+function add_ie_html5_shim () {
+	global $is_IE;
+	if ( $is_IE ) {
+		echo '<!--[if lt IE 9]>';
+		 echo '<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>';
+	 	echo '<![endif]-->';
+	}
+}
+add_action( 'wp_head', 'add_ie_html5_shim' );
 
 ///////////////////
 // Theme Scripts //

@@ -134,7 +134,7 @@ class GB_Router_Page extends GB_Router_Utility {
 	public function set_post_contents( $post ) {
 		global $pages;
 		$pages = array( $this->contents );
-		// TODO: add a facility for multi-page documents?
+		// FUTURE: add a facility for multi-page documents?
 	}
 
 	/**

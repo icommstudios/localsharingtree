@@ -78,6 +78,8 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		$fields['fine_print']['description'] = gb__('<span>Required:</span> Fine Print of This Deal and Voucher; Example: Can only be used towards lunch for a party of 2 or more.');
 		$fields['voucher_how_to_use']['description'] = gb__('<span>Required:</span> How to Redeem the Voucher; Example: Bring printed copy into restaurant and give to waitress before ordering to receive discount.');
 		
+		$fields['images']['description'] = gb__('Please Upload an Image That Represents Your Deal. For Example: A deal for lunch at a deli would have a picture of a deli sandwich. Every image is left to our discretion. If you do not upload an image or if your image is not approved, we will use a stock image.');
+		
 		$fields['agree_reviewed_information'] = array(
 			'weight' => 200,
 			'label' => sprintf(self::__( 'I have reviewed the information I submitted and hereby certify that the statements and information in this form are true and correct to the best of my knowledge and belief, and I authorize <a href="http://www.LocalSharingTree.com" target="_blank">www.LocalSharingTree.com</a> to post this deal and any attachments submitted with it on their site.' ), $link_terms),

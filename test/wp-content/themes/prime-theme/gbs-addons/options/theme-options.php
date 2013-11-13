@@ -82,7 +82,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			// self::$theme_color_settings_page = self::register_settings_page( 'theme_color_options', sprintf( self::__( '%s Styling' ), GBS_THEME_NAME ), self::__( 'Theme Styling' ), 10000, TRUE, 'theme' );
 			add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
 			add_action( self::DAILY_CRON_HOOK, array( get_class(), 'daily_clean_up' ) );
-			self::register_path_callback( self::$custom_css_path, array( get_class(), 'custom_css' ), self::CUSTOM_CSS_VAR );
+			add_action( 'gb_router_generate_routes', array( get_class(), 'register_customcss_callback' ), 10, 1 );
 			add_filter( 'gbs_no_ssl_redirect', array( get_class(), 'ssl_redirect' ), 10 );
 
 			global $pagenow;
@@ -126,9 +126,26 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			add_action( 'load-group-buying_page_group-buying/theme_color_options', array( get_class(), 'options_help_section_defaults' ), 50 );
 		}
 
+		/**
+		 * Register the path callback
+		 *
+		 * @static
+		 * @param GB_Router $router
+		 * @return void
+		 */
+		public static function register_customcss_callback( GB_Router $router ) {
+			$args = array(
+				'path' => self::$custom_css_path,
+				'title' => 'Custom CSS',
+				'page_callback' => array( get_class(), 'view_custom_css' )
+			);
+			$router->add_route( self::CUSTOM_CSS_VAR, $args );
+		}
+
 		private function __construct() {
 			// Flavor
-			add_action( 'parse_request', array( get_class(), 'flavor_css' ) );
+			add_action( 'init', array( get_class(), 'register_flavor_css' ), 101 );
+			add_action( 'wp_enqueue_scripts', array( get_class(), 'enqueue_flavor_css' ) );
 			// Footer Scripts
 			add_action( 'wp_footer', array( get_class(), 'gbs_footer_scripts' ), 100 );
 			// Location Flavor
@@ -171,7 +188,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 
 		public static function reset_customizer_options() {
 
-			if ( ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == self::CUSTOMIZER_RESET_QUARY_ARG ) || $start ) {
+			if ( ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == self::CUSTOMIZER_RESET_QUARY_ARG ) ) {
 				self::get_registrations( TRUE );
 				if ( !defined( 'DOING_AJAX' ) ) {
 					wp_redirect( remove_query_arg( 'action' ) );
@@ -365,6 +382,16 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		// Flavor CSS //
 		////////////////
 
+		/**
+		 *
+		 *
+		 * @static
+		 * @return bool Whether the current query is a css page
+		 */
+		public static function is_css_flavor_page() {
+			return GB_Router_Utility::is_on_page( self::CUSTOM_CSS_VAR );
+		}
+
 		public static function get_flavor_css() {
 			$output = '';
 			$imports = '';
@@ -393,7 +420,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 									$output .= $values['selectors']." { font-family: ".$fonts_value['font-family'].$important."; } \n";
 								} else {
 									// print all imports at the top
-									$imports .= "@import url('https://fonts.googleapis.com/css?family=".$fonts_value['font-name'].":r,b');\n";
+									$imports .= "\n@import url('https://fonts.googleapis.com/css?family=".$fonts_value['font-name'].":r,b');\n\n";
 									$output .= $values['selectors'].' {';
 									$output .= 'font-family: "'.$fonts_value['font-name'].'", '.$all_fonts['web-fonts']['font-family'].$important.';';
 									$output .= "} \n";
@@ -533,8 +560,18 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		// Enqueue //
 		/////////////
 
-		public function custom_css( $wp ) {
+		public function view_custom_css() {
 			header( 'Content-type: text/css' );
+			?>
+/**
+ * Custom CSS
+ * This css file is generated dynamically from the flavor options within your GBS theme, 
+ * any custom CSS added to the "Custom CSS" option within the backend or added by one of
+ * two actions: gb_custom_css & gb_custom_css_after.
+ * 
+ * The registered style slug for this file is 'custom_css'.
+ */
+			<?php
 			do_action( 'gb_custom_css' );
 			if ( function_exists( 'gb_custom_color_registrations' ) ) {
 				self::get_flavor_css();
@@ -544,8 +581,12 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			exit();
 		}
 
-		public static function flavor_css() {
-			wp_enqueue_style( 'custom_css', self::get_css_url(), array( 'template_style' ) );
+		public static function register_flavor_css() {
+			wp_register_style( 'custom_css', self::get_css_url(), array( 'template_style', 'media_queries_style' ) );
+		}
+
+		public static function enqueue_flavor_css() {
+			wp_enqueue_style( 'custom_css' );
 		}
 
 		/**
@@ -574,6 +615,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			$background_image_url = self::location_background_image( $term_id );
 			$background_image_repeat = self::location_background_image_repeat( $term_id );
 
+			$background_css = '';
 			if ( $background_color ) {
 				$background_css .= "body { background-color:$background_color; }";
 			}
@@ -643,9 +685,10 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 
 		public static function get_css_url() {
 			if ( self::using_permalinks() ) {
-				return home_url( trailingslashit( self::$custom_css_path ), is_ssl()?'https':NULL );
+				return trailingslashit( home_url( '', is_ssl()?'https':NULL ) ).trailingslashit( self::$custom_css_path );
 			} else {
-				return add_query_arg( array( self::CUSTOM_CSS_VAR => 1 ), home_url( '', is_ssl()?'https':NULL ) );
+				$router = GB_Router::get_instance();
+				return $router->get_url( self::CUSTOM_CSS_VAR ); // TODO SSL check
 			}
 		}
 
@@ -656,7 +699,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		 */
 		public static function ssl_redirect() {
 			global $wp;
-			if ( is_ssl() && isset( $wp->query_vars[self::CUSTOM_CSS_VAR] ) && $wp->query_vars[self::CUSTOM_CSS_VAR] ) {
+			if ( is_ssl() && self::is_css_flavor_page() ) {
 				return FALSE;
 			}
 			return TRUE;

@@ -134,7 +134,7 @@ class GB_Route extends GB_Router_Utility {
 	 */
 	public function url( $args = array() ) {
 		$args[self::QUERY_VAR] = $this->id;
-		return add_query_arg( $args, trailingslashit( home_url() ) );
+		return add_query_arg( $args, trailingslashit( home_url( '', is_ssl()?'https':NULL ) ) );
 	}
 
 	/**
@@ -144,6 +144,12 @@ class GB_Route extends GB_Router_Utility {
 	 */
 	public function rewrite_rules() {
 		$this->generate_rewrite();
+		// Potentially fix improper re-write paths,
+		// most of GBS doesn't add /?$ which creates 
+		// and issue with sub paths
+		if ( strpos( $this->path, '?$' ) === false ) {
+			$this->path = trailingslashit( $this->path ) . '?$';
+		}
 		return array(
 			$this->path => $this->wp_rewrite,
 		);

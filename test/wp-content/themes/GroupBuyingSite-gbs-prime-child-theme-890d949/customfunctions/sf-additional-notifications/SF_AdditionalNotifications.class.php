@@ -23,6 +23,7 @@ class SF_Additional_Notifications extends Group_Buying_Controller
 		
 		//Add hooks
 		add_action( 'register_merchant', array(get_class(), 'send_user_register_merchant'), 10, 1);
+		add_action( 'edit_merchant', array(get_class(), 'send_admin_merchant_edit'), 999, 1);
 		add_action( 'submit_deal', array(get_class(), 'send_user_submit_deal'), 10, 1);
 		add_action( 'transition_post_status', array( get_class(), 'handle_status_change'), 10, 3);
 	
@@ -36,6 +37,14 @@ class SF_Additional_Notifications extends Group_Buying_Controller
 					'shortcodes' => array( 'date', 'username', 'site_title', 'site_url', 'merchant_name' ),
 					'default_title' => self::__( 'Merchant Registered at ' . get_bloginfo( 'name' ) ),
 					'default_content' => self::default_merchant_registration_content(),
+					'default_disabled' => FALSE
+				);
+		$notifications['merchant_edited'] = array(
+					'name' => self::__( 'Merchant Edited' ),
+					'description' => self::__( 'Customize the notification email that is sent to Admins when a merchant edits their profile.' ),
+					'shortcodes' => array( 'date', 'username', 'site_title', 'site_url', 'merchant_name' ),
+					'default_title' => self::__( 'Merchant Profile Edited at ' . get_bloginfo( 'name' ) ),
+					'default_content' => 'A merchant has edited their profile and needs your review.',
 					'default_disabled' => FALSE
 				);
 		$notifications['merchant_deal_submitted'] = array(
@@ -278,6 +287,42 @@ class SF_Additional_Notifications extends Group_Buying_Controller
 			}
 		}
 		return '';
+	}
+	
+	
+	public static function send_admin_merchant_edit($merchant) {
+		global $wpdb;
+		
+		// Set status to draft (use wpdb query, because of issue with wp_update_post deleting meta)
+		$merchant_id = $merchant->get_ID();
+		$update_result = $wpdb->query(
+				"
+				UPDATE $wpdb->posts 
+				SET post_status = 'draft'
+				WHERE ID = ".$merchant_id."
+				"
+			);
+		
+		//$my_post['ID'] = $merchant->get_ID();
+		//$my_post['post_status'] = 'pending';
+		//wp_update_post( $my_post );
+		
+		// Send admin email
+		
+		//$to = get_option( 'admin_email' );
+		$to = 'daniel@studiofidelis.com';
+		
+		//Also get the user
+		$user = get_current_user_id();
+		if ( is_numeric( $user ) ) {
+			$user = get_userdata( $user );
+		}
+		
+		$newdata['user'] = $user;
+		$newdata['rand'] = mt_rand();
+		$newdata['merchant'] = $merchant; 
+		
+		Group_Buying_Notifications::send_notification( 'merchant_edited', $newdata, $to );
 	}
 	
 
