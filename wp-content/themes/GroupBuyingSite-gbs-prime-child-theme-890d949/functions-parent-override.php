@@ -13,6 +13,7 @@ require_once('customfunctions/sf-account-fields/SF_AccountFields.class.php');
 require_once('customfunctions/sf-merchant-fields/SF_merchantFields.class.php');
 require_once('customfunctions/sf-featured-deal/SF_Featured_Deals.class.php');
 require_once('customfunctions/sf-deal-fields/SF_DealFields.class.php');
+require_once('customfunctions/SF_CustomSearch.php');
 
 // Account Registration fields
 add_filter('gb_account_register_contact_info_fields', 'custom_fields_changes', 999);
@@ -379,6 +380,7 @@ function custom_cart_items($items, $cart) {
 
 
 // Add Page number navigation
+
 function wp_pagination($this_query = null) {
 	global $wp_query;
 	if ( !$this_query ) {
