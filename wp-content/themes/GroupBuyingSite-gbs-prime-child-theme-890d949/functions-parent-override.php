@@ -13,6 +13,8 @@ require_once('customfunctions/sf-account-fields/SF_AccountFields.class.php');
 require_once('customfunctions/sf-merchant-fields/SF_merchantFields.class.php');
 require_once('customfunctions/sf-featured-deal/SF_Featured_Deals.class.php');
 require_once('customfunctions/sf-deal-fields/SF_DealFields.class.php');
+require_once('customfunctions/sf-custom-csv-reports/SF_CustomCSVReports.class.php');
+require_once('customfunctions/sf-custom-csv-reports/SF_CustomSalesExport.class.php');
 require_once('customfunctions/SF_CustomSearch.php');
 
 // Account Registration fields
