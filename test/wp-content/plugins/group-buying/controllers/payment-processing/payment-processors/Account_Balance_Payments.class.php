@@ -75,7 +75,7 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 	public function filter_payment_request_total( $total, Group_Buying_Checkouts $checkout ) {
 		if ( isset( $checkout->cache['account_balance'] ) && $checkout->cache['account_balance'] ) {
 			$credit_to_use = $checkout->cache['account_balance'];
-			$credit_to_use_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+			$credit_to_use_value = number_format( floatval( $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() ) ), 2 );
 			return max( $total - $credit_to_use_value, 0 ); // no, you can't use credit to get free money
 		}
 		return $total;
@@ -305,31 +305,31 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 
 		}
 		if ( isset( $_POST['gb_credit_account_balance'] ) && $_POST['gb_credit_account_balance'] ) {
-			$credit_to_use = $_POST['gb_credit_account_balance'];
-			$credits_to_use_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
-			if ( !is_numeric( $credit_to_use ) ) {
+			$submitted_credit_to_use = $_POST['gb_credit_account_balance'];
+			if ( !is_numeric( $submitted_credit_to_use ) ) {
 				self::set_message( "Unknown value for Account Balance field", self::MESSAGE_STATUS_ERROR );
 				$checkout->mark_page_incomplete( Group_Buying_Checkouts::PAYMENT_PAGE );
 				return;
 			}
-			$credit_to_use = (float)$credit_to_use;
-			if ( $credit_to_use < 0.01 ) {
-				return;
-			}
+			// Account balances is a dollar amount,
+			// convert whats submitted to a credit value. 
+			$credit_to_use = number_format( floatval( $submitted_credit_to_use*self::get_credit_exchange_rate( $this->get_credit_type() ) ), 2 );
+
 			$account = Group_Buying_Account::get_instance();
 			$balance = $account->get_credit_balance( $this->get_credit_type() );
-			if ( $balance < $credits_to_use_value ) {
-				self::set_message( "You account balance is too low.", self::MESSAGE_STATUS_ERROR );
-				$checkout->mark_page_incomplete( Group_Buying_Checkouts::PAYMENT_PAGE );
-				return;
+			// Force the max credits possible.
+			if ( $balance < $credit_to_use ) {
+				$credit_to_use = $balance;
 			}
 			$cart = Group_Buying_Cart::get_instance();
 			$total = $cart->get_total();
-			if ( $credits_to_use_value > $total ) {
-				// If trying to use more credits than what's needed set to the max.
-				$credit_to_use = $total*self::get_credit_exchange_rate( $this->get_credit_type() );;
+			// If the submission is more than the total
+			if ( $submitted_credit_to_use > $total ) {
+				// Don't use any more credits than necessary.
+				// Convert back to the credit total to use.
+				$credit_to_use = $total*self::get_credit_exchange_rate( $this->get_credit_type() );
 			}
-			$checkout->cache['account_balance'] = $credit_to_use;
+			$checkout->cache['account_balance'] = $credit_to_use; // force a formatted dollar amount just in case.
 		}
 	}
 

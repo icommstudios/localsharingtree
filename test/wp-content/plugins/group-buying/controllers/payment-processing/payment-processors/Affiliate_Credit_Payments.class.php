@@ -290,28 +290,30 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 		}
 		if ( isset( $_POST['gb_credit_affiliate_credits'] ) && $_POST['gb_credit_affiliate_credits'] ) {
 			$credit_to_use = $_POST['gb_credit_affiliate_credits'];
-			$credits_to_use_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
 			if ( !is_numeric( $credit_to_use ) ) {
 				self::set_message( "Unknown value for Rewards field", self::MESSAGE_STATUS_ERROR );
 				$checkout->mark_page_incomplete( Group_Buying_Checkouts::PAYMENT_PAGE );
 				return;
 			}
+			// Credits are not fractions
 			$credit_to_use = (float)$credit_to_use;
 			if ( $credit_to_use < 0.01 ) {
 				return;
 			}
 			$account = Group_Buying_Account::get_instance();
 			$balance = $account->get_credit_balance( $this->get_credit_type() );
-			if ( $balance < $credits_to_use_value ) {
-				self::set_message( "You don't have that many reward points.", self::MESSAGE_STATUS_ERROR );
-				$checkout->mark_page_incomplete( Group_Buying_Checkouts::PAYMENT_PAGE );
-				return;
+			// Force the max credits possible.
+			if ( $balance < $credit_to_use ) {
+				$credit_to_use = $balance;
 			}
 			$cart = Group_Buying_Cart::get_instance();
 			$total = $cart->get_total();
-			if ( $credits_to_use_value > $total ) {
-				// If trying to use more credits than what's needed set to the max.
-				$credit_to_use = $total*self::get_credit_exchange_rate( $this->get_credit_type() );
+			// Calculate the value of the credits attempted to be used.
+			$calculated_credit_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+			// If the calculated value of the credits is more than the total
+			if ( $calculated_credit_value > $total ) {
+				// Don't use any more credits than necessary.
+				$credit_to_use = $total/self::get_credit_exchange_rate( $this->get_credit_type() );
 			}
 			$checkout->cache['affiliate_credits'] = $credit_to_use;
 		}

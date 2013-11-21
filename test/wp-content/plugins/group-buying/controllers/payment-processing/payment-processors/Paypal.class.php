@@ -358,8 +358,8 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 				$deal_info[$item['deal_id']][] = $item;
 			}
 		}
+		$shipping_address = array();
 		if ( isset( $checkout->cache['shipping'] ) ) {
-			$shipping_address = array();
 			$shipping_address['first_name'] = $checkout->cache['shipping']['first_name'];
 			$shipping_address['last_name'] = $checkout->cache['shipping']['last_name'];
 			$shipping_address['street'] = $checkout->cache['shipping']['street'];

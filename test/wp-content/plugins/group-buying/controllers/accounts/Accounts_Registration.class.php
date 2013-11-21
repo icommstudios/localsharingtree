@@ -77,7 +77,6 @@ class Group_Buying_Accounts_Registration extends Group_Buying_Controller {
 		$registration_page = self::get_instance();
 		if ( isset( $_POST['gb_account_action'] ) && $_POST['gb_account_action'] == self::FORM_ACTION ) {
 			$registration_page->process_form_submission();
-			return;
 		}
 		// View template
 		$registration_page->view_registration_form();

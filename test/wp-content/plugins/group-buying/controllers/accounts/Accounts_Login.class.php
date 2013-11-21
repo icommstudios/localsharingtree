@@ -17,7 +17,7 @@ class Group_Buying_Accounts_Login extends Group_Buying_Accounts {
 		add_action( 'wp_login_failed', array( get_class(), 'login_failed' ), 10, 1 );
 
 		// wp-login.php
-		add_action( 'wp_loaded', array( get_class(), 'redirect_away_from_login' ) );
+		add_action( 'init', array( get_class(), 'redirect_away_from_login' ) );
 
 		// Replace WP Login URIs
 		add_filter( 'login_url', array( get_class(), 'login_url' ), 10, 2 );
@@ -246,6 +246,10 @@ class Group_Buying_Accounts_Login extends Group_Buying_Accounts {
 	 */
 	public function redirect_away_from_login() {
 		global $pagenow;
+
+		// check for password protected content
+		if ( isset( $_GET['action'] ) && isset( $_POST['post_password'] ) && $_GET['action'] == 'postpass' )
+			return;
 
 		// check if it's part of a flash upload.
 		if ( isset( $_POST ) && !empty( $_POST['_wpnonce'] ) )

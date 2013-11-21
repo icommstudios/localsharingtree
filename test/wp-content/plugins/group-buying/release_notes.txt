@@ -24,6 +24,13 @@ Developer info
 
 4.6.3.1 - Better Records conversion, fix for voucher filtering and fix force login issues.
 
+4.6.4 - New function gb_user_has_voucher and allow for errors to not be logged, SSL update for forcing https:// on checkout, SSL optimizations.
+
+4.6.4.1 - WordPress 3.7 compatibility update for redirecting away from wp-login.php and password protected content submissions.
+
+4.6.5 - Registration page showing blank content under certain circumstances.
+
+
 Version: 4.5
 ------------
 

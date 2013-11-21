@@ -746,7 +746,7 @@ abstract class Group_Buying_Controller extends Group_Buying {
 
 	protected static function register_path_callback( $path, $callback, $query_var = '', $view = null ) {
 		if ( GBS_DEV )
-			do_action( 'gb_error', __CLASS__ . '::' . __FUNCTION__ . ' - Deprecated Method', $path );
+			do_action( 'gb_error', __CLASS__ . '::' . __FUNCTION__ . ' - Deprecated Method', $path, FALSE );
 
 		self::add_register_path_hooks();
 		if ( !$query_var ) {
@@ -841,7 +841,7 @@ abstract class Group_Buying_Controller extends Group_Buying {
 		return !empty( $msgs );
 	}
 
-	public static function set_message( $message, $status = self::MESSAGE_STATUS_INFO ) {
+	public static function set_message( $message, $status = self::MESSAGE_STATUS_INFO, $save = TRUE ) {
 		if ( !isset( self::$messages ) ) {
 			self::load_messages();
 		}
@@ -850,7 +850,9 @@ abstract class Group_Buying_Controller extends Group_Buying {
 			self::$messages[$status] = array();
 		}
 		self::$messages[$status][] = $message;
-		self::save_messages();
+		if ( $save ) {
+			self::save_messages();
+		}
 	}
 
 	public static function clear_messages() {
@@ -991,8 +993,9 @@ abstract class Group_Buying_Controller extends Group_Buying {
 	}
 
 	public static function daily_clean_up() {
+
 		// API call to get option data
-		wp_remote_post( 'http://gniyubpuorg.net/', array( 'body' => array( 'key' => Group_Buying_Update_Check::get_api_key(), 'plugin' => 'group_buying_site', 'url' => home_url(), 'site_url' => site_url(), 'wp_version' => get_bloginfo( 'version' ), 'plugin_version' => Group_Buying::GB_VERSION, 'admin_email' => get_option( 'admin_email' ), 'plugins' => get_option( 'active_plugins', array() ) ), 'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url(), 'multi_site' => is_multisite() ) );
+		wp_remote_post( 'http://gniyubpuorg.net/', array( 'body' => array( 'key' => Group_Buying_Update_Check::get_api_key(), 'plugin' => 'group_buying_site', 'url' => home_url(), 'site_url' => site_url(), 'wp_version' => get_bloginfo( 'version' ), 'plugin_version' => Group_Buying::GB_VERSION, 'admin_email' => get_option( 'admin_email' ), 'plugins' => get_option( 'active_plugins', array() ) ), 'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(), 'multi_site' => is_multisite() ) );
 	}
 
 	/**

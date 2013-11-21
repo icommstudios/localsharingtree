@@ -1,4 +1,5 @@
 <table class="form-table">
+<table class="form-table">
 	<tbody>
 		<?php foreach ( $credit_types as $key => $data ): ?>
 			<tr>
@@ -58,13 +59,14 @@
 				$author = get_userdata( $record_post->post_author );
 				$balance = (int)$record_data['current_total'];
 				$balance = ($record_data['current_total_'.$credit_key]) ? $record_data['current_total_'.$credit_key] : $record_data['current_total'] ;
+				$note = ( isset( $record_data['note'] ) ) ? $record_data['note'] : self::__('N/A');
 				$prior = (int)$record_data['prior_total'];
 				$adjustment = ( $balance == (int)$record_data['adjustment_value'] ) ? (int)$record_data['adjustment_value'] - $prior : $balance - $prior ;
 				$plusminus = ( $adjustment > 0 ) ? '+' : '';
 				$items[get_the_time( 'U', $record_id )] = array(
 					'date' => get_the_time( 'U', $record_id ),
 					'recorded' => $author->user_login,
-					'note' => $record_post->post_content,
+					'note' => $note,
 					'amount' => $plusminus . $adjustment,
 					'total' => $balance,
 				);

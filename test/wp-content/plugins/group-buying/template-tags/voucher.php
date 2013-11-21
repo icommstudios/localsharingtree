@@ -385,6 +385,36 @@ function gb_is_voucher_claimed( $voucher_id = 0 ) {
 	return apply_filters( 'gb_has_voucher_claimed', $return, $voucher_id );
 }
 
+/**
+ * Confirm the user has this voucher
+ * @param  integer $deal_id 
+ * @param  integer $user_id 
+ * @return bool           
+ */
+function gb_user_has_voucher( $deal_id = 0, $user_id = 0, $all_statuses = FALSE ) {
+	if ( !$deal_id ) {
+		global $post;
+		$deal_id = $post->ID;
+	}
+	if ( !$user_id ) {
+		$user_id = get_current_user_id();
+	}
+	$vouchers = Group_Buying_Voucher::get_users_vouchers( $user_id );
+	if ( !empty( $vouchers ) ) {
+		$deal_ids = array();
+		foreach ( $vouchers as $voucher ) {
+			if ( $voucher->is_active() || $all_statuses ) {
+				$deal = $voucher->get_deal();
+				if ( !is_a( $deal, 'Group_Buying_Deal' ) ) {
+					continue;
+				}
+				$deal_ids[] = $deal->get_id();
+			}
+		}
+	}
+	return in_array( $deal_id, $deal_ids );
+}
+
 ///////////////////////
 // Content / Display //
 ///////////////////////
@@ -771,7 +801,3 @@ function gb_get_voucher_legal() {
 function gb_voucher_legal() {
 	echo apply_filters( 'gb_voucher_legal', gb_get_voucher_legal() );
 }
-
-
-
-

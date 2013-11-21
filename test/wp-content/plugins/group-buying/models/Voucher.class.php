@@ -70,7 +70,6 @@ class Group_Buying_Voucher extends Group_Buying_Post_Type {
 	 */
 	public static function filter_voucher_query( WP_Query $query ) {
 
-
 		if ( self::is_voucher_query( $query ) && // we only care if this is the query for vouchers
 			!is_admin() ) {
 
@@ -465,4 +464,44 @@ class Group_Buying_Voucher extends Group_Buying_Post_Type {
 		$vouchers = self::find_by_meta( self::POST_TYPE, array( self::$meta_keys['serial_number'] => $serial ) );
 		return $vouchers;
 	}
+	
+	public static function get_users_vouchers( $user_id = 0, $return_ids = FALSE ) {
+		if ( !$user_id ) {
+			$user_id = get_current_user_id();
+		}
+		$purchases = Group_Buying_Purchase::get_purchases( array(
+				'user' => $user_id,
+			) );
+		$args=array(
+			'post_type' => self::POST_TYPE,
+			'post_status' => 'any',
+			'posts_per_page' => -1,
+			'fields' => 'ids',
+			'meta_query' => array(
+				array(
+					'key' => self::$meta_keys['purchase_id'],
+					'value' => $purchases,
+					'compare' => 'IN',
+					'type' => 'NUMERIC',
+				)
+			)
+		);
+		$voucher_ids = get_posts( $args );
+		if ( $return_ids ) {
+			return $voucher_ids;
+		}
+		// return the empty array.
+		if ( empty( $voucher_ids ) ) {
+			return $voucher_ids;
+		}
+		$vouchers = array();
+		foreach ( $voucher_ids as $voucher_id ) {
+			$voucher = Group_Buying_Voucher::get_instance( $voucher_id );
+			if ( !is_a( $voucher, 'Group_Buying_Voucher' ) ) {
+				continue;
+			}
+			$vouchers[] = $voucher;
+		}
+		return $vouchers;
+	}	
 }

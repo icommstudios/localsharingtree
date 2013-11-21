@@ -93,12 +93,12 @@ class GB_Router extends GB_Router_Utility {
 		}
 	}
 
-	public function get_url( $route_id, $arguments = array() ) {
+	public function get_url( $route_id, $arguments = array(), $force_ssl = FALSE ) {
 		$route = $this->get_route( $route_id );
 		if ( !$route ) {
 			return home_url();
 		} else {
-			return $route->url( $arguments );
+			return $route->url( $arguments, $force_ssl );
 		}
 	}
 

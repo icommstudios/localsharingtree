@@ -227,11 +227,12 @@ class Group_Buying_Accounts extends Group_Buying_Controller {
 						break;
 					}
 					$account->set_credit_balance( $total, $key );
-					$data = $_POST;
+					$data = array();
+					$data['note'] = $_POST['account_credit_notes'][$key];
 					$data['adjustment_value'] = $value;
 					$data['current_total'] = $total;
 					$data['prior_total'] = $balance;
-					do_action( 'gb_new_record', $_POST['account_credit_notes'][$key], Group_Buying_Accounts::$record_type . '_' . $key, gb__( 'Credit Adjustment' ), get_current_user_id(), $account->get_ID(), $data );
+					do_action( 'gb_new_record', $data, Group_Buying_Accounts::$record_type . '_' . $key, gb__( 'Credit Adjustment' ), get_current_user_id(), $account->get_ID() );
 					do_action( 'gb_save_meta_box_gb_account_credits', $account, $post_id, $_POST );
 				}
 			}
@@ -538,7 +539,7 @@ class Group_Buying_Accounts extends Group_Buying_Controller {
 			'invalidkey' => self::__( 'Invalid Password Reset Key.' ),
 		);
 		if ( isset( $_GET['message'] ) && isset( $messages[$_GET['message']] ) ) {
-			self::set_message( $messages[$_GET['message']], self::MESSAGE_STATUS_ERROR );
+			self::set_message( $messages[$_GET['message']], self::MESSAGE_STATUS_INFO, FALSE );
 		}
 	}
 
