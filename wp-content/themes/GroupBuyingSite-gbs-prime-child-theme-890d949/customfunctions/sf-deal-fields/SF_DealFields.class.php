@@ -18,7 +18,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		add_action( 'save_post', array( get_class(), 'save_meta_boxes' ), 10, 2 );
 		
 		//Deal submission fields changes
-		add_filter('gb_deal_submission_fields', array( get_class(), 'custom_gb_deal_submission_fields'), 10, 1);
+		add_filter('gb_deal_submission_fields', array( get_class(), 'custom_gb_deal_submission_fields'), 10, 2);
 		add_action('submit_deal', array( get_class(), 'custom_submit_deal'), 10, 1);
 		
 		//Change voucher expiration date to expiration comments
@@ -41,7 +41,9 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 	}
 	
 	//Deal submission fields changes
-	public function custom_gb_deal_submission_fields( $fields ) {
+	public function custom_gb_deal_submission_fields( $fields, $deal ) {
+		
+		$deal_id = ($deal) ? $deal->get_ID() : '';
 		
 		//Remove voucher codes
 		unset( $fields['voucher_serial_numbers'] );
@@ -67,7 +69,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			'label' => self::__( 'Voucher Expiration Comments' ),
 			'type' => 'textarea',
 			'required' => FALSE,
-			'default' => $_POST[self::$meta_keys['voucher_expiration_comments']],
+			'default' => ($_POST[self::$meta_keys['voucher_expiration_comments']]) ? $_POST[self::$meta_keys['voucher_expiration_comments']] : self::get_field($deal_id, self::$meta_keys['voucher_expiration_comments']),
 			'description' => gb__('All Vouchers Expire 6 Months After Purchase Unless Otherwise Specified Here.')
 		);
 		
@@ -86,7 +88,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			'type' => 'checkbox',
 			'required' => TRUE,
 			'value' => 'yes',
-			'default' => $_POST[self::$meta_keys['agree_reviewed_information']],
+			'default' => ($_POST[self::$meta_keys['agree_reviewed_information']]) ? $_POST[self::$meta_keys['agree_reviewed_information']] : self::get_field($deal_id, self::$meta_keys['agree_reviewed_information']),
 		);
 		
 		$link_terms = site_url('/merchant-account-terms-and-conditions/');
@@ -96,7 +98,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			'type' => 'checkbox',
 			'required' => TRUE,
 			'value' => 'yes',
-			'default' => $_POST[self::$meta_keys['agree_terms']],
+			'default' =>($_POST[self::$meta_keys['agree_terms']]) ? $_POST[self::$meta_keys['agree_terms']] : self::get_field($deal_id, self::$meta_keys['agree_terms']),
 		);
 		
 		return $fields;

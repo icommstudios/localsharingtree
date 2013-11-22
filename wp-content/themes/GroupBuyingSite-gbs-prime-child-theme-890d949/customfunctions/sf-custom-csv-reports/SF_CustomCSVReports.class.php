@@ -18,12 +18,6 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 			wp_enqueue_style( 'group-buying-admin-deal', GB_URL . '/resources/css/deal.admin.gbs.css' );
 		}
 		
-		//Add Menu
-		//add_action('admin_menu', array( get_class(), 'gbs_sfsalesexport_admin_actions' ) );  
-		
-		//Add action for download interupt
-		//add_action('wp_loaded', array( get_class(), 'do_sales_export_download') );
-		
 		// Changes to GBS Purchase Reports
 		add_filter('set_deal_purchase_report_data_column', array( get_class(),'purchase_report_data_column'), 999, 1);
 		add_filter('set_deal_purchase_report_data_records', array( get_class(),'purchase_report_data_records'), 999, 1);
@@ -241,39 +235,7 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 	}
 	
 	public function deal_export($deal_id) {
-			$columns = array(
-					'deal_name' => 'Deal Name',
-					'description' => 'Deal Description',
-					'expiration' => 'Deal Expiration',
-					'price' => 'Deal Price',
-					'shipping_cost' => 'Deal Shipping Cost',
-					'locations' => 'Locations',
-					'min_purchases' => 'Minimum Purchases',
-					'max_purchases' => 'Max Purchases',
-					'max_purchases_per_user' => 'Max Purchases Per User',
-					'value' => 'Value',
-					'savings' => 'Savings',
-					'highlights_' => 'Highlights',
-					'fine_print' => 'Fine Print',
-					'voucher_expiration' => 'Voucher Expiration Comments',
-					'how_to_use' => 'How to Use',
-					'redeem_locations' => 'Redemption Locations',
-					'agree_terms' => 'Agree to Terms',
-					//Merchant fields
-					'merchant_name' => 'Merchant Name',
-					'merchant_description' => 'Merchant Description',
-					'merchant_contact' => 'Contact Name',
-					'merchant_mailing_address' => 'Mailing Address',
-					'merchant_phone' => 'Contact Phone',
-					'merchant_email' => 'Contact Email',
-					'merchant_website' => 'Website',
-					'merchant_facebook' => 'Facebook',
-					'merchant_twitter' => 'Twitter',
-					'merchant_checks_payable' => 'Checks Payable To',
-					'merchant_ein' => 'EIN',
-					'merchant_business_address' => 'Business Address',
-					'merchant_agree_terms' => 'Agree to Merchnat Terms',
-				);
+			
 		$fields = array();
 		$deal = Group_Buying_Deal::get_instance($deal_id);
 		
@@ -285,7 +247,7 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 			$title = $deal->get_title();
 			$content = apply_filters( 'the_content', $post_obj->post_content );
 			$expiration = date( 'm/d/Y G:i', $deal->get_expiration_date() );
-			$deal_locations = wp_get_object_terms( $deal->get_ID(), Group_Buying_Deal::LOCATION_TAXONOMY, array( 'fields' => 'ids' ) );
+			$deal_locations = implode(' | ', wp_get_object_terms( $deal->get_ID(), Group_Buying_Deal::LOCATION_TAXONOMY, array( 'fields' => 'names' ) ));
 			$price = $deal->get_price();
 			$shipping = $deal->get_shipping_meta();
 			$min = $deal->get_min_purchases();
@@ -320,6 +282,7 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 				'default' => $title,
 				'description' => gb__('<span>Required:</span> Advertised title of deal.')
 			);
+			
 	
 			$fields['description'] = array(
 				'weight' => 2,
@@ -515,10 +478,26 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 				'default' => $voucher_serial_numbers,
 				'description' => gb__('<span>Optional:</span> Enter a comma separated list to use your own custom codes for this deal instead of them being dynamically generated. The amount of codes entered should not be less than that of the maximum purchases set above.')
 			);
+			
+			
 	
 			$fields = apply_filters( 'gb_deal_submission_fields', $fields, $deal );
 			$fields = apply_filters( 'gb_edit_deal_submission_fields', $fields, $deal );
 			uasort( $fields, array( get_class(), 'sort_by_weight' ) );
+			
+			//Remove unwanted fields
+			unset($fields['images']);
+			unset($fields['thumbnail']);
+			unset($fields['voucher_details']);
+			
+			//Change field labels
+			//Change field lables
+			if ( isset($fields['agree_terms']) ) {
+				$fields['agree_terms']['label'] = 'Deal Submission Merchant Terms Agreement';
+			}
+			if ( isset($fields['agree_reviewed_information']) ) {
+				$fields['agree_reviewed_information']['label'] = 'Deal Submission Reviewed Information Agreement';
+			}
 			
 			//MERCHANT FIELDS
 			//from Group_Buying_Merchants::merchant_contact_info_fields()
@@ -543,7 +522,8 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 				'required' => TRUE,
 				'default' => ''
 			);
-	
+			
+			/*
 			$merchant_fields['merchant_thumbnail'] = array(
 				'weight' => 7,
 				'label' => self::__( 'Merchant Image' ),
@@ -552,6 +532,7 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 				'default' => '',
 				'description' => gb__('<span>Optional:</span> Featured image for the merchant.')
 			);
+			*/
 	
 			$merchant_fields['name'] = array(
 				'weight' => 11,
@@ -625,13 +606,36 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 			$merchant_fields = apply_filters( 'gb_merchant_register_contact_info_fields', $merchant_fields, $merchant );
 			uasort( $merchant_fields, array( get_class(), 'sort_by_weight' ) );
 			
+			//Remove unwanted fields
+			//unset($merchant_fields['label_mailing_address']);
+			//unset($merchant_fields['label_business_address']);
+			unset($merchant_fields['copy_address']);
+			
+			//Change field lables
+			if ( isset($merchant_fields['agree_terms']) ) {
+				$merchant_fields['agree_terms']['label'] = 'Merchant Account Terms Agreement';
+			}
+			if ( isset($merchant_fields['label_mailing_address']) ) {
+				$merchant_fields['label_mailing_address']['label'] = 'Merchant Mailing Address';
+			}
+			if ( isset($merchant_fields['label_business_address']) ) {
+				$merchant_fields['label_business_address']['label'] = 'Merchant Business Address';
+			}
+			
 			//Merge merchant_fields with deal fields
+			foreach ($merchant_fields as $mer_key => $mer_field) {
+				//prepend to field key so we don't accidently overwrite anything
+				$merchant_fields['mer_'.$mer_key] = $mer_field;
+				unset($merchant_fields[$mer_key]);
+			}
 			$fields = array_merge($fields, $merchant_fields);
+			
 		}
 		//Do we have anything to export?
 		if ( !empty($fields) ) {
 			//$columns = array_keys($fields);
 			$records = array();
+			$columns = array();
 			foreach ($fields as $field_key => $field) {
 				//Get the field columns
 				$columns[$field_key] = $field['label'];
@@ -660,7 +664,6 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 		// Records
 		foreach ( $records as $record ) { // Loop through each record
 			
-			
 			foreach ( $columns as $key => $label ) { // order the records based on the columns
 				$val = str_replace( '"', '""', $record[$key] );
 				$val = nl2br($val);
@@ -668,7 +671,6 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 				
 				$records_array[] = '"'.$val.'"';
 			}
-			
 			
 			$csv .= implode( ",", $records_array )."\n";
 			$records_array = null; // reset
