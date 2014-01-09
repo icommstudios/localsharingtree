@@ -641,7 +641,6 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 	
 		
 		// set headers
-		
 		header( "Pragma: public" );
 		header( "Expires: 0" );
 		header( "Cache-Control: private" );
@@ -665,11 +664,11 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 		}
 		.label {
 			color: #444;
-			font-size: 12px;
+			font-size: 16px;
 		}
 		.label_big {
 			color: #222;
-			font-size: 14px;
+			font-size: 18px;
 		}
 		h1, h2, h3, h4, h5 {
 			color: #444;
