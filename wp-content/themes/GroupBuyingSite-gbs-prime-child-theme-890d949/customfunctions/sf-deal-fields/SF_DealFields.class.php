@@ -25,6 +25,9 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		add_filter('gb_voucher_expiration_date', array( get_class(), 'custom_gb_voucher_expiration_date'), 10, 2);
 		add_filter('gb_get_voucher_expiration_date', array( get_class(), 'custom_gb_voucher_expiration_date'), 10, 2);
 		
+		//Change scripts for media uploader
+		add_action('wp_footer', array( get_class(), 'custom_media_uploader_scripts'));
+		
 	}
 	
 	public function custom_gb_voucher_expiration_date( $date, $voucher_id ) {
@@ -47,6 +50,17 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		
 		//Remove voucher codes
 		unset( $fields['voucher_serial_numbers'] );
+		
+		//Unset new media_uploader image
+		unset( $fields['images'] );
+		$fields['thumbnail'] = array(
+			'weight' => 3,
+			'label' => gb__( 'Deal Image' ),
+			'type' => 'file',
+			'required' => FALSE,
+			'default' => '',
+			'description' => gb__('<span>Optional:</span> Featured image for the deal.')
+		);
 		
 		//Add No expiration date checkbox option
 		$js_functions = '<script type="text/javascript">
@@ -80,7 +94,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		$fields['fine_print']['description'] = gb__('<span>Required:</span> Fine Print of This Deal and Voucher; Example: Can only be used towards lunch for a party of 2 or more.');
 		$fields['voucher_how_to_use']['description'] = gb__('<span>Required:</span> How to Redeem the Voucher; Example: Bring printed copy into restaurant and give to waitress before ordering to receive discount.');
 		
-		$fields['images']['description'] = gb__('Please Upload an Image That Represents Your Deal. For Example: A deal for lunch at a deli would have a picture of a deli sandwich. Every image is left to our discretion. If you do not upload an image or if your image is not approved, we will use a stock image.');
+		$fields['thumbnail']['description'] = gb__('Please Upload an Image That Represents Your Deal. For Example: A deal for lunch at a deli would have a picture of a deli sandwich. Every image is left to our discretion. If you do not upload an image or if your image is not approved, we will use a stock image.');
 		
 		$fields['agree_reviewed_information'] = array(
 			'weight' => 200,
@@ -111,6 +125,12 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			$deal->save_post_meta( array(
 				self::$meta_keys['voucher_expiration_comments'] => stripslashes($_POST['gb_deal_voucher_expiration_comments'])
 			));
+		}
+		
+		//Save thumbnail (replacing the new media_uploader)
+		if ( !empty( $_FILES['gb_deal_thumbnail'] ) ) {
+			// Set the uploaded field as an attachment
+			$deal->set_attachement( $_FILES, 'gb_deal_thumbnail' );
 		}
 	}
 
@@ -218,5 +238,60 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		return $value;
 	}
 	
+	
+	//Change media uploader scripts - use our custom one
+	public static function custom_media_uploader_scripts() {
+		?>
+        <script type="text/javascript">
+			///////////////////
+			// Media upload //
+			///////////////////
+			
+			// Uploading files
+			var new_media_uploader;
+			jQuery('.custom_upload_image_button').live('click', function( event ){
+				var button = jQuery( this );
+				// If the media uploader already exists, reopen it.
+				if ( new_media_uploader ) {
+				  new_media_uploader.open();
+				  return;
+				}
+				// Create the media uploader.
+				new_media_uploader = wp.media.frames.new_media_uploader = wp.media({
+					title: button.data( 'uploader-title' ),
+					// Tell the modal to show only images.
+					library: {
+						type: 'none',
+						query: false,
+						searchable: false
+					},
+					button: {
+						text: button.data( 'uploader-button-text' ),
+					},
+					multiple: button.data( 'uploader-allow-multiple' )
+				});
+		
+				// Create a callback when the uploader is called
+				new_media_uploader.on( 'select', function() {
+					var	selection = new_media_uploader.state().get('selection'),
+						input_name = button.data( 'input-name' ),
+						bucket = $( '#' + input_name + '-thumbnails');
+		
+					 selection.map( function( attachment ) {
+						attachment = attachment.toJSON();
+						// console.log(attachment);
+						bucket.append(function() {
+							return '<img src="'+attachment.sizes.thumbnail.url+'" width="'+attachment.sizes.thumbnail.width+'" height="'+attachment.sizes.thumbnail.height+'" class="deal_submission_thumb thumbnail" /><input name="'+input_name+'[]" type="hidden" value="'+attachment.id+'" />'
+						});
+					 });
+				});
+		
+				// Open the uploader
+				new_media_uploader.open();
+			  });
+				
+		</script>
+        <?php	
+	}
 }
 SF_Deal_Fields::init();

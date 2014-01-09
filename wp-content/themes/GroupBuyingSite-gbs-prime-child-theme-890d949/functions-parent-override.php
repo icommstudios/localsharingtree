@@ -17,6 +17,163 @@ require_once('customfunctions/sf-custom-csv-reports/SF_CustomCSVReports.class.ph
 require_once('customfunctions/sf-custom-csv-reports/SF_CustomSalesExport.class.php');
 require_once('customfunctions/SF_CustomSearch.php');
 
+function remove_medialibrary_tab($tabs) {
+unset($tabs['type_url']);
+unset($tabs['library']);
+return;
+}
+//add_filter('media_upload_tabs','remove_medialibrary_tab', 999, 1);
+
+//Add Mailchimp Unsubscribe feature
+add_filter('subscribe_mc_groupins','custom_do_unsubscribe_mailchimp', 99, 2);
+function custom_do_unsubscribe_mailchimp( $merge_vars, $group_id = '' ) {
+
+	// Get email
+	if ( isset( $_POST['email_address'] ) && !empty($_POST['email_address']) ) {
+		$email = $_POST['email_address'];
+	} elseif ( isset( $_POST['gb_account_email'] ) && !empty($_POST['gb_account_email']) ) {
+		$email = $_POST['gb_account_email'];
+	} else {
+		$current_user = wp_get_current_user();
+		$email = $current_user->user_email;
+	}
+	
+	//Get list id
+	$list_id = get_option('gb_mailchimp_list_id');
+	$group_id = get_option( 'gb_mailchimp_group_id' );
+
+	// Setup API instance so locations can be added before being added to the merge vars.
+	require_once( get_template_directory() . '/gbs-addons/subscription/list-services/utilities/MCAPI.class.php');
+	$mc_api = new GB_MCAPI(get_option('gb_mailchimp_api_key'));
+	
+	//Remove groupings ( locations ) so user has no locations ( allow subscribe to re-add them )
+	$remove_groups_merge_vars = array(
+			'GROUPINGS' => array(
+				array( 'id' => $group_id, 'groups' => $groups ),
+
+			),
+			//'MC_LOCATION'=>array('LATITUDE'=>34.0413, 'LONGITUDE'=>-84.3473),
+		);
+	
+	//Update list member
+	$retval = $mc_api->listUpdateMember(
+		$list_id,
+		$email,
+		$remove_groups_merge_vars,
+		$email_type = 'html',
+		$replace_interests = TRUE
+	);
+		
+	// Continue with regular Mailchimp subscribe process
+	return $merge_vars;
+}
+//Custom function to get user's Mailchim location subscriptions
+function sf_get_users_mailchimp_locations($user_id = null) {
+	if ( !$user_id ) {
+		$user_id = get_current_user_id();	
+	}
+	if ( !$user_id ) return false;
+	$user_data = get_userdata( $user_id );
+	
+	//Email
+	$email = $user_data->user_email;
+	
+	//Get list id
+	$list_id = get_option('gb_mailchimp_list_id');
+	$group_id = get_option( 'gb_mailchimp_group_id' );
+
+	// Setup API instance so locations can be added before being added to the merge vars.
+	require_once( get_template_directory() . '/gbs-addons/subscription/list-services/utilities/MCAPI.class.php');
+	$mc_api = new GB_MCAPI(get_option('gb_mailchimp_api_key'));
+	
+	$response = $mc_api->listMemberInfo(
+		$list_id,
+		$email
+	);
+	
+	//Get user's subscribed locations (groups)
+	$user_sub_locations = array();
+	if ( $response['success'] && $response['data']) {
+		foreach ($response['data'] as $response_email) {
+			if ( $response_email['list_id'] == $list_id && isset($response_email['merges']['GROUPINGS']) ) {
+				foreach ($response_email['merges']['GROUPINGS'] as $response_grouping ) {
+					if ( $response_grouping['id'] == $group_id && !empty($response_grouping['groups']) ) {
+						$user_sub_locations = explode(',', $response_grouping['groups']);
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+	//Cleanup
+	if ( is_array( $user_sub_locations ) ) {
+		foreach ( $user_sub_locations as $key => $sub ) {
+			$user_sub_locations[$key] = trim($sub);
+		}
+	}
+	
+	//Update local database mailchimp option
+	$account = Group_Buying_Account::get_instance();
+	$db_options = get_post_meta( $account->get_ID(), '_'.Group_Buying_MailChimp::LOCATION_PREF_OPTION, true );
+	if ( $user_sub_locations != $db_options ) {
+		update_post_meta( $account->get_ID(), '_'.Group_Buying_MailChimp::LOCATION_PREF_OPTION, $user_sub_locations );
+	}
+	
+	return $user_sub_locations;
+}
+add_filter('gb_account_edit_account_notificaiton_fields', 'custom_change_mailchimp_subscription_field', 99, 2);
+function custom_change_mailchimp_subscription_field( $fields, $account ) {
+	
+	if ( isset($fields['mc_subscription']) ) {
+		
+		//Replace database stored options with actual Mailchimp options
+		if ( function_exists('sf_get_users_mailchimp_locations' ) ) {
+			$view = '';
+			
+			if ( $account ) {
+				$user_id = $account->get_user_id_for_account();
+			}
+			
+			$mc_options = sf_get_users_mailchimp_locations($user_id);
+			
+			//Rebuild view
+			foreach ( gb_get_locations( FALSE ) as $location ) {
+				$checked = ( in_array( $location->slug, $mc_options ) ) ? 'checked="checked"' : '' ;
+				$view .= '<span class="location_pref_input_wrap"><label><input type="checkbox" name="'.Group_Buying_MailChimp::LOCATION_PREF_OPTION.'[]" value="'.$location->slug.'" '.$checked.'>'.$location->name.'</label></span>';
+			}
+			//Add an empty checkbox input ( to ensure the form still runs if all options are unselected )
+			$view .= '<span style="display: none;"><input type="checkbox" name="'.Group_Buying_MailChimp::LOCATION_PREF_OPTION.'[]" value="" checked="checked"></span>';
+			$fields['mc_subscription']['output'] = $view;
+		}
+	
+	}
+	return $fields;	
+}
+
+// Report records per page
+add_filter('gb_reports_show_records', 'custom_gb_reports_show_records', 999, 2);
+function custom_gb_reports_show_records( $number, $report = '' ) {
+	if ( $report == 'accounts' ) {
+		$is_csv = stripos($_SERVER['REQUEST_URI'], '/reports/csv');
+		if ( $is_csv !== false ) {
+			return 99999; //Show all records if showing CSV for accounts report
+		}
+	}
+	return $number;
+}
+//Remove showpage from accounts CSV download url
+add_filter('gb_get_current_report_csv_download_url', 'custom_gb_get_current_report_csv_download_url', 999, 1);
+function custom_gb_get_current_report_csv_download_url( $url ) {
+	//is csv report url
+	if ( stripos($url, '/reports/csv') !== false) {
+		//remove pagination var
+		$url = remove_query_arg('showpage', $url);
+	}
+	return $url;
+}
+
+
 // Account Registration fields
 add_filter('gb_account_register_contact_info_fields', 'custom_fields_changes', 999);
 add_filter('gb_account_edit_contact_fields', 'custom_fields_changes', 999);
