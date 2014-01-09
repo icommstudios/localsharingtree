@@ -13,16 +13,9 @@ require_once('customfunctions/sf-account-fields/SF_AccountFields.class.php');
 require_once('customfunctions/sf-merchant-fields/SF_merchantFields.class.php');
 require_once('customfunctions/sf-featured-deal/SF_Featured_Deals.class.php');
 require_once('customfunctions/sf-deal-fields/SF_DealFields.class.php');
-require_once('customfunctions/sf-custom-csv-reports/SF_CustomCSVReports.class.php');
+require_once('customfunctions/sf-custom-csv-reports/SF_CustomDealExport.class.php');
 require_once('customfunctions/sf-custom-csv-reports/SF_CustomSalesExport.class.php');
 require_once('customfunctions/SF_CustomSearch.php');
-
-function remove_medialibrary_tab($tabs) {
-unset($tabs['type_url']);
-unset($tabs['library']);
-return;
-}
-//add_filter('media_upload_tabs','remove_medialibrary_tab', 999, 1);
 
 //Add Mailchimp Unsubscribe feature
 add_filter('subscribe_mc_groupins','custom_do_unsubscribe_mailchimp', 99, 2);

@@ -208,7 +208,7 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 	
 	/* Custom Deal & Merchant Data Export to CSV */
 	public static function deal_register_columns( $columns ) {
-		$columns['sf_deal_csv_download'] = self::__( 'Export Deal & Merchant' );
+		$columns['sf_deal_data_download'] = self::__( 'Export Deal & Merchant' );
 		return $columns;
 	}
 	public static function deal_column_display( $column_name, $id ) {
@@ -220,8 +220,8 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 
 		switch ( $column_name ) {
 	
-		case 'sf_deal_csv_download':
-			echo '<p><a href="/wp-admin/?sf_deal_csv_download='.$id.'" class="button">'.self::__( 'Download CSV' ).'</a></p>';
+		case 'sf_deal_data_download':
+			echo '<p><a href="/wp-admin/?sf_deal_data_download='.$id.'" class="button">'.self::__( 'Download File' ).'</a></p>';
 			break;
 		default:
 			break;
@@ -229,8 +229,8 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 	}
 	
 	public function tigger_report_download() {
-		if (is_admin() && isset($_GET['sf_deal_csv_download']) ) {
-			self::deal_export($_GET['sf_deal_csv_download']);
+		if (is_admin() && isset($_GET['sf_deal_data_download']) ) {
+			self::deal_export($_GET['sf_deal_data_download']);
 		}
 	}
 	
@@ -581,7 +581,7 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 			);
 			
 			
-			$mechant = $deal->get_merchant();
+			$merchant = $deal->get_merchant();
 			
 			if ( is_a( $merchant, 'Group_Buying_Merchant' ) ) {
 				$merchant_post = $merchant->get_post();
@@ -628,54 +628,20 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 				$merchant_fields['mer_'.$mer_key] = $mer_field;
 				unset($merchant_fields[$mer_key]);
 			}
-			$fields = array_merge($fields, $merchant_fields);
+			//$fields = array_merge($fields, $merchant_fields);
 			
 		}
 		//Do we have anything to export?
-		if ( !empty($fields) ) {
-			//$columns = array_keys($fields);
-			$records = array();
-			$columns = array();
-			foreach ($fields as $field_key => $field) {
-				//Get the field columns
-				$columns[$field_key] = $field['label'];
-				
-				//Get the field value
-				$records[0][$field_key] = $field['default'];
-				
-			}
-			
-			self::download_csv('deal_merchant_submission_'.$deal_id.'.csv', $columns, $records);
+		if ( !empty($fields) || !empty($merchant_fields) ) {
+			self::download_data('deal_merchant_submission_'.$deal_id.'.html', $fields, $merchant_fields);
 		}
 	}
 	
-	public function download_csv($filename = 'gbs_csv_file.csv', $columns = false, $records = false) {
+	public function download_data($filename = 'gbs_deal_export.html', $deal_fields = false, $merchant_fields = false) {
 	
-		$csv = '';
-		$labels_array = array();
-		$records_array = array();
 		
-		// CSV Headers
-		foreach ( $columns as $key => $label ) {
-			$labels_array[] = $label;
-		}
-		$csv .= implode( ",", $labels_array )."\n";
-		
-		// Records
-		foreach ( $records as $record ) { // Loop through each record
-			
-			foreach ( $columns as $key => $label ) { // order the records based on the columns
-				$val = str_replace( '"', '""', $record[$key] );
-				$val = nl2br($val);
-				$val = str_replace(array(PHP_EOL, "\n\r", "\r\n", "\r", "\n"), '<br>', $val);
-				
-				$records_array[] = '"'.$val.'"';
-			}
-			
-			$csv .= implode( ",", $records_array )."\n";
-			$records_array = null; // reset
-		}
 		// set headers
+		
 		header( "Pragma: public" );
 		header( "Expires: 0" );
 		header( "Cache-Control: private" );
@@ -683,7 +649,125 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 		header( "Content-Disposition: attachment; filename=$filename" );
 		header( "Accept-Ranges: bytes" );
 		
-		print $csv;	
+		echo '<!doctype html>
+			<html>
+			<head>
+			<meta charset="UTF-8">
+			<title>'.$filename.'</title>
+		<style>
+		body {
+			margin: 5px 15px;	
+		}
+		body, table, p, td {
+			font-family: Arial, Tahoma, serif;
+			font-size: 14px;	
+			color: #000000;
+		}
+		.label {
+			color: #444;
+			font-size: 12px;
+		}
+		.label_big {
+			color: #222;
+			font-size: 14px;
+		}
+		h1, h2, h3, h4, h5 {
+			color: #444;
+		}
+		p {
+			margin: 0;
+			padding: 0;	
+		}
+		</style>
+		</head>
+		<body>';
+		
+		//Header
+		echo '<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+			<td align="right" width="45%" valign="top">
+				<img src="'.get_stylesheet_directory_uri()."/customfunctions/sf-custom-csv-reports/assets/export_logo_header.png".'" width="200" border="0"></td>
+			<td align="left" valign="top" width="30">
+				&nbsp;
+			</td>
+			<td align="left" valign="top">
+				<br>
+				Support Team<br>
+				704-380-3250 Office<br>
+				704-838-0678 Fax<br>
+				Support@LocalSharingTree.com
+			</td>
+		  </tr>
+		</table>';
+		
+		//Business
+		echo '<h2 align="center">Business Information</h2><br>
+		<table width="100%" border="0" cellspacing="5" cellpadding="0">
+		';
+		foreach ( $merchant_fields as $field ) {
+			if ( $field['type'] == 'heading' || $field['type'] == 'hidden' ) {
+				?>
+              <tr>
+                <td colspan="2" align="left" class="label_big" valign="top">&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2" align="left" class="label_big" valign="top"><?php echo $field['label']; ?></td>
+              </tr>
+             	<?php
+			} elseif ( $field['type'] == 'checkbox' ) {
+				?>
+              <tr>
+                <td nowrap="nowrap" align="left" class="label" width="200" valign="top"><?php echo $field['label']; ?></td>
+                <td align="left" valign="top"><?php echo '&#10003; YES'; //($field['default']) ? '&#10003; YES' : 'NO'; ?></td>
+              </tr>
+				<?php
+			} else {
+				?>
+              <tr>
+                <td nowrap="nowrap" align="left" class="label" width="200" valign="top"><?php echo $field['label']; ?></td>
+                <td align="left" valign="top"><?php echo $field['default']; ?></td>
+              </tr>
+          		<?php
+			}
+		}
+		echo '</table>';
+		
+		//Deal
+		echo '<h2 align="center">Deal Information</h2><br>
+		<table width="100%" border="0" cellspacing="5" cellpadding="0">
+		';
+		foreach ( $deal_fields as $field ) {
+			if ( $field['type'] == 'heading' || $field['type'] == 'hidden' ) {
+				?>
+              <tr>
+                <td colspan="2" align="left" class="label_big" valign="top">&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2" align="left" class="label_big" valign="top"><?php echo $field['label']; ?></td>
+              </tr>
+           		<?php
+			} elseif ( $field['type'] == 'checkbox' ) {
+				?>
+              <tr>
+                <td nowrap="nowrap" align="left" class="label" width="200" valign="top"><?php echo $field['label']; ?></td>
+                <td align="left" valign="top"><?php echo '&#10003; YES'; //($field['default']) ? '&#10003; YES' : 'NO'; ?></td>
+              </tr>
+          		<?php
+			} else {
+				?>
+              <tr>
+                <td nowrap="nowrap" align="left" class="label" width="200" valign="top"><?php echo $field['label']; ?></td>
+                <td align="left" valign="top"><?php echo $field['default']; ?></td>
+              </tr>
+          		<?php
+			}
+		}
+		echo '</table>';
+
+		
+		echo '</body>
+		</html>';
+		
 		exit();
 	}
 
