@@ -46,8 +46,9 @@ function gb_subscription_form( $show_locations = TRUE, $select_location_text = '
 									$current_location = $_COOKIE[ 'gb_location_preference' ];
 								} elseif ( is_tax() ) {
 									global $wp_query;
-									if ( $wp_query->get_queried_object() && $wp_query->get_queried_object()->slug ) {
-										$current_location = $wp_query->get_queried_object()->slug;
+									$query_slug = $wp_query->get_queried_object()->slug;
+									if ( isset( $query_slug ) && !empty( $query_slug ) ) {
+										$current_location = $query_slug;
 									}
 								}
 								echo '<select name="deal_location" id="deal_location" size="1">';

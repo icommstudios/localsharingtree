@@ -118,7 +118,11 @@ class Group_Buying_Record extends Group_Buying_Post_Type {
 	 * @return array The type
 	 */
 	public function get_type() {
-		$type_term = array_pop( wp_get_object_terms( $this->ID, self::TAXONOMY ) );
+		$terms = wp_get_object_terms( $this->ID, self::TAXONOMY );
+		if ( empty( $terms ) ) {
+			return self::set_type( self::DEFAULT_TYPE );	
+		}
+		$type_term = array_pop( $terms );
 		return $type_term->slug;
 	}
 
@@ -140,7 +144,7 @@ class Group_Buying_Record extends Group_Buying_Post_Type {
 	 * @param string  $type
 	 * @return
 	 */
-	public static function maybe_add_type( $type, $name = '' ) {
+	public static function maybe_add_type( $type = '', $name = '' ) {
 		$type = ( $type == '' ) ? self::DEFAULT_TYPE : $type ;
 		$term = get_term_by( 'slug', $type, self::TAXONOMY );
 		if ( !empty( $term->slug ) ) {

@@ -22,7 +22,7 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 		add_action( 'save_post', array( get_class(), 'save_meta_boxes' ), 10, 2 );
 		
 		// Merchant Registration & Edit
-		add_filter('gb_merchant_register_contact_info_fields', array(get_class(), 'add_merchant_register_fields') );
+		add_filter('gb_merchant_register_contact_info_fields', array(get_class(), 'add_merchant_register_fields'), 10, 2 );
 		//add_filter('gb_validate_merchant_registration', array(get_class(), 'validate_merchant_fields'), 10, 2); //NOT REQUIRED - GBS validates field marked required
 		add_action('register_merchant', array(get_class(), 'process_merchant_form_submit'), 50, 1);
 		add_action('edit_merchant', array(get_class(), 'process_merchant_form_submit'), 50, 1);
@@ -284,8 +284,8 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 		*/
 	}
 	
-	public static function add_merchant_register_fields($fields) {
-		$merchant_id = Group_Buying_Merchant::get_merchant_id_for_user();
+	public static function add_merchant_register_fields($fields, $merchant = null) {
+		$merchant_id = ($merchant) ? $merchant->get_ID() : '';
 		
 		$fields['label_mailing_address'] = array(
 			'weight' => 9.5,

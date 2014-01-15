@@ -132,9 +132,10 @@ class GB_Route extends GB_Router_Utility {
 	 * @param array   $args
 	 * @return string
 	 */
-	public function url( $args = array() ) {
+	public function url( $args = array(), $force_ssl = FALSE ) {
 		$args[self::QUERY_VAR] = $this->id;
-		return add_query_arg( $args, trailingslashit( home_url( '', is_ssl()?'https':NULL ) ) );
+		$scheme = ( is_ssl() || $force_ssl ) ? 'https' : NULL ;
+		return add_query_arg( $args, trailingslashit( home_url( '', $scheme ) ) );
 	}
 
 	/**

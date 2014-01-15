@@ -204,9 +204,7 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 		}
 		if ( null == $account || !is_a( $account, 'Group_Buying_Account' ) ) {
 			$user = get_user_by( 'email', $email );
-			if ( is_a( $user, 'WP_User' ) ) {
-				$account = Group_Buying_Account::get_instance( $user->ID );
-			}
+			$account = Group_Buying_Account::get_instance( $user->ID );
 		}
 
 		self::init_mc();
@@ -226,16 +224,15 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 
 		// default merge variables
 		$merge_vars = array(
+			'FNAME' => $account->get_name( 'first' ),
+			'LNAME' => $account->get_name( 'last' ),
 			'GROUPINGS' => array(
 				array( 'id' => self::$group_id, 'groups' => $groups ),
 
 			),
 			//'MC_LOCATION'=>array('LATITUDE'=>34.0413, 'LONGITUDE'=>-84.3473),
+
 		);
-		if ( $account ) {
-			$merge_vars['FNAME'] = $account->get_name( 'first' );
-			$merge_vars['LNAME'] = $account->get_name( 'last' );
-		}
 		$merge_vars = apply_filters( 'subscribe_mc_groupins', $merge_vars, self::$group_id );
 		//logs
 		do_action( 'gb_log', 'subscribe - merge_vars', $merge_vars );

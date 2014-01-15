@@ -151,7 +151,7 @@
 									<?php endif ?>
 								</div><!-- #.merchant_types -->
 								<?php if (gb_has_merchant_excerpt(gb_get_merchant_id())): ?>
-									<?php gb_merchant_excerpt(gb_get_merchant_id()); ?>
+									<?php echo strip_tags(gb_get_merchant_excerpt(gb_get_merchant_id())); ?>
 									<span class="read_more"><a href="<?php gb_merchant_url(gb_get_merchant_id()) ?>" title="<?php gb_merchant_name(gb_get_merchant_id()) ?>"><?php gb_e('Read More.') ?></a></span>
 								<?php endif ?>
 

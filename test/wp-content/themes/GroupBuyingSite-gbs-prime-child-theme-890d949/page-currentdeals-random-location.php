@@ -2,7 +2,7 @@
 /*
 Template Name: Current Deals - Random Order - (based on preferred location)
 */
-
+session_start();
 get_header(); ?>
 
 		<div id="deals_loop" class="container prime main clearfix">
@@ -44,8 +44,50 @@ get_header(); ?>
 					$location = gb_get_preferred_location();
 					$args = array_merge( array(gb_get_deal_location_tax() => $location), $args);
 				}
+				
+				// Randomly order posts upon home page load and allow pagination
+				add_filter('posts_orderby', 'custom_lst_edit_posts_orderby');
+				/**
+				 * Randomize posts, keeping same order on subsequent Home page and single post views
+				 */
+				function custom_lst_edit_posts_orderby($orderby_statement) {
+					if(!is_admin()){
+						
+						if(!isset($_SESSION['seed'])) {
+							//echo 'New Grid';
+							$_SESSION['new_request'] = true;
+						} else {
+							// $refesh_flag will be true if $request_signatures match between page loads.
+							$request_signature = md5($_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
+							// $interior_flag will be true if the last page URL contains the base url but is not the base url.
+							$interior_flag = (bool)get_query_var('paged');
+							// if we are staring page AND the page has been refreshed AND the last page was not an interior page,
+							// unset the seed and flag as a new request so the grid will appear the same upon return.
+							if($_SESSION['last_request'] == $request_signature && $interior_flag == false){
+								//echo 'Reset to New Grid';
+								unset($_SESSION['seed']);
+								$_SESSION['new_request'] = true;
+							} else {
+								//echo 'Continuting Grid';
+								$_SESSION['new_request'] = false;
+								$_SESSION['last_request'] = $request_signature;
+							}
+						}
+						$seed = $_SESSION['seed'];
+						if (empty($seed)) {
+							$seed = rand();
+							$_SESSION['seed'] = $seed;
+						}
+						$orderby_statement = 'RAND('.$seed.')';
+						
+					}
+					return $orderby_statement;
+				}
 					
 				$deal_query = new WP_Query($args);
+				
+				// REMOVE - Randomly order post
+				remove_filter('posts_orderby', 'custom_lst_edit_posts_orderby');
 				?>
                 
 				<?php if ( ! $deal_query->have_posts() ) : ?>

@@ -29,20 +29,13 @@ class Group_Buying_Merchants_Voucher_Claim extends Group_Buying_Controller {
 
 	public static function add_item_merch_report( $array, $voucher, $purchase, $account ) {
 		$redemption_data = $voucher->get_redemption_data();
-		$filtered_redemption_data = array();
-		if ( isset( $redemption_data['name'] ) ) {
-			$filtered_redemption_data['redeem_name'] = $redemption_data['name'];
-		}
-		if ( isset( $redemption_data['date'] ) ) {
-			$filtered_redemption_data['redeem_date'] = $redemption_data['date'];
-		}
-		if ( isset( $redemption_data['total'] ) ) {
-			$filtered_redemption_data['redeem_total'] = $redemption_data['total'];
-		}
-		if ( isset( $redemption_data['notes'] ) ) {
-			$filtered_redemption_data['redeem_notes'] = $redemption_data['notes'];
-		}
-		return array_merge( $array, $filtered_redemption_data );
+		$redemption_data = array(
+			'redeem_name' => $redemption_data['name'],
+			'redeem_date' => $redemption_data['date'],
+			'redeem_total' => $redemption_data['total'],
+			'redeem_notes' => $redemption_data['notes']
+		);
+		return array_merge( $array, $redemption_data );
 	}
 
 	/**

@@ -5,14 +5,16 @@ $account_merchant_id = gb_account_merchant_id();
 if ( $account_merchant_id ) {
 	$merchants_deal_ids = gb_get_merchants_deal_ids( $account_merchant_id );
 }
+
 // Pending deals
-	if ( !empty( $merchants_deal_ids ) && function_exists('gb_deal_preview_available') ) {
+	if ( is_array( $merchants_deal_ids ) && function_exists('gb_deal_preview_available') ) {
 		$deals= null;
 		$args=array(
 			'post_type' => gb_get_deal_post_type(),
-			'post__in' => $merchants_deal_ids,
+			'post__in' => $merchant_deal_ids,
 			'post_status' => array('pending','draft','future','private'),
 			'posts_per_page' => -1, // return this many
+			
 		);
 		$deals = new WP_Query($args);
 		if ($deals->have_posts()) {
@@ -64,7 +66,7 @@ if ( $account_merchant_id ) {
 	<?php
 	
 	// Purchase history
-		if ( $account_merchant_id && !empty( $merchants_deal_ids ) ) {
+		if ( $account_merchant_id && is_array( $merchants_deal_ids ) ) {
 
 			$deals= null;
 			$args=array(

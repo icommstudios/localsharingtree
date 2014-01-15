@@ -24,7 +24,7 @@ class Group_Buying_Destroy extends Group_Buying_Controller {
 	}
 
 	function trash_warnings() {
-		if ( isset( $_GET['post_status'] ) && isset( $_GET['post_type'] ) && $_GET['post_status'] == 'trash' && $_GET['post_type'] == 'gb_deal' ) {
+		if ( isset( $_GET['post_status'] ) && isset( $_GET['post_type'] ) && $_GET['post_status'] == 'trash' && $_GET['post_type'] == Group_Buying_Deal::POST_TYPE ) {
 			self::_e('<div class="error"><p>Permanantly deleting deals (i.e. emptying the "trash") will cause all associated orders, vouchers and payments for that deal (or deals) to be permanantly modified/deleted.</p></div>');
 		}
 	}

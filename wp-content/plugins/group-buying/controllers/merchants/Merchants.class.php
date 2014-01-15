@@ -527,6 +527,9 @@ class Group_Buying_Merchants extends Group_Buying_Controller {
 	}
 
 	public function allow_file_uploads( $allcaps, $cap, $args ) {
+		if ( !isset( $cap[0] ) || !isset( $args[1] ) )
+			return $allcaps;
+
 		// Bail out if we're not asking about uploading files:
 		if ( 'upload_files' != $cap[0] )
 			return $allcaps;

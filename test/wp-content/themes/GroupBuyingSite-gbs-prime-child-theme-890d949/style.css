@@ -1,14 +1,22 @@
 /* *
- * Theme Name: Blank Child Theme
+ * Theme Name: Local Sharing Tree Child Theme
  * Theme URI: http://groupbuyingsite.com
- * Description: This theme will be identical to the Prime Theme until you add modifications.
- * Author: Group Buying Site
+ * Description: Custom modifications for Local Sharing Tree.
+ * Author: Group Buying Site / iComm Studios
  * Author URI: http://groupbuyingsite.com
  * Version: 1.0
  * template: prime-theme
    ================================================== */
 /* ===[ Add your custom styles below: ]===
    ================================================== */
+
+#logo {
+    max-width: 85%
+}
+
+.page_title {
+    padding-bottom: 10px;
+}
 
  /* Page Navigation */
 .pagination {
@@ -128,6 +136,14 @@ li#menu-item-18553 a:hover {
     padding: 5px 10px;
     margin-bottom: 0;
 }
+
+span.csv_download_link {
+    float:none;
+}
+span.csv_download_link a {
+    margin: 10px 0;
+}
+
 /* ===[ Phone-sized devices and the like ]===
    ================================================== */
 @media only screen and (max-width: 680px) { 
@@ -214,9 +230,7 @@ div.row {
     text-align: center;
 }
 @media (min-width: 768px) and (max-width: 979px) { 
-    #logo {
-        max-width: 65%
-    }
+    
     #logo img {
         max-width: 90%;
         width: auto;
@@ -337,20 +351,48 @@ div.row {
     #logo {
         margin: 10px 0;
         float: left;
-        max-width: 80%;
     }
 }
 @media (max-width: 480px) { 
     #header {
         min-height: 140px
     }
+
+    .header_meta {
+        float:none;
+        margin:0px; padding:0px;
+    }
+
+    #location {
+        position: relative;
+        top: 20px; right: 0;
+        margin: 0px; padding:0px;
+    }
+
+    #login_form {
+        float:none;
+        width:100%;
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    #login_wrap { 
+        top:5px;
+        margin-right: 0px;
+        padding: 5px;
+    }
+
+    .header-locations-drop-link {
+        width:100%;
+    }
     #location .current_location {
-        width: 0px;
+        width:90%;
         overflow: hidden;
         border: 1px solid rgba(0,0,0,0.2);
         background-color: rgba(0,0,0,0.05);
         border-radius: 4px;
         background-position: -43px -243px;
+        margin: 0; padding-left: 10%;
     }
     #locations_header_wrap {
         left: 20px;

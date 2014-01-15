@@ -22,7 +22,7 @@ class Group_Buying_Dev_Logs extends Group_Buying {
 
 		// action to log
 		add_action( 'gb_log', array( get_class(), 'log' ), 10, 2 );
-		add_action( 'gb_error', array( get_class(), 'error' ), 10, 2 );
+		add_action( 'gb_error', array( get_class(), 'error' ), 10, 3 );
 
 		// purge old logs
 		add_action( 'gb_cron', array( get_class(), 'purge_old_logs' ) );
@@ -48,7 +48,7 @@ class Group_Buying_Dev_Logs extends Group_Buying {
 		}
 	}
 
-	public static function error( $subject, $data = array() ) {
+	public static function error( $subject, $data = array(), $record_error = TRUE ) {
 
 		if ( self::DEBUG ) {
 			error_log( '--- ' . $subject . ' ---------------------' );
@@ -58,11 +58,13 @@ class Group_Buying_Dev_Logs extends Group_Buying {
 			}
 		}
 
-		if ( function_exists( 'wp_get_current_user' ) ) {
-			self::record_log( $subject, $data, TRUE );
-		}
-		else {
-			self::$recorded_errors[$subject] = $data;
+		if ( $record_error ) {
+			if ( function_exists( 'wp_get_current_user' ) ) {
+				self::record_log( $subject, $data, TRUE );
+			}
+			else {
+				self::$recorded_errors[$subject] = $data;
+			}
 		}
 	}
 

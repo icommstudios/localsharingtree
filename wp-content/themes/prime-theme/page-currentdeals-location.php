@@ -60,7 +60,10 @@ get_header(); ?>
 				<?php endwhile; ?>
                 
 				<?php if (  $deal_query->max_num_pages > 1 ) : ?>
-					<?php wp_pagination(); ?>
+					<div id="nav-below" class="navigation clearfix">
+						<div class="nav-previous"><?php next_posts_link( gb__( '<span class="meta-nav">&larr;</span> Older deals' ), $deal_query->max_num_pages ); ?></div>
+						<div class="nav-next"><?php previous_posts_link( gb__( 'Newer deals <span class="meta-nav">&rarr;</span>' ), $deal_query->max_num_pages ); ?></div>
+					</div><!-- #nav-below -->
 				<?php endif; ?>
                 
 				<?php wp_reset_query(); ?>

@@ -131,7 +131,7 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 					) );
 				$notification = Group_Buying_Notification::get_instance( $post_id );
 				self::save_meta_box_gb_notification_type( $notification, $post_id, $notification_type );
-				if ( isset( $data['default_disabled'] ) && $data['default_disabled'] ) {
+				if ( $data['default_disabled'] ) {
 					$notification->set_disabled( 'TRUE' );
 				}
 			}
@@ -401,9 +401,6 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 		if ( wp_is_post_autosave( $post_id ) || $post->post_status == 'auto-draft' || defined( 'DOING_AJAX' ) || isset( $_GET['bulk_edit'] ) ) {
 			return;
 		}
-		if ( !isset( $_POST['notification_type'] ) ) {
-			return;
-		}
 		self::init_types();
 		// save all the meta boxes
 		$notification = Group_Buying_Notification::get_instance( $post_id );
@@ -411,12 +408,9 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 	}
 
 	public static function save_meta_box_gb_notification_type( $notification, $post_id, $notification_type = NULL ) {
-		if ( NULL === $notification_type && isset( $_POST['notification_type'] ) ) {
+		if ( NULL === $notification_type ) {
 			$notification_type = $_POST['notification_type'];
 		}
-
-		if ( is_null( $notification_type ) )
-			return;
 
 		$notifications = get_option( self::NOTIFICATIONS_OPTION_NAME, array() );
 

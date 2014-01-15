@@ -18,7 +18,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		add_action( 'save_post', array( get_class(), 'save_meta_boxes' ), 10, 2 );
 		
 		//Deal submission fields changes
-		add_filter('gb_deal_submission_fields', array( get_class(), 'custom_gb_deal_submission_fields'), 10, 1);
+		add_filter('gb_deal_submission_fields', array( get_class(), 'custom_gb_deal_submission_fields'), 10, 2);
 		add_action('submit_deal', array( get_class(), 'custom_submit_deal'), 10, 1);
 		
 		//Change voucher expiration date to expiration comments
@@ -41,10 +41,23 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 	}
 	
 	//Deal submission fields changes
-	public function custom_gb_deal_submission_fields( $fields ) {
+	public function custom_gb_deal_submission_fields( $fields, $deal ) {
+		
+		$deal_id = ($deal) ? $deal->get_ID() : '';
 		
 		//Remove voucher codes
 		unset( $fields['voucher_serial_numbers'] );
+		
+		//Unset new media_uploader image
+		unset( $fields['images'] );
+		$fields['thumbnail'] = array(
+			'weight' => 3,
+			'label' => gb__( 'Deal Image' ),
+			'type' => 'file',
+			'required' => FALSE,
+			'default' => '',
+			'description' => gb__('<span>Optional:</span> Featured image for the deal.')
+		);
 		
 		//Add No expiration date checkbox option
 		$js_functions = '<script type="text/javascript">
@@ -67,7 +80,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			'label' => self::__( 'Voucher Expiration Comments' ),
 			'type' => 'textarea',
 			'required' => FALSE,
-			'default' => $_POST[self::$meta_keys['voucher_expiration_comments']],
+			'default' => ($_POST[self::$meta_keys['voucher_expiration_comments']]) ? $_POST[self::$meta_keys['voucher_expiration_comments']] : self::get_field($deal_id, self::$meta_keys['voucher_expiration_comments']),
 			'description' => gb__('All Vouchers Expire 6 Months After Purchase Unless Otherwise Specified Here.')
 		);
 		
@@ -78,7 +91,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		$fields['fine_print']['description'] = gb__('<span>Required:</span> Fine Print of This Deal and Voucher; Example: Can only be used towards lunch for a party of 2 or more.');
 		$fields['voucher_how_to_use']['description'] = gb__('<span>Required:</span> How to Redeem the Voucher; Example: Bring printed copy into restaurant and give to waitress before ordering to receive discount.');
 		
-		$fields['images']['description'] = gb__('Please Upload an Image That Represents Your Deal. For Example: A deal for lunch at a deli would have a picture of a deli sandwich. Every image is left to our discretion. If you do not upload an image or if your image is not approved, we will use a stock image.');
+		$fields['thumbnail']['description'] = gb__('Please Upload an Image That Represents Your Deal. For Example: A deal for lunch at a deli would have a picture of a deli sandwich. Every image is left to our discretion. If you do not upload an image or if your image is not approved, we will use a stock image.');
 		
 		$fields['agree_reviewed_information'] = array(
 			'weight' => 200,
@@ -86,7 +99,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			'type' => 'checkbox',
 			'required' => TRUE,
 			'value' => 'yes',
-			'default' => $_POST[self::$meta_keys['agree_reviewed_information']],
+			'default' => ($_POST[self::$meta_keys['agree_reviewed_information']]) ? $_POST[self::$meta_keys['agree_reviewed_information']] : self::get_field($deal_id, self::$meta_keys['agree_reviewed_information']),
 		);
 		
 		$link_terms = site_url('/merchant-account-terms-and-conditions/');
@@ -96,7 +109,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			'type' => 'checkbox',
 			'required' => TRUE,
 			'value' => 'yes',
-			'default' => $_POST[self::$meta_keys['agree_terms']],
+			'default' =>($_POST[self::$meta_keys['agree_terms']]) ? $_POST[self::$meta_keys['agree_terms']] : self::get_field($deal_id, self::$meta_keys['agree_terms']),
 		);
 		
 		return $fields;
@@ -109,6 +122,12 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			$deal->save_post_meta( array(
 				self::$meta_keys['voucher_expiration_comments'] => stripslashes($_POST['gb_deal_voucher_expiration_comments'])
 			));
+		}
+		
+		//Save thumbnail (replacing the new media_uploader)
+		if ( !empty( $_FILES['gb_deal_thumbnail'] ) ) {
+			// Set the uploaded field as an attachment
+			$deal->set_attachement( $_FILES, 'gb_deal_thumbnail' );
 		}
 	}
 
@@ -215,6 +234,6 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		}
 		return $value;
 	}
-	
+
 }
 SF_Deal_Fields::init();

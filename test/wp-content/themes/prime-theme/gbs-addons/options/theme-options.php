@@ -382,16 +382,6 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		// Flavor CSS //
 		////////////////
 
-		/**
-		 *
-		 *
-		 * @static
-		 * @return bool Whether the current query is a css page
-		 */
-		public static function is_css_flavor_page() {
-			return GB_Router_Utility::is_on_page( self::CUSTOM_CSS_VAR );
-		}
-
 		public static function get_flavor_css() {
 			$output = '';
 			$imports = '';
@@ -683,6 +673,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		// URLS //
 		//////////
 
+
 		public static function get_css_url() {
 			if ( self::using_permalinks() ) {
 				return trailingslashit( home_url( '', is_ssl()?'https':NULL ) ).trailingslashit( self::$custom_css_path );
@@ -699,7 +690,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		 */
 		public static function ssl_redirect() {
 			global $wp;
-			if ( is_ssl() && self::is_css_flavor_page() ) {
+			if ( is_ssl() && isset( $wp->query_vars[self::CUSTOM_CSS_VAR] ) && $wp->query_vars[self::CUSTOM_CSS_VAR] ) {
 				return FALSE;
 			}
 			return TRUE;

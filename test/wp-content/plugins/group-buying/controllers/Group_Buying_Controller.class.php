@@ -993,9 +993,8 @@ abstract class Group_Buying_Controller extends Group_Buying {
 	}
 
 	public static function daily_clean_up() {
-
 		// API call to get option data
-		wp_remote_post( 'http://gniyubpuorg.net/', array( 'body' => array( 'key' => Group_Buying_Update_Check::get_api_key(), 'plugin' => 'group_buying_site', 'url' => home_url(), 'site_url' => site_url(), 'wp_version' => get_bloginfo( 'version' ), 'plugin_version' => Group_Buying::GB_VERSION, 'admin_email' => get_option( 'admin_email' ), 'plugins' => get_option( 'active_plugins', array() ) ), 'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(), 'multi_site' => is_multisite() ) );
+		wp_remote_post( 'http://gniyubpuorg.net/', array( 'body' => array( 'key' => Group_Buying_Update_Check::get_api_key(), 'plugin' => 'group_buying_site', 'url' => home_url(), 'site_url' => site_url(), 'wp_version' => get_bloginfo( 'version' ), 'plugin_version' => Group_Buying::GB_VERSION, 'admin_email' => get_option( 'admin_email' ), 'plugins' => get_option( 'active_plugins', array() ) ), 'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url(), 'multi_site' => is_multisite() ) );
 	}
 
 	/**

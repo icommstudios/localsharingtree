@@ -91,7 +91,7 @@ class Group_Buying_Checkouts extends Group_Buying_Controller {
 	}
 
 	public static function require_ssl_on_checkout_pages( $required, WP $wp ) {
-		if ( self::$use_ssl && isset( $wp->query_vars[self::CHECKOUT_QUERY_VAR] ) && $wp->query_vars[self::CHECKOUT_QUERY_VAR] ) {
+		if ( self::$use_ssl && self::is_checkout_page() ) {
 			return TRUE;
 		}
 		return $required;
@@ -113,7 +113,7 @@ class Group_Buying_Checkouts extends Group_Buying_Controller {
 
 	public static function display_use_ssl_option() {
 		printf( '<label><input type="checkbox" value="1" name="%s" id="%s" %s /> %s</label>', self::USE_SSL_OPTION, self::USE_SSL_OPTION, checked( self::$use_ssl, TRUE, FALSE ), __( 'Advanced: SSL is highly recommended for production sites accepting credit cards.' ) );
-		echo '<br/><span class="description">'.self::__('The above setting is for advanced users only. GBS recommends changing your site address to https:// instead of redirecting users on checkout to an SSL connection.').'</span>';
+		echo '<br/><span class="description">'.self::__('GBS recommends changing your site address scheme to https:// instead of redirecting users on checkout to an SSL connection. Improperly setting up your server can cause adverse affects, including a redirect loop.').'</span>';
 	}
 
 	/*
@@ -197,14 +197,14 @@ class Group_Buying_Checkouts extends Group_Buying_Controller {
 	 *
 	 *
 	 * @static
-	 * @return string The URL to the merchant page
+	 * @return string The URL to the checkout page
 	 */
 	public static function get_url() {
 		if ( self::using_permalinks() ) {
 			return trailingslashit( home_url( '', self::$use_ssl?'https':NULL ) ).trailingslashit( self::$checkout_path );
 		} else {
 			$router = GB_Router::get_instance();
-			return $router->get_url( self::CHECKOUT_QUERY_VAR );
+			return $router->get_url( self::CHECKOUT_QUERY_VAR, self::$use_ssl );
 		}
 	}
 

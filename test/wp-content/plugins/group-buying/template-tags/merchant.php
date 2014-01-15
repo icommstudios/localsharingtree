@@ -161,10 +161,10 @@ function gb_get_voucher_claim_url( $code = null, $redirect = null ) {
 		$url = add_query_arg( array( 'redirect_to' => $redirect ), $url );
 	}
 	if ( null == $code ) {
-		return apply_filters( 'gb_get_voucher_claim_url', $url );
+		return apply_filters( 'gb_get_merchants_url', $url );
 	}
 	$url = add_query_arg( array( Group_Buying_Merchants_Voucher_Claim::BIZ_VOUCHER_CLAIM_ARG => $code ), $url );
-	return apply_filters( 'gb_get_voucher_claim_url', $url );
+	return apply_filters( 'gb_get_merchants_url', $url );
 }
 
 /**
@@ -259,16 +259,7 @@ function gb_get_merchant_authorized_users( $post_id = 0 ) {
  * @return boolean
  */
 function gb_has_merchant( $post_id = 0 ) {
-	return apply_filters( 'gb_has_merchant', gb_get_merchant_id( $post_id ) );
-}
-
-/**
- * Does this deal have a merchant assigned to it and is it published.
- * @param  integer $post_id Post or Deal ID
- * @return boolean
- */
-function gb_has_active_merchant( $post_id = 0 ) {
-	return apply_filters( 'gb_has_active_merchant', gb_get_merchant_id( $post_id, TRUE ) );
+	return ( apply_filters( 'gb_has_merchant_id', !gb_get_merchant_id( $post_id ) ) ) ? FALSE: TRUE ;
 }
 
 /**
@@ -276,21 +267,14 @@ function gb_has_active_merchant( $post_id = 0 ) {
  * @param  integer $post_id Post or Deal ID
  * @return integer
  */
-function gb_get_merchant_id( $post_id = 0, $status_check = FALSE ) {
+function gb_get_merchant_id( $post_id = 0 ) {
 	if ( !$post_id ) {
 		global $post;
 		$post_id = $post->ID;
 	}
 	$merchant = Group_Buying_Merchant::get_merchant_object( $post_id );
-
-	if ( !is_a( $merchant, 'Group_Buying_Merchant' ) )
-		return FALSE;
-
-	$merchant_id = $merchant->get_id();
-	if ( $status_check && get_post_status( $merchant_id ) != 'publish' )
-		return FALSE;
-
-	return apply_filters( 'gb_get_merchant_id', $merchant_id );
+	if ( !is_object( $merchant ) ) return FALSE;
+	return apply_filters( 'gb_get_merchant_id', $merchant->get_id() );
 }
 
 /**

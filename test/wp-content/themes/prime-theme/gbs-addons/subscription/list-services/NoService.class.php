@@ -41,30 +41,28 @@ class Group_Buying_None extends Group_Buying_List_Services {
 ?>
 		<form action="" id="gb_subscription_form" method="post" class="clearfix">
 			<?php
-				$current_location = '';
-				$locations = gb_get_locations( false );
-				$no_city_text = get_option( Group_Buying_List_Services::SIGNUP_CITYNAME_OPTION );
-				if ( ( !empty( $locations ) || !empty( $no_city_text ) ) && $show_locations ) { ?>
-					<span class="option location_options_wrap clearfix">
-						<label for="locations"><?php gb_e( $select_location_text ); ?></label>
-						<?php
-							global $wp_query;
-							if ( $wp_query->get_queried_object() ) {
-								$current_location = $wp_query->get_queried_object()->slug;
-							}
-							if ( $current_location == '' && isset( $_COOKIE[ 'gb_location_preference' ] ) ) {
-								$current_location = $_COOKIE[ 'gb_location_preference' ];
-							}
-							echo '<select name="deal_location" id="deal_location" size="1">';
-							foreach ( $locations as $location ) {
-								echo '<option value="'.$location->slug.'" '.selected( $current_location, $location->slug ).'>'.$location->name.'</option>';
-							}
-							if ( !empty( $no_city_text ) ) {
-								echo '<option value="notfound">'.esc_attr( $no_city_text ).'</option>';
-							}
-							echo '</select>'; ?>
-					</span> <?php
-				} ?>
+		$locations = gb_get_locations( false );
+		$no_city_text = get_option( Group_Buying_List_Services::SIGNUP_CITYNAME_OPTION );
+		if ( ( !empty( $locations ) || !empty( $no_city_text ) ) && $show_locations ) {
+?>
+						<span class="option location_options_wrap clearfix">
+							<label for="locations"><?php gb_e( $select_location_text ); ?></label>
+							<?php
+			global $wp_query;
+			$query_slug = $wp_query->get_queried_object()->slug;
+			$current_location = ( !empty( $query_slug ) ) ? $query_slug : $_COOKIE[ 'gb_location_preference' ] ;
+			echo '<select name="deal_location" id="deal_location" size="1">';
+			foreach ( $locations as $location ) {
+				echo '<option value="'.$location->slug.'" '.selected( $current_location, $location->slug ).'>'.$location->name.'</option>';
+			}
+			if ( !empty( $no_city_text ) ) {
+				echo '<option value="notfound">'.esc_attr( $no_city_text ).'</option>';
+			}
+			echo '</select>';
+?>
+						</span>
+					<?php
+		} ?>
 			<?php wp_nonce_field( 'gb_subscription' );?>
 			<span class="submit clearfix"><input type="submit" class="button-primary" name="gb_subscription" id="gb_subscription" value="<?php gb_e( $button_text ); ?>"></span>
 		</form>
