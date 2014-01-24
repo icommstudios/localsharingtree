@@ -40,6 +40,8 @@
 				</div><!-- #login_wrap -->
 			</div>
 
+			<!-- search form goes here -->
+
 		</div>
 
 	</div><!-- #header -->
