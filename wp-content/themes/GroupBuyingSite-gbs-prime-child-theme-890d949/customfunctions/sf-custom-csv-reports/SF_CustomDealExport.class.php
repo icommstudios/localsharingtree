@@ -246,7 +246,12 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 			$post_obj = get_post( $deal->get_ID() );
 			$title = $deal->get_title();
 			$content = apply_filters( 'the_content', $post_obj->post_content );
-			$expiration = date( 'm/d/Y G:i', $deal->get_expiration_date() );
+			$expiration = $deal->get_expiration_date();
+			if ( $expiration > 0 ) {
+				$expiration = date( 'm/d/Y G:i', $expiration );
+			} else {
+				$expiration = 'Dea Does Not Expire';
+			}
 			$deal_locations = implode(' | ', wp_get_object_terms( $deal->get_ID(), Group_Buying_Deal::LOCATION_TAXONOMY, array( 'fields' => 'names' ) ));
 			$price = $deal->get_price();
 			$shipping = $deal->get_shipping_meta();
