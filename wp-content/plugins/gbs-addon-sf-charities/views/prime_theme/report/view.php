@@ -20,7 +20,8 @@
 	}
    ?>
 </div>
-<table class="report">
+<div class="report">
+<table>
 	<thead>
 		<tr>
 		<?php foreach ( $columns as $key => $label ): ?>
@@ -40,6 +41,7 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
+</div>
 <div id="report_navigation pagination clearfix">
   <?php
   	if ( $gb_report_pages > 1 ) {
