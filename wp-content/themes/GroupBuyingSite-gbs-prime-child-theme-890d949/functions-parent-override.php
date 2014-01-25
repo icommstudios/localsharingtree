@@ -8,6 +8,7 @@
 
 // Include Custom functions
 
+require_once('customfunctions/SF_DealResetLimits.php');
 require_once('customfunctions/sf-additional-notifications/SF_AdditionalNotifications.class.php');
 require_once('customfunctions/sf-account-fields/SF_AccountFields.class.php');
 require_once('customfunctions/sf-merchant-fields/SF_merchantFields.class.php');
