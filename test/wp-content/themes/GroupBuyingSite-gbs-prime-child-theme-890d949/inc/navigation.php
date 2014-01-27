@@ -1,3 +1,11 @@
+<div class="topnav-wrap clearfix">
+
+	<div class="topnav container cleasrfix">
+		<?php wp_nav_menu( array( 'sort_column' => 'menu_order', 'theme_location' => 'topnav', 'depth' =>'2', 'container' => 'none' ) ); ?>
+	</div>
+
+</div>
+
 <div id="header_wrap" class="prime boxed_prime clearfix">
 
 	<div id="header" class="container clearfix">

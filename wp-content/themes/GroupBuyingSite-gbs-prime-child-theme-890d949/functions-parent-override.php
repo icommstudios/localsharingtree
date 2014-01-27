@@ -18,6 +18,12 @@ require_once('customfunctions/sf-custom-csv-reports/SF_CustomDealExport.class.ph
 require_once('customfunctions/sf-custom-csv-reports/SF_CustomSalesExport.class.php');
 require_once('customfunctions/SF_CustomSearch.php');
 
+// This theme uses wp_nav_menu() in one location.
+register_nav_menus( array(
+		'header' => gb__( 'Header Menu' ),
+		'topnav' => gb__( 'TopNav Menu' )
+	) );
+
 //Add Mailchimp Unsubscribe feature
 add_filter('subscribe_mc_groupins','custom_do_unsubscribe_mailchimp', 99, 2);
 function custom_do_unsubscribe_mailchimp( $merge_vars, $group_id = '' ) {
