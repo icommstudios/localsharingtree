@@ -42,6 +42,11 @@ font-size: 14px;
     color:#ccc;
 }
 
+.lst-header-search {
+    float: right;
+    margin-top: 80px;
+}
+
 #logo {
     max-width: 85%
 }
@@ -176,6 +181,17 @@ span.csv_download_link a {
     margin: 10px 0;
 }
 
+#searchsubmit {
+border: 1px solid rgba(0,0,0,0.2);
+padding: 14px 20px 12px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+background-color: rgba(0,0,0,0.05);
+color: white;
+cursor: pointer;
+}
+
 /* ===[ Phone-sized devices and the like ]===
    ================================================== */
 @media only screen and (max-width: 680px) { 
@@ -186,7 +202,7 @@ span.csv_download_link a {
 #login_wrap {
     border: 1px solid rgba(0,0,0,0.2);
     position: absolute;
-    padding: 14px 20px 2px;
+    padding: 14px 20px 12px;
     top: 30px;
     right: 0;
     -webkit-border-radius: 5px;

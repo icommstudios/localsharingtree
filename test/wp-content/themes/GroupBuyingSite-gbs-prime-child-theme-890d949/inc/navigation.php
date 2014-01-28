@@ -48,9 +48,11 @@
 				</div><!-- #login_wrap -->
 			</div>
 
-			<!-- search form goes here -->
-
 		</div>
+
+		<div class="lst-header-search">
+				<?php get_search_form(); ?> 
+			</div>
 
 	</div><!-- #header -->
 
