@@ -44,11 +44,12 @@ font-size: 14px;
 
 .lst-header-search {
     float: right;
-    margin-top: 80px;
+    margin-top: 90px;
 }
 
 #logo {
-    max-width: 85%
+    max-width: 85%;
+    margin:20px 0px;
 }
 
 .page_title {
@@ -203,7 +204,7 @@ cursor: pointer;
     border: 1px solid rgba(0,0,0,0.2);
     position: absolute;
     padding: 14px 20px 12px;
-    top: 30px;
+    top: 15px;
     right: 0;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -410,6 +411,10 @@ div.row {
         float:none;
         margin:0px; padding:0px;
     }
+
+    .lst-header-search {
+    float: none;
+}
 
     #location {
         position: relative;
