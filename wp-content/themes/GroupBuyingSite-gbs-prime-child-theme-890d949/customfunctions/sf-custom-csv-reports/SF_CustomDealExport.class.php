@@ -250,7 +250,7 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 			if ( $expiration > 0 ) {
 				$expiration = date( 'm/d/Y G:i', $expiration );
 			} else {
-				$expiration = 'Dea Does Not Expire';
+				$expiration = 'Deal Does not Expire';
 			}
 			$deal_locations = implode(' | ', wp_get_object_terms( $deal->get_ID(), Group_Buying_Deal::LOCATION_TAXONOMY, array( 'fields' => 'names' ) ));
 			$price = $deal->get_price();

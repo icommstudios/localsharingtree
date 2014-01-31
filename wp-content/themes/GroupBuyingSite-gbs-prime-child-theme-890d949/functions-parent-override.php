@@ -247,8 +247,9 @@ function custom_footer_scripts() {
 	</script>
     <?php	
 	//Add popup for requiring login before adding to cart
-	if ( !is_user_logged_in() ) { 
 	/*
+	if ( !is_user_logged_in() ) { 
+	
 	?>
     <script type="text/javascript">
 		//On click show lighbox for login
@@ -269,7 +270,56 @@ function custom_footer_scripts() {
 		});
 	</script>
     <?php
+	}
 	*/
+	
+	//Add popup for on order confirmation page
+	if ( gb_on_checkout_page() && gb_get_current_checkout_page() == 'confirmation') { 
+		global $order_number;
+		$checkout = Group_Buying_Checkouts::get_instance();
+		$charity_id = ( $checkout ) ? $checkout->cache['gb_charity'] : '';
+		if ( !$charity_id ) {
+			$share_text_original = 'I just shopped, saved and supported charity at LocalSharingTree.com';
+			$share_text = urlencode($share_text_original);
+			$share_url = urlencode( add_query_arg(array('ref' => $order_number), site_url()));
+		} else {
+			$charity_title = get_the_title ( $charity_id );
+			$share_text_original = 'I just shopped, saved and supported '.$charity_title .' at LocalSharingTree.com';
+			$share_text = urlencode($share_text_original);
+			$share_url = urlencode( add_query_arg(array('ref' => $order_number), site_url()));
+		}
+		?>
+        <div id="trigger_fancybox_order_confirmation" style="display: none;">
+            <div style="text-align: center; padding: 15px;">
+            	 <h3 style="padding-bottom: 15px;">Thank you for your order!</h3>
+                <p style="padding-bottom: 5px;"><strong>Share with your friends: </strong></p>
+                <p style="padding-bottom: 5px;"><?php echo $share_text_original; ?></p>
+                <a style="margin: 10px 2px; display: inline-block;" href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo $share_text; ?>&amp;p[url]=<?php echo $share_url; ?>&amp;p[summary]=" class="order_confirm_facebook" target="_blank"><img src="http://localsharingtree.com/wp-content/plugins/floating-social-media-icon/images/themes/1/facebook.png" style="border:0px;" alt="Share on Facebook"></a>
+                <a style="margin: 10px 2px; display: inline-block;" href="http://twitter.com/intent/tweet?original_referer=<?php echo site_url() ?>&text=<?php echo $share_text; ?>&url=<?php echo $share_url; ?>" title="Share on Twitter" class="order_confirm_twitter" target="_blank"><img src="http://localsharingtree.com/wp-content/plugins/floating-social-media-icon/images/themes/1/twitter.png" style="border:0px;" alt="Share on Twitter"></a>
+            </div>
+        </div>
+        <script type="text/javascript">
+			jQuery("#trigger_fancybox_order_confirmation").fancybox({
+				'content': '<div class="fancybox_order_confirmation" style="display: block; !important">' + jQuery("#trigger_fancybox_order_confirmation").html() + '</div>',
+				'hideOnOverlayClick': true,
+				'hideOnContentClick': false,
+				'showCloseButton': true,
+				'autoDimensions': true,
+				'autoScale': true,
+				'overlayColor': '#000000',
+				'width': 700,
+				'height': 200,
+				'overlayOpacity': 0.8,
+				'padding': 0
+			});
+            jQuery(document).ready(function() {
+				setTimeout(function() {
+					 jQuery("#trigger_fancybox_order_confirmation").trigger('click');
+				}, 2000);
+              
+            });
+        </script>
+		<?php
 	}
 }
 
