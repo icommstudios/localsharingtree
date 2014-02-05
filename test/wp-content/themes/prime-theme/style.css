@@ -550,10 +550,6 @@ width: auto;
 	text-shadow: rgba(255,255,255,0.7) 0 1px;
 }
 
-#login_wrap a.logout {
-	opacity: 0.5;
-}
-
 #login_wrap .cart_count {
 	font-weight: normal;
 	font-style: normal;

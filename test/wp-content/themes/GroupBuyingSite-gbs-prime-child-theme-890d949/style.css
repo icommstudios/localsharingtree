@@ -9,48 +9,6 @@
    ================================================== */
 /* ===[ Add your custom styles below: ]===
    ================================================== */
-.topnav-wrap {
-background:#025A78;
-min-height: 40px;
-margin: 0px;
-padding:0px;
-}
-
-.topnav {
-position: relative;
-max-width: 1020px;
-}
-
-.topnav ul {
-    list-style: none;
-    margin: 0px;
-    padding:0px;
-}
-
-.topnav li {
-    display: inline-block;
-}
-
-.topnav li a {
-display: block;
-padding: 10px;
-color: white;
-font-size: 14px;
-}
-
-.topnav li a:hover {
-    color:#ccc;
-}
-
-.lst-header-search {
-    float: right;
-    margin-top: 90px;
-}
-
-#logo {
-    max-width: 85%;
-    margin:20px 0px;
-}
 
 .page_title {
     padding-bottom: 10px;
@@ -193,6 +151,133 @@ color: white;
 cursor: pointer;
 }
 
+
+/*  Reworked Header */
+
+#lst_header {
+    max-width: 1020px;
+}
+
+#header_wrap {
+    padding: 0 .5em;
+}
+
+.topnav-wrap {
+background:#025A78;
+min-height: 40px;
+margin: 0px;
+padding:0px;
+}
+
+.topnav {
+position: relative;
+max-width: 1020px;
+}
+
+.topnav ul {
+    list-style: none;
+    margin: 0px;
+    padding:0px;
+}
+
+.topnav li {
+    display: inline-block;
+}
+
+.topnav li a {
+display: block;
+padding: 10px;
+color: white;
+font-size: 12px;
+}
+
+.topnav li a:hover {
+    color:#ccc;
+}
+
+.lst_header_meta{
+}
+
+#lst_logo {
+    max-width: 100%;
+    display: block;
+}
+#lst_logo img {
+    width:100%;
+}
+
+#lst_login_form {
+    position: relative;
+}
+
+#login_wrap {
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 10px 0px;
+    padding: 14px 20px 12px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #ccc;
+    background-color: rgba(0,0,0,0.05);
+    box-shadow: none;
+    position: relative;
+    right:0; top:0;
+    max-width: 300px;
+}
+#login_wrap a {
+    color: #fff;
+    text-shadow: none;
+}
+
+#login_wrap .header_name {
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    text-align: left;
+}
+
+.header_cart {
+    margin-left: 0px;
+}
+
+#location {
+    height: 20px;
+    overflow: visible;
+    margin: 0;
+    padding: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    z-index: 300;
+    position: relative;
+    right:0;
+    text-align: left;
+}
+
+.lst-header-search {
+    clear: both;
+    margin: 10px 0px;
+}
+
+#s { width:75%; }
+#searchsubmit { width: 16%; float:right; }
+
+#navigation select {
+    width:96%;
+    margin: 2%;
+    padding: 2%;
+}
+
+@media (min-width: 600px) {
+
+    #lst_logo {
+    max-width: 50%;
+    float: left;
+    }
+
+    .lst_header_meta{
+    float: right;
+    }
+
+}
+
 /* ===[ Phone-sized devices and the like ]===
    ================================================== */
 @media only screen and (max-width: 680px) { 
@@ -200,38 +285,10 @@ cursor: pointer;
         min-width: 100px
     }
 }
-#login_wrap {
-    border: 1px solid rgba(0,0,0,0.2);
-    position: absolute;
-    padding: 14px 20px 12px;
-    top: 15px;
-    right: 0;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    background-color: #ccc;
-    background-color: rgba(0,0,0,0.05);
-    box-shadow: none;
-}
-#login_wrap a {
-    color: #fff;
-    text-shadow: none;
-}
 #navigation ul.sub-menu {
     z-index: 200
 }
-#location {
-    height: 50px;
-    margin-top: 20px;
-    overflow: visible;
-    position: absolute;
-    right: 200px;
-    top: 1px;
-    padding: 20px 20px 10px 20px;
-    cursor: pointer;
-    white-space: nowrap;
-    z-index: 300;
-}
+
 .mini_header {
     padding: 0px;
     margin-bottom: 10px;
@@ -280,10 +337,7 @@ div.row {
 }
 @media (min-width: 768px) and (max-width: 979px) { 
     
-    #logo img {
-        max-width: 90%;
-        width: auto;
-    }
+    
     a.mainImg {
         margin: 0 2%
     }
@@ -315,31 +369,13 @@ div.row {
     #navigation {
         padding: 0px
     }
-    #navigation select {
-        width: 70%;
-        margin: 5px;
-    }
     .font_large {
         font-size: 1.25em
-    }
-    #login_wrap {
-        top: 70px
-    }
-    .header_cart {
-        display: inline-block;
-        margin-left: -32px;
     }
     #header {
         min-height: 160px
     }
-    #location {
-        position: absolute;
-        left: 0;
-        top: 50px;
-    }
-    .header_meta {
-        display: block
-    }
+    
 }
 @media (max-width: 767px) { 
     a.mainImg img {
@@ -355,7 +391,6 @@ div.row {
     img {
         width: auto;
         height: auto;
-        max-width: 70%;
         vertical-align: middle;
         margin-bottom: 1em;
     }
@@ -370,10 +405,6 @@ div.row {
     #navigation {
         padding: 4px 0
     }
-    #logo img {
-        max-width: 100%;
-        width: auto;
-    }
 }
 @media (max-width: 680px) { 
     #subscribe_dd {
@@ -387,86 +418,20 @@ div.row {
     #navigation {
         padding: 0px
     }
-    #navigation select {
-        width: 70%;
-        margin: 5px;
-    }
-    #logo {
-        max-width: 100%;
-        padding: 5px 10px;
-    }
+    
 }
 @media (min-width: 690px) and (max-width: 767px) { 
-    #logo {
-        margin: 10px 0;
-        float: left;
-    }
+    
 }
 @media (max-width: 480px) { 
     #header {
         min-height: 140px
     }
 
-    .header_meta {
-        float:none;
-        margin:0px; padding:0px;
-    }
-
-    .lst-header-search {
-    float: none;
-}
-
-    #location {
-        position: relative;
-        top: 20px; right: 0;
-        margin: 0px; padding:0px;
-    }
-
-    #login_form {
-        float:none;
-        width:100%;
-        position: relative;
-        margin-bottom: 10px;
-    }
-
-    #login_wrap { 
-        top:5px;
-        margin-right: 0px;
-        padding: 5px;
-    }
-
-    .header-locations-drop-link {
-        width:100%;
-    }
-    #location .current_location {
-        width:90%;
-        overflow: hidden;
-        border: 1px solid rgba(0,0,0,0.2);
-        background-color: rgba(0,0,0,0.05);
-        border-radius: 4px;
-        background-position: -43px -243px;
-        margin: 0; padding-left: 10%;
-    }
-    #locations_header_wrap {
-        left: 20px;
-        top: 40px;
-        width: 170px;
-    }
-    #logo {
-        max-width: 100%
-    }
-    #logo img {
-        max-width: 100%;
-        margin-bottom: 0;
-    }
     img {
         width: auto;
         height: auto;
         max-width: 100%;
-    }
-    #navigation select {
-        width: 40%;
-        margin: 5px;
     }
     #footer .footer_widget_wrap {
         padding-top: 1em
