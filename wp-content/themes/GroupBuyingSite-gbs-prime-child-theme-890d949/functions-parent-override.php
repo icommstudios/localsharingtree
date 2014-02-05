@@ -587,6 +587,19 @@ function custom_cart_items($items, $cart) {
     return $items;
 }
 
+// Facebook Connect - Subscribe to mailchimp
+add_action('wp', 'custom_detect_facebook_registration');
+function custom_detect_facebook_registration() {
+	if ( isset($_GET['facebook_reg']) && is_user_logged_in() ) {
+		//Subscribe them
+		$current_user = wp_get_current_user();
+		$email = $current_user->user_email;
+		
+		if ( class_exists('Group_Buying_MailChimp') ) {
+			$retval = Group_Buying_MailChimp::subscribe( $email, $_COOKIE[ 'gb_location_preference' ] );
+		}
+	}
+}
 
 // Add Page number navigation
 
