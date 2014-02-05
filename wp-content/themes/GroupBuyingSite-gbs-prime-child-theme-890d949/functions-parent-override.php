@@ -601,6 +601,32 @@ function custom_detect_facebook_registration() {
 	}
 }
 
+if ($_GET['fbtest']) {
+	add_action('wp_footer', 'custom_fbttest_footer');
+	function custom_fbttest_footer() {
+		global $blog_id;
+		$uid = get_user_meta( get_current_user_id(), $blog_id.'_fb_uid', TRUE );	
+		echo '_fb_uid: '.$uid;
+		
+	}
+	add_filter('gb_facebook_scope', 'test_output_gb_facebook_scope', 10, 1);
+	function test_output_gb_facebook_scope($scope) {
+		echo ' <br>fb scope: '.$uid;
+		die($scope);	
+	}
+}
+
+if ($_GET['fbtestdelete']) {
+	add_action('wp_footer', 'custom_fbttest_delete_footer');
+	function custom_fbttest_delete_footer() {
+		global $blog_id;
+		$uid = delete_user_meta( get_current_user_id(), $blog_id.'_fb_uid' );	
+		echo 'deleted _fb_uid: '.$uid;
+		
+	}
+}
+
+
 // Add Page number navigation
 
 function wp_pagination($this_query = null) {
