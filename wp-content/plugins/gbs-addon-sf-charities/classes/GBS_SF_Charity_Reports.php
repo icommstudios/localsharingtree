@@ -130,6 +130,20 @@ class GBS_SF_Charity_Reports extends Group_Buying_Controller {
 			}
 		}
 		$report->records = $purchase_array;
+		
+		$report->total_donations = self::get_charity_total_donations( $_GET['id'] );
+	}
+	
+	public static function get_charity_total_donations($charity_id) {
+		
+		$purchases = GB_SF_Charities::get_purchase_by_charity( $charity_id );
+		$donation_amt = 0;
+		foreach ( 	$purchases as $purchase_id ) {
+			$purchase = Group_Buying_Purchase::get_instance( $purchase_id );
+			$donation = GB_SF_Charities::get_purchase_charity_donation_amount($purchase);	
+			$donation_amt += (float)$donation;
+		}
+		return $donation_amt;
 	}
 
 
@@ -164,7 +178,7 @@ class GBS_SF_Charity_Reports extends Group_Buying_Controller {
 		$valid = TRUE;
 		if ( isset( $_POST['gb_charity'] ) ) {
 			if ( $_POST['gb_charity'] == '' ) {
-				self::set_message( "A Charity Selection is Required. ", self::MESSAGE_STATUS_ERROR );
+				self::set_message( "A Non Profit Selection is Required. ", self::MESSAGE_STATUS_ERROR );
 				$valid = FALSE;
 			}
 		}

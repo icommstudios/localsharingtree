@@ -47,10 +47,14 @@
                 ?>
                 </tbody>
             </table><!-- End .gb_table -->
-            <?php if ($vouchers->found_posts > 5): ?>
+            <?php if ($purchases->found_posts > 5): ?>
                 <p><?php gb_e('This is a summary of your most recent donations.'); ?></p>
             <?php endif ?>
-
+            
+			<div>
+            <h4>Total Donations: <?php echo gb_get_formatted_money(GBS_SF_Charity_Reports::get_charity_total_donations( $charity_id )); ?></h4>
+            </div>
+            
             <?php
         } else {
             ?>

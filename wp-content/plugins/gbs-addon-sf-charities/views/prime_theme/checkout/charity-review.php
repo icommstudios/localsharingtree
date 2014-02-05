@@ -1,1 +1,1 @@
-<p class="contrast_light message"><strong><?php self::_e('Charity Contribution:'); ?></strong> <?php echo $donation_percentage.'% '; printf(self::__("of your purchase will be donated to <span class='charity-recipient'>%s</span>. Thank you!"), get_the_title( $charity_id ) ); ?></p>
+<p class="contrast_light message"><strong><?php self::_e('Non Profit Contribution:'); ?></strong> <?php echo $donation_percentage.'% '; printf(self::__("of your purchase will be donated to <span class='charity-recipient'>%s</span>. Thank you!"), get_the_title( $charity_id ) ); ?></p>

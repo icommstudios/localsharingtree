@@ -52,7 +52,7 @@ class GB_SF_Charities_Checkout extends Group_Buying_Controller {
 		$valid = TRUE;
 		if ( isset( $_POST['gb_charity'] ) ) {
 			if ( $_POST['gb_charity'] == '' ) {
-				self::set_message( "A Charity Selection is Required. ", self::MESSAGE_STATUS_ERROR );
+				self::set_message( "A Non Profit Selection is Required. ", self::MESSAGE_STATUS_ERROR );
 				$valid = FALSE;
 			}
 		}

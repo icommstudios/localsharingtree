@@ -3,15 +3,23 @@
 		self::_e('No Data');
 	} else {
 		global $gb_report_pages;
+		
+		//Get report instance
+		$report = Group_Buying_Reports::get_instance( $_GET['report'] );
 	?>
 
 <style type="text/css" media="screen">
 	.report_nav_button.active .report_button { background-position: left -89px; color: #000; }
 	.report_nav_button .report_button { background-position: left -30px; text-shadow: none; border: none; margin-right: 10px;}
 </style>
+
+<div style="border-bottom: 1px dotted #ccc; border-bottom: 1px dotted rgba(0,0,0,0.2); padding-bottom: 5px; margin-bottom: 10px;">
+<h3>Total Donations: <?php echo gb_get_formatted_money(GBS_SF_Charity_Reports::get_charity_total_donations( $_GET['id'] )); ?></h3>
+</div>
+
 <div id="report_navigation clearfix">
   <?php
-	$report = Group_Buying_Reports::get_instance( $_GET['report'] );
+	
   	$date_range = array(1,7,30,60,90,120,365);
 	foreach ($date_range as $range) {
 		$active = ($range == $_GET['range']) ? 'active' : '' ;
