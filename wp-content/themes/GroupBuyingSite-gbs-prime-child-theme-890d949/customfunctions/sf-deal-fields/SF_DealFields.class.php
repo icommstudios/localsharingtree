@@ -6,6 +6,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 	const DEBUG = TRUE;
 	
 	private static $meta_keys = array(
+		'start_date' => '_custom_start_date', // string
 		'voucher_expiration_comments' => '_voucher_expiration_comments', // string
 		'agree_terms' => '_custom_agree_terms', // string
 		'agree_reviewed_information' => '_custom_agree_reviewed_information', // string
@@ -45,6 +46,28 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		
 		$deal_id = ($deal) ? $deal->get_ID() : '';
 		
+		
+		//Add start date and checkbox option
+		$js_functions = '<script type="text/javascript">
+			jQuery(\'#gb_deal_start_date\').datetimepicker({minDate: 0, maxDate: "+90D"});
+			jQuery(\'#gb_deal_start_date\').change(function(){ 
+				jQuery(\'#gb_deal_start_date_now\').attr(\'checked\', false); 
+			}); 
+			jQuery(\'#gb_deal_start_date_now\').change(function(){ 
+				if (jQuery(this).attr(\'checked\') ) { 
+					jQuery(\'#gb_deal_start_date\').val(0); 
+				} 
+			});</script>';
+		
+		$fields['start_date'] = array(
+			'weight' => 4,
+			'label' => gb__( 'Deal Start Date' ),
+			'type' => 'text',
+			'required' => FALSE,
+			'default' => ($_POST['gb_deal_start_date']) ? $_POST['gb_deal_start_date'] : self::get_field($deal_id, self::$meta_keys['start_date']),
+			'description' => 'Choose the date your deal with start running ( No more than 90 days in advance ). You can also choose Publish now.<br><input type="checkbox" id="gb_deal_start_date_now"> Publish now ( as soon as approved ) '.str_replace(array("\r\n", "\r"), "\n", $js_functions)
+		);
+		
 		//Remove voucher codes
 		unset( $fields['voucher_serial_numbers'] );
 		
@@ -80,7 +103,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			'label' => self::__( 'Voucher Expiration Comments' ),
 			'type' => 'textarea',
 			'required' => FALSE,
-			'default' => ($_POST[self::$meta_keys['voucher_expiration_comments']]) ? $_POST[self::$meta_keys['voucher_expiration_comments']] : self::get_field($deal_id, self::$meta_keys['voucher_expiration_comments']),
+			'default' => ($_POST['gb_deal_voucher_expiration_comments']) ? $_POST['gb_deal_voucher_expiration_comments'] : self::get_field($deal_id, self::$meta_keys['voucher_expiration_comments']),
 			'description' => gb__('All Vouchers Expire 6 Months After Purchase Unless Otherwise Specified Here.')
 		);
 		
@@ -99,7 +122,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			'type' => 'checkbox',
 			'required' => TRUE,
 			'value' => 'yes',
-			'default' => ($_POST[self::$meta_keys['agree_reviewed_information']]) ? $_POST[self::$meta_keys['agree_reviewed_information']] : self::get_field($deal_id, self::$meta_keys['agree_reviewed_information']),
+			'default' => ($_POST['gb_deal_agree_reviewed_information']) ? $_POST['gb_deal_agree_reviewed_information'] : self::get_field($deal_id, self::$meta_keys['agree_reviewed_information']),
 		);
 		
 		$link_terms = site_url('/merchant-account-terms-and-conditions/');
@@ -109,7 +132,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 			'type' => 'checkbox',
 			'required' => TRUE,
 			'value' => 'yes',
-			'default' =>($_POST[self::$meta_keys['agree_terms']]) ? $_POST[self::$meta_keys['agree_terms']] : self::get_field($deal_id, self::$meta_keys['agree_terms']),
+			'default' =>($_POST['gb_deal_agree_terms']) ? $_POST['gb_deal_agree_terms'] : self::get_field($deal_id, self::$meta_keys['agree_terms']),
 		);
 		
 		return $fields;
@@ -118,9 +141,26 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 	public function custom_submit_deal( $deal ) {
 		if ( !$deal ) return;
 		
+		if ( isset( $_POST['gb_deal_start_date'] ) ) { //notice post field title for deal submit forms
+			$deal->save_post_meta( array(
+				self::$meta_keys['start_date'] => stripslashes($_POST['gb_deal_start_date'])
+			));
+		}
+		
 		if ( isset( $_POST['gb_deal_voucher_expiration_comments'] ) ) { //notice post field title for deal submit forms
 			$deal->save_post_meta( array(
 				self::$meta_keys['voucher_expiration_comments'] => stripslashes($_POST['gb_deal_voucher_expiration_comments'])
+			));
+		}
+		
+		if ( isset( $_POST['gb_deal_agree_terms'] ) ) {
+			$deal->save_post_meta( array(
+				self::$meta_keys['agree_terms'] => stripslashes($_POST['gb_deal_agree_terms'])
+			));
+		}
+		if ( isset( $_POST['gb_deal_agree_reviewed_information'] ) ) {
+			$deal->save_post_meta( array(
+				self::$meta_keys['agree_reviewed_information'] => stripslashes($_POST['gb_deal_agree_reviewed_information'])
 			));
 		}
 		
@@ -163,7 +203,14 @@ class SF_Deal_Fields extends Group_Buying_Controller {
                     
 						</td>
 					</tr>
+                    <tr>
+						<td>
+							<label for="<?php echo self::$meta_keys['start_date'] ?>"><?php gb_e( 'Deal Start Date (requested by merchant)' ); ?></label><br />
+							<input style="width:98%;" name="<?php echo self::$meta_keys['start_date'] ?>" id="<?php echo self::$meta_keys['start_date'] ?>" value="<?php echo esc_attr_e( self::get_field($post->ID, self::$meta_keys['start_date'])) ?>">
+                            <em>Note: If "0", then merchant requests to Publish Now.</em>
                     
+						</td>
+					</tr>
              	</tbody>
 			</table>
            
@@ -188,7 +235,13 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 	private static function save_meta_box( $post_id, $post ) {
 		
 		$deal = Group_Buying_Deal::get_instance($post_id);
-
+		
+		if ( isset( $_POST[self::$meta_keys['start_date']] ) ) {
+			$deal->save_post_meta( array(
+				self::$meta_keys['start_date'] => stripslashes($_POST[self::$meta_keys['start_date']])
+			));
+		}
+		
 		if ( isset( $_POST[self::$meta_keys['voucher_expiration_comments']] ) ) {
 			$deal->save_post_meta( array(
 				self::$meta_keys['voucher_expiration_comments'] => stripslashes($_POST[self::$meta_keys['voucher_expiration_comments']])
