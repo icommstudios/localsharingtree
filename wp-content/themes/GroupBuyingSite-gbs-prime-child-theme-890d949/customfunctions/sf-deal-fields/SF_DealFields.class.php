@@ -116,6 +116,9 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		
 		$fields['thumbnail']['description'] = gb__('Please Upload an Image That Represents Your Deal. For Example: A deal for lunch at a deli would have a picture of a deli sandwich. Every image is left to our discretion. If you do not upload an image or if your image is not approved, we will use a stock image.');
 		
+		$fields['max_purchases']['description'] =  gb__('<span>Optional:</span> Maximum number of purchases allowed for this deal.');
+		$fields['max_per_user']['description'] =  gb__('Optional: Maximum number of purchases allowed for this deal for one user per 6 weeks. After 6 weeks, the Max Purchases Per User will reset.');
+		
 		$fields['agree_reviewed_information'] = array(
 			'weight' => 200,
 			'label' => sprintf(self::__( 'I have reviewed the information I submitted and hereby certify that the statements and information in this form are true and correct to the best of my knowledge and belief, and I authorize <a href="http://www.LocalSharingTree.com" target="_blank">www.LocalSharingTree.com</a> to post this deal and any attachments submitted with it on their site.' ), $link_terms),
