@@ -225,7 +225,7 @@ font-size: 12px;
     text-align: left;
 }
 #login_wrap a {
-    color: #fff;
+    color: #025A78;
     text-shadow: none;
 }
 
@@ -259,6 +259,7 @@ width:100%;
 .header-locations-drop-link {
     color: white;
     letter-spacing: 1px;
+    font-size: 18px;
 }
 
 #location .current_location {
@@ -271,6 +272,7 @@ background: url("img/sprite.png") no-repeat scroll -45px -246px transparent;
     border-left: 1px solid rgba(0,0,0,0.2);
     border-bottom: 1px solid rgba(0,0,0,0.2);
     border-right: 1px solid rgba(0,0,0,0.2);
+    font-size: 13px;
 }
 
 .lst-header-search {
@@ -279,7 +281,10 @@ background: url("img/sprite.png") no-repeat scroll -45px -246px transparent;
 }
 
 #s {
-width:75%;
+width:78%;
+font-weight: normal;
+font-family: "Arvo", Arial, Helvetica, Geneva, sans-serif;
+font-size: 16px;
 -moz-opacity: 0.60;
  opacity: 0.60;
  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=60);
@@ -297,7 +302,11 @@ transition: all .3s ease-in-out;
  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=100); 
 }
 
-#searchsubmit { width: 16%; float:right; }
+#searchsubmit {
+    width: 16%;
+    float:right;
+    padding: 10px 20px;
+}
 
 #navigation select {
     width:96%;
@@ -315,6 +324,10 @@ transition: all .3s ease-in-out;
 
     .lst_header_meta{
     float: right;
+    }
+
+    #s {
+    width:80%;
     }
 
 }
