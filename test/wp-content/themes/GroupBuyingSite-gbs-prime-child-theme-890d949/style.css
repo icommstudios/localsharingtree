@@ -213,7 +213,7 @@ font-size: 12px;
 #login_wrap {
     border: 1px solid rgba(0,0,0,0.2);
     margin: 10px 0px;
-    padding: 14px 20px 12px;
+    padding: 14px 20px 8px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -222,7 +222,7 @@ font-size: 12px;
     box-shadow: none;
     position: relative;
     right:0; top:0;
-    max-width: 300px;
+    text-align: left;
 }
 #login_wrap a {
     color: #fff;
@@ -232,6 +232,7 @@ font-size: 12px;
 #login_wrap .header_name {
     border-bottom: 1px solid rgba(0,0,0,0.2);
     text-align: left;
+    color: #025A78;
 }
 
 .header_cart {
@@ -251,12 +252,51 @@ font-size: 12px;
     text-align: left;
 }
 
+#locations_header_wrap {
+width:100%;
+}
+
+.header-locations-drop-link {
+    color: white;
+    letter-spacing: 1px;
+}
+
+#location .current_location {
+background: url("img/sprite.png") no-repeat scroll -45px -246px transparent;
+}
+
+.locations-ul {
+    background-color: #ccc;
+    background-color: rgba(0,0,0,0.05);
+    border-left: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-right: 1px solid rgba(0,0,0,0.2);
+}
+
 .lst-header-search {
     clear: both;
     margin: 10px 0px;
 }
 
-#s { width:75%; }
+#s {
+width:75%;
+-moz-opacity: 0.60;
+ opacity: 0.60;
+ -ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=60);
+
+ -webkit-transition: all .3s ease-in-out;
+-moz-transition: all .3s ease-in-out;
+-ms-transition: all .3s ease-in-out;
+-o-transition: all .3s ease-in-out;
+transition: all .3s ease-in-out;
+}
+
+#s:focus {
+-moz-opacity: 1.0;
+ opacity: 1.0;
+ -ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=100); 
+}
+
 #searchsubmit { width: 16%; float:right; }
 
 #navigation select {
@@ -268,7 +308,8 @@ font-size: 12px;
 @media (min-width: 600px) {
 
     #lst_logo {
-    max-width: 50%;
+    margin-top: 15px;
+    max-width: 60%;
     float: left;
     }
 
