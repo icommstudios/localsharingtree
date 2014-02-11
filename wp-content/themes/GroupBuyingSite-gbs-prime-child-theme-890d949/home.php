@@ -4,13 +4,13 @@
 **/
 get_header(); ?>
 
-	<div id="home_page" class="container clearfix">
+	<div id="home_page" class="container text-center clearfix">
+
+		<img src="<?php gb_header_logo(); ?>" />
 		
 		<div id="content" class="home prime clearfix">
 			
 			<div class="mini_header home text-center">
-				
-				<img src="<?php gb_header_logo(); ?>" />
 			
 				<div id="subscription_form" class="clearfix">
 					<?php //gb_subscription_form() ?>
@@ -23,7 +23,7 @@ get_header(); ?>
 							if ( !empty( $locations ) ) {
 								?>
 									<span class="option location_options_wrap clearfix">
-										<label for="locations"><?php gb_e( 'Select a Location' ); ?></label><br />
+										<h2><label for="locations"><?php gb_e( 'Select a Location' ); ?></label></h2>
 										<?php
 											$current_location = null;
 											if ( isset( $_COOKIE[ 'gb_location_preference' ] ) && $_COOKIE[ 'gb_location_preference' ] != '' ) {
