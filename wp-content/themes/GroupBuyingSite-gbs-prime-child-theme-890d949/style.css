@@ -148,6 +148,7 @@ span.csv_download_link a {
 
 #header_wrap {
     padding: 0 .5em;
+    padding-top:36px;
 }
 
 .topnav-wrap {
@@ -155,6 +156,15 @@ background:#025A78;
 min-height: 40px;
 margin: 0px;
 padding:0px;
+position: fixed;
+top: 0px; left: 0px;
+width: 100%;
+z-index: 1200;
+}
+
+
+.logged-in .topnav-wrap {
+top:32px;
 }
 
 .topnav {
@@ -334,7 +344,14 @@ cursor: pointer;
 
 /* ===[ Phone-sized devices and the like ]===
    ================================================== */
-@media only screen and (max-width: 680px) { 
+@media only screen and (max-width: 680px) {
+
+    img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+    }
+    
     .fancybox_message_banner {
         min-width: 100px
     }
@@ -442,12 +459,7 @@ div.row {
     .container.main {
         width: 90%
     }
-    img {
-        width: auto;
-        height: auto;
-        vertical-align: middle;
-        margin-bottom: 1em;
-    }
+   
     #footer img {
         max-width: 50%;
         width: auto;
@@ -480,12 +492,6 @@ div.row {
 @media (max-width: 480px) { 
     #header {
         min-height: 140px
-    }
-
-    img {
-        width: auto;
-        height: auto;
-        max-width: 100%;
     }
     #footer .footer_widget_wrap {
         padding-top: 1em
