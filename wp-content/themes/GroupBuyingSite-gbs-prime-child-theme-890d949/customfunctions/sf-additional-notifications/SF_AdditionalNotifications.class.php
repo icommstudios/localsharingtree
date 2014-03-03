@@ -18,7 +18,7 @@ class SF_Additional_Notifications extends Group_Buying_Controller
 		
 		//Replace default admin notfication
 		remove_action( 'gb_admin_notification', array('Group_Buying_Notifications', 'admin_notification' ), 10, 2 );
-		add_action('gb_admin_notification', array(get_class(),'new_admin_notification'), 10, 2);
+		add_action('gb_admin_notification', array(get_class(), 'new_admin_notification'), 10, 2);
 		
 		//Add Shortcode
 		add_filter('gb_notification_shortcodes', array(get_class(), 'add_shortcodes'), 10, 1);
@@ -259,6 +259,10 @@ class SF_Additional_Notifications extends Group_Buying_Controller
 			$newdata['user'] = $user;
 			$newdata['rand'] = mt_rand();
 			$newdata['deal'] = $info[0]; //deal is info array (should be in data - gbs bug)
+			if ( empty($info[0]) && is_object($data) ) {
+				 //if they ever fix the bug
+				 $newdata['deal'] = $data;
+			}
 			
 			Group_Buying_Notifications::send_notification( 'merchant_deal_submitted', $newdata, $to );
 			
@@ -267,7 +271,11 @@ class SF_Additional_Notifications extends Group_Buying_Controller
 			$newdata['user'] = $user;
 			$newdata['rand'] = mt_rand();
 			$newdata['merchant'] = $info[0]; //merchant is info array (should be in data - gbs bug)
-			
+			if ( empty($info[0]) && is_object($data) ) {
+				 //if they ever fix the bug
+				 $newdata['merchant'] = $data;
+			}
+	
 			Group_Buying_Notifications::send_notification( 'merchant_registration', $newdata, $to );
 			
 		} else {
