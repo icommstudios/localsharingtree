@@ -7,11 +7,11 @@ if ( $account_merchant_id ) {
 }
 
 // Pending deals
-	if ( is_array( $merchants_deal_ids ) && function_exists('gb_deal_preview_available') ) {
+	if ( is_array( $merchants_deal_ids ) && !empty( $merchants_deal_ids ) && function_exists('gb_deal_preview_available') ) {
 		$deals= null;
 		$args=array(
 			'post_type' => gb_get_deal_post_type(),
-			'post__in' => $merchant_deal_ids,
+			'post__in' => $merchants_deal_ids,
 			'post_status' => array('pending','draft','future','private'),
 			'posts_per_page' => -1, // return this many
 			
@@ -33,12 +33,13 @@ if ( $account_merchant_id ) {
 					<tbody>
 					<?php
 					while ($deals->have_posts()) : $deals->the_post();
+					
 						if ( gb_get_status() !== 'closed' ) {
 							?>
 							<tr>
 								<td class="td_status"><?php echo get_post_status(get_the_ID()) ?></td>
 								<td class="purchase_deal_title va-middle">
-									<strong><?php the_title() ?></strong>
+									<strong><?php the_title(); ?></strong>
 								</td>
 								<td class="td_deal_preview va-middle">
 									<?php if ( gb_deal_preview_available() ): ?>

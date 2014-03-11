@@ -3,6 +3,9 @@
 class GB_SF_Charity extends Group_Buying_Post_Type {
 	const POST_TYPE = 'gb_charities';
 	const REWRITE_SLUG = 'charities';
+	
+	const CHARITY_TYPE_TAXONOMY = 'gb_charity_type';
+	const CHARITY_TYPE_TAX_SLUG = 'charity-type';
 
 	private static $instances = array();
 
@@ -17,6 +20,18 @@ class GB_SF_Charity extends Group_Buying_Post_Type {
 	public static function init() {
 		// Register
 		self::register_charity_post_type();
+		
+		// register Charity Type taxonomy
+		$singular = 'Charity Type';
+		$plural = 'Charity Types';
+		$taxonomy_args = array(
+			'rewrite' => array(
+				'slug' => self::CHARITY_TYPE_TAX_SLUG,
+				'with_front' => FALSE,
+				'hierarchical' => TRUE,
+			),
+		);
+		self::register_taxonomy( self::CHARITY_TYPE_TAXONOMY, array( self::POST_TYPE ), $singular, $plural, $taxonomy_args );
 
 	}
 

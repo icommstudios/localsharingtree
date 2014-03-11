@@ -23,6 +23,33 @@ register_nav_menus( array(
 		'header' => gb__( 'Header Menu' ),
 		'topnav' => gb__( 'TopNav Menu' )
 	) );
+	
+// Register the sidebars 
+add_action( 'widgets_init', 'register_custom_sidebars', 11 );
+function register_custom_sidebars() {
+	register_sidebar(
+		array(
+			'name' => 'Charities Sidebar',
+			'id'            => 'charities-sidebar',
+			'description'   => 'Used on the Charities archive page.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => '<div class="clear"></div></div>',
+			'before_title' => '<h2 class="widget-title gb_ff">',
+			'after_title' => '</h2>'
+		)
+	);
+	register_sidebar(
+		array(
+			'name' => 'Single Charity Sidebar',
+			'id'            => 'charity-sidebar',
+			'description'   => 'Used on the single Charity page.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => '<div class="clear"></div></div>',
+			'before_title' => '<h2 class="widget-title gb_ff">',
+			'after_title' => '</h2>'
+		)
+	);
+}
 
 //Add Mailchimp Unsubscribe feature
 add_filter('subscribe_mc_groupins','custom_do_unsubscribe_mailchimp', 99, 2);
@@ -652,4 +679,51 @@ function wp_pagination($this_query = null) {
 			   echo '</ul></div>';
 	}
 }
+
+//Add Filter by letter
+function custom_show_filter_letters() {
+	
+	$letters = array('A','B','C','D','E','F','G','H','I','J','K','L','M',
+					 'N', 'O','P','Q','R','S','T','U','V','W','X','Y','Z');
+	
+	echo '<div class="pagination filter_by_letter"><ul>';
+	echo '<li><span>Starts with: </span></li>';
+	foreach ( $letters as $l) {
+		$letter_url = add_query_arg(array('lf' => $l), home_url($_SERVER['REQUEST_URI']));
+		
+		if ( $_GET['lf'] == $l ) {
+			echo '<li class="current_letter"><span class="current">'.$l.'</span></li>';
+		} else {
+			echo '<li><a href="'.$letter_url.'" class>'.$l.'</a></li>';
+		}
+	}
+   	echo '</ul></div>';
+	
+}
+//Filter the query to filter by letter
+add_filter('posts_where', 'sf_filter_archive_by_letter');
+function sf_filter_archive_by_letter ( $where ) {
+	global $wp_query, $wpdb;
+
+	//Do not filter for some pages
+	if ( isset( $_GET['lf'] ) && !empty( $_GET['lf'] ) && !is_admin() && is_main_query() ) {
+	   
+	   //Filter for these cases
+	   if ( is_post_type_archive( 'gb_charities' ) 
+	   			|| is_post_type_archive( 'gb_merchant' )
+				|| is_tax( 'gb_charity_type' )
+				|| is_tax( 'gb_merchant_type')  ) {
+	   
+			$letter_filter = $_GET['lf'];
+	
+			if ( !empty($letter_filter) ) {
+				$where .= " AND $wpdb->posts.post_title LIKE '".$letter_filter."%'";
+				return $where;
+			} 
+	   }
+	}
+	return $where;
+}
+
+
 
