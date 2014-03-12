@@ -10,6 +10,27 @@
 /* ===[ Add your custom styles below: ]===
    ================================================== */
 
+.success {
+background: #1c5d27 !important;
+}
+
+.warning {
+background: #8e2a2a !important;
+}
+
+.button-light {
+    border-radius: 0.4em;
+    background-color: rgba(0,0,0,.4) !important;
+
+    text-shadow: rgba(0,0,0,0.5) 0 1px 1px;
+    border: none;
+    padding: 8px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
 
 h2.section_heading, legend.section_heading, .section_heading a, .table_heading {
 display: inline-block;
@@ -50,7 +71,14 @@ background-color: #ffffff;
 border: 1px solid #dddddd;
 border-left-width: 0;
 }
+.pagination ul>li>a:hover, .pagination ul>li>a:focus {
+    background: #f4f4f4;
+}
 
+ /* Filter by Letter */
+.filter_by_letter>ul>li>a {
+padding: 4px 8px;
+}
  
 .video-container {
     position: relative;
@@ -154,7 +182,7 @@ span.csv_download_link a {
 
 #header_wrap {
     padding: 0 .5em;
-    padding-top:36px;
+    padding-top: 15px;
 }
 
 .topnav-wrap {
@@ -169,9 +197,9 @@ z-index: 1200;
 }
 
 
-.logged-in .topnav-wrap {
+/*.logged-in .topnav-wrap {
 top:32px;
-}
+}*/
 
 .topnav {
 position: relative;

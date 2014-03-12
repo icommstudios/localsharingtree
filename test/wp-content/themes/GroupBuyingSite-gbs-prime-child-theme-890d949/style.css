@@ -10,6 +10,14 @@
 /* ===[ Add your custom styles below: ]===
    ================================================== */
 
+.success {
+background: #1c5d27 !important;
+}
+
+.warning {
+background: #8e2a2a !important;
+}
+
 .page_title {
     padding-bottom: 10px;
 }

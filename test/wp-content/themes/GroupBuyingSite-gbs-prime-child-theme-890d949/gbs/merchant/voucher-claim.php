@@ -12,9 +12,10 @@
 	?>	
 <?php if ( FALSE != $claimed ) : ?>
 	<div id="voucher_claimed_warning" class="main_block clearfix">
-		<p class="success button font_xx_large"><?php gb_e('Voucher Redeemed!') ?></p>
+		<p class="warning button font_xx_large"><?php gb_e('Voucher Already Redeemed!') ?></p>
 		<?php $redemption_data = $voucher->get_redemption_data(); ?>
-		<span class="voucher_info_title gb_ff"><?php gb_e('Voucher marked claimed:') ?></span> <span class="voucher_info button"><?php echo date(get_option('date_format'),$claimed) ?></span>
+		<span class="voucher_info_title gb_ff"><?php gb_e('Voucher marked claimed:') ?></span> <span class="voucher_info button warning"><?php echo date(get_option('date_format'),$claimed) ?></span>
+		<div class="alert"><small>*this voucher is no longer valid - do not accept</small></div>
 	</div>
 <?php else: ?>
 	<form id="claim_voucher"  class="main_block registration_layout"  action="" method="post">
