@@ -32,6 +32,9 @@ class GB_SF_Charity extends Group_Buying_Post_Type {
 			),
 		);
 		self::register_taxonomy( self::CHARITY_TYPE_TAXONOMY, array( self::POST_TYPE ), $singular, $plural, $taxonomy_args );
+		
+		//Add location taxonomy
+		add_action('init', array(get_class(), 'custom_add_locations_taxonomy'), 999);
 
 	}
 
@@ -147,6 +150,12 @@ class GB_SF_Charity extends Group_Buying_Post_Type {
 		}
 		return $account_id;
 	}
+	
+	
+	public static function custom_add_locations_taxonomy() {
+		register_taxonomy_for_object_type( Group_Buying_Deal::LOCATION_TAXONOMY, 'gb_charities' );
+	}
+	
 	
 	
 	/**
