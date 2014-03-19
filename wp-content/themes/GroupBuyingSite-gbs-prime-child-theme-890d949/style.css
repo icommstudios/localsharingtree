@@ -10,6 +10,14 @@
 /* ===[ Add your custom styles below: ]===
    ================================================== */
 
+body {
+    padding-top: 40px;
+}
+
+body.logged-in  {
+    padding-top: 0px;
+}
+
 .success {
 background: #1c5d27 !important;
 }
@@ -186,7 +194,7 @@ span.csv_download_link a {
 }
 
 .topnav-wrap {
-background:#025A78;
+background:#1c5d27;
 min-height: 40px;
 margin: 0px;
 padding:0px;
@@ -361,7 +369,6 @@ cursor: pointer;
     }
 
     #lst_logo {
-    margin-top: 15px;
     max-width: 60%;
     float: left;
     }
