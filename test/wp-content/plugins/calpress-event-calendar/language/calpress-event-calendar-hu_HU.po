@@ -1,0 +1,1274 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CalPress Calendar v1.5.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-06-13 13:26:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: app/helper/class-calp-events-helper.php:555
+#: app/helper/class-calp-events-helper.php:574
+#: app/helper/class-calp-events-helper.php:1506
+#: app/helper/class-calp-settings-helper.php:273
+#: app/view/box_time_and_date.php:58
+#@ calpress-event-calendar
+msgid "Daily"
+msgstr "Napi"
+
+#: app/helper/class-calp-events-helper.php:556
+#: app/helper/class-calp-events-helper.php:575
+#: app/helper/class-calp-events-helper.php:1518
+#: app/view/box_time_and_date.php:59
+#@ calpress-event-calendar
+msgid "Weekly"
+msgstr "Heti"
+
+#: app/helper/class-calp-events-helper.php:557
+#: app/helper/class-calp-events-helper.php:576
+#: app/helper/class-calp-events-helper.php:1530
+#: app/view/box_time_and_date.php:60
+#@ calpress-event-calendar
+msgid "Monthly"
+msgstr "Havi"
+
+#: app/helper/class-calp-events-helper.php:558
+#: app/helper/class-calp-events-helper.php:577
+#: app/helper/class-calp-events-helper.php:1542
+#: app/view/box_time_and_date.php:61
+#@ calpress-event-calendar
+msgid "Yearly"
+msgstr "Évi"
+
+#: app/helper/class-calp-events-helper.php:599
+#@ calpress-event-calendar
+msgid "day(s)"
+msgstr "Nap(ok)"
+
+#: app/helper/class-calp-events-helper.php:628
+#@ calpress-event-calendar
+msgid "week(s)"
+msgstr "Hét(ek)"
+
+#: app/helper/class-calp-events-helper.php:680
+#@ calpress-event-calendar
+msgid "month(s)"
+msgstr "Hónap(ok)"
+
+#: app/helper/class-calp-events-helper.php:701
+#@ calpress-event-calendar
+msgid "year(s)"
+msgstr "Év(ek)"
+
+#: app/helper/class-calp-events-helper.php:1314
+#@ calpress-event-calendar
+msgid "Never"
+msgstr "Soha"
+
+#: app/helper/class-calp-events-helper.php:1315
+#@ calpress-event-calendar
+msgid "After"
+msgstr "Után"
+
+#: app/helper/class-calp-events-helper.php:1316
+#: app/view/box_time_and_date.php:84
+#@ calpress-event-calendar
+msgid "On date"
+msgstr "Dátum szerint"
+
+#: app/helper/class-calp-events-helper.php:1400
+#: app/helper/class-calp-events-helper.php:1429
+#: app/helper/class-calp-events-helper.php:1457
+#@ calpress-event-calendar
+msgid "and"
+msgstr "és"
+
+#: app/helper/class-calp-events-helper.php:1425
+#: app/helper/class-calp-events-helper.php:1432
+#: app/helper/class-calp-events-helper.php:1438
+#@ calpress-event-calendar
+msgid "of the month"
+msgstr "A hónap"
+
+#: app/helper/class-calp-events-helper.php:1509
+#@ calpress-event-calendar
+msgid "Every other day"
+msgstr "Minden második nap"
+
+#: app/helper/class-calp-events-helper.php:1511
+#, php-format
+#@ calpress-event-calendar
+msgid "Every %d days"
+msgstr "Minden %d nap"
+
+#: app/helper/class-calp-events-helper.php:1521
+#@ calpress-event-calendar
+msgid "Every other week"
+msgstr "Minden második héten"
+
+#: app/helper/class-calp-events-helper.php:1523
+#, php-format
+#@ calpress-event-calendar
+msgid "Every %d weeks"
+msgstr "Minden %d Héten"
+
+#: app/helper/class-calp-events-helper.php:1533
+#@ calpress-event-calendar
+msgid "Every other month"
+msgstr "Minden hónapban"
+
+#: app/helper/class-calp-events-helper.php:1535
+#, php-format
+#@ calpress-event-calendar
+msgid "Every %d months"
+msgstr "Minden %d hónapban"
+
+#: app/helper/class-calp-events-helper.php:1545
+#@ calpress-event-calendar
+msgid "Every other year"
+msgstr "Minden más évben"
+
+#: app/helper/class-calp-events-helper.php:1547
+#, php-format
+#@ calpress-event-calendar
+msgid "Every %d years"
+msgstr "Minden %d évek"
+
+#: app/helper/class-calp-events-helper.php:1567
+#, php-format
+#@ calpress-event-calendar
+msgid "until %s"
+msgstr "-ig %s"
+
+#: app/helper/class-calp-events-helper.php:1570
+#, php-format
+#@ calpress-event-calendar
+msgid "for %d occurrences"
+msgstr "az %d előfordulását"
+
+#: app/helper/class-calp-events-helper.php:1572
+#@ calpress-event-calendar
+msgid "forever"
+msgstr "mindig"
+
+#. translators: "%s" represents the week's starting date
+#: app/helper/class-calp-calendar-helper.php:1328
+#, php-format
+#@ calpress-event-calendar
+msgid "%s - %s"
+msgstr "%s - %s"
+
+#: app/helper/class-calp-calendar-helper.php:1329
+#: app/helper/class-calp-calendar-helper.php:1330
+#@ calpress-event-calendar
+msgid "M j"
+msgstr "M j"
+
+#: app/helper/class-calp-settings-helper.php:86
+#@ calpress-event-calendar
+msgid "- Auto-Create New Page -"
+msgstr "- Új oldal automatikusan -"
+
+#: app/helper/class-calp-settings-helper.php:108
+#, php-format
+#@ calpress-event-calendar
+msgid "View \"%s\" »"
+msgstr "\"%s\" Néz »"
+
+#: app/helper/class-calp-settings-helper.php:150
+#: app/view/calendar.php:158
+#@ calpress-event-calendar
+msgid "Month"
+msgstr "Hónap"
+
+#: app/helper/class-calp-settings-helper.php:153
+#: app/view/calendar.php:151
+#@ calpress-event-calendar
+msgid "Week"
+msgstr "Hét"
+
+#: app/helper/class-calp-settings-helper.php:156
+#@ calpress-event-calendar
+msgid "Agenda"
+msgstr "Naptár"
+
+#: app/helper/class-calp-settings-helper.php:159
+#: app/view/calendar.php:226
+#: app/view/month.php:15
+#@ calpress-event-calendar
+msgid "Today"
+msgstr "Ma"
+
+#: app/helper/class-calp-settings-helper.php:240
+#@ calpress-event-calendar
+msgid "Default (d/m/y)"
+msgstr "Default (d/m/y)"
+
+#: app/helper/class-calp-settings-helper.php:243
+#@ calpress-event-calendar
+msgid "US (m/d/y)"
+msgstr "US (m/d/y)"
+
+#: app/helper/class-calp-settings-helper.php:246
+#@ calpress-event-calendar
+msgid "ISO 8601 (y-m-d)"
+msgstr "ISO 8601 (y-m-d)"
+
+#: app/helper/class-calp-settings-helper.php:249
+#@ calpress-event-calendar
+msgid "Dotted (m.d.y)"
+msgstr "Dotted (m.d.y)"
+
+#: app/helper/class-calp-settings-helper.php:267
+#@ calpress-event-calendar
+msgid "Hourly"
+msgstr "Óránkénti"
+
+#: app/helper/class-calp-settings-helper.php:270
+#@ calpress-event-calendar
+msgid "Twice Daily"
+msgstr "Naponta kétszer"
+
+#: app/helper/class-calp-settings-helper.php:357
+#@ calpress-event-calendar
+msgid "Calendar"
+msgstr "Naptár"
+
+#: app/controller/class-calp-settings-controller.php:125
+#@ calpress-event-calendar
+msgid "Settings Updated."
+msgstr "Beállítások frissítve."
+
+#: app/controller/class-calp-settings-controller.php:216
+#, php-format
+#@ calpress-event-calendar
+msgid "Flushed %d events"
+msgstr "%d Események eltávolítása"
+
+#: app/controller/class-calp-settings-controller.php:224
+#: app/controller/class-calp-settings-controller.php:274
+#@ calpress-event-calendar
+msgid "Invalid ICS feed ID"
+msgstr "Érvénytelen ICS - ID"
+
+#: app/controller/class-calp-settings-controller.php:259
+#@ calpress-event-calendar
+msgid "No events were found"
+msgstr "Nem található esemény"
+
+#: app/controller/class-calp-settings-controller.php:264
+#, php-format
+#@ calpress-event-calendar
+msgid "Imported %d events"
+msgstr "%d Események importiálása"
+
+#: app/controller/class-calp-settings-controller.php:265
+#: app/view/feed_row.php:22
+#, php-format
+#@ calpress-event-calendar
+msgid "Flush 1 event"
+msgid_plural "Flush %s events"
+msgstr[0] "1 esemény eltávolítása"
+msgstr[1] "%s esemény eltávolítása"
+
+#: app/controller/class-calp-settings-controller.php:373
+#, php-format
+#@ calpress-event-calendar
+msgid "<a href=\"%s\">Settings</a>"
+msgstr "<a href=\"%s\">Beállítások</a>"
+
+#: app/controller/class-calp-importer-controller.php:92
+#@ calpress-event-calendar
+msgid "The Events Calendar → All-in-One Event Calendar"
+msgstr "The Events Calendar → All-in-One Event Calendar"
+
+#: app/controller/class-calp-importer-controller.php:93
+#@ calpress-event-calendar
+msgid "Imports events created using The Events Calendar plugin into the All-in-One Event Calendar"
+msgstr "Import események segítségével létrehozott The Eseménynaptár bővítmény az All-in-One Eseménynaptár"
+
+#: app/controller/class-calp-calendar-controller.php:312
+#, php-format
+#@ calpress-event-calendar
+msgid "%s , %s"
+msgstr "%s , %s"
+
+#. translators: "%s" represents the week's starting date
+#: app/controller/class-calp-calendar-controller.php:376
+#, php-format
+#@ calpress-event-calendar
+msgid "Week of %s"
+msgstr "Hét %s"
+
+#: app/controller/class-calp-calendar-controller.php:376
+#@ calpress-event-calendar
+msgid "F j"
+msgstr "F j"
+
+#: app/controller/class-calp-events-controller.php:291
+#@ calpress-event-calendar
+msgid "times"
+msgstr "idő"
+
+#: app/controller/class-calp-events-controller.php:416
+#, php-format
+#@ calpress-event-calendar
+msgid "Event updated. <a href=\"%s\">View event</a>"
+msgstr "Esemény frissítve. <a href=\"%s\">Esemény megtekintése</a>"
+
+#: app/controller/class-calp-events-controller.php:417
+#@ calpress-event-calendar
+msgid "Custom field updated."
+msgstr "Egyéni mező frissítve."
+
+#: app/controller/class-calp-events-controller.php:418
+#@ calpress-event-calendar
+msgid "Custom field deleted."
+msgstr "Egyéni mező törölve."
+
+#: app/controller/class-calp-events-controller.php:419
+#@ calpress-event-calendar
+msgid "Event updated."
+msgstr "Esemény frissítve."
+
+#. translators: %s: date and time of the revision
+#: app/controller/class-calp-events-controller.php:421
+#, php-format
+#@ calpress-event-calendar
+msgid "Event restored to revision from %s"
+msgstr "Visszaállított esemény%s "
+
+#: app/controller/class-calp-events-controller.php:422
+#, php-format
+#@ calpress-event-calendar
+msgid "Event published. <a href=\"%s\">View event</a>"
+msgstr "Esemény közzétéve. <a href=\"%s\">Esemény megtekintése</a>"
+
+#: app/controller/class-calp-events-controller.php:423
+#@ default
+msgid "Event saved."
+msgstr "Esemény mentve."
+
+#: app/controller/class-calp-events-controller.php:424
+#, php-format
+#@ calpress-event-calendar
+msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
+msgstr "Elküldött esemény. <a target=\"_blank\" href=\"%s\">Esemény megtekintése</a>"
+
+#: app/controller/class-calp-events-controller.php:425
+#, php-format
+#@ calpress-event-calendar
+msgid "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview event</a>"
+msgstr "Esemény tervezett: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Esemény megtekintése</a>"
+
+#: app/controller/class-calp-events-controller.php:427
+#@ calpress-event-calendar
+msgid "M j, Y @ G:i"
+msgstr "M j, Y @ G:i"
+
+#: app/controller/class-calp-events-controller.php:428
+#, php-format
+#@ calpress-event-calendar
+msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
+msgstr "Esemény tervezet frissítve.<a target=\"_blank\" href=\"%s\">Esemény megtekintése</a>"
+
+#: app/controller/class-calp-app-controller.php:436
+#: app/controller/class-calp-app-controller.php:437
+#@ calpress-event-calendar
+msgid "Settings"
+msgstr "Beállitások"
+
+#: app/model/class-calp-event.php:475
+#: app/view/agenda_list.php:52
+#@ calpress-event-calendar
+msgid " (all-day)"
+msgstr "(Egész nap)"
+
+#: app/view/event-excerpt.php:2
+#@ calpress-event-calendar
+msgid "When:"
+msgstr "Mikor:"
+
+#: app/view/event-excerpt.php:6
+#@ calpress-event-calendar
+msgid "Where:"
+msgstr "Hol:"
+
+#: app/view/calendar.php:21
+#@ calpress-event-calendar
+msgid "Hide map"
+msgstr "Térkép elrejtése"
+
+#: app/view/calendar.php:26
+#: app/view/event-popup.php:25
+#@ calpress-event-calendar
+#@ default
+msgid "Show map"
+msgstr "Térkép mutatása"
+
+#: app/view/calendar.php:80
+#@ calpress-event-calendar
+msgid "Calendar "
+msgstr "Naptár"
+
+#: app/view/calendar.php:91
+#@ calpress-event-calendar
+msgid "Show Calendars"
+msgstr "Naptár Mutatása"
+
+#: app/view/calendar.php:40
+#: app/view/calendar.php:109
+#@ calpress-event-calendar
+msgid "Hide All Calendars"
+msgstr "Minden Naptárt Elrejt"
+
+#: app/view/calendar.php:144
+#@ calpress-event-calendar
+msgid "Day"
+msgstr "Nap"
+
+#: app/view/calendar.php:165
+#@ calpress-event-calendar
+msgid "List"
+msgstr "Lista"
+
+#: app/helper/class-calp-app-helper.php:546
+#@ calpress-event-calendar
+msgid "Type"
+msgstr "Típus"
+
+#: app/view/box_time_and_date.php:2
+#@ calpress-event-calendar
+msgid "Event date and time"
+msgstr "Esemény dátuma és ideje"
+
+#: app/view/box_time_and_date.php:8
+#@ calpress-event-calendar
+msgid "All-day event"
+msgstr "Egész napos esemény"
+
+#: app/view/box_time_and_date.php:18
+#@ calpress-event-calendar
+msgid "Start date / time"
+msgstr "Indítás dátum / idő"
+
+#: app/view/box_time_and_date.php:31
+#@ calpress-event-calendar
+msgid "End date / time"
+msgstr "Vége dátum / idő"
+
+#: app/view/box_time_and_date.php:46
+#@ calpress-event-calendar
+msgid "Repeat"
+msgstr "Ismétlés"
+
+#: app/view/box_time_and_date.php:70
+#@ calpress-event-calendar
+msgid "End"
+msgstr "Vége"
+
+#: app/view/box_time_and_date.php:77
+#@ calpress-event-calendar
+msgid "Ending after"
+msgstr "Vége után"
+
+#: app/view/box_time_and_date.php:92
+#@ calpress-event-calendar
+msgid "Apply"
+msgstr "Alkalmaz"
+
+#: app/view/box_time_and_date.php:93
+#@ calpress-event-calendar
+msgid "Cancel"
+msgstr "Töröl"
+
+#: app/view/import.php:6
+#@ calpress-event-calendar
+msgid "Successfully imported events:"
+msgstr "Sikeresen importálva események:"
+
+#: app/view/box_event_contact.php:1
+#@ calpress-event-calendar
+msgid "Organizer contact info"
+msgstr "Szervező elérhetőségei"
+
+#: app/view/box_event_contact.php:7
+#@ calpress-event-calendar
+msgid "Contact name:"
+msgstr "Kapcsolattartó neve:"
+
+#: app/view/box_event_contact.php:17
+#@ calpress-event-calendar
+msgid "Phone:"
+msgstr "Tel.:"
+
+#: app/view/box_event_contact.php:27
+#@ calpress-event-calendar
+msgid "E-mail:"
+msgstr "E-mail:"
+
+#: app/view/agenda.php:41
+#: app/view/agenda_list.php:49
+#: app/view/agenda_list.php:55
+#: app/view/agenda_search.php:39
+#: app/view/event-popup.php:56
+#: app/view/event-popup.php:61
+#: app/view/search.php:26
+#: app/view/today.php:73
+#: app/view/today.php:78
+#@ calpress-event-calendar
+#@ default
+msgid "to"
+msgstr "irányában"
+
+#: app/view/agenda.php:43
+#@ calpress-event-calendar
+msgid "all-day"
+msgstr "egész nap"
+
+#: app/view/row_daily.php:3
+#: app/view/row_monthly.php:3
+#: app/view/row_weekly.php:3
+#: app/view/row_yearly.php:3
+#@ calpress-event-calendar
+msgid "Every"
+msgstr "Minden"
+
+#: app/view/box_ics_import_settings.php:6
+#@ calpress-event-calendar
+msgid "Auto-refresh"
+msgstr "Automatikus frissítés"
+
+#: app/view/box_ics_import_settings.php:18
+#: app/view/feed_row.php:3
+#@ calpress-event-calendar
+msgid "iCalendar/.ics Feed URL:"
+msgstr "iCalendar/.ics Feed URL:"
+
+#: app/view/box_ics_import_settings.php:22
+#@ calpress-event-calendar
+msgid "Event category"
+msgstr "Esemény kategória"
+
+#: app/view/box_ics_import_settings.php:28
+#: app/view/feed_row.php:15
+#@ calpress-event-calendar
+msgid "Tag with"
+msgstr "Tag with"
+
+#: app/view/box_ics_import_settings.php:32
+#@ calpress-event-calendar
+msgid "+ Add new subscription"
+msgstr "+ Új előfizetés"
+
+#: app/view/feed_row.php:9
+#@ calpress-event-calendar
+msgid "Event category:"
+msgstr "Esemény kategóriája:"
+
+#: app/view/feed_row.php:19
+#@ calpress-event-calendar
+msgid "× Delete"
+msgstr "× Törlés"
+
+#: app/view/feed_row.php:20
+#@ calpress-event-calendar
+msgid "Update"
+msgstr "Frissítse"
+
+#: app/view/event_categories-color_picker.php:5
+#: app/view/event_categories-color_picker.php:19
+#@ calpress-event-calendar
+msgid "Category Color"
+msgstr "Kategória: Színek"
+
+#: app/view/event_categories-color_picker.php:13
+#: app/view/event_categories-color_picker.php:25
+#@ calpress-event-calendar
+msgid "Events in this category will be identified by this color"
+msgstr "Események ebben a kategóriában fogja azonosítani ezt a színt"
+
+#: app/view/box_general_settings.php:1
+#@ calpress-event-calendar
+msgid "Viewing Events"
+msgstr "Események megtekintése"
+
+#: app/view/box_general_settings.php:3
+#@ calpress-event-calendar
+msgid "Calendar page:"
+msgstr "Naptár oldal:"
+
+#: app/view/box_general_settings.php:7
+#@ calpress-event-calendar
+msgid "Default calendar view:"
+msgstr "Alapértelmezett naptár nézet:"
+
+#: app/view/box_general_settings.php:15
+#@ calpress-event-calendar
+msgid "Timezone:"
+msgstr "Időzóna:"
+
+#: app/view/box_general_settings.php:19
+#@ calpress-event-calendar
+msgid "Week starts on"
+msgstr "A hét első napja"
+
+#: app/view/search.php:40
+#: app/view/search.php:43
+#: app/view/search.php:46
+#@ calpress-event-calendar
+msgid "events"
+msgstr "Események"
+
+#: app/view/box_general_settings.php:37
+#@ calpress-event-calendar
+msgid "Use the configured <strong>region</strong> (WordPress locale) to bias the address autocomplete function"
+msgstr "Használja a beállított <strong> régió </ strong> (WordPress locale) a torzítás a cím automatikus kiegészítés funkció"
+
+#: app/view/box_general_settings.php:23
+#@ calpress-event-calendar
+msgid "Adding/Editing Events"
+msgstr "Hozzáadása / Szerkesztése Események"
+
+#: app/view/box_general_settings.php:25
+#@ calpress-event-calendar
+msgid "Input dates in this format:"
+msgstr "Bemenő dátumok ebben a formátumban:"
+
+#: app/view/box_event_cost.php:1
+#@ calpress-event-calendar
+msgid "Event cost"
+msgstr "Esemény ár"
+
+#: app/view/box_event_cost.php:7
+#@ calpress-event-calendar
+msgid "Cost"
+msgstr "Ár"
+
+#: app/view/admin_notices.php:2
+#@ calpress-event-calendar
+msgid "Calpress Notice:"
+msgstr "CalPress Megjegyzés:"
+
+#: app/view/settings.php:5
+#@ calpress-event-calendar
+msgid "CalPress Event Calendar"
+msgstr "CalPress Esemény Naptár"
+
+#: app/helper/class-calp-app-helper.php:547
+#: app/view/event-popup.php:45
+#: app/view/today.php:62
+#@ calpress-event-calendar
+msgid "Venue"
+msgstr "Helyszín"
+
+#: app/view/event-popup.php:50
+#: app/view/today.php:67
+#@ calpress-event-calendar
+msgid "When"
+msgstr "Mikor"
+
+#: app/view/event-popup.php:69
+#: app/view/today.php:86
+#@ calpress-event-calendar
+msgid "Notes"
+msgstr "Megjegyzés"
+
+#: app/view/agenda-widget-ajax-view.php:10
+#: app/view/agenda-widget.php:12
+#@ calpress-event-calendar
+msgid "Calpress Events"
+msgstr "Calpress Események"
+
+#: app/view/agenda-widget-form.php:2
+#@ calpress-event-calendar
+msgid "Title:"
+msgstr "Title:"
+
+#: app/view/agenda-widget-form.php:6
+#@ calpress-event-calendar
+msgid "Number of events to show:"
+msgstr "Események számát mutatja:"
+
+#: app/view/agenda-widget-form.php:14
+#@ calpress-event-calendar
+msgid "Events with these <strong>Categories</strong>"
+msgstr "Események ezzel <strong> Kategóriák </ strong>"
+
+#: app/view/agenda-widget-form.php:30
+#@ calpress-event-calendar
+msgid "<strong>Or</strong> events with these <strong>Tags</strong>"
+msgstr "<strong> vagy </ strong> Rendezvények <strong> ezekkel a kulcsszavakkal </ strong>"
+
+#: app/view/agenda-widget-form.php:46
+#@ calpress-event-calendar
+msgid "<strong>Or</strong> any of these <strong>Events</strong>"
+msgstr "<strong> Vagy </ strong> minden ilyen <strong> Rendezvények </ strong>"
+
+#: app/view/agenda-widget-form.php:62
+#@ calpress-event-calendar
+msgid "Show <strong>View Calendar</strong> button"
+msgstr "Megmutatása <strong> nézet </ strong> gombra"
+
+#: app/view/agenda-widget-form.php:68
+#@ calpress-event-calendar
+msgid "Hide this widget on calendar page"
+msgstr "Widget elrejtése naptár oldalon"
+
+#: app/view/event-popup.php:37
+#@ calpress-event-calendar
+msgid "Address Not Available"
+msgstr "Cím nem elérhető"
+
+#: app/view/event-popup.php:53
+#: app/view/today.php:70
+#@ calpress-event-calendar
+msgid " (all-day) "
+msgstr "(Egész nap)"
+
+#: app/view/box_event_location.php:1
+#@ calpress-event-calendar
+msgid "Event location details"
+msgstr "esemény helye további részletek"
+
+#: app/view/box_event_location.php:7
+#@ calpress-event-calendar
+msgid "Venue name:"
+msgstr "Helyszín neve:"
+
+#: app/view/box_event_location.php:17
+#@ calpress-event-calendar
+msgid "Address:"
+msgstr "Cím:"
+
+#: app/view/box_event_location.php:27
+#@ calpress-event-calendar
+msgid "Show Google Map:"
+msgstr "Megmutatás Google Map:"
+
+#: app/controller/class-calp-events-controller.php:150
+#@ calpress-event-calendar
+msgid "This feed is already being imported."
+msgstr "Ezt a hírcsatornát már importálta."
+
+#: app/controller/class-calp-events-controller.php:151
+#@ calpress-event-calendar
+msgid "Please enter a valid iCalendar URL."
+msgstr "Adjon meg egy érvényes iCalendar URL-t."
+
+#: app/controller/class-calp-settings-controller.php:317
+#@ calpress-event-calendar
+msgctxt "meta box"
+msgid "General Settings"
+msgstr "Általános beállítások"
+
+#: app/controller/class-calp-settings-controller.php:324
+#@ calpress-event-calendar
+msgctxt "meta box"
+msgid "ICS Import Settings"
+msgstr "ICS-beállítások importálása"
+
+#: app/helper/class-calp-app-helper.php:148
+#@ calpress-event-calendar
+msgctxt "Custom post type name"
+msgid "Events"
+msgstr "Események"
+
+#: app/helper/class-calp-app-helper.php:149
+#@ calpress-event-calendar
+msgctxt "Custom post type name (singular)"
+msgid "Event"
+msgstr "Esemény"
+
+#: app/helper/class-calp-app-helper.php:205
+#@ calpress-event-calendar
+msgctxt "Event categories taxonomy"
+msgid "Event Categories"
+msgstr "Esemény Kategóriák"
+
+#: app/helper/class-calp-app-helper.php:206
+#@ calpress-event-calendar
+msgctxt "Event categories taxonomy (singular)"
+msgid "Event Category"
+msgstr "Esemény Kategória"
+
+#: app/helper/class-calp-app-helper.php:213
+#@ calpress-event-calendar
+msgctxt "Event tags taxonomy"
+msgid "Event Tags"
+msgstr "Esemény Címek"
+
+#: app/helper/class-calp-app-helper.php:214
+#@ calpress-event-calendar
+msgctxt "Event tags taxonomy (singular)"
+msgid "Event Tag"
+msgstr "Esemény Cím"
+
+#: app/helper/class-calp-events-helper.php:1395
+#: app/helper/class-calp-events-helper.php:1404
+#: app/helper/class-calp-events-helper.php:1412
+#@ calpress-event-calendar
+msgctxt "Recurrence editor - weekly tab"
+msgid "on"
+msgstr "ezen a"
+
+#: app/helper/class-calp-events-helper.php:1425
+#: app/helper/class-calp-events-helper.php:1432
+#: app/helper/class-calp-events-helper.php:1438
+#@ calpress-event-calendar
+msgctxt "Recurrence editor - monthly tab"
+msgid "on"
+msgstr "ebben a"
+
+#: app/helper/class-calp-events-helper.php:1452
+#: app/helper/class-calp-events-helper.php:1460
+#: app/helper/class-calp-events-helper.php:1467
+#@ calpress-event-calendar
+msgctxt "Recurrence editor - yearly tab"
+msgid "on"
+msgstr "ebben a"
+
+#: app/view/row_weekly.php:6
+#@ calpress-event-calendar
+msgctxt "Recurrence editor - weekly tab"
+msgid "On"
+msgstr "Ebben a"
+
+#: app/view/row_yearly.php:7
+#@ calpress-event-calendar
+msgctxt "Recurrence editor - yearly tab"
+msgid "In"
+msgstr "Ebben a"
+
+#: app/view/settings.php:16
+#@ calpress-event-calendar
+msgid "Update Settings"
+msgstr "Beállítások Frissítése"
+
+#: app/helper/class-calp-app-helper.php:544
+#@ calpress-event-calendar
+msgid "Start Date"
+msgstr "Kezdés Dátuma"
+
+#: app/helper/class-calp-app-helper.php:545
+#@ calpress-event-calendar
+msgid "Category"
+msgstr "Kategória"
+
+#: app/helper/class-calp-settings-helper.php:176
+#@ calpress-event-calendar
+msgid "Default"
+msgstr "Alapértelmezett"
+
+#: app/view/agenda-widget-ajax-view.php:17
+#: app/view/agenda-widget.php:19
+#@ calpress-event-calendar
+msgid "There are no events."
+msgstr "Nincsenek események."
+
+#: app/view/agenda-widget-ajax-view.php:44
+#: app/view/agenda-widget.php:46
+#@ calpress-event-calendar
+msgid "(all-day)"
+msgstr "(Egész napos)"
+
+#: app/view/agenda-widget-ajax-view.php:47
+#: app/view/agenda-widget.php:49
+#@ calpress-event-calendar
+msgid "View Details"
+msgstr "Részletek"
+
+#: app/view/agenda-widget-ajax-view.php:113
+#: app/view/agenda-widget.php:115
+#@ default
+msgid "View Calendar"
+msgstr "Naptár megtekintése"
+
+#: app/view/agenda-widget-form.php:71
+#@ calpress-event-calendar
+msgid "Show mini calendar navigator"
+msgstr "Aktuális mini naptár navigátor"
+
+#: app/view/agenda.php:13
+#: app/view/agenda.php:75
+#: app/view/agenda_search.php:13
+#: app/view/agenda_search.php:68
+#: app/view/today.php:41
+#@ calpress-event-calendar
+msgid "No Events"
+msgstr "Nincs Esemény"
+
+#: app/view/agenda.php:77
+#@ calpress-event-calendar
+msgid "No Upcoming Events"
+msgstr "Nincs esemény a közeljövőben"
+
+#: app/view/agenda_list.php:18
+#@ calpress-event-calendar
+msgid "Show on map"
+msgstr "Mutatása a térképen"
+
+#: app/view/box_general_settings.php:11
+#@ calpress-event-calendar
+msgid "Calendar theme:"
+msgstr "Naptár Sablon:"
+
+#: app/view/box_ics_import_settings.php:2
+#@ calpress-event-calendar
+msgid "Warning - please note that not all calendars use the latest and correct implementation of the ics format. Please double check your imported calendars to verify that they have imported correctly"
+msgstr "Figyelem - kérjük, vegye figyelembe, hogy nem minden naptár alkalmazás alkalmas az ics helyes végrehajtásához. Kérjük, ellenőrizze az importált naptárakat, hogy az általuk importált naptárak helyesen lettek importálva"
+
+#: app/view/calendar.php:53
+#@ calpress-event-calendar
+msgid "Results"
+msgstr "Eredmények"
+
+#: app/view/calendar.php:173
+#@ calpress-event-calendar
+msgid "Search"
+msgstr "Keresés"
+
+#: app/view/calendar.php:182
+#@ calpress-event-calendar
+msgid "Click here to toggle full-screen mode on/off"
+msgstr "Kattintson ide a teljes képernyős mód be/ki használatához"
+
+#: app/view/class-calp-agenda-widget.php:20
+#@ calpress-event-calendar
+msgid "CalPress: Lists of the upcoming events"
+msgstr "Calpress: Közelgő események"
+
+#: app/view/event-popup.php:79
+#@ calpress-event-calendar
+msgid "Read more"
+msgstr "Bővebben"
+
+#: app/view/event-popup.php:86
+#@ calpress-event-calendar
+msgid "Open in Google Maps"
+msgstr "Megnyitása Google Maps-ban"
+
+#: app/view/search.php:37
+#@ calpress-event-calendar
+msgid "Another"
+msgstr "Másik"
+
+#: app/view/search.php:38
+#: app/view/search.php:42
+#@ calpress-event-calendar
+msgid "older"
+msgstr "korábbi"
+
+#: app/view/search.php:39
+#@ calpress-event-calendar
+msgid "upcoming"
+msgstr "közelgő"
+
+#: app/view/today.php:114
+#@ calpress-event-calendar
+msgid "all-day events"
+msgstr "összes esemény"
+
+#: app/helper/class-calp-app-helper.php:150
+#@ calpress-event-calendar
+msgid "Add New"
+msgstr "Hozzáad"
+
+#: app/helper/class-calp-app-helper.php:151
+#@ calpress-event-calendar
+msgid "Add New Event"
+msgstr "Új esemény"
+
+#: app/helper/class-calp-app-helper.php:152
+#@ calpress-event-calendar
+msgid "Edit Event"
+msgstr "Esemény szerkesztése "
+
+#: app/helper/class-calp-app-helper.php:153
+#@ calpress-event-calendar
+msgid "New Event"
+msgstr "Új esemény"
+
+#: app/helper/class-calp-app-helper.php:154
+#@ calpress-event-calendar
+msgid "View Event"
+msgstr "Esemény megtekintése"
+
+#: app/helper/class-calp-app-helper.php:155
+#@ calpress-event-calendar
+msgid "Search Events"
+msgstr "Események keresése"
+
+#: app/helper/class-calp-app-helper.php:156
+#@ calpress-event-calendar
+msgid "No Events found"
+msgstr "Nincs találat"
+
+#: app/helper/class-calp-app-helper.php:157
+#@ calpress-event-calendar
+msgid "No Events found in Trash"
+msgstr "Nincs találat a Kukában"
+
+#: app/helper/class-calp-app-helper.php:158
+#@ calpress-event-calendar
+msgid "Parent Event"
+msgstr "Szülő Esemény"
+
+#: app/helper/class-calp-app-helper.php:159
+#: app/view/class-calp-agenda-widget.php:18
+#: app/view/class-calp-agenda-widget.php:46
+#@ calpress-event-calendar
+msgid "CalPress Events"
+msgstr "CallPress Események"
+
+#: app/helper/class-calp-app-helper.php:416
+#, php-format
+#@ calpress-event-calendar
+msgid "All Events <span class=\"update-plugins count-%d\" title=\"%d Pending Events\"><span class=\"update-count\">%d</span></span>"
+msgstr "Minden esemény <span class=\"update-plugins count-%d\" title=\"%d Közelgő események\"><span class=\"update-count\">%d</span></span>"
+
+#: app/helper/class-calp-app-helper.php:422
+#@ calpress-event-calendar
+msgid "All Events"
+msgstr "Összes Esemény"
+
+#: app/helper/class-calp-app-helper.php:506
+#@ calpress-event-calendar
+msgid "Event Details"
+msgstr "Esemény részletei"
+
+#: app/helper/class-calp-app-helper.php:549
+#@ calpress-event-calendar
+msgid "Post Date"
+msgstr "Hozzászólás dátuma"
+
+#: app/helper/class-calp-app-helper.php:788
+#, php-format
+#@ calpress-event-calendar
+msgid "%sTo set up the plugin: %s 1. Select an option in the <strong>Calendar page</strong> dropdown list. %s 2. Select an option in the <strong>Timezone</strong> dropdown list. %s 3. Click <strong>Update Settings</strong>. %s"
+msgstr "%sPlugin Beállítások: %s 1.  Válasszon egy lehetőséget a listából<strong>Naptár oldal</strong>. %s 2. Válasszon ki egy<strong>Időzóna</strong> a listáról. %s 3. Klikk <strong>Frissítse a beállításokat</strong>. %s"
+
+#: app/helper/class-calp-app-helper.php:790
+#@ calpress-event-calendar
+msgid "To set up the plugin: Select an option in the <strong>Calendar page</strong> dropdown list, the click <strong>Update Settings</strong>."
+msgstr "Beállítások a plugin: Válasszon egy lehetőséget a listából a<strong>Naptár oldal</strong>, majd kattintson a<strong>Frissítés beállításai</strong>."
+
+#: app/helper/class-calp-app-helper.php:792
+#@ calpress-event-calendar
+msgid "To set up the plugin: Select an option in the <strong>Timezone</strong> dropdown list, the click <strong>Update Settings</strong>."
+msgstr "Beállítások a plugin: Válasszon <strong>Időzóna</strong>,majd kattintson a <strong>Frissítés beállításai</strong>."
+
+#: app/helper/class-calp-app-helper.php:796
+#, php-format
+#@ calpress-event-calendar
+msgid "The plugin is installed, but has not been configured. <a href=\"%s\">Click here to set it up now »</a>"
+msgstr "A bővítmény telepítve van, de még nem lett beállítva. <a href=\"%s\">Beállítás most »</a>"
+
+#: app/helper/class-calp-app-helper.php:802
+#@ calpress-event-calendar
+msgid "The plugin is installed, but has not been configured. Please log in as a WordPress Administrator to set it up."
+msgstr "A bővítmény telepítésre került, de még nem beállítva. Beállítása igényel rendszergazdai jogokat."
+
+#: app/helper/class-calp-events-helper.php:320
+#: app/helper/class-calp-events-helper.php:342
+#@ calpress-event-calendar
+msgid "No repeat"
+msgstr "Nincs ismétlés"
+
+#: app/helper/class-calp-events-helper.php:321
+#: app/helper/class-calp-events-helper.php:343
+#@ calpress-event-calendar
+msgid "Every day"
+msgstr "Minden nap"
+
+#: app/helper/class-calp-events-helper.php:322
+#: app/helper/class-calp-events-helper.php:344
+#@ calpress-event-calendar
+msgid "Every week"
+msgstr "Minden héten"
+
+#: app/helper/class-calp-events-helper.php:323
+#: app/helper/class-calp-events-helper.php:345
+#@ calpress-event-calendar
+msgid "Every month"
+msgstr "Minden hónapban"
+
+#: app/helper/class-calp-events-helper.php:324
+#: app/helper/class-calp-events-helper.php:346
+#@ calpress-event-calendar
+msgid "Every year"
+msgstr "Minden évben"
+
+#: app/helper/class-calp-events-helper.php:326
+#: app/helper/class-calp-events-helper.php:348
+#@ calpress-event-calendar
+msgid "Custom..."
+msgstr "Egyedileg ..."
+
+#: app/helper/class-calp-events-helper.php:469
+#@ calpress-event-calendar
+msgid "first"
+msgstr "első"
+
+#: app/helper/class-calp-events-helper.php:470
+#@ calpress-event-calendar
+msgid "second"
+msgstr "második"
+
+#: app/helper/class-calp-events-helper.php:471
+#@ calpress-event-calendar
+msgid "third"
+msgstr "harmadik"
+
+#: app/helper/class-calp-events-helper.php:472
+#@ calpress-event-calendar
+msgid "fourth"
+msgstr "negyedik"
+
+#: app/helper/class-calp-events-helper.php:474
+#@ calpress-event-calendar
+msgid "last"
+msgstr "utolsó"
+
+#: app/helper/class-calp-events-helper.php:479
+#@ calpress-event-calendar
+msgid "Sunday"
+msgstr "Vasárnap"
+
+#: app/helper/class-calp-events-helper.php:480
+#@ calpress-event-calendar
+msgid "Monday"
+msgstr "Hétfő"
+
+#: app/helper/class-calp-events-helper.php:481
+#@ calpress-event-calendar
+msgid "Tuesday"
+msgstr "Kedd"
+
+#: app/helper/class-calp-events-helper.php:482
+#@ calpress-event-calendar
+msgid "Wednesday"
+msgstr "Szerda"
+
+#: app/helper/class-calp-events-helper.php:483
+#@ calpress-event-calendar
+msgid "Thursday"
+msgstr "Csütörtök"
+
+#: app/helper/class-calp-events-helper.php:484
+#@ calpress-event-calendar
+msgid "Friday"
+msgstr "Péntek"
+
+#: app/helper/class-calp-events-helper.php:485
+#@ calpress-event-calendar
+msgid "Saturday"
+msgstr "Szombat"
+
+#: app/helper/class-calp-events-helper.php:487
+#@ calpress-event-calendar
+msgid "day"
+msgstr "nap"
+
+#: app/helper/class-calp-events-helper.php:488
+#@ calpress-event-calendar
+msgid "weekday"
+msgstr "Hétköznap"
+
+#: app/controller/class-calp-app-controller.php:448
+#: app/controller/class-calp-app-controller.php:449
+#@ calpress-event-calendar
+msgid "Add-Ons"
+msgstr ""
+
+#: app/helper/class-calp-events-helper.php:489
+#@ calpress-event-calendar
+msgid "weekend day"
+msgstr ""
+
+#: app/view/addons.php:8
+#@ calpress-event-calendar
+msgid "No addons available"
+msgstr ""
+
+#: app/view/agenda-widget-ajax-view.php:105
+#: app/view/agenda-widget.php:107
+#: app/view/calendar.php:249
+#@ default
+#@ calpress-event-calendar
+msgid "Subscribe"
+msgstr ""
+
+#: app/view/agenda-widget-form.php:65
+#@ calpress-event-calendar
+msgid "Show <strong>Subscribe</strong> buttons"
+msgstr ""
+
+#: app/view/box_general_settings.php:31
+#@ calpress-event-calendar
+msgid "Use <strong>24h time</strong> format"
+msgstr ""
+
+#: app/view/calendar.php:36
+#@ calpress-event-calendar
+msgid "Show All Calendars"
+msgstr ""
+
+#: app/helper/class-calp-app-helper.php:281
+#@ calpress-event-calendar
+msgid "Show All "
+msgstr ""
+
+#: app/view/addons.php:3
+#@ calpress-event-calendar
+msgid "CalPress Add-Ons"
+msgstr ""
+
+#: app/view/agenda-widget-form.php:23
+#@ calpress-event-calendar
+msgid "No categories found."
+msgstr ""
+
+#: app/view/agenda-widget-form.php:39
+#@ calpress-event-calendar
+msgid "No tags found."
+msgstr ""
+
+#: app/view/agenda-widget-form.php:55
+#@ calpress-event-calendar
+msgid "No events found."
+msgstr ""
+
+#: app/view/box_ics_import_settings.php:13
+#@ calpress-event-calendar
+msgid "Hide <strong>Subscribe</strong> button"
+msgstr ""
+
+#: app/view/event-excerpt.php:4
+#@ calpress-event-calendar
+msgid "Notes:"
+msgstr ""
+
+#: app/view/row_monthly.php:7
+#@ calpress-event-calendar
+msgid "Each"
+msgstr ""
+
+#: app/view/select_style_meta_box.php:35
+#@ calpress-event-calendar
+msgid "Style List"
+msgstr ""
+

@@ -3,7 +3,7 @@
 	<div class="biz_wrapper clearfix">
 	
 		<div class="merchant_logo contrast"><!-- Begin .merchant-logo -->
-			<?php the_post_thumbnail('gbs_150w', array('title' => get_the_title())); ?>
+			<a href="<?php the_permalink() ?>" title="<?php the_title() ?>"><?php the_post_thumbnail('gbs_150w', array('title' => get_the_title())); ?></a>
 		</div><!-- End .merchant-logo -->
 	
 		<div class="biz_content contrast">
@@ -15,13 +15,13 @@
 
 			<ul class="inline social_links clearfix merchant_meta">
 				<?php if (gb_has_merchant_website()): ?>
-					<li class="social_icon website"><a href="<?php gb_merchant_website() ?>" target="_blank"><?php gb_e('Website') ?></a></li>
+					<li class="social_icon website"><a href="<?php gb_merchant_website() ?>" target="_blank" class="button-light"><?php gb_e('Website') ?></a></li>
 				<?php endif ?>
 				<?php if (gb_has_merchant_facebook()): ?>
-					<li class="social_icon facebook"><a href="<?php gb_merchant_facebook() ?>" target="_blank"><?php gb_e('Facebook') ?></a></li>
+					<li class="social_icon facebook"><a href="<?php gb_merchant_facebook() ?>" target="_blank" class="button-light"><?php gb_e('Facebook') ?></a></li>
 				<?php endif ?>
 				<?php if (gb_has_merchant_twitter()): ?>
-					<li class="social_icon twitter"><a href="<?php gb_merchant_twitter() ?>" target="_blank"><?php gb_e('Twitter') ?></a></li>
+					<li class="social_icon twitter"><a href="<?php gb_merchant_twitter() ?>" target="_blank" class="button-light"><?php gb_e('Twitter') ?></a></li>
 				<?php endif ?>
 			</ul>
 	
@@ -29,6 +29,6 @@
 	
 	</div>
 
-	<p><a href="<?php the_permalink() ?>" class="biz_moreinfo gb_ff alignright"><?php gb_e('More Info') ?></a></p>
+	<p><a href="<?php the_permalink() ?>" class="biz_moreinfo button gb_ff alignright"><?php gb_e('More Info') ?></a></p>
 
 </div><!-- End .biz_listing -->

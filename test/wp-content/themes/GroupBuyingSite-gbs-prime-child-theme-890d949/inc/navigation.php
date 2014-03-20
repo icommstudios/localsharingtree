@@ -26,7 +26,7 @@
 								<span class="gravatar"><?php gb_gravatar() ?></span>
 								<?php gb_e( 'Hi,' ) ?> <?php gb_name() ?></a>
 							</span>
-			<span><a href="<?php gbs_account_link() ?>" class="name" title="<?php gb_e( 'Cart (0)' ) ?>"><?php gb_e( 'Cart (0)' ) ?></a></span> | 
+			<span><a href="<?php gb_cart_url() ?>"><?php gb_e( 'Cart' ) ?></span> | 
 			<span class="header_cart"><a href="<?php gbs_account_link() ?>" class="name" title="<?php gb_e( 'Your Account' ) ?>"><?php gb_e( 'My Account' ) ?></a></span> | 
 			<?php gb_logout_url(); ?>
 						</div>

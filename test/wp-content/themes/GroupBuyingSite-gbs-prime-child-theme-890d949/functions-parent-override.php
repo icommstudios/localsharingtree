@@ -8,6 +8,7 @@
 
 // Include Custom functions
 
+require_once('customfunctions/SF_DealResetLimits.php');
 require_once('customfunctions/sf-additional-notifications/SF_AdditionalNotifications.class.php');
 require_once('customfunctions/sf-account-fields/SF_AccountFields.class.php');
 require_once('customfunctions/sf-merchant-fields/SF_merchantFields.class.php');
@@ -22,6 +23,33 @@ register_nav_menus( array(
 		'header' => gb__( 'Header Menu' ),
 		'topnav' => gb__( 'TopNav Menu' )
 	) );
+	
+// Register the sidebars 
+add_action( 'widgets_init', 'register_custom_sidebars', 11 );
+function register_custom_sidebars() {
+	register_sidebar(
+		array(
+			'name' => 'Charities Sidebar',
+			'id'            => 'charities-sidebar',
+			'description'   => 'Used on the Charities archive page.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => '<div class="clear"></div></div>',
+			'before_title' => '<h2 class="widget-title gb_ff">',
+			'after_title' => '</h2>'
+		)
+	);
+	register_sidebar(
+		array(
+			'name' => 'Single Charity Sidebar',
+			'id'            => 'charity-sidebar',
+			'description'   => 'Used on the single Charity page.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => '<div class="clear"></div></div>',
+			'before_title' => '<h2 class="widget-title gb_ff">',
+			'after_title' => '</h2>'
+		)
+	);
+}
 
 //Add Mailchimp Unsubscribe feature
 add_filter('subscribe_mc_groupins','custom_do_unsubscribe_mailchimp', 99, 2);
@@ -246,8 +274,9 @@ function custom_footer_scripts() {
 	</script>
     <?php	
 	//Add popup for requiring login before adding to cart
-	if ( !is_user_logged_in() ) { 
 	/*
+	if ( !is_user_logged_in() ) { 
+	
 	?>
     <script type="text/javascript">
 		//On click show lighbox for login
@@ -268,7 +297,56 @@ function custom_footer_scripts() {
 		});
 	</script>
     <?php
+	}
 	*/
+	
+	//Add popup for on order confirmation page
+	if ( gb_on_checkout_page() && gb_get_current_checkout_page() == 'confirmation') { 
+		global $order_number;
+		$checkout = Group_Buying_Checkouts::get_instance();
+		$charity_id = ( $checkout ) ? $checkout->cache['gb_charity'] : '';
+		if ( !$charity_id ) {
+			$share_text_original = 'I just shopped, saved and supported charity at LocalSharingTree.com';
+			$share_text = urlencode($share_text_original);
+			$share_url = urlencode( add_query_arg(array('ref' => $order_number), site_url()));
+		} else {
+			$charity_title = get_the_title ( $charity_id );
+			$share_text_original = 'I just shopped, saved and supported '.$charity_title .' at LocalSharingTree.com';
+			$share_text = urlencode($share_text_original);
+			$share_url = urlencode( add_query_arg(array('ref' => $order_number), site_url()));
+		}
+		?>
+        <div id="trigger_fancybox_order_confirmation" style="display: none;">
+            <div style="text-align: center; padding: 15px;">
+            	 <h3 style="padding-bottom: 15px;">Thank you for your order!</h3>
+                <p style="padding-bottom: 5px;"><strong>Share with your friends: </strong></p>
+                <p style="padding-bottom: 5px;"><?php echo $share_text_original; ?></p>
+                <a style="margin: 10px 2px; display: inline-block;" href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo $share_text; ?>&amp;p[url]=<?php echo $share_url; ?>&amp;p[summary]=" class="order_confirm_facebook" target="_blank"><img src="http://localsharingtree.com/wp-content/plugins/floating-social-media-icon/images/themes/1/facebook.png" style="border:0px;" alt="Share on Facebook"></a>
+                <a style="margin: 10px 2px; display: inline-block;" href="http://twitter.com/intent/tweet?original_referer=<?php echo site_url() ?>&text=<?php echo $share_text; ?>&url=<?php echo $share_url; ?>" title="Share on Twitter" class="order_confirm_twitter" target="_blank"><img src="http://localsharingtree.com/wp-content/plugins/floating-social-media-icon/images/themes/1/twitter.png" style="border:0px;" alt="Share on Twitter"></a>
+            </div>
+        </div>
+        <script type="text/javascript">
+			jQuery("#trigger_fancybox_order_confirmation").fancybox({
+				'content': '<div class="fancybox_order_confirmation" style="display: block; !important">' + jQuery("#trigger_fancybox_order_confirmation").html() + '</div>',
+				'hideOnOverlayClick': true,
+				'hideOnContentClick': false,
+				'showCloseButton': true,
+				'autoDimensions': true,
+				'autoScale': true,
+				'overlayColor': '#000000',
+				'width': 700,
+				'height': 200,
+				'overlayOpacity': 0.8,
+				'padding': 0
+			});
+            jQuery(document).ready(function() {
+				setTimeout(function() {
+					 jQuery("#trigger_fancybox_order_confirmation").trigger('click');
+				}, 2000);
+              
+            });
+        </script>
+		<?php
 	}
 }
 
@@ -536,6 +614,45 @@ function custom_cart_items($items, $cart) {
     return $items;
 }
 
+// Facebook Connect - Subscribe to mailchimp
+add_action('wp', 'custom_detect_facebook_registration');
+function custom_detect_facebook_registration() {
+	if ( isset($_GET['facebook_reg']) && is_user_logged_in() ) {
+		//Subscribe them
+		$current_user = wp_get_current_user();
+		$email = $current_user->user_email;
+		
+		if ( class_exists('Group_Buying_MailChimp') ) {
+			$retval = Group_Buying_MailChimp::subscribe( $email, $_COOKIE[ 'gb_location_preference' ] );
+		}
+	}
+}
+
+if ($_GET['fbtest']) {
+	add_action('wp_footer', 'custom_fbttest_footer');
+	function custom_fbttest_footer() {
+		global $blog_id;
+		$uid = get_user_meta( get_current_user_id(), $blog_id.'_fb_uid', TRUE );	
+		echo '_fb_uid: '.$uid;
+		
+	}
+	add_filter('gb_facebook_scope', 'test_output_gb_facebook_scope', 10, 1);
+	function test_output_gb_facebook_scope($scope) {
+		echo ' <br>fb scope: '.$uid;
+		die($scope);	
+	}
+}
+
+if ($_GET['fbtestdelete']) {
+	add_action('wp_footer', 'custom_fbttest_delete_footer');
+	function custom_fbttest_delete_footer() {
+		global $blog_id;
+		$uid = delete_user_meta( get_current_user_id(), $blog_id.'_fb_uid' );	
+		echo 'deleted _fb_uid: '.$uid;
+		
+	}
+}
+
 
 // Add Page number navigation
 
@@ -562,4 +679,51 @@ function wp_pagination($this_query = null) {
 			   echo '</ul></div>';
 	}
 }
+
+//Add Filter by letter
+function custom_show_filter_letters() {
+	
+	$letters = array('A','B','C','D','E','F','G','H','I','J','K','L','M',
+					 'N', 'O','P','Q','R','S','T','U','V','W','X','Y','Z');
+	
+	echo '<div class="pagination filter_by_letter"><ul>';
+	echo '<li><span>Starts with: </span></li>';
+	foreach ( $letters as $l) {
+		$letter_url = add_query_arg(array('lf' => $l), home_url($_SERVER['REQUEST_URI']));
+		
+		if ( $_GET['lf'] == $l ) {
+			echo '<li class="current_letter"><span class="current">'.$l.'</span></li>';
+		} else {
+			echo '<li><a href="'.$letter_url.'" class>'.$l.'</a></li>';
+		}
+	}
+   	echo '</ul></div>';
+	
+}
+//Filter the query to filter by letter
+add_filter('posts_where', 'sf_filter_archive_by_letter');
+function sf_filter_archive_by_letter ( $where ) {
+	global $wp_query, $wpdb;
+
+	//Do not filter for some pages
+	if ( isset( $_GET['lf'] ) && !empty( $_GET['lf'] ) && !is_admin() && is_main_query() ) {
+	   
+	   //Filter for these cases
+	   if ( is_post_type_archive( 'gb_charities' ) 
+	   			|| is_post_type_archive( 'gb_merchant' )
+				|| is_tax( 'gb_charity_type' )
+				|| is_tax( 'gb_merchant_type')  ) {
+	   
+			$letter_filter = $_GET['lf'];
+	
+			if ( !empty($letter_filter) ) {
+				$where .= " AND $wpdb->posts.post_title LIKE '".$letter_filter."%'";
+				return $where;
+			} 
+	   }
+	}
+	return $where;
+}
+
+
 

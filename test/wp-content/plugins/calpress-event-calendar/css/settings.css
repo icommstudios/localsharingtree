@@ -1,0 +1,185 @@
+#the-calpress-settings div.inside {
+	background: #fff;
+	margin: 0 !important;
+	padding: 6px 0 8px;
+}
+#the-calpress-settings a {
+	font-weight: bold;
+}
+.calp_feed_h4 {
+	margin-bottom: 5px;
+}
+.column-1-calp {
+	float: left;
+	width: 54%;
+}
+.column-2-calp {
+	float: right;
+	width: 45%;
+}
+.column-3-calp {
+	float: left;
+	width: 100%;
+}
+.calp-plugin-branding {
+	padding: 0 20px 0 20px;
+}
+.calp-plugin-logo {
+	position: relative;
+	margin-left: -15px;
+}
+
+.calp-support-button {
+	float:right;
+	width:280px;
+	text-align: center;
+	margin: 1em 0 1em 1em;
+}
+.calp-support-button a {
+	font-size: 24px;
+	font-weight: normal !important;
+	color:#fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	display: block;
+	padding: 10px 30px 10px 30px;
+	margin: 0 auto;
+	border-radius: 10px;
+	-o-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius:10px;
+	text-shadow: -1px -1px 1px rgba(0,0,0,.2);
+	-o-text-shadow: -1px -1px 1px rgba(0,0,0,.2);
+	-moz-text-shadow: -1px -1px 1px rgba(0,0,0,.2);
+	-webkit-text-shadow: -1px -1px 1px rgba(0,0,0,.2);
+	box-shadow: 0 0.3em 0.3em rgba(0,0,0,0.2);
+	-o-box-shadow: 0 0.3em 0.3em rgba(0,0,0,0.2);
+	-moz-box-shadow: 0 0.3em 0.3em rgba(0,0,0,0.2);
+	-webkit-box-shadow: 0 0.3em 0.3em rgba(0,0,0,0.2);
+	border:1px solid #fff;
+}
+.calp-support-button a:link, .calp-support-button a:visited {
+	background: #88b633;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#91bb35', endColorstr='#548a26');
+	background: linear-gradient(#91bb35, #548a26);
+	background: -o-linear-gradient(#91bb35, #548a26);
+	background: -moz-linear-gradient(#91bb35, #548a26);
+	background: -webkit-gradient(linear, left top, left bottom, from(#91bb35), to(#548a26));
+	background: -webkit-linear-gradient(#91bb35, #548a26);
+}
+
+.calp-support-button a:hover {
+	color: #fff;
+	background: #88b633;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d2e7a2', endColorstr='#91bb35');
+	background: linear-gradient(#d2e7a2, #91bb35);
+	background: -o-linear-gradient(#d2e7a2, #91bb35);
+	background: -moz-linear-gradient(#d2e7a2, #91bb35);
+	background: -webkit-gradient(linear, left top, left bottom, from(#d2e7a2), to(#91bb35));
+	background: -webkit-linear-gradient(#d2e7a2, #91bb35);
+}
+
+.calp-support-button a span {
+	display: block;
+	padding-top:2px;
+	font-size: .5em;
+	color:#e5f3ca;
+	text-align: center;
+	text-transform: lowercase;
+}
+
+.column-1-calp #general-settings {
+	line-height: 1.7em;
+}
+.column-1-calp #general-settings div.inside label {
+	float: left;
+	clear: left;
+	margin: 0.25em 0;
+}
+.column-1-calp #general-settings .checkbox {
+	float: left;
+	margin: 0.5em 0.5em 0 0;
+}
+.column-1-calp #general-settings div.description {
+	clear: left;
+	font-size: 0.95em;
+	line-height: 1.5em;
+	margin-bottom: 1em;
+}
+.column-1-calp #general-settings label.textinput {
+	width: 230px;
+}
+.column-1-calp #general-settings h2 {
+	margin-bottom: 0;
+	margin-top: 10px;
+}
+
+.calp-follow-fan {
+	padding:10px 0 10px 0;
+	margin: 10px 0 0 0;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.calp-facebook-like-top {
+	float: left;
+}
+
+/* ICS Feeds */
+#calp_feed_url,
+.calp-feed-url {
+	width: 100%;
+}
+.calp-feed-category, .calp-feed-tags {
+	float: left;
+	overflow: hidden;
+	line-height: 2em;
+}
+.calp-feed-category strong, .calp-feed-tags strong {
+	margin: 0 1em 0 0.2em;
+}
+#calp_feed_category, #calp_feed_tags {
+	width: 15em;
+}
+#calp_feed_category {
+	margin-right: 0.5em;
+}
+.calp-feed-container {
+	background: #eee;
+	border: 1px solid #ddd;
+	padding: 0.3em 0.5em;
+	border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	overflow: hidden;
+	position: relative;
+	margin: 1em 0 0;
+}
+.calp-feed-container .ajax-loading {
+	clear: left;
+	display: block;
+}
+.calp_feed_h4 {
+	margin: 0.5em 0;
+}
+#calp_add_new_ics, .calp_delete_ics {
+	clear: left;
+}
+#calp_add_new_ics, .calp_delete_ics, .calp_update_ics, .calp_flush_ics {
+	float: right;
+}
+#calp_save_settings {
+	clear: left;
+	display: block;
+}
+
+.calp-donate {
+	text-align: center;
+}
+#calp-rss-news {
+	margin: 0;
+	padding: 0px 0px 0px 20px;
+}
+#calp-rss-news > li {
+	list-style: disc;
+}

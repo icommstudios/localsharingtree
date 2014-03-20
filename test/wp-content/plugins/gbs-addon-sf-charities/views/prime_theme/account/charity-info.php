@@ -1,6 +1,6 @@
 <div class="dash_section charity_dash_section">
 	
-    <h2 class="section_heading background_alt gb_ff"><?php echo get_the_title($charity_id); ?>: <?php gb_e('Recent Donations'); ?> <a class="section_heading_link font_x_small alt_link"  href="<?php gb_charity_purchases_report_url($charity_id) ?>" title="<?php gb_e('View all Donations'); ?>"><?php gb_e('See All&#63;'); ?></a></h2>
+    <h2 class="section_heading background_alt gb_ff"><?php echo get_the_title($charity_id); ?>: <?php gb_e('Recent Donations'); ?> <a class="section_heading_link font_x_small alt_link"  href="<?php gb_charity_purchases_report_url($charity_id) ?>" title="<?php gb_e('View all Donations'); ?>"><?php gb_e('View all Donations'); ?></a></h2>
 		
     
     <?php
@@ -47,10 +47,14 @@
                 ?>
                 </tbody>
             </table><!-- End .gb_table -->
-            <?php if ($vouchers->found_posts > 5): ?>
+            <?php if ($purchases->found_posts > 5): ?>
                 <p><?php gb_e('This is a summary of your most recent donations.'); ?></p>
             <?php endif ?>
-
+            
+			<div>
+            <h4>Total Donations: <?php echo gb_get_formatted_money(GBS_SF_Charity_Reports::get_charity_total_donations( $charity_id )); ?></h4>
+            </div>
+            
             <?php
         } else {
             ?>

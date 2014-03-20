@@ -15,12 +15,9 @@ $acx_si_feed = get_option('acx_si_feed');
 $acx_si_icon_size = get_option('acx_si_icon_size');
 $acx_si_fsmi_menu_highlight = get_option('acx_si_fsmi_menu_highlight');
 $acx_si_fsmi_float_fix = get_option('acx_si_fsmi_float_fix');
+$acx_si_fsmi_theme_warning_ignore = get_option('acx_si_fsmi_theme_warning_ignore');
 // *****************************************************
 // Check Credit Link
-function check_acx_credit($yes,$no)
-{ 	$acx_si_credit = get_option('acx_si_credit');
-	if($acx_si_credit != "no") { echo $yes; } else { echo $no; } 
-}
 function enqueue_acx_si_style()
 {
 	wp_enqueue_style ( 'acx-si-style', plugins_url('style.css', __FILE__) );
@@ -29,6 +26,10 @@ function enqueue_acx_si_style()
 function acx_option_value_check($option_name,$yes,$no)
 { 	$acx_si_option_set = get_option($option_name);
 	if ($acx_si_option_set != "") { echo $yes; } else { echo $no; }
+}
+function check_acx_credit($yes,$no)
+{ 	$acx_si_credit = get_option('acx_si_credit');
+	if($acx_si_credit != "no") { echo $yes; } else { echo $no; } 
 }
 function acurax_si_simple($theme = "") // Added Default "" // Updated << and V (alt added to Images Title Added to Links)
 {
@@ -99,7 +100,10 @@ function acx_theme_check_wp_head() {
 		echo "<div class=\"highlight\" style=\"width: 99%; margin-top: 10px; margin-bottom: 10px; border: 1px solid darkred;\">" . "Your theme needs to be fixed for plugins to work (Especially Floating Social Media Icon). To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>&lt;?php wp_head(); ?&gt;</code> just before the <code>&lt;/head&gt;</code> line of your theme's <code>header.php</code> file." . "</div>";
 	}
 } // theme check 
+if($acx_si_fsmi_theme_warning_ignore != "yes")
+{
 add_action('admin_notices', 'acx_theme_check_wp_head');
+}
 function acx_theme_check_wp_footer() {
 	$template_directory = get_template_directory();
 	
@@ -119,7 +123,11 @@ function acx_theme_check_wp_footer() {
 		// wp_footer() not found:
 		echo "<div class=\"highlight\" style=\"width: 99%; margin-top: 10px; margin-bottom: 10px; border: 1px solid darkred;\">" . "Your theme needs to be fixed for plugins to work (Especially Floating Social Media Icon). To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>&lt;?php wp_footer(); ?&gt;</code> just before the <code>&lt;/body&gt;</code> line of your theme's <code>footer.php</code> file." . "</div>";
 	}
-} add_action('admin_notices', 'acx_theme_check_wp_footer');
+}
+if($acx_si_fsmi_theme_warning_ignore != "yes")
+{
+add_action('admin_notices', 'acx_theme_check_wp_footer');
+}
 function acurax_icons()
 {
 	global $acx_si_theme, $acx_si_credit, $acx_si_display , $acx_si_twitter, $acx_si_facebook, $acx_si_youtube, 		
@@ -472,7 +480,7 @@ function acx_fsmi_si_pluign_finish_version_update()
 		  </div>';
 }
 $acx_fsmi_si_current_version = get_option('acx_fsmi_si_current_version');
-if($acx_fsmi_si_current_version != '1.3.2') // Current Version
+if($acx_fsmi_si_current_version != '1.3.4') // Current Version
 {
 if (get_option('social_icon_array_order') != "")
 {

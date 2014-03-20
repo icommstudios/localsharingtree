@@ -16,7 +16,50 @@ class GB_SF_Charities_Checkout extends Group_Buying_Controller {
 
 		// Save charity record for purchase
 		add_action( 'completing_checkout', array( get_class(), 'save_charity' ), 10, 1 );
+		
+		add_action( 'wp_ajax_nopriv_gbs_ajax_query_charities',  array( get_class(), 'ajax_query_charities' ), 10, 0 );
+		add_action( 'wp_ajax_gbs_ajax_query_charities',  array( get_class(), 'ajax_query_charities' ), 10, 0 );
 
+	}
+	
+	
+	/**
+	 * Print a JSON object with the attributes for the requested deal
+	 *
+	 * @static
+	 * @return void
+	 */
+	public static function ajax_query_charities() {
+	
+		//$response = 2;
+
+		$args = array(
+				'post_type' => GB_SF_Charity::POST_TYPE,
+				'order' => 'ASC',
+				'orderby' => 'id',
+				'numberposts' => -1,
+			);
+		wp_parse_str( $_POST['selections'], $selections );
+		foreach ( $selections as $term_name => $term_id ) {
+			if ( !empty($term_id ) && $term_id > 0) {
+				$args['tax_query']['relation'] = 'AND'; // in case it wasn't set earlier
+				$args['tax_query'][] = array(
+						'taxonomy' => $term_name,
+						'field' => 'id',
+						'terms' => array($term_id),
+						'operator' => 'IN'
+						);
+			}
+		}
+		
+		$charity_ids = get_posts($args);
+		foreach ( $charity_ids as $charity ) {
+			$response[] = array('id' => $charity->ID, 'title' => $charity->post_title);
+		}
+		
+		header( 'Content-Type: application/json' );
+		echo json_encode( $response );
+		exit();
 	}
 
 	/**
@@ -52,7 +95,7 @@ class GB_SF_Charities_Checkout extends Group_Buying_Controller {
 		$valid = TRUE;
 		if ( isset( $_POST['gb_charity'] ) ) {
 			if ( $_POST['gb_charity'] == '' ) {
-				self::set_message( "A Charity Selection is Required. ", self::MESSAGE_STATUS_ERROR );
+				self::set_message( "A Non Profit Selection is Required. ", self::MESSAGE_STATUS_ERROR );
 				$valid = FALSE;
 			}
 		}

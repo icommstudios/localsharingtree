@@ -111,11 +111,10 @@ padding: 4px 8px;
 li#menu-item-1048 a,
 li#menu-item-1103 a,
 li#menu-item-1105 a,
-li#menu-item-18553 a,
 li#menu-item-1048 a:hover,
 li#menu-item-1103 a:hover,
-li#menu-item-1105 a:hover,
-li#menu-item-18553 a:hover {
+li#menu-item-1105 a:hover
+{
     color: #23668e;
     text-shadow: none;
 }

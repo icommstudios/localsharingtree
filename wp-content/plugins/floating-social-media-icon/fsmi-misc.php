@@ -3,6 +3,8 @@ if($_POST['acurax_social_icon_hidden'] == 'Y')
 {	//Form data sent
 $acx_si_fsmi_menu_highlight = $_POST['acx_si_fsmi_menu_highlight'];
 update_option('acx_si_fsmi_menu_highlight', $acx_si_fsmi_menu_highlight);
+$acx_si_fsmi_theme_warning_ignore = $_POST['acx_si_fsmi_theme_warning_ignore'];
+update_option('acx_si_fsmi_theme_warning_ignore', $acx_si_fsmi_theme_warning_ignore);
 $acx_si_fsmi_acx_service_banners = $_POST['acx_si_fsmi_acx_service_banners'];
 update_option('acx_si_fsmi_acx_service_banners', $acx_si_fsmi_acx_service_banners);
 $acx_si_fsmi_float_fix = $_POST['acx_si_fsmi_float_fix'];
@@ -16,11 +18,13 @@ update_option('acx_si_fsmi_hide_advert', $acx_si_fsmi_hide_advert);
 else
 {	//Normal page display
 $acx_si_fsmi_menu_highlight = get_option('acx_si_fsmi_menu_highlight');
+$acx_si_fsmi_theme_warning_ignore = get_option('acx_si_fsmi_theme_warning_ignore');
 $acx_si_fsmi_acx_service_banners = get_option('acx_si_fsmi_acx_service_banners');
 $acx_si_fsmi_float_fix = get_option('acx_si_fsmi_float_fix');
 $acx_si_fsmi_hide_advert = get_option('acx_si_fsmi_hide_advert');
 // Setting Defaults
 if ($acx_si_fsmi_menu_highlight == "") {	$acx_si_fsmi_menu_highlight = "yes"; }
+if ($acx_si_fsmi_theme_warning_ignore == "") {	$acx_si_fsmi_theme_warning_ignore = "no"; }
 if ($acx_si_fsmi_acx_service_banners == "") {	$acx_si_fsmi_acx_service_banners = "yes"; }
 if ($acx_si_fsmi_float_fix == "") {	$acx_si_fsmi_float_fix = "no"; }
 if ($acx_si_fsmi_hide_advert == "") {	$acx_si_fsmi_hide_advert = "no"; }
@@ -60,7 +64,7 @@ if ($acx_si_fsmi_hide_advert == "") {	$acx_si_fsmi_hide_advert = "no"; }
 <option value="yes"<?php if ($acx_si_fsmi_menu_highlight == "yes") { echo 'selected="selected"'; } ?>>Yes, Highlight Plugin Menu </option>
 <option value="no"<?php if ($acx_si_fsmi_menu_highlight == "no") { echo 'selected="selected"'; } ?>>No, Dont Highlight Plugin Menu </option>
 </select>
-<?php _e("Show Plugin Menu In Green" ); ?>
+<?php _e("If you don't like the plugin menu highlighting in green, you can set this to NO" ); ?>
 </p>
 <p class="widefat" style="padding:8px;width:99%;margin-top:8px;">	<?php _e("Acurax Service Banners: " ); ?>
 <select name="acx_si_fsmi_acx_service_banners">
@@ -83,6 +87,15 @@ if ($acx_si_fsmi_hide_advert == "") {	$acx_si_fsmi_hide_advert = "no"; }
 </select>
 <?php _e("If your widget/shortcode icons are in Vertical, then enable this to make it Horizontal" ); ?>
 </p>
+
+<p class="widefat" style="padding:8px;width:99%;margin-top:8px;">	<?php _e("Ignore Theme Warning?" ); ?>
+<select name="acx_si_fsmi_theme_warning_ignore">
+<option value="yes"<?php if ($acx_si_fsmi_theme_warning_ignore == "yes") { echo 'selected="selected"'; } ?>>Yes </option>
+<option value="no"<?php if ($acx_si_fsmi_theme_warning_ignore == "no") { echo 'selected="selected"'; } ?>>No </option>
+</select>
+<?php _e("If everything is working properly and still the plugin shows theme warning, you can set this to Yes" ); ?>
+</p>
+
 <p class="submit">
 <input type="submit" name="Submit" value="<?php _e('Save Settings', 'acx_si_config' ) ?>" />
 </p>

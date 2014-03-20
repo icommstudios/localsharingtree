@@ -8,6 +8,7 @@
 			<i class="icon-play"></i>
 			<i class="icon-code"></i>
 			<i class="icon-film"></i>
+			<i class="icon-quote-left"></i>
 		</span>
 		<span class="cs-title">
 			<?php echo $box_title; ?>
@@ -26,7 +27,7 @@
 				<option value="youtube" <?php selected($slide['type'], 'youtube'); ?>><?php _e('YouTube', 'cycloneslider'); ?></option>
 				<option value="vimeo" <?php selected($slide['type'], 'vimeo'); ?>><?php _e('Vimeo', 'cycloneslider'); ?></option>
 				<option value="custom" <?php selected($slide['type'], 'custom'); ?>><?php _e('Custom HTML', 'cycloneslider'); ?></option>
-				<option value="video" <?php selected($slide['type'], 'video'); ?>><?php _e('Video (Old Version)', 'cycloneslider'); ?></option>
+				<option value="testimonial" <?php selected($slide['type'], 'testimonial'); ?>><?php _e('Testimonial', 'cycloneslider'); ?></option>
 			</select>	
 		</div>
 		<div class="clear"></div>
@@ -41,9 +42,8 @@
 				<input class="button-secondary cs-media-gallery-show" type="button" value="<?php _e('Get Image', 'cycloneslider'); ?>" />
 			</div>
 			<div class="cs-image-settings">
-				<p class="expandable-group-title first"><?php _e('Slide Properties:', 'cycloneslider'); ?></p>
 				<div class="expandable-box">
-					<div class="expandable-header"><?php _e('Caption', 'cycloneslider'); ?></div>
+					<div class="expandable-header first"><?php _e('Caption', 'cycloneslider'); ?></div>
 					<div class="expandable-body">
 						<div class="field">
 							<label for=""><?php _e('Title:', 'cycloneslider'); ?></label> <br>
@@ -150,10 +150,15 @@
 			<div class="clear"></div>
 		</div><!-- // end .cs-slide-image -->
 		<div class="cs-slide-youtube">
-			<div class="field last">
-				<label for=""><?php _e('YouTube URL:', 'cycloneslider'); ?></label>
-				<input type="text" class="widefat cs-youtube-url" name="cycloneslider_metas[<?php echo $i; ?>][youtube_url]" value="<?php echo esc_attr($slide['youtube_url']); ?>" />
+			<div class="field">
+				<label for="cs_youtube_url-<?php echo $i; ?>" class="cs-changeling-id"><?php _e('YouTube URL:', 'cycloneslider'); ?></label>
+				<input id="cs_youtube_url-<?php echo $i; ?>" type="text" class="widefat cs-changeling-id cs-youtube-url" name="cycloneslider_metas[<?php echo $i; ?>][youtube_url]" value="<?php echo esc_attr($slide['youtube_url']); ?>" />
 				<span class="note"><?php _e('Copy and paste a valid YouTube URL here.', 'cycloneslider'); ?></span>
+			</div>
+			<div class="field field-normal last">
+				<input type="hidden" name="cycloneslider_metas[<?php echo $i; ?>][youtube_related]" value="false" />
+				<input id="cs_youtube_related-<?php echo $i; ?>" type="checkbox" class="widefat cs-changeling-id cs-youtube-related" name="cycloneslider_metas[<?php echo $i; ?>][youtube_related]" value="true" <?php checked( $slide['youtube_related'], 'false' ); ?> />
+				<label for="cs_youtube_related-<?php echo $i; ?>" class="cs-changeling-id"><?php _e('Do not show suggested videos when the video finishes.', 'cycloneslider'); ?></label>
 			</div>
 		</div><!-- // end .cs-slide-youtube -->
 		<div class="cs-slide-vimeo">
@@ -170,40 +175,42 @@
 			</div>
 		</div><!-- // end .cs-slide-custom -->
 		
-		<div class="cs-slide-video">
-			<div class="cs-video-error">
-				<p><?php _e('This video slide is problematic. Please consider using YouTube, Vimeo or Custom slide type for videos. This slide will be removed in the future and will be replaced with a better one.', 'cycloneslider'); ?></p>
-			</div>
-			<div class="cs-video-preview">
-				<div class="cs-video-thumb" <?php echo (empty($slide['video_thumb'])) ? 'style="display:none"' : '';?>>
-					<?php if($slide['video_thumb']): ?>
-					<img src="<?php echo esc_url($slide['video_thumb']); ?>" alt="thumb">
-					<?php endif; ?>
-				</div>
-				
-				<div class="field">
-					<input class="widefat cs-video-thumb-url" name="cycloneslider_metas[<?php echo $i; ?>][video_thumb]" type="hidden" value="<?php echo esc_attr($slide['video_thumb']); ?>" />
-					<label for=""><?php _e('Video URL:', 'cycloneslider'); ?></label>
-					<input class="widefat cs-video-url" name="cycloneslider_metas[<?php echo $i; ?>][video_url]" type="text" value="<?php echo esc_attr($slide['video_url']); ?>" />
-					<span class="note"><?php _e('Copy and paste a Youtube or Vimeo URL and hit the Get Video button.', 'cycloneslider'); ?></span>
-					<div class="clear"></div>
-				</div>
+		<div class="cs-slide-testimonial">
+			<div class="cs-testimonial-quote">
 				<div class="field last">
-					<input class="button-secondary cs-button-update cs-video-get" type="button" value="<?php _e('Get Video', 'cycloneslider'); ?>" />
+					<label for=""><?php _e('Quote', 'cycloneslider'); ?></label>
+					<textarea class="widefat cs-testimonial" name="cycloneslider_metas[<?php echo $i; ?>][testimonial]"><?php echo esc_textarea($slide['testimonial']); ?></textarea>
+				</div>
+			</div><!-- // end .cs-testimonial-quote -->
+			<div class="cs-quote-properties">
+				<div class="expandable-box">
+					<div class="expandable-header first"><?php _e('Author', 'cycloneslider'); ?></div>
+					<div class="expandable-body">
+						<div class="field last">
+							<label for=""><?php _e('Name:', 'cycloneslider'); ?></label> <br>
+							<input class="widefat" name="cycloneslider_metas[<?php echo $i; ?>][testimonial_author]" type="text" value="<?php echo esc_attr($slide['testimonial_author']); ?>" />
+						</div>
+					</div>
+				</div>
+				<div class="expandable-box last">
+					<div class="expandable-header"><?php _e('Link', 'cycloneslider'); ?></div>
+					<div class="expandable-body">
+						<div class="field">
+							<label for=""><?php _e('Link URL:', 'cycloneslider'); ?></label> <br>
+							<input class="widefat" name="cycloneslider_metas[<?php echo $i; ?>][testimonial_link]" type="text" value="<?php echo esc_url($slide['testimonial_link']); ?>" />
+						</div>
+						<div class="field last">
+							<label for=""><?php _e('Open Link in:', 'cycloneslider'); ?></label> <br>
+							<select class="" id="" name="cycloneslider_metas[<?php echo $i; ?>][testimonial_link_target]">
+								<option <?php selected( $slide['testimonial_link_target'], '_self' ); ?> value="_self"><?php _e('Same Window', 'cycloneslider'); ?></option>
+								<option <?php selected( $slide['testimonial_link_target'], '_blank' ); ?> value="_blank"><?php _e('New Tab or Window', 'cycloneslider'); ?></option>
+							</select>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="cs-video-settings">
-				<div class="field last">
-					<label for=""><?php _e('Embed Code', 'cycloneslider'); ?></label>
-					<textarea class="widefat cs-video-embed" rows="10" name="cycloneslider_metas[<?php echo $i; ?>][video]"><?php echo esc_textarea($slide['video']); ?></textarea>
-					<span class="note"><?php _e('You can place your embed code directly here. Or you can use the Get Video button to generate the embed code.', 'cycloneslider'); ?></span>
-					<br><br>
-					<span class="note"><?php _e('<strong>Note:</strong> The Slide Properties and Tile effects are not supported for videos.', 'cycloneslider'); ?></span>
-					<br>
-					<span class="note"><?php _e('<strong>Note:</strong> Append &wmode=transparent to the embed code src attribute to make HTML elements appear on top of Flash.', 'cycloneslider'); ?></span>
-				</div>
-			</div>
-		</div><!-- // end .cs-slide-video -->
+			<div class="clear"></div>
+		</div><!-- // end .cs-slide-testimonial -->
 		<div class="clear"></div>
 		<?php echo $debug ?>
 	</div>

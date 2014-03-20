@@ -1,35 +1,29 @@
 === Easy Smooth Scroll Links ===
 Contributors: Jeriff Cheng
-Donate link: http://www.92app.com
-Tags:anchor,anchor text,links,link,smooth scroll links,scroll,smooth scroll
+Tags: smooth scroll,jquery smooth scroll div,smooth scroll jquery,smooth scroll chrome,smooth scroll firefox,smooth scroll javascript,smooth scroll to anchor,smooth scroll plugin,smooth scroll tutorial,anchor,anchor text
 Requires at least: 2.6.5
-Tested up to: 3.2.1
+Tested up to: 3.8
 Stable tag: trunk
 
 == Description ==
- This plugin will enable you to easily create Page Anchors and add smooth scrolling effect to links that point to Page Anchors,instead of "jumping" to them. Easy Smooth Scroll Links WordPress Plugin is extremely useful for setting up a menu which can send you to different sections of a post.
+Create anchors and add up to to 30 scrolling animation effects to links that link to page anchors. You can set scroll speed and offset value. 
+
+<h4>Features</h4>
  
- Features:
- 
- * Create Page Anchors in WordPress Visual Editor easily through either Anchor Button or shortcode
-   
- * Add smooth scrolling effect to all links that point to Anchors
+ * You can set __scroll speed__ and __offset value__. 
+ * Choose from __30 Scrolling Animation Effects__
+ * You can __exclude certain anchors from scrolling__.
+ * Option to enable __Go To Top Button__ (with offset, animation effect and speed settings).
+ * Works on __all major browsers__: IE, Firefox, Chrome, Safari...
+ * __Visual Editor__ Anchor Button
+ * __Shortcode__ Supported [anchor]anchorname[/anchor]
 
-For more information,refer to <a rel="follow" title="Easy Smooth Scroll Links WordPress Plugin" href="http://www.92app.com/wordpress-plugins/easy-smooth-scroll-links" target="_blank">Easy Smooth Scroll Links WordPress Plugin</a>
+<h4>Video Tutorial</h4>
 
-<h4>Other WordPress Plugins I created:</h4>
-<ul>
-	<li><a rel="follow" target="_blank" href="http://www.92app.com/wordpress-plugins/facebook-twitter-google-plus-one-share-buttons" title="Facebook,Twitter,Google plus one Share Buttons WordPress Plugin">Facebook,Twitter,Google plus one Share Buttons</a></li>
-	<li><a rel="follow" title="Author Box After Posts WordPress Plugin" href="http://www.92app.com/wordpress-plugins/author-box-after-posts" target="_blank">Author Box After Posts</a> :Adds an author box after your post contents.</li>
-	<li><a rel="follow" target="_blank" href="http://www.92app.com/wordpress-plugins/nofollow-internal-links" title="Nofollow Internal Links WordPress Plugin">Nofollow Internal Links</a> :Adds the "nofollow" rel attribute to internal links</li>
-</ul>
+http://www.youtube.com/watch?v=te0FZcPulJs
 
-My Blog:<a rel="follow" href="http://www.92app.com" target="_blank">www.92app.com</a>
-Google +: <a rel="follow" href="http://plus.google.com/105297477957946180215" target="_blank">Google+</a>
-Twitter: <a rel="follow" href="https://twitter.com/jeriffcheng" rel="me" target="_blank">Twitter</a>
-Facebook: <a rel="follow" href="http://www.facebook.com/hschengyongtao" rel="me" target="_blank">Facebook</a>
-Linkedin: <a rel="follow" href="http://www.linkedin.com/in/jeriff" rel="me" target="_blank">Linkedin</a>
-FriendFeed: <a rel="follow" title="FriendFeed" href="http://friendfeed.com/jeriffcheng" rel="me" target="_blank">FriendFeed</a>
+For more information,refer to <a rel="follow" href="http://www.jeriffcheng.com/wordpress-plugins/easy-smooth-scroll-links#faqs" target="_blank">Easy Smooth Scroll Links WordPress Plugin</a>
+
 
 == Installation ==
 1. Upload the full directory into your wp-content/plugins directory
@@ -37,26 +31,64 @@ FriendFeed: <a rel="follow" title="FriendFeed" href="http://friendfeed.com/jerif
 3. That's it!
 
 == Frequently Asked Questions ==
-For FAQs and bug report,refer to <a rel="follow" title="Easy Smooth Scroll Links WordPress Plugin" href="http://www.92app.com/wordpress-plugins/easy-smooth-scroll-links" target="_blank">Easy Smooth Scroll Links WordPress Plugin</a>
+For FAQs and bug report,refer to <a target="_blank" rel="follow" href="http://www.jeriffcheng.com/wordpress-plugins/easy-smooth-scroll-links#faqs">ESSL FAQs</a>
 
 == Screenshots ==
 
-1. Page Anchor Shortcode
-2. Set up an anchor
-3. Link to an anchor
-
+1. Plugin Options Page
+2. Animation Effects
+3. Visual Editor Anchor Button
+4. Go To Top Button
 
 == Changelog ==
 
-= 1.0 =
-*First Version
+= 1.6 =
 
-= 1.1---08.8.2011=
-NEW : Add Page Anchor Shortcode.
+*New:  Option to set offset for GoToTop Button.
+
+= 1.5 =
+
+*New: Option to enable Go To Top Button (with custom scroll speed and animation effect)
+
+= 1.4 =
+
+*New: You can now exclude certain anchors from scrolling
+
+*Imoprove: Set default scrolling animation effect to more smooth 'easeInQuint' 
+
+
+= 1.3.2 =
+
+*New: Added 30 Scrolling Animation Effects
+
+*Fix: Prevent saving empty input fields
+
+= 1.3.1 =
+
+*Fix: wp enqueue script error  when turning WP_DEBUG mode on
+
+= 1.3 =
+
+*NEW: You can set scroll speed and offset value on WordPress backend now !
+
+= 1.2 =
+
+*FIX：Chrome Compatibility Problem
+
+*FIX: wp_enqueue_script was called incorrectly
+
+= 1.1 =
+
+*NEW : Add Page Anchor Shortcode.
 
 Changed : Use wp_enqueue_script function to load the script instead of the default <script> tag.
 
+= 1.0 =
+
+*First Version
 
 == Upgrade Notice ==
-= 1.1 =
-Add Page Anchor Shortcode
+
+= 1.6 =
+
+*New:  Option to set offset for GoToTop Button.

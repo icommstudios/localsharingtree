@@ -10,7 +10,7 @@ display:none;
 }
 </style>
 <div class="error" style="background: none repeat scroll 0pt 0pt infobackground; border: 1px solid inactivecaption; padding: 5px;line-height:16px;">
-Thanks again for using the plugin. we will never show the mesage again.
+Thanks again for using the plugin. we will never show the message again.
 </div>
 <?php
 }

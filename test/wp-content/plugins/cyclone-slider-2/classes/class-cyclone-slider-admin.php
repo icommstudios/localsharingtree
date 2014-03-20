@@ -265,7 +265,11 @@ if(!class_exists('Cyclone_Slider_Admin')):
                 
                     $image_url = $this->get_slide_img_thumb($slide['id']);
                     $image_url = apply_filters('cycloneslider_preview_url', $image_url, $slide);
-                    $box_title = apply_filters('cycloneslider_box_title', __('Slide', 'cycloneslider'), $slide).' '.($i+1);
+                    $box_title = __('Slide', 'cycloneslider').' '.($i+1);
+                    if( '' != trim($slide['title']) and 'image' == $slide['type'] ){
+                        $box_title = $box_title. ' - '.$slide['title'];
+                    }
+                    $box_title = apply_filters('cycloneslider_box_title', $box_title);
                     
                     $vars = array();
                     $vars['i'] = $i;
@@ -397,6 +401,24 @@ if(!class_exists('Cyclone_Slider_Admin')):
                 } else {
                     $templates[$name]['screenshot'] = CYCLONE_URL.'images/screenshot.png';
                 }
+                
+                $templates[$name]['warning'] = '';
+            
+                if( $template['location_name'] == 'core' ){
+                    $templates[$name]['location_name'] = __('Core', 'cycloneslider');
+                    $templates[$name]['location_details'] = sprintf( __("Located inside the Cyclone Slider's templates directory:<br> <strong>%s</strong>", 'cycloneslider' ), $template['path']);
+                }
+                if( $template['location_name'] == 'active-theme' ){
+                    $templates[$name]['location_name'] = 'Active Theme';
+                    $templates[$name]['location_details'] = sprintf( __("Located inside your currently active theme:<br> <strong>%s</strong>", 'cycloneslider' ), $template['path']);
+                    $templates[$name]['warning'] = sprintf( __('Your template is in danger of being overwritten when you upgrade your theme. Please move it inside %s.', 'cycloneslider' ), 'wp-content/cycloneslider' );
+                }
+                if( $template['location_name'] == 'wp-content' ){
+                    $templates[$name]['location_name'] = 'WP Content';
+                    $templates[$name]['location_details'] = sprintf( __("Located inside wp-content directory:<br> <strong>%s</strong>", 'cycloneslider'), $template['path'] );
+                }
+                
+                // Remove inactive templates
                 if($active_templates[$name]==0){
                     unset($templates[$name]);
                 }

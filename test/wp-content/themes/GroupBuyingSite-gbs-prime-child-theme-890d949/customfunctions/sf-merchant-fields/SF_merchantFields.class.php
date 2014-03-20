@@ -28,8 +28,8 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 		add_action('edit_merchant', array(get_class(), 'process_merchant_form_submit'), 50, 1);
 		
 		//Add locations taxonomy to Merchants & charities
-		add_action('init', array(get_class(), 'custom_add_locations_taxonomy'), 999);
-		add_filter( 'pre_get_posts', array(get_class(), 'custom_query_deals_only_locations') ); //Remove merchants from Location taxonomy lists (only show deals)
+		//add_action('init', array(get_class(), 'custom_add_locations_taxonomy'), 999);
+		add_filter( 'pre_get_posts', array(get_class(), 'custom_query_deals_only_locations') ); //Remove merchants and other post_types from Location taxonomy lists (only show deals)
 		
 		add_action('wp_footer', array(get_class(), 'add_scripts_footer') );
 		
@@ -405,7 +405,7 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 	}
 	
 	public static function custom_add_locations_taxonomy() {
-		register_taxonomy_for_object_type( Group_Buying_Deal::LOCATION_TAXONOMY, 'gb_charities' );
+		register_taxonomy_for_object_type( Group_Buying_Deal::LOCATION_TAXONOMY, 'gb_merchant' );
 	}
 	
 	public static function custom_query_deals_only_locations( $query ) {

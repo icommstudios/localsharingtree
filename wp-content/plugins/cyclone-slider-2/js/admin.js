@@ -98,6 +98,18 @@ jQuery(document).ready(function($){
                             $(field).attr('name',name);
                         }
                     });
+                    $(box).find('.cs-changeling-id').each(function(i, field){ /*** Loop thru relevant fields ***/
+                        var name = $(field).attr('id');
+                        if(name){
+                            name = name.replace(/[0-9]+/, boxIndex); /*** Replace all ad_asdasd-x ***/
+                            $(field).attr('id',name);
+                        }
+                        var name = $(field).attr('for');
+                        if(name){
+                            name = name.replace(/[0-9]+/, boxIndex); /*** Replace all ad_asdasd-x ***/
+                            $(field).attr('for',name);
+                        }
+                    });
                 });
             }
         });
@@ -136,6 +148,32 @@ jQuery(document).ready(function($){
             $(".cycloneslider_metas_enable_slide_effects").trigger('change');
             
             e.preventDefault();
+        });
+        
+        /*** Add image to slide ***/
+        $('#cyclone-slides-metabox').on('wpAddImage', '.cs-media-gallery-show', function(e, image_url, attachment_id){
+            var current_slide_box, slide_thumb, slide_attachment_id;
+
+            current_slide_box = $(this).parents('.cs-slide');/*** Get current box ***/
+            slide_thumb = current_slide_box.find('.cs-image-thumb');/*** Find the thumb ***/
+            slide_attachment_id = current_slide_box.find('.cs-image-id ');/*** Find the hidden field that will hold the attachment id ***/
+            
+            slide_thumb.html('<img src="'+image_url+'" alt="thumb">').show();
+            slide_attachment_id.val(attachment_id);
+ 
+        });
+        
+        /*** Add multiple images as slide ***/
+        $('#cyclone-slides-metabox').on('wpAddImages', '.cs-multiple-slides', function(e, media_attachments){
+            var cur_slide_count = $('.cs-sortables .cs-slide').length;
+            
+            for(i=0; i<media_attachments.length; ++i){
+                
+                $('#cyclone-slides-metabox .cs-add-slide').trigger('click');
+                
+                $('.cs-sortables .cs-slide').eq(cur_slide_count+i).find('.cs-media-gallery-show').trigger('wpAddImage', [media_attachments[i].url, media_attachments[i].id]);
+            }
+            
         });
         
         /*** Toggle - slide body visiblity ***/
@@ -294,11 +332,52 @@ jQuery(document).ready(function($){
         $('#pts_post_type').html('<option value="cycloneslider">Cycloneslider</option>');
         
         /*** Template Chooser ***/
-        $('.cs-templates li').click(function(){
+        $('#cyclone-slider-templates-metabox').on('click', '.cs-templates li', function(e){
             $('.cs-templates li').removeClass('active');
             $('.cs-templates li input').removeAttr('checked');
             $(this).addClass('active').find('input').attr('checked','checked');
         });
+        $('#cyclone-slider-templates-metabox').on('click', '.body .cs-location a', function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            
+            var trigger = $(this),
+                content = '',
+                boxy = $('#cs-boxy'),
+                width = 0,
+                height = 0,
+                x = 0,
+                y = 0;
+            
+            boxy.html( trigger.data('content') );
+            boxy.stop().show();
+            
+            /* Do calcs after element is shown to prevent zero values for hidden element */
+            width = boxy.outerWidth(),
+            height = boxy.outerHeight(),
+            x = trigger.offset().left,
+            y = trigger.offset().top,
+                
+            y = y - height;
+            if ( $('body').hasClass('admin-bar') ) {
+                y -= 32;
+            }
+            
+            boxy.css({
+                'left': x+'px',
+                'top': y+'px'
+            });
+        });
+        $(document).on('click', '#cs-boxy', function(e){
+            e.preventDefault();
+            e.stopPropagation();
+        })
+        $(document).on('click', 'body', function(e){
+            $('#cs-boxy').fadeOut();
+        })
+        $(window).resize(function(e){
+            $('#cs-boxy').hide();
+        })
         
         /*** show/Hide Tile Properties for slideshow ***/
         $('#cyclone-slider-properties-metabox').on('change', '#cycloneslider_settings_fx', function(){
@@ -340,14 +419,14 @@ jQuery(document).ready(function($){
         }
         // Prepare the variable that holds our custom media manager.
         var cyclone_media_frame;
-        var current_slide_box = false;
+        var triggering_element = null;
         
         // Bind to our click event in order to open up the new media experience.
         $(document.body).on('click', '.cs-media-gallery-show', function(e){
             // Prevent the default action from occuring.
             e.preventDefault();
             
-            current_slide_box = $(this).parents('.cs-slide');/*** get current box ***/
+            triggering_element = jQuery(this); /* Get current clicked element */
             
             
             // If the frame already exists, re-open it.
@@ -371,13 +450,10 @@ jQuery(document).ready(function($){
             });
     
             cyclone_media_frame.on('select', function(){
-                var media_attachment, slide_thumb, slide_attachment_id, img_url;
+                var media_attachment, img_url;
                 
                 // Grab our attachment selection and construct a JSON representation of the model.
                 media_attachment = cyclone_media_frame.state().get('selection').first().toJSON();
-                
-                slide_thumb = current_slide_box.find('.cs-image-thumb');/*** find the thumb ***/
-                slide_attachment_id = current_slide_box.find('.cs-image-id ');/*** find the hidden field that will hold the attachment id ***/
                 
                 if(undefined==media_attachment.sizes.medium){ /*** Account for smaller images where medium does not exist ***/
                     img_url = media_attachment.url;
@@ -385,9 +461,58 @@ jQuery(document).ready(function($){
                     img_url = media_attachment.sizes.medium.url;
                 }
                 
-                slide_thumb.html('<img src="'+img_url+'" alt="thumb">').show();
-                slide_attachment_id.val(media_attachment.id);
+                triggering_element.trigger('wpAddImage', [img_url, media_attachment.id]);
+            });
+    
+            // Now that everything has been set, let's open up the frame.
+            cyclone_media_frame.open();
+        });
+    })();
+    
+    
+    (function() {
+        if(typeof(wp) == "undefined" || typeof(wp.media) != "function"){
+            return;
+        }
+        // Prepare the variable that holds our custom media manager.
+        var cyclone_media_frame;
+        var triggering_element = null;
+        
+        // Bind to our click event in order to open up the new media experience.
+        $(document.body).on('click', '.cs-multiple-slides', function(e){
+            // Prevent the default action from occuring.
+            e.preventDefault();
+            
+            triggering_element = jQuery(this); /* Get current clicked element */
+            
+            
+            // If the frame already exists, re-open it.
+            if ( cyclone_media_frame ) {
+                cyclone_media_frame.open();
+                return;
+            }
+    
+
+            cyclone_media_frame = wp.media.frames.cyclone_media_frame = wp.media({
+                className: 'media-frame cs-frame',
+                frame: 'select',
+                multiple: true,
+                title: cycloneslider_admin_vars.title2,
+                library: {
+                    type: 'image'
+                },
+                button: {
+                    text:  cycloneslider_admin_vars.button2
+                }
+            });
+    
+            cyclone_media_frame.on('select', function(){
+                var media_attachments;
                 
+                // Grab our attachment selection and construct a JSON representation of the model.
+                media_attachments = cyclone_media_frame.state().get('selection').toJSON();
+                
+                triggering_element.trigger('wpAddImages', [media_attachments]);
             });
     
             // Now that everything has been set, let's open up the frame.

@@ -75,7 +75,7 @@ update_option('acx_si_installed_date', $acx_si_installed_date);
 		$social_icon_array_order = array(0,1,2,3,4,5,6);
 		$social_icon_array_order = serialize($social_icon_array_order);
 		update_option('social_icon_array_order', $social_icon_array_order);
-		$acx_fsmi_si_current_version = "1.3.2";  // Current Version
+		$acx_fsmi_si_current_version = "1.3.4";  // Current Version
 		update_option('acx_fsmi_si_current_version', $acx_fsmi_si_current_version);
 	} else 
 	{
@@ -158,7 +158,7 @@ if($acx_si_fsmi_hide_advert == "no")
 	if($acx_si_credit != "yes")
 	{	?>
 		<div id='acx_backlink' align='center'>
-Please do a favour by enabling backlink to our site. <a href="admin.php?page=Acurax-Social-Icons-Settings&backlink=enable">Okay, Enable.</a> 
+Please do a favour by enabling back-link to our site. <a href="admin.php?page=Acurax-Social-Icons-Settings&backlink=enable">Okay, Enable.</a> 
 		</div>
 		<?php 
 	}	?>
@@ -382,7 +382,7 @@ Please do a favour by enabling backlink to our site. <a href="admin.php?page=Acu
 <?php if($_GET["status"] == "updated") { ?>
 <div style="display: block; background-color: rgb(255, 255, 224); padding: 10px; border: 1px solid rgb(230, 219, 85); font-family: arial; font-size: 13px; font-weight: bold; text-align: center; border-radius: 10px 10px 10px 10px;">Acurax Floating Social Media Icon Update Successfully Completed - Thank You</div>
 <?php
-$acx_fsmi_si_current_version = "1.3.2";  // Current Version
+$acx_fsmi_si_current_version = "1.3.4";  // Current Version
 update_option('acx_fsmi_si_current_version', $acx_fsmi_si_current_version);
 } ?>
 <hr/>

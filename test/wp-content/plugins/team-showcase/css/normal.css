@@ -1,0 +1,53 @@
+#tshowcase-wrap {
+	
+}
+
+
+.tshowcase-box {
+	
+	}
+	
+.tshowcase-box-photo {
+	
+	
+}
+
+.tshowcase-box-photo img {
+	
+}
+
+.tshowcase-box-photo img:hover {
+	
+}
+
+.tshowcase-box-info {
+		
+}
+
+.tshowcase-box-title {
+	font-weight:bold;
+	font-size:1.1em;
+	
+	}
+#tshowcase-hover-wrap .tshowcase-box-title a {
+	color:#FFF;
+	text-decoration:none;
+}
+
+#tshowcase-hover-wrap .tshowcase-box-title a:hover {
+	color:#FFF;
+	text-decoration:underline;
+}
+
+.tshowcase-box-social {}
+
+.tshowcase-box-details {}
+
+.tshowcase-single-position { 
+	font-style:italic;
+}
+.tshowcase-single-email{}
+.tshowcase-single-telephone{}
+.tshowcase-single-location{}
+.tshowcase-single-shortbio{}
+.tshowcase-single-website{}

@@ -3,8 +3,8 @@ Contributors: kosinix
 Donate link: http://www.codefleet.net/donate/
 Tags: slider, slideshow, drag-and-drop, wordpress-slider, wordpress-slideshow, cycle 2, jquery, responsive, translation-ready, custom-post, cyclone-slider
 Requires at least: 3.5
-Tested up to: 3.6.1
-Stable tag: 2.7.5
+Tested up to: 3.8
+Stable tag: 2.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ Cyclone Slider 2 is an easy-to-use slider plugin with an intuitive user interfac
 = Features: =
 * Very easy to use interface! Just drag and drop to re-order your slides.
 * Responsive slider for responsive and fluid websites.
-* Supports image, YouTube, Vimeo, and custom HTML slides.
+* Supports image, YouTube, Vimeo, custom HTML, and testimonial slides.
 * Powered by [Cycle 2](http://jquery.malsup.com/cycle2/), the most flexible jQuery slideshow plugin.
 * Every project is unique. To address this issue Cyclone Slider 2 has a template system that allow developers to easily customize the slider appearance and behavior.
 * Ability to add per-slide transition effects.
@@ -41,10 +41,17 @@ Cyclone Slider 2 is an easy-to-use slider plugin with an intuitive user interfac
 = Credits =
 * Cyclone Slider 2 was based on [Cycle 2](http://jquery.malsup.com/cycle2/) by [Mike Alsup](http://jquery.malsup.com/).
 * Special thanks to Cea Bacolor for the wonderful photos.
+
+
+= Translations = 
 * Aubin BERTHE for the French translation.
 * maxgx for the Italian translation.
 * [Hassan](http://wordpress.org/support/profile/hassanhamm) for the Arabic translation.
 * Javad for the Persian translation.
+* [Borisa Djuraskovic](http://www.webhostinghub.com/) for the Serbo-Croatian translation.
+* [Gabriel Gil](http://gabrielgil.es/) for the Spanish translation.
+
+Do you want to translate Cyclone Slider into your language? Go to the project page at [transifex](https://www.transifex.com/projects/p/cyclone-slider-2/), create a free account, and join.
 
 = License =
 GPLv2 or later - http://www.gnu.org/licenses/gpl-2.0.html
@@ -83,11 +90,8 @@ Sorry but its not currently supported as it requires loading the YouTube API whi
 Most probably its wordpress adding paragpraphs on line breaks next to the slides therefore adding a blank `<p>` slide. You can try adding this to functions.php:
 `remove_filter('the_content', 'wpautop');`
 
-= How can I use templates? =
-`[cycloneslider id="my-slider" template="custom-name"]` 
-
 = Where do I add my own templates? =
-Inside your current active theme create a folder named "cycloneslider". Add your templates inside.
+Inside `wp-content` create a folder named "cycloneslider". Add your templates inside.
 
 == Screenshots ==
 
@@ -98,6 +102,40 @@ Inside your current active theme create a folder named "cycloneslider". Add your
 5. Slideshow Settings
 
 == Changelog ==
+
+= 2.8.2 - 2014-01-10 =
+* New. Added testimonial slide type. Now you can create testimonial sliders.
+* New. Added support for testimonial slides in Dark and Standard templates.
+* New. Added Spanish translation by Gabriel Gil.
+* New. Added Serbo-Croation translation by Borisa Djuraskovic.
+* Change. Added a few responsive tweaks in admin.css for the template selection area.
+* Change. Removed unused codes. 
+
+= 2.8.1 - 2014-01-02 =
+* New. Added ability to disable related videos in YouTube slide.
+* New. Slide title now appends the slide caption of there is one.
+* New. MP6 color schemes. Added subtle cosmetic changes to UI depending on what admin color scheme was selected.
+* Change. Made hide_non_active false only if using dynamic height and YouTube/Vimeo slides. For backwards compatibility with older templates.
+* Change. Removed old problematic video slide.
+* Fix. Fixed Vimeo error when URL fails to load.
+* Fix. Fix for very long slide titles.
+* Fix. Bug fix for PHP warning in template selection when template is unchecked in settings page.
+
+= 2.8.0 - 2013-12-29 - This is a major release =
+* New. Added support for YouTube, Vimeo and Custom slide types in Text template.
+* New. Added support for YouTube and Vimeo slide types in Dark template.
+* New. Added "Location" column in template selection panel.
+* New. Added warning when a template is located in the currently active theme directory. It warns the user of potential deletion of the template when a theme is updated.
+* New. Added template directory in wp-content/cycloneslider/. This is now the recommended directory to store custom or modified templates to survive update nukes.
+* New. Added width_management to shortcode attributes.
+* Change. hide_non_active is now always set to false for getBoundingClientRect to not return zero.
+* Fix. Minor change for directory separator on active theme location.
+* Fix. Fixed inacurate next slide height reading by using getBoundingClientRect() instead of outerHeight().
+* Fix. Added check to fix PHP warning when Vimeo URL is blank.
+
+= 2.7.7 - 2013-11-26 =
+* New. Added ability to select multiple images to add as slides
+* Change. Refactor code for template javascripts. Moved similar code into client.js
 
 = 2.7.6 - 2013-10-13 =
 * New. Added support for YouTube and Vimeo slide types in thumbnails template.
@@ -274,6 +312,40 @@ Inside your current active theme create a folder named "cycloneslider". Add your
 
 
 == Upgrade Notice ==
+
+= 2.8.2 - 2014-01-10 =
+* New. Added testimonial slide type. Now you can create testimonial sliders.
+* New. Added support for testimonial slides in Dark and Standard templates.
+* New. Added Spanish translation by Gabriel Gil.
+* New. Added Serbo-Croation translation by Borisa Djuraskovic.
+* Change. Added a few responsive tweaks in admin.css for the template selection area.
+* Change. Removed unused codes. 
+
+= 2.8.1 - 2014-01-02 =
+* New. Added ability to disable related videos in YouTube slide.
+* New. Slide title now appends the slide caption of there is one.
+* New. MP6 color schemes. Added subtle cosmetic changes to UI depending on what admin color scheme was selected.
+* Change. Made hide_non_active false only if using dynamic height and YouTube/Vimeo slides. For backwards compatibility with older templates.
+* Change. Removed old problematic video slide.
+* Fix. Fixed Vimeo error when URL fails to load.
+* Fix. Fix for very long slide titles.
+* Fix. Bug fix for PHP warning in template selection when template is unchecked in settings page.
+
+= 2.8.0 - 2013-12-29 - This is a major release =
+* New. Added support for YouTube, Vimeo and Custom slide types in Text template.
+* New. Added support for YouTube and Vimeo slide types in Dark template.
+* New. Added "Location" column in template selection panel.
+* New. Added warning when a template is located in the currently active theme directory. It warns the user of potential deletion of the template when a theme is updated.
+* New. Added template directory in wp-content/cycloneslider/. This is now the recommended directory to store custom or modified templates to survive update nukes.
+* New. Added width_management to shortcode attributes.
+* Change. hide_non_active is now always set to false for getBoundingClientRect to not return zero.
+* Fix. Minor change for directory separator on active theme location.
+* Fix. Fixed inacurate next slide height reading by using getBoundingClientRect() instead of outerHeight().
+* Fix. Added check to fix PHP warning when Vimeo URL is blank.
+
+= 2.7.7 - 2013-11-26 =
+* New. Added ability to select multiple images to add as slides
+* Change. Refactor code for template javascripts. Moved similar code into client.js
 
 = 2.7.6 - 2013-10-13 =
 * New. Added support for YouTube and Vimeo slide types in thumbnails template.

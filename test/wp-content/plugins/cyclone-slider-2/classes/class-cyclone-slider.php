@@ -60,7 +60,8 @@ if(!class_exists('Cyclone_Slider')):
                     'tile_delay' => null,
                     'tile_vertical' => null,
                     'random' => null,
-                    'resize' => null
+                    'resize' => null,
+                    'width_management' => null
                 ),
                 $shortcode_settings,
                 'cycloneslider'
@@ -69,6 +70,8 @@ if(!class_exists('Cyclone_Slider')):
             $slider_slug = $shortcode_settings['id']; // Slideshow slug passed from shortcode
             
             $slider_count = ++$this->slider_count; // Make each call to shortcode unique
+            
+            $slider_html_id = 'cycloneslider-'.$slider_slug.'-'.$slider_count; // UID
             
             $slider = $this->cyclone_slider_data->get_slider_by_slug( $slider_slug ); // Get slider by slug
             
@@ -129,6 +132,9 @@ if(!class_exists('Cyclone_Slider')):
             if( null !== $shortcode_settings['resize'] ){
                 $slider_settings['resize'] = $shortcode_settings['resize'];
             }
+            if( null !== $shortcode_settings['width_management'] ){
+                $slider_settings['width_management'] = $shortcode_settings['width_management'];
+            }
             
             $image_count = 0; // Number of image slides
             $video_count = 0; // Number of video slides
@@ -157,7 +163,12 @@ if(!class_exists('Cyclone_Slider')):
                     $youtube_count++;
                     $youtube_id = $this->cyclone_slider_youtube->get_youtube_id($slides[$i]['youtube_url']);
                     
-                    $slides[$i]['youtube_embed_code'] = '<iframe width="'.$slider_settings['width'].'" height="'.$slider_settings['height'].'" src="//www.youtube.com/embed/'.$youtube_id.'?wmode=transparent" frameborder="0" allowfullscreen></iframe>';
+                    $youtube_related = '';
+                    if( 'true' == $slides[$i]['youtube_related'] ) {
+                        $youtube_related = '&rel=0';
+                    }
+                    
+                    $slides[$i]['youtube_embed_code'] = '<iframe id="'.$slider_html_id.'-iframe-'.$i.'" width="'.$slider_settings['width'].'" height="'.$slider_settings['height'].'" src="//www.youtube.com/embed/'.$youtube_id.'?wmode=transparent'.$youtube_related.'" frameborder="0" allowfullscreen></iframe>';
                     $slides[$i]['youtube_id'] = $youtube_id;
                     $slides[$i]['thumbnail_small'] = $this->cyclone_slider_youtube->get_youtube_thumb($youtube_id);
                     
@@ -165,7 +176,7 @@ if(!class_exists('Cyclone_Slider')):
                     $vimeo_count++;
                     $vimeo_id = $this->cyclone_slider_vimeo->get_vimeo_id($slides[$i]['vimeo_url']);
                     
-                    $slides[$i]['vimeo_embed_code'] = '<iframe width="'.$slider_settings['width'].'" height="'.$slider_settings['height'].'" src="http://player.vimeo.com/video/'.$vimeo_id.'?api=1&wmode=transparent" frameborder="0"  webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+                    $slides[$i]['vimeo_embed_code'] = '<iframe id="'.$slider_html_id.'-iframe-'.$i.'" width="'.$slider_settings['width'].'" height="'.$slider_settings['height'].'" src="http://player.vimeo.com/video/'.$vimeo_id.'?api=1&wmode=transparent" frameborder="0"  webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
                     $slides[$i]['vimeo_id'] = $vimeo_id;
                     $slides[$i]['thumbnail_small'] = $this->cyclone_slider_vimeo->get_vimeo_thumb($vimeo_id);
                 }
@@ -182,15 +193,18 @@ if(!class_exists('Cyclone_Slider')):
             // Hardcoded for now
             $slider_settings['hide_non_active'] = "true";
             $slider_settings['auto_height'] = "{$slider_settings['width']}:{$slider_settings['height']}"; // Use ratio for backward compat
-            if( ($youtube_count+$vimeo_count) > 0 ){ 
-                $slider_settings['hide_non_active'] = "false"; // Do not hide non active slides to prevent reloading of videos
+            if( 'on' == $slider_settings['dynamic_height'] ) {
+                $slider_settings['auto_height'] = 0; // Disable autoheight when dynamic height is on. To prevent slider returning to wrong (ratio height) height when browser is resized.
+            }
+            if( ($youtube_count+$vimeo_count) > 0 or  'on' == $slider_settings['dynamic_height'] ){ 
+                $slider_settings['hide_non_active'] = "false"; // Do not hide non active slides to prevent reloading of videos and for getBoundingClientRect() to not return 0.
             }
             $slider_settings['auto_height_speed'] = 250; // Will be editable in admin in the future
             $slider_settings['auto_height_easing'] = "null"; // Will be editable in admin in the future
             
             // Pass this vars to template
             $vars = array();
-            $vars['slider_html_id'] = 'cycloneslider-'.$slider_slug.'-'.$slider_count; // The unique HTML ID for slider
+            $vars['slider_html_id'] = $slider_html_id; // The unique HTML ID for slider
             $vars['slider_count'] = $slider_count;
             $vars['slides'] = $slides;
             $vars['image_count'] = $image_count;

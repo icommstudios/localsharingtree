@@ -86,7 +86,7 @@ class Registration_Captcha extends Group_Buying_Controller {
 		if ( !function_exists( 'recaptcha_get_html' ) ) {
 			require_once GBS_REG_CAP_FIELDS . '/library/recaptchalib.php';
 		}
-		return '<script type="text/javascript"> var RecaptchaOptions = { theme : "clean" };</script><div class="clearfix" style="width:450px; margin-left:120px; margin-bottom:20px">'.recaptcha_get_html( self::$publickey, null, TRUE ).'</div>';
+		return '<script type="text/javascript"> var RecaptchaOptions = { theme : "clean" };</script><div class="recaptcha_wrapper clearfix" style="width:450px; margin-left:120px; margin-bottom:20px">'.recaptcha_get_html( self::$publickey, null, TRUE ).'</div>';
 	}
 
 	/**
