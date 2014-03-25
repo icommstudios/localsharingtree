@@ -1,3 +1,33 @@
+4.7.1
+-----
+
+- Bug fix: Rewards and Credits being used on checkout under specific circumstances (i.e. exchange rates) could cause incorrect totals and prevent checkout.
+- credit and reward shortcodes will now be calculated totals.
+- Notifications not being sent unless the data array is different. Add gb_was_notification_sent_check filter.
+
+4.7.1.1
+-------
+
+- Use HTTP 1.1 for all Paypal API calls. Fixes sandbox and prevent live from breaking in the future.
+
+Version 4.7
+-----------
+- New Administration changes
+- Add-on Marketplace fixes
+- WP Affiliate Platform changes
+- Allow for images to not be added to the description after deal submission, via gb_auto_add_multiple_images_to_description filter.
+- Child theme installation fix for certain version of WP.
+- Content feed bug repeating content
+
+4.7.0.1 - Bug Fix: Records returning arrays as strings in $record->data.
+4.7.0.2 - GBS Records Option hidden.
+4.7.0.3 - Tax options fix.
+4.7.0.4 - Filtered countries save callback fix.
+4.7.0.5 - WP_AFFILIATE_PLATFORM_VERSION Warning fix.
+4.7.0.6 - Shipping options not showing at checkout when items have a 0 or 0.00 shipping cost.
+
+
+
 Version 4.6
 -----------
 
@@ -25,6 +55,13 @@ Developer info
 4.6.3.1 - Better Records conversion, fix for voucher filtering and fix force login issues.
 
 4.6.4 - New function gb_user_has_voucher and allow for errors to not be logged, SSL update for forcing https:// on checkout, SSL optimizations.
+
+4.6.4.1 - WordPress 3.7 compatibility update for redirecting away from wp-login.php and password protected content submissions.
+
+4.6.5 - Registration page showing blank content under certain circumstances.
+
+4.6.6 - Fix white screen issue on checkout if logs are created (happens with certain versions of PHP), fix guest checkout php notice, syndication bug fix, merchant purchase report fix, states and countries filter fix, select2 upgrade and other minor fixes.
+
 
 Version: 4.5
 ------------

@@ -17,6 +17,7 @@ class Group_Buying_Destroy extends Group_Buying_Controller {
 		add_action( 'before_delete_post',  array( get_class(), 'destroyed_deal' ), 10, 1 );
 
 		add_action( 'wp_ajax_gbs_deactivate_voucher',  array( get_class(), 'maybe_deactivate_voucher' ), 10, 0 );
+		add_action( 'wp_ajax_gbs_void_purchase',  array( get_class(), 'maybe_void_purchase' ), 10, 0 );
 		add_action( 'wp_ajax_gbs_void_payment',  array( get_class(), 'maybe_void_payment' ), 10, 0 );
 		add_action( 'wp_ajax_gbs_destroyer',  array( get_class(), 'destroy' ), 10, 0 );
 
@@ -247,11 +248,72 @@ class Group_Buying_Destroy extends Group_Buying_Controller {
 		foreach ( $items as $key => $item ) {
 			self::reset_deal_purchase_numbers( $item['deal_id'] );
 		}
+
+		// In case notes are sent
+		if ( isset( $_REQUEST['notes'] ) && $_REQUEST['notes'] != '' ) {
+			$notes = sprintf( self::__( 'Deleted by User #%s on %s:<br/>%s' ), get_current_user_id(), date( get_option( 'date_format' ) . ' @ ' . get_option( 'time_format' ) ), $_REQUEST['notes'] );
+			$purchase->set_admin_notes( $notes );
+		}
+
 		add_action( 'gb_purchase_destroyed', $purchase_id, $destroy_related, $force_delete );
 	}
 
+	/**
+	 * Void a purchase
+	 * Void all payments and deactivate all vouchers.
+	 * @param  integet  $purchase   Purchase ID
+	 * @return
+	 */
+	public static function void_purchase( $purchase_id, $note = '' ) {
+		$purchase = Group_Buying_Purchase::get_instance( $purchase_id );
+		if ( !is_a( $purchase, 'Group_Buying_Purchase' ) )
+				return;
+
+
+		// Mark as voided
+		$purchase->set_void();
+
+		// Void all payments
+		$payment_ids = $purchase->get_payments();
+		foreach ( $payment_ids as $payment_id ) {
+			self::void_payment( $payment_id, $note );
+		}
+
+		// Deactivate all vouchers
+		$voucher_ids = $purchase->get_vouchers();
+		foreach ( $voucher_ids as $voucher_id ) {
+			$voucher = Group_Buying_Voucher::get_instance( $voucher_id );
+			
+			if ( !is_a( $voucher, 'Group_Buying_Voucher' ) )
+				continue;
+
+			$voucher->deactivate();
+		}
+
+		// Merge old data with new updated message
+		$notes = sprintf( self::__( 'Voided by User #%s on %s:<br/>%s' ), get_current_user_id(), date( get_option( 'date_format' ) . ' @ ' . get_option( 'time_format' ) ), $note );
+		$purchase->set_admin_notes( $notes );
+		add_action( 'gb_void_purchase', $purchase_id, $notes );
+	}
+
+	public function maybe_void_purchase() {
+		if ( !isset( $_REQUEST['void_purchase_nonce'] ) )
+			wp_die( 'Forget something?' );
+
+		$nonce = $_REQUEST['void_purchase_nonce'];
+		if ( !wp_verify_nonce( $nonce, self::NONCE ) )
+        	wp_die( 'Not going to fall for it!' );
+
+        if ( current_user_can( 'delete_posts' ) ) {
+			$purchase_id = $_REQUEST['purchase_id'];
+			$data = ( isset( $_REQUEST['notes'] ) ) ? $_REQUEST['notes'] : '' ;
+			self::void_purchase( $purchase_id, $data );
+			do_action( 'gb_purchase_voided', $purchase_id );
+		}
+		
+	}
+
 	public static function maybe_void_payment() {
-		error_log( 'request' . print_r( $_REQUEST, TRUE ) );
 		if ( !isset( $_REQUEST['void_payment_nonce'] ) )
 			wp_die( 'Forget something?' );
 
@@ -315,7 +377,7 @@ class Group_Buying_Destroy extends Group_Buying_Controller {
 		$new_data = wp_parse_args( $payment->get_data(), array( 'void_notes' => $new_data, 'updated' => sprintf( self::__( 'Voided by User #%s on %s' ), get_current_user_id(), date( get_option( 'date_format' ) . ' @ ' . get_option( 'time_format' ) ) ) ) );
 		$payment->set_data( $new_data );
 
-		add_action( 'gb_void_payment', $payment_id, $destroy, $new_data );
+		add_action( 'gb_void_payment', $payment_id, $new_data );
 	}
 
 	public function reset_deal_purchase_numbers( $deal_id = 0 ) {

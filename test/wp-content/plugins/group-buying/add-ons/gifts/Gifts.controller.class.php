@@ -7,12 +7,16 @@
  * @subpackage Gift
  */
 class Group_Buying_Gifts extends Group_Buying_Controller {
+	const SETTINGS_PAGE = 'gift_records';
 	const REDEMPTION_PATH_OPTION = 'gb_gift_redemption';
 	const REDEMPTION_QUERY_VAR = 'gb_gift_redemption';
 	const FORM_ACTION = 'gb_gift_redemption';
 	private static $redemption_path = 'gifts';
-	protected static $settings_page;
 	private static $instance;
+
+	public static function get_admin_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
 
 	public static function init() {
 		self::register_payment_pane();
@@ -25,12 +29,45 @@ class Group_Buying_Gifts extends Group_Buying_Controller {
 
 		// Redemption Templating
 		self::$redemption_path = get_option( self::REDEMPTION_PATH_OPTION, self::$redemption_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
+		self::register_settings();
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_gift_callback' ), 10, 1 );
 		add_action( 'parse_request', array( get_class(), 'manually_resend_gift' ), 1, 0 );
+	}
 
-		// Admin
-		self::$settings_page = self::register_settings_page( 'gift_records', self::__( 'Gift Records' ), self::__( 'Gifts' ), 9.1, FALSE, 'records', array( get_class(), 'display_table' ) );
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'Gift Records' ),
+			'menu_title' => self::__( 'Gifts' ),
+			'weight' => 17,
+			'reset' => FALSE, 
+			'section' => 'records',
+			'callback' => array( get_class(), 'display_table' )
+			);
+		do_action( 'gb_settings_page', $args );
+
+		// Settings
+		$settings = array(
+			'gb_url_path_gifts' => array(
+				'weight' => 190,
+				'settings' => array(
+					self::REDEMPTION_PATH_OPTION => array(
+						'label' => self::__( 'Gift Redemption Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$redemption_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -147,19 +184,6 @@ class Group_Buying_Gifts extends Group_Buying_Controller {
 			),
 		);
 		$router->add_route( self::REDEMPTION_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_cart_paths';
-
-		// Settings
-		register_setting( $page, self::REDEMPTION_PATH_OPTION );
-		add_settings_field( self::REDEMPTION_PATH_OPTION, self::__( 'Gift Redemption Path' ), array( get_class(), 'display_path' ), $page, $section );
-	}
-
-	public static function display_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="'.self::REDEMPTION_PATH_OPTION.'" id="'.self::REDEMPTION_PATH_OPTION.'" value="' . esc_attr( self::$redemption_path ) . '"  size="40" /><br />';
 	}
 
 	public static function on_redemption_page() {
@@ -384,7 +408,7 @@ class Group_Buying_Gifts extends Group_Buying_Controller {
 		<div class="wrap">
 			<?php screen_icon(); ?>
 			<h2 class="nav-tab-wrapper">
-				<?php self::display_admin_tabs(); ?>
+				<?php do_action( 'gb_settings_tabs' ); ?>
 			</h2>
 
 			 <?php $wp_list_table->views() ?>

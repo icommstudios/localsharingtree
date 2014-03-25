@@ -7,6 +7,7 @@
  * @subpackage Account
  */
 class Group_Buying_Accounts extends Group_Buying_Controller {
+	const SETTINGS_PAGE = 'account_records';
 	const ACCOUNT_PATH_OPTION = 'gb_account_path';
 	const ACCOUNT_QUERY_VAR = 'gb_view_account';
 	const CREDIT_TYPE = 'balance';
@@ -15,6 +16,10 @@ class Group_Buying_Accounts extends Group_Buying_Controller {
 	private static $balance_payment_processor;
 	private static $instance;
 
+	public static function get_admin_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
+
 	/**
 	 * Init
 	 *
@@ -22,7 +27,7 @@ class Group_Buying_Accounts extends Group_Buying_Controller {
 	 */
 	public static function init() {
 		self::$account_path = get_option( self::ACCOUNT_PATH_OPTION, self::$account_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 50, 0 );
+		self::register_settings();
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_callback' ), 10, 1 );
 
 		// Checkout actions
@@ -38,14 +43,12 @@ class Group_Buying_Accounts extends Group_Buying_Controller {
 		add_action( 'add_meta_boxes', array( get_class(), 'add_meta_boxes' ) );
 		add_action( 'save_post', array( get_class(), 'save_meta_boxes' ), 10, 2 );
 
-		// Admin Mngt.
-		self::$settings_page = self::register_settings_page( 'account_records', self::__( 'Accounts' ), self::__( 'Accounts' ), 9, FALSE, 'records', array( get_class(), 'display_table' ) );
-
 		// User Admin columns
 		add_filter ( 'manage_users_columns', array( get_class(), 'user_register_columns' ) );
 		add_filter ( 'manage_users_custom_column', array( get_class(), 'user_column_display' ), 10, 3 );
 
 		// Profile Views
+		add_filter( 'gb_account_view_panes', array( get_class(), 'get_panes' ), 10, 2 );
 		add_action( 'show_user_profile', array( get_class(), 'account_info' ) );
 		add_action( 'edit_user_profile', array( get_class(), 'account_info' ) );
 		
@@ -56,6 +59,43 @@ class Group_Buying_Accounts extends Group_Buying_Controller {
 		// Misc.
 		add_filter( 'gb_admin_bar', array( get_class(), 'add_link_to_admin_bar' ), 10, 1 );
 		add_action( 'parse_request', array( get_class(), 'forced_messaging' ) );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'Accounts' ),
+			'menu_title' => self::__( 'Accounts' ),
+			'weight' => 10,
+			'reset' => FALSE, 
+			'section' => 'records',
+			'callback' => array( get_class(), 'display_table' )
+			);
+		do_action( 'gb_settings_page', $args );
+
+		// Settings
+		$settings = array(
+			'gb_url_path_account' => array(
+				'title' => self::__('Custom URL Paths'),
+				'weight' => 100,
+				'settings' => array(
+					self::ACCOUNT_PATH_OPTION => array(
+						'label' => self::__( 'Account Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$account_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -83,25 +123,6 @@ class Group_Buying_Accounts extends Group_Buying_Controller {
 	public static function register_credit_type( $credit_types = array() ) {
 		$credit_types[self::CREDIT_TYPE] = self::__( 'Account Balance' );
 		return $credit_types;
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_url_paths';
-		add_settings_section( $section, self::__( 'Custom URL Paths' ), array( get_class(), 'display_account_paths_section' ), $page );
-
-		// Settings
-		register_setting( $page, self::ACCOUNT_PATH_OPTION );
-		add_settings_field( self::ACCOUNT_PATH_OPTION, self::__( 'Account Path' ), array( get_class(), 'display_account_path' ), $page, $section );
-	}
-
-	public static function display_account_paths_section() {
-		Group_Buying_Controller::flush_rewrite_rules();
-		echo self::__( '<h4>Customize the Account paths</h4>' );
-	}
-
-	public static function display_account_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="'.self::ACCOUNT_PATH_OPTION.'" id="'.self::ACCOUNT_PATH_OPTION.'" value="' . esc_attr( self::$account_path ) . '"  size="40" /><br />';
 	}
 
 	public static function admin_style() {
@@ -574,7 +595,7 @@ class Group_Buying_Accounts extends Group_Buying_Controller {
 		<div class="wrap">
 			<?php screen_icon(); ?>
 			<h2 class="nav-tab-wrapper">
-				<?php self::display_admin_tabs(); ?>
+				<?php do_action( 'gb_settings_tabs' ); ?>
 			</h2>
 
 			 <?php $wp_list_table->views() ?>

@@ -4,6 +4,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 	include 'template-tags.php';
 
 	class Group_Buying_Theme_UI extends Group_Buying_Controller {
+		const SETTINGS_PAGE = 'theme_options';
 		const CUSTOM_CSS_OPTION = 'gb_custom_css';
 		const HEADER_LOGO_OPTION = 'gb_theme_header_logo';
 		const FOOTER_SCRIPT_OPTION = 'gb_theme_footer_script';
@@ -21,7 +22,6 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		private static $custom_css_path = 'flavor/css';
 		private static $instance;
 		protected static $theme_settings_page;
-		protected static $theme_color_settings_page;
 		protected static $flavor;
 		protected static $custom_css;
 		protected static $header_logo;
@@ -73,14 +73,13 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			'web-fonts' => array( 'font-family' => 'Arial, Helvetica, Geneva, sans-serif', 'font-name' => '==Google Web Fonts==' ),
 		);
 
-
+		public static function get_admin_page( $prefixed = TRUE ) {
+			return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+		}
 
 		public static function init() {
 			self::get_instance();
 
-			self::$theme_settings_page = self::register_settings_page( 'theme_options', sprintf( self::__( '%s Options' ), GBS_THEME_NAME ), self::__( 'Theme Options' ), 9999, FALSE, 'theme' );
-			// self::$theme_color_settings_page = self::register_settings_page( 'theme_color_options', sprintf( self::__( '%s Styling' ), GBS_THEME_NAME ), self::__( 'Theme Styling' ), 10000, TRUE, 'theme' );
-			add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
 			add_action( self::DAILY_CRON_HOOK, array( get_class(), 'daily_clean_up' ) );
 			add_action( 'gb_router_generate_routes', array( get_class(), 'register_customcss_callback' ), 10, 1 );
 			add_filter( 'gbs_no_ssl_redirect', array( get_class(), 'ssl_redirect' ), 10 );
@@ -102,6 +101,11 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			self::$force_login = get_option( self::FORCE_LOGIN, 'false' );
 			self::$deprecated_registered_colors = get_option( self::FLAVOR_ARRAY, array() );
 			self::$customizer_options = get_option( self::CUSTOMIZER_OPTIONS_PREFIX . GBS_THEME_SLUG, self::get_registrations() );
+
+			if ( is_admin() ) {
+				self::$theme_settings_page = self::get_admin_page(); // backward compatibility
+				self::register_options();
+			}
 
 			// Theme Customizer (WP 3.4+)
 			if ( version_compare( get_bloginfo( 'version' ), '3.4', '>=' ) ) {
@@ -381,6 +385,16 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		////////////////
 		// Flavor CSS //
 		////////////////
+
+		/**
+		 *
+		 *
+		 * @static
+		 * @return bool Whether the current query is a css page
+		 */
+		public static function is_css_flavor_page() {
+			return GB_Router_Utility::is_on_page( self::CUSTOM_CSS_VAR );
+		}
 
 		public static function get_flavor_css() {
 			$output = '';
@@ -673,7 +687,6 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		// URLS //
 		//////////
 
-
 		public static function get_css_url() {
 			if ( self::using_permalinks() ) {
 				return trailingslashit( home_url( '', is_ssl()?'https':NULL ) ).trailingslashit( self::$custom_css_path );
@@ -690,7 +703,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		 */
 		public static function ssl_redirect() {
 			global $wp;
-			if ( is_ssl() && isset( $wp->query_vars[self::CUSTOM_CSS_VAR] ) && $wp->query_vars[self::CUSTOM_CSS_VAR] ) {
+			if ( is_ssl() && self::is_css_flavor_page() ) {
 				return FALSE;
 			}
 			return TRUE;
@@ -823,49 +836,163 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			return self::$instance;
 		}
 
-		public static function register_settings_fields() {
 
-			// theme settings
-			$page = Group_Buying_UI::get_settings_page();
-			$reg_section = 'gb_registration_settings';
-			register_setting( $page, self::TOS_PAGE_ID );
-			register_setting( $page, self::PP_PAGE_ID );
-			add_settings_field( self::TOS_PAGE_ID, self::__( 'Terms and Conditions Page<br/><small>If selected a TOS message will be displayed below the registration form.</small>' ), array( get_class(), 'display_tos' ), $page, $reg_section );
-			add_settings_field( self::PP_PAGE_ID, self::__( 'Privacy Policy Page<br/><small>Terms and conditions must be selected above.</small>' ), array( get_class(), 'display_pp' ), $page, $reg_section );
+		///////////////
+		// Options //
+		///////////////
 
-			$section = 'gb_general_settings';
-			register_setting( $page, self::FORCE_LOGIN );
-			add_settings_field( self::FORCE_LOGIN, self::__( 'Force Login' ), array( get_class(), 'display_option_force_login' ), $page, $section );
 
-			// options
-			add_settings_field( self::FOOTER_SCRIPT_OPTION, self::__( 'Footer Scripts' ), array( get_class(), 'display_footer_script' ), self::$theme_settings_page );
-			add_settings_field( self::NO_DEALS_CONTENT, self::__( 'Empty Location Content<br/><small>Replace the content of a location without any deals with a page.</small>' ), array( get_class(), 'display_nodeals' ), self::$theme_settings_page );
+		/**
+		 * Hooked on init add the settings page and options.
+		 *
+		 */
+		public static function register_options() {
 
-			//theme styling
-			$section = 'gb_theme_styling';
-			add_settings_section( $section, self::__( 'Style Customizations' ), array( get_class(), 'display_style_section' ), self::$theme_settings_page );
+			// Option page
+			$args = array(
+				'slug' => self::SETTINGS_PAGE,
+				'title' => sprintf( self::__( '%s Options' ), GBS_THEME_NAME ),
+				'menu_title' => self::__( 'Theme Options' ),
+				'weight' => 1000,
+				'reset' => FALSE, 
+				'section' => 'theme'
+				);
+			do_action( 'gb_settings_page', $args );
 
-			register_setting( self::$theme_settings_page, self::FOOTER_SCRIPT_OPTION );
-			register_setting( self::$theme_settings_page, self::TWITTER_OPTION );
-			register_setting( self::$theme_settings_page, self::FACEBOOK_OPTION );
-			register_setting( self::$theme_settings_page, self::NO_DEALS_CONTENT );
-			register_setting( self::$theme_settings_page, self::HEADER_LOGO_OPTION );
-			register_setting( self::$theme_settings_page, self::CUSTOM_CSS_OPTION );
+
+			// UI Settings
+			$settings = array(
+				'gb_registration_settings' => array(
+					'title' => self::__( 'Registration Options' ),
+					'weight' => 10,
+					'settings' => array(
+						self::TOS_PAGE_ID => array(
+							'label' => self::__( 'Terms and Conditions Page' ),
+							'option' => array(
+								'type' => 'pages',
+								'default' => self::$tos_pageid,
+								'args' => array( 'show_option_none' => self::__( 'Select Terms Page' ) ),
+								'description' => self::__( 'If selected a TOS message will be displayed below the registration form.' )
+								)
+							),
+						self::PP_PAGE_ID => array(
+							'label' => self::__( 'Privacy Policy Page' ),
+							'option' => array(
+								'type' => 'pages',
+								'default' => self::$pp_pageid,
+								'args' => array( 'show_option_none' => self::__( 'Select Privacy Policy Page' ) ),
+								'description' => self::__( 'A Terms and Conditions Page must be selected above.' )
+								)
+							)
+						)
+					),
+				'gb_force_login' => array(
+					'title' => self::__( 'Site Restrictions' ),
+					'weight' => 10,
+					'settings' => array(
+						self::FORCE_LOGIN => array(
+							'label' => self::__( 'Force Login' ),
+							'option' => array(
+								'type' => 'radios',
+								'default' => self::$force_login,
+								'options' => array( 
+									'true' => self::__( 'Closed &mdash; A good way for the site to be in maintenance mode or create a membership site.' ),
+									'subscriptions' => self::__( 'Closed with Subscriptions &mdash; Allow subscriptions to be collected on the homepage but still force users to login 	if they need access.' ),
+									'false' => self::__( 'Open &mdash; Let everyone play.' )
+									),
+								)
+							)
+						)
+					)
+				);
+			do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
+
+			// Theme Settings
+			$settings = array(
+				'gb_theme_options' => array(
+					'weight' => 10,
+					'settings' => array(
+						self::FOOTER_SCRIPT_OPTION => array(
+							'label' => self::__( 'Footer Scripts' ),
+							'option' => array(
+								'type' => 'textarea',
+								'default' => self::$footer_scripts
+							)
+						),
+						self::NO_DEALS_CONTENT => array(
+							'label' => self::__( 'Empty Location Content' ),
+							'option' => array(
+								'type' => 'pages',
+								'default' => self::$nodeal_pageid,
+								'args' => array( 'show_option_none' => self::__( 'Select Page' ) ),
+								'description' => self::__( 'Replace the content of a location without any deals with a page.' )
+							)
+						)
+					)
+				),
+				'gb_theme_styling' => array(
+					'title' => self::__( 'Style Customizations' ),
+					'weight' => 30,
+					'settings' => array(
+						'display_customization' => array(
+							'label' => self::__( 'Theme Customization' ),
+							'option' => array( get_class(), 'display_customization' ),
+						),
+						self::CUSTOM_CSS_OPTION => array(
+							'label' => self::__( 'Custom CSS' ),
+							'option' => array(
+								'type' => 'textarea',
+								'default' => self::$custom_css
+							)
+						),
+						self::HEADER_LOGO_OPTION => array(
+							'label' => self::__( 'Header Logo' ),
+							'option' => array(
+								'type' => 'text',
+								'default' => self::$header_logo
+							)
+						),
+						'display_background_image' => array(
+							'label' => self::__( 'Background Image' ),
+							'option' => array(
+								'type' => 'bypass',
+								'output' => sprintf( self::__( 'Modify the default background <a href="%s">here</a>.<br/>Modify the location specific backgrounds by editing <a href="%s">locations</a>.' ), 'themes.php?page=custom-background', 'edit-tags.php?taxonomy=gb_location&post_type=gb_deal' ),
+							)
+						),
+						'display_menus_link' => array(
+							'label' => self::__( 'Menus' ),
+							'option' => array(
+								'type' => 'bypass',
+								'output' => sprintf( self::__( 'Change your site navigation via menus <a href="%s">here</a>.'), 'nav-menus.php' )
+							)
+						),
+						'display_widget_link' => array(
+							'label' => self::__( 'Widgets' ),
+							'option' => array(
+								'type' => 'bypass',
+								'output' => sprintf( self::__( 'Add widgets to your site <a href="%s">here</a>.'), 'widgets.php' )
+							)
+						),
+					),
+				)
+			);
+			do_action( 'gb_settings', $settings, self::SETTINGS_PAGE );
 
 			if ( defined('GB_THEME_CHILD_THEME') && get_template_directory() == get_stylesheet_directory() ) {
-				add_settings_field( 'install_child_theme', self::__( 'Install Child Theme' ), array( get_class(), 'install_child_theme' ), self::$theme_settings_page, $section );
+				// Child Theme Install
+				$install_child_theme = array(
+					'install_child_theme' => array(
+						'weight' => 20,
+						'settings' => array(
+							'install_child_theme' => array(
+								'label' => self::__( 'Install Child Theme' ),
+								'option' => array( get_class(), 'install_child_theme' )
+							)
+						)
+					)
+				);
+				do_action( 'gb_settings', $install_child_theme, self::SETTINGS_PAGE );
 			}
-
-			add_settings_field( 'display_customization', self::__( 'Theme Customization' ), array( get_class(), 'display_customization' ), self::$theme_settings_page, $section );
-			add_settings_field( self::CUSTOM_CSS_OPTION, self::__( 'Custom CSS' ), array( get_class(), 'display_css_textarea' ), self::$theme_settings_page, $section );
-			add_settings_field( self::HEADER_LOGO_OPTION, self::__( 'Header Logo' ), array( get_class(), 'display_header_logo' ), self::$theme_settings_page, $section );
-			add_settings_field( 'display_background_image', self::__( 'Background Image' ), array( get_class(), 'display_background_image' ), self::$theme_settings_page, $section );
-			add_settings_field( 'display_menus_link', self::__( 'Menus' ), array( get_class(), 'display_menus_link' ), self::$theme_settings_page, $section );
-			add_settings_field( 'display_widget_link', self::__( 'Widgets' ), array( get_class(), 'display_widget_link' ), self::$theme_settings_page, $section );
-		}
-
-		public static function display_style_section() {
-			echo self::__( 'Customize your theme.' );
 		}
 
 		public function install_child_theme() {
@@ -912,63 +1039,6 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 				</p>
 			<?php
 			
-		}
-
-		public static function display_menus_link() {
-			$link = 'nav-menus.php';
-			self::_e( sprintf( 'Change your site navigation via menus <a href="%s">here</a>.', $link ) );
-		}
-
-		public static function display_widget_link() {
-			$link = 'widgets.php';
-			self::_e( sprintf( 'Add widgets to your site <a href="%s">here</a>.', $link ) );
-		}
-
-		public static function display_background_image() {
-			$background = 'themes.php?page=custom-background';
-			$location = 'edit-tags.php?taxonomy=gb_location&post_type=gb_deal';
-			self::_e( sprintf( 'Modify the default background <a href="%s">here</a>.', $background ) );
-			echo "<br/>";
-			self::_e( sprintf( 'Modify the location specific backgrounds by editing <a href="%s">locations</a>.', $location ) );
-		}
-
-		public static function display_css_textarea() {
-			do_action('gb_theme_options_display_css_textarea');
-			echo '<textarea rows="5" cols="40" name="'.self::CUSTOM_CSS_OPTION.'">'.self::$custom_css.'</textarea>';
-		}
-
-		public static function display_header_logo() {
-			echo '<input type="text" class="regular-text" name="'.self::HEADER_LOGO_OPTION.'" value="'.self::$header_logo.'" />';
-		}
-
-		public static function display_footer_script() {
-			echo '<textarea rows="5" cols="40" name="'.self::FOOTER_SCRIPT_OPTION.'">'.self::$footer_scripts.'</textarea>';
-		}
-
-		public static function display_twitter() {
-			echo '<input type="text" class="regular-text" name="'.self::TWITTER_OPTION.'" value="'.self::$twitter.'" />';
-		}
-
-		public static function display_facebook() {
-			echo '<input type="text" class="regular-text" name="'.self::FACEBOOK_OPTION.'" value="'.self::$facebook.'" />';
-		}
-
-		public static function display_nodeals() {
-			wp_dropdown_pages( array( 'name' => self::NO_DEALS_CONTENT, 'echo' => 1, 'show_option_none' => self::__( '-- Select --' ), 'option_none_value' => '0', 'selected' => self::$nodeal_pageid ) );
-		}
-
-		public static function display_tos() {
-			wp_dropdown_pages( array( 'name' => self::TOS_PAGE_ID, 'echo' => 1, 'show_option_none' => self::__( '-- Select --' ), 'option_none_value' => '0', 'selected' => self::$tos_pageid ) );
-		}
-
-		public static function display_pp() {
-			wp_dropdown_pages( array( 'name' => self::PP_PAGE_ID, 'echo' => 1, 'show_option_none' => self::__( '-- Select --' ), 'option_none_value' => '0', 'selected' => self::$pp_pageid ) );
-		}
-
-		public static function color_section() {
-			echo "<p>";
-			printf( self::__( 'Customize the theme by changing the colors below. Customize the background color and image via <a href="%s">Appearance > Background</a>.' ), admin_url( '/themes.php?page=custom-background' ) );
-			echo "</p>";
 		}
 
 		/**
@@ -1038,12 +1108,6 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 				$logo_image_url = esc_attr( $_POST['logo_image_url'] );
 				update_metadata( 'location_terms', $term_id, 'logo_image_url', $logo_image_url );
 			}
-		}
-
-		public static function display_option_force_login() {
-			echo '<label><input type="radio" name="'.self::FORCE_LOGIN.'" value="true" '.checked( 'true', self::$force_login, FALSE ).'/> '.self::__( 'Closed &mdash; A good way for the site to be in maintenance mode or create a membership site.' ).'</label><br />';
-			echo '<label><input type="radio" name="'.self::FORCE_LOGIN.'" value="subscriptions" '.checked( 'subscriptions', self::$force_login, FALSE ).'/> '.self::__( 'Closed with Subscriptions &mdash; Allow subscriptions to be collected on the homepage but still force users to login 	if they need access.' ).'</label><br />';
-			echo '<label><input type="radio" name="'.self::FORCE_LOGIN.'" value="false" '.checked( 'false' , self::$force_login, FALSE ).'/> '.self::__( 'Open &mdash; Let everyone play.' ).'</label><br /	>';
 		}
 
 	}

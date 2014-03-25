@@ -732,8 +732,9 @@ function gb_dynamic_prices( $post_id = 0, $show_all = false ) {
 	$out = '<ul class="milestone_pricing gb_fx">';
 	$i = 1;
 	foreach ( $dynamic_prices as $limit => $price ) {
+		$i_class = ( $current_price > $price ) ? 'prior' : $i++;
 		$next = $limit - gb_get_number_of_purchases( $post_id );
-		$out .= '<li class="ms instance_' . $i . '" style="width:' . $width . '%">';
+		$out .= '<li class="ms instance_' . $i_class . '" style="width:' . $width . '%">';
 		$out .= '<div>';
 		$out .= '<span class="gb_fx">' . str_replace( '.00', '', gb_get_formatted_money( $price ) ) . '</span> ' . sprintf( gb__( ' after %s' ), $limit );
 		$out .= '</div>';

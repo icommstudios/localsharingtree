@@ -12,8 +12,54 @@ class Group_Buying_Accounts_Registration extends Group_Buying_Controller {
 	public static function init() {
 		self::$minimal_registration = get_option( self::MINIMAL_REGISTRATION_OPTION, 'FALSE' );
 		self::$register_path = get_option( self::REGISTER_PATH_OPTION, self::$register_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 1 );
+		self::register_settings();
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_registration_callback' ), 10, 1 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_account_register' => array(
+				'weight' => 104,
+				'settings' => array(
+					self::REGISTER_PATH_OPTION => array(
+						'label' => self::__( 'Registration Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$register_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
+
+		// Settings
+		$settings = array(
+			'gb_account_registration' => array(
+				'weight' => 5,
+				'title' => self::__( 'Registration Settings' ),
+				'settings' => array(
+					self::MINIMAL_REGISTRATION_OPTION => array(
+						'label' => self::__( 'Registration Fields' ),
+						'option' => array(
+							'type' => 'radios',
+							'options' => array(
+								'TRUE' => self::__( 'Minimal Registration with Username, E-Mail and Password.' ),
+								'FALSE' => self::__( 'Full Registration with all contact fields. ' )
+								),
+							'default' => self::$minimal_registration
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -38,32 +84,6 @@ class Group_Buying_Accounts_Registration extends Group_Buying_Controller {
 		$router->add_route( self::REGISTER_QUERY_VAR, $args );
 	}
 
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_url_paths';
-
-		// Settings
-		register_setting( $page, self::REGISTER_PATH_OPTION );
-		// Fields
-		add_settings_field( self::REGISTER_PATH_OPTION, self::__( 'Account Registration Path' ), array( get_class(), 'display_account_register_path' ), $page, $section );
-
-		$section = 'gb_registration_settings';
-		add_settings_section( $section, self::__( 'Registration Settings' ), array( get_class(), 'display_settings_section' ), $page );
-		// Settings
-		register_setting( $page, self::MINIMAL_REGISTRATION_OPTION );
-		// Fields
-		add_settings_field( self::MINIMAL_REGISTRATION_OPTION, self::__( 'Registration Fields' ), array( get_class(), 'display_registration_mini_option' ), $page, $section );
-	}
-
-	public static function display_registration_mini_option() {
-		echo '<label><input type="radio" name="'.self::MINIMAL_REGISTRATION_OPTION.'" value="TRUE" '.checked( 'TRUE', self::$minimal_registration, FALSE ).'/> '.self::__( 'Minimal Registration with Username, E-Mail and Password.' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::MINIMAL_REGISTRATION_OPTION.'" value="FALSE" '.checked( 'FALSE', self::$minimal_registration, FALSE ).'/> '.self::__( 'Full Registration with all contact fields' ).'</label><br />';
-	}
-
-	public static function display_account_register_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::REGISTER_PATH_OPTION . '" id="' . self::REGISTER_PATH_OPTION . '" value="' . esc_attr( self::$register_path ) . '" size="40"/><br />';
-	}
-
 	public static function on_registration_page() {
 		// Registered users shouldn't be here. Send them elsewhere
 		if ( get_current_user_id() ) {
@@ -77,7 +97,6 @@ class Group_Buying_Accounts_Registration extends Group_Buying_Controller {
 		$registration_page = self::get_instance();
 		if ( isset( $_POST['gb_account_action'] ) && $_POST['gb_account_action'] == self::FORM_ACTION ) {
 			$registration_page->process_form_submission();
-			return;
 		}
 		// View template
 		$registration_page->view_registration_form();

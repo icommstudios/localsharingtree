@@ -22,15 +22,15 @@ jQuery(document).ready(function() {
 </p>
 <p>
 	<label for="deal_highlights"><strong><?php gb_e( 'Deal&rsquo;s or Merchant&rsquo;s "Highlights":' ); ?></strong></label><br/>
-	<textarea rows="3" cols="40" name="deal_highlights" tabindex="506" id="deal_highlights" class="tinymce" style="width:98%"><?php echo esc_textarea( $deal_highlights ); ?></textarea>
+	<textarea rows="3" cols="40" name="deal_highlights" tabindex="506" id="deal_highlights" class="tinymce" style="width:98%;height:200px;"><?php echo esc_textarea( $deal_highlights ); ?></textarea>
 </p>
 <p>
 	<label for="deal_fine_print"><strong><?php gb_e( 'Deal&rsquo;s "Fine Print":' ); ?></strong></label><br/>
-	<textarea rows="3" cols="40" name="deal_fine_print" tabindex="507" id="deal_fine_print" class="tinymce" style="width:98%"><?php echo esc_textarea( $deal_fine_print ); ?></textarea>
+	<textarea rows="3" cols="40" name="deal_fine_print" tabindex="507" id="deal_fine_print" class="tinymce" style="width:98%height:200px;"><?php echo esc_textarea( $deal_fine_print ); ?></textarea>
 </p>
 <p>
 	<label for="deal_rss_excerpt"><strong><?php gb_e( 'Deal&rsquo;s RSS Excerpt:' ); ?></strong></label><br/>
-	<textarea rows="3" cols="40" name="deal_rss_excerpt" tabindex="507" id="deal_rss_excerpt" class="tinymce" style="width:98%"><?php echo esc_textarea( $deal_rss_excerpt ); ?></textarea>
+	<textarea rows="3" cols="40" name="deal_rss_excerpt" tabindex="507" id="deal_rss_excerpt" class="tinymce" style="width:98%height:200px;"><?php echo esc_textarea( $deal_rss_excerpt ); ?></textarea>
 </p>
 <?php /*/ ?>
 <p>

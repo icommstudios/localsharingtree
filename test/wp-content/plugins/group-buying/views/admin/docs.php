@@ -1,5 +1,6 @@
 <script type="text/javascript" charset="utf-8">
 	jQuery(document).ready(function($){
+		jQuery('#submit').remove();
 		jQuery("#save_api_key").on('click', function(event) {
 			event.preventDefault();
 			var $save_button = $( this ),
@@ -9,9 +10,7 @@
 						$('#api-key-save-container').empty().html('<?php self::_e("API Key Saved") ?>: ' + api_key_value);
 					}
 				);
-		});
-		jQuery('#submit').remove();
-	});
+		});	});
 </script>
 <div id="welcome-panel" class="welcome-panel">
 	<div class="welcome-panel-content">

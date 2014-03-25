@@ -10,8 +10,33 @@ class Group_Buying_Merchants_Dashboard extends Group_Buying_Controller {
 
 	public static function init() {
 		self::$dash_path = get_option( self::BIZ_DASH_PATH_OPTION, self::$dash_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 1 );
+		self::register_settings();
+
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_registration_callback' ), 10, 1 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_merchant_dash' => array(
+				'weight' => 131,
+				'settings' => array(
+					self::BIZ_DASH_PATH_OPTION => array(
+						'label' => self::__( 'Merchant Dashboard Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$dash_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -35,19 +60,6 @@ class Group_Buying_Merchants_Dashboard extends Group_Buying_Controller {
 			),
 		);
 		$router->add_route( self::BIZ_DASH_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_merchant_paths';
-
-		// Settings
-		register_setting( $page, self::BIZ_DASH_PATH_OPTION );
-		add_settings_field( self::BIZ_DASH_PATH_OPTION, self::__( 'Merchant Dashboard Path' ), array( get_class(), 'display_merchant_registration_path' ), $page, $section );
-	}
-
-	public static function display_merchant_registration_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::BIZ_DASH_PATH_OPTION . '" id="' . self::BIZ_DASH_PATH_OPTION . '" value="' . esc_attr( self::$dash_path ) . '" size="40"/><br />';
 	}
 
 	public static function on_biz_dash_page() {

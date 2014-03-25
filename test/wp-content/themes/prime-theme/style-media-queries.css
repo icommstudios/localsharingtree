@@ -93,7 +93,9 @@
 	background-image: none;
 	margin-right: 10px;
 }
-
+.account_sidebar .merchant {
+	display: none;
+}
 .page_title h1 {
 	margin: 0 15px 15px;
 }

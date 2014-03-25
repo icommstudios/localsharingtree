@@ -7,8 +7,13 @@
  * @subpackage Base
  */
 class Group_Buying_Records extends Group_Buying_Controller {
+	const SETTINGS_PAGE = 'gbs_records';
 	const RECORD_PURGE_NONCE = 'gb_record_purge_nonce';
 	private static $instance;
+
+	public static function get_admin_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
 
 	public static function init() {
 		add_action( 'gb_new_record', array( get_class(), 'new_record' ), 10, 6 );
@@ -18,14 +23,25 @@ class Group_Buying_Records extends Group_Buying_Controller {
 		// Purge
 		add_action( 'admin_init', array( get_class(), 'maybe_purge_records' ) );
 
-		
+		self::add_admin_page();
 	}
 
 	/**
 	 * Add menu under tools.
 	 */
 	public static function add_admin_page() {
-		add_submenu_page( 'tools.php', self::__( 'Records' ), self::__( 'GBS Records' ), 'manage_options', self::TEXT_DOMAIN.'/gbs_records', array( get_class(), 'display_table' ) );
+		// Option page
+		$args = array(
+			'parent' => 'tools.php',
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'Records' ),
+			'menu_title' => self::__( 'GBS Records' ),
+			'weight' => 10,
+			'reset' => FALSE, 
+			'section' => '',
+			'callback' => array( get_class(), 'display_table' )
+			);
+		do_action( 'gb_settings_page', $args );
 	}
 
 	public static function new_record( $data = array(), $type = 'mixed', $title = '', $author_id = 1, $associate_id = -1, $deprecated_data_variable = array() ) {

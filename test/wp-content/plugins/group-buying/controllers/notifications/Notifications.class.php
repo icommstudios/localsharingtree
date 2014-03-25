@@ -7,7 +7,7 @@
  * @subpackage Notification
  */
 class Group_Buying_Notifications extends Group_Buying_Controller {
-
+	const SETTINGS_PAGE = 'notifications';
 	const META_BOX_PREFIX = 'gb_notification_shortcodes_';
 	const NOTIFICATIONS_OPTION_NAME = 'gb_notifications';
 	const EMAIL_FROM_NAME = 'gb_notification_from_name';
@@ -22,28 +22,86 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 	private static $shortcodes;
 	private static $data;
 
-	public static function init() {
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 20, 0 );
+	public static function get_admin_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
 
+	public static function init() {
 		self::$notification_from_name = get_option( self::EMAIL_FROM_NAME, get_bloginfo( 'name' ) );
 		self::$notification_from_email = get_option( self::EMAIL_FROM_EMAIL, get_bloginfo( 'admin_email' ) );
 		self::$notification_format = get_option( self::EMAIL_FORMAT, 'TEXT' );
+		self::register_settings();
 
+		// Help Sections
+		add_action( 'admin_menu', array( get_class(), 'admin_menu' ) );
+
+		// Admin
 		add_action( 'add_meta_boxes', array( get_class(), 'add_meta_boxes' ) );
 		add_action( 'save_post', array( get_class(), 'save_meta_boxes' ), 10, 2 );
 		add_action( 'load-post.php', array( get_class(), 'queue_notification_js' ) );
 		add_action( 'load-post-new.php', array( get_class(), 'queue_notification_js' ) );
 		add_action( 'admin_init', array( get_class(), 'create_notifications' ) );
 
-		// Admin columns
-		self::$settings_page = self::register_settings_page( 'notifications', self::__( 'Notifications' ), self::__( 'Notification Settings' ), 15, FALSE, 'general', array( get_class(), 'display_table' ) );
-		add_action( 'admin_menu', array( get_class(), 'admin_menu' ) );
-
 		// Subscription Settings
 		add_filter( 'gb_account_edit_panes', array( get_class(), 'get_edit_panes' ), 20, 2 );
 		add_action( 'gb_process_account_edit_form', array( get_class(), 'process_form' ) );
 
 		self::hook_notifications();
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'Notifications' ),
+			'menu_title' => self::__( 'Notification Settings' ),
+			'weight' => 9,
+			'reset' => FALSE, 
+			'section' => 'general',
+			'callback' => array( get_class(), 'display_table' )
+			);
+		do_action( 'gb_settings_page', $args );
+
+		// Settings
+		$settings = array(
+			'notifications' => array(
+				'title' => self::__('Notification Settings'),
+				'weight' => 10,
+				'settings' => array(
+					self::EMAIL_FROM_NAME => array(
+						'label' => self::__( 'Default From Name' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$notification_from_name
+							)
+						),
+					self::EMAIL_FROM_EMAIL => array(
+						'label' => self::__( 'Default From Email' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$notification_from_email
+							)
+						),
+					self::EMAIL_FORMAT => array(
+						'label' => self::__( 'Default From Name' ),
+						'option' => array(
+							'type' => 'select',
+							'options' => array(
+									'HTML' => self::__( 'HTML' ),
+									'TEXT' => self::__( 'Plain Text' )
+								),
+							'default' => self::$notification_format,
+							'description' => self::__('Default notifications are plain text. If setting to HTML you will need create custom HTML notifications.')
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	public function admin_menu() {
@@ -131,7 +189,7 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 					) );
 				$notification = Group_Buying_Notification::get_instance( $post_id );
 				self::save_meta_box_gb_notification_type( $notification, $post_id, $notification_type );
-				if ( $data['default_disabled'] ) {
+				if ( isset( $data['default_disabled'] ) && $data['default_disabled'] ) {
 					$notification->set_disabled( 'TRUE' );
 				}
 			}
@@ -401,6 +459,9 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 		if ( wp_is_post_autosave( $post_id ) || $post->post_status == 'auto-draft' || defined( 'DOING_AJAX' ) || isset( $_GET['bulk_edit'] ) ) {
 			return;
 		}
+		if ( !isset( $_POST['notification_type'] ) ) {
+			return;
+		}
 		self::init_types();
 		// save all the meta boxes
 		$notification = Group_Buying_Notification::get_instance( $post_id );
@@ -408,9 +469,12 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 	}
 
 	public static function save_meta_box_gb_notification_type( $notification, $post_id, $notification_type = NULL ) {
-		if ( NULL === $notification_type ) {
+		if ( NULL === $notification_type && isset( $_POST['notification_type'] ) ) {
 			$notification_type = $_POST['notification_type'];
 		}
+
+		if ( is_null( $notification_type ) )
+			return;
 
 		$notifications = get_option( self::NOTIFICATIONS_OPTION_NAME, array() );
 
@@ -552,17 +616,17 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 		}
 		$data['html'] = $html;
 
-		// don't send a notification that has already been sent
-		if ( self::was_notification_sent( $notification_name, $data, $to ) ) {
-			do_action( 'gb_error', __CLASS__ . '::' . __FUNCTION__ . ' - Notifications: Message Already Sent', $data );
-			return;
-		}
-
 		$notification_title = self::get_notification_title( $notification_name, $data );
 		$notification_content = self::get_notification_content( $notification_name, $data );
 
 		// Don't send notifications with empty titles or content
 		if ( empty( $notification_title ) || empty( $notification_content ) ) {
+			return;
+		}
+
+		// don't send a notification that has already been sent
+		if ( apply_filters( 'gb_was_notification_sent_check', '__return_true' ) && self::was_notification_sent( $notification_name, $data, $to, $notification_content ) ) {
+			do_action( 'gb_error', __CLASS__ . '::' . __FUNCTION__ . ' - Notifications: Message Already Sent', $data );
 			return;
 		}
 
@@ -626,13 +690,15 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 	 * @param string  $to
 	 * @return bool Whether this notification has been sent previously
 	 */
-	public static function was_notification_sent( $notification_name, $data, $to ) {
+	public static function was_notification_sent( $notification_name, $data, $to, $notification_content = '' ) {
 		global $blog_id;
 		$user_id = self::get_notification_user_id( $to, $data );
 		if ( !$user_id ) {
 			return FALSE;
 		}
-
+		if ( $notification_content != '' ) {
+			$data['content'] = $notification_content;
+		}
 		$meta = get_user_meta( $user_id, $blog_id.'_gbs_notification-'.$notification_name, FALSE );
 		if ( in_array( self::get_hash( $data ), $meta ) ) {
 			return TRUE;
@@ -716,7 +782,7 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 	public static function shortcode_date( $atts, $content, $code, $data ) {
 		// Currently undocumented, but a "format" attribute can be used to customize the date format
 		$atts = shortcode_atts( array( 'format' => get_option( 'date_format' ) ), $atts );
-		return date( $atts['format'], current_time( 'timestamp', 1 ) );
+		return date( $atts['format'], current_time( 'timestamp' ) );
 	}
 
 	public static function shortcode_username( $atts, $content, $code, $data ) {
@@ -730,13 +796,15 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 
 	public static function shortcode_rewards_used( $atts, $content, $code, $data  ) {
 		$purchase = $data['purchase'];
-		$credits_used = $purchase->get_total( Group_Buying_Affiliate_Credit_Payments::PAYMENT_METHOD );
+		$purchase_total = $purchase->get_total( Group_Buying_Affiliate_Credit_Payments::PAYMENT_METHOD );
+		$credits_used = $purchase_total*Group_Buying_Payment_Processors::get_credit_exchange_rate( Group_Buying_Affiliates::CREDIT_TYPE );
 		return $credits_used;
 	}
 
 	public static function shortcode_credits_used( $atts, $content, $code, $data  ) {
 		$purchase = $data['purchase'];
-		$credits_used = $purchase->get_total( Group_Buying_Account_Balance_Payments::PAYMENT_METHOD );
+		$purchase_total = $purchase->get_total( Group_Buying_Account_Balance_Payments::PAYMENT_METHOD );
+		$credits_used = $purchase_total*Group_Buying_Payment_Processors::get_credit_exchange_rate( Group_Buying_Accounts::CREDIT_TYPE );
 		return $credits_used;
 	}
 
@@ -1066,37 +1134,6 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 		return $url;
 	}
 
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_notification_settings';
-		add_settings_section( $section, self::__( 'Notification Settings' ), array( get_class(), 'display_settings_section' ), $page );
-		// Settings
-		register_setting( $page, self::EMAIL_FROM_NAME );
-		register_setting( $page, self::EMAIL_FROM_EMAIL );
-		register_setting( $page, self::EMAIL_FORMAT );
-		// Fields
-		add_settings_field( self::EMAIL_FROM_NAME, self::__( 'Default From Name' ), array( get_class(), 'display_notification_from_name' ), $page, $section );
-		add_settings_field( self::EMAIL_FROM_EMAIL, self::__( 'Default From Email' ), array( get_class(), 'display_notification_from_email' ), $page, $section );
-		add_settings_field( self::EMAIL_FORMAT, self::__( 'Send e-mail as' ), array( get_class(), 'display_notification_format' ), $page, $section );
-		add_settings_field( 'notification_disable', self::__( 'Disable Notifications' ), array( get_class(), 'display_notification_disable' ), $page, $section );
-	}
-
-	public static function display_notification_from_name() {
-		echo '<input type="text" name="'.self::EMAIL_FROM_NAME.'" value="'.self::$notification_from_name.'" size="40" />';
-	}
-
-	public static function display_notification_from_email() {
-		echo '<input type="text" name="'.self::EMAIL_FROM_EMAIL.'" value="'.self::$notification_from_email.'" size="40" />';
-	}
-
-	public static function display_notification_format() {
-		echo '<select name="'.self::EMAIL_FORMAT.'"><option value="HTML" '.selected( 'HTML', self::$notification_format, FALSE ).'>HTML</option><option value="TEXT" '.selected( 'TEXT', self::$notification_format, FALSE ).'>Plain Text</option></select><br/><span class="description">'.self::__( 'Default notifications are plain text. If setting to HTML you will need create custom HTML notifications.' ).'</span>';
-	}
-
-	public static function display_notification_disable() {
-		printf( self::__( 'Disable <a href="%s">notifications</a> with the disable option on the notification edit page.' ), gb_admin_url( 'notifications' ), GB_RESOURCES.'img/docs/disable-notification.png' );
-	}
-
 	public static function get_user_email( $user = false ) {
 		if ( false == $user ) {
 			$user = get_current_user_id();
@@ -1402,7 +1439,7 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 	<div class="wrap">
 		<?php screen_icon(); ?>
 		<h2 class="nav-tab-wrapper">
-			<?php self::display_admin_tabs(); ?>
+			<?php do_action( 'gb_settings_tabs' ); ?>
 		</h2>
 
 		<form id="payments-filter" method="get">

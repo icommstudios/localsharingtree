@@ -111,6 +111,11 @@ class Group_Buying_Purchases_Table extends WP_List_Table {
 		);
 	}
 
+	function column_admin_notes( $item ) {
+		$purchase = Group_Buying_Purchase::get_instance( $item->ID );
+		echo $purchase->get_admin_notes();
+	}
+
 	function column_total( $item ) {
 		$purchase = Group_Buying_Purchase::get_instance( $item->ID );
 		gb_formatted_money( $purchase->get_total() );
@@ -173,13 +178,20 @@ class Group_Buying_Purchases_Table extends WP_List_Table {
 		$purchase = Group_Buying_Purchase::get_instance( $item->ID );
 
 		$actions = array(
-			'trash'    => '<span id="'.$purchase_id.'_destroy_result"></span><a href="javascript:void(0)" class="gb_destroy" id="'.$purchase_id.'_destroy" ref="'.$purchase_id.'">'.gb__( 'Delete Purchase' ).'</a>',
+			'void' => '<a href="#TB_inline?width=900&height=225&inlineId=void_purchase_'.$purchase_id.'" class="thickbox" id="void_link_'.$purchase_id.'" title="'.gb__('Void Purchase').'">'.gb__( 'Void Purchase' ).'</a>',
+			'trash' => '<a href="#TB_inline?width=900&height=95&inlineId=delete_purchase_'.$purchase_id.'" class="thickbox" id="delete_link_'.$purchase_id.'" title="'.gb__('Delete Purchase').'">'.gb__( 'Delete Purchase' ).'</a>'
 		);
+
+		$delete_form = '<div id="delete_purchase_'.$purchase_id.'" style="display:none;"><p class="description">'.gb__( "This will permanently trash the purchase and its associated voucher(s) and payment(s) which cannot be reversed (without manually adjusting them in the DB). This will not reverse any payments or provide a credit to the customer, that must be done manually." ).'</p><a href="javascript:void(0)" class="gb_delete_payment button" id="'.$purchase_id.'_delete" ref="'.$purchase_id.'">'.gb__( 'Permanently Delete Purchase and Associated Records' ).'</a></p></div>';
+
+		$void_form = '<div id="void_purchase_'.$purchase_id.'" style="display:none;"><p><textarea name="transaction_data_'.$purchase_id.'" id="transaction_data_'.$purchase_id.'" style="width:99%" rows="10" placeholder="'.gb__('These notes will be added to the admin notes.').'"></textarea><a href="javascript:void(0)" class="gb_void_purchase button" id="'.$purchase_id.'_void" ref="'.$purchase_id.'">'.gb__( 'Void Purchase' ).'</a></p></div>';
 
 		$status = ucfirst( str_replace( 'publish', 'complete', $item->post_status ) );
 		$status .= '<br/><span style="color:silver">';
 		$status .= mysql2date( get_option( 'date_format' ).' @ '.get_option( 'time_format' ), $item->post_date );
 		$status .= '</span>';
+		$status .= $delete_form;
+		$status .= $void_form;
 		$status .= $this->row_actions( $actions );
 		return $status;
 	}
@@ -199,6 +211,7 @@ class Group_Buying_Purchases_Table extends WP_List_Table {
 			'title'  => gb__( 'Order' ),
 			'total'  => gb__( 'Total' ),
 			'deals'  => gb__( 'Deals' ),
+			'admin_notes'  => gb__( 'Admin Notes' ),
 			'payments'  => gb__( 'Payments' ),
 			'ip_address'  => gb__( 'IP Address' )
 		);

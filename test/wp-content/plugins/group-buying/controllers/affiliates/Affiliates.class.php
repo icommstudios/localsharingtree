@@ -31,7 +31,6 @@ class Group_Buying_Affiliates extends Group_Buying_Controller {
 
 	final public static function init() {
 		// Options
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 40, 0 );
 		self::$share_path = get_option( self::SHARE_PATH_OPTION, self::$share_path );
 		self::$bitly_login = get_option( self::BITLY_API_LOGIN );
 		self::$bitly_api = get_option( self::BITLY_API_KEY );
@@ -52,14 +51,90 @@ class Group_Buying_Affiliates extends Group_Buying_Controller {
 		add_action( 'payment_complete', array( get_class(), 'apply_credits' ), 10, 1 ); // Do the dirty work
 
 		// WP Affiliate
-		if ( !defined('WP_AFFILIATE_PLATFORM_VERSION') ) {
-			define('WP_AFFILIATE_PLATFORM_VERSION', 0);
+		add_action( 'payment_authorized', array( get_class(), 'set_ad_id' ), 20, 1 );
+		add_action( 'payment_pending', array( get_class(), 'set_ad_id' ), 20, 1 );
+		add_action( 'payment_complete', array( get_class(), 'wp_affiliate' ), 5, 1 ); // Come before apply_credits
+
+		// Register settings after WP_AFFILIATE
+		self::register_settings();
+	}
+
+	///////////////
+	// Settings //
+	///////////////
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_affiliate_settings' => array(
+				'title' => self::__('Affiliate/Share Settings'),
+				'weight' => 60,
+				'callback' => array( get_class(), 'display_settings_section' ),
+				'settings' => array(
+					self::AFFILIATE_CREDIT_OPTION => array(
+						'label' => self::__( 'Social/Affiliate Credit' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$affiliate_credit,
+							'attributes' => array( 'class' => 'small-text' )
+							)
+						),
+					self::AFFILIATE_COOKIE_EXP_OPTION => array(
+						'label' => self::__( 'Cookie Expiration' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$affiliate_cookie_exp,
+							'description' => self::__('In Seconds'),
+							'attributes' => array( 'class' => 'small-text' )
+							)
+						),
+					self::SHARE_PATH_OPTION => array(
+						'label' => self::__( 'Share Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$share_path,
+							'description' => trailingslashit( get_home_url() ) . trailingslashit( self::$share_path ) . '&lt;'.self::__('account slug').'&gt;/&lt;'.self::__('deal slug').'&gt;/',
+							'attributes' => array( 'class' => 'small-text' )
+							)
+						),
+					self::BITLY_API_LOGIN => array(
+						'label' => self::__( 'Bitly Login' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$bitly_login,
+							'description' => self::__('Use the Bitly API to shorten URLs and enables stat functions (e.g. total shares).  Be aware that shortened URLs can sometimes cause emails to be marked as spam or blocked.')
+							)
+						),
+					self::BITLY_API_KEY => array(
+						'label' => self::__( 'Bitly API Key' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$bitly_api,
+							'description' => self::__('Find this API key on your <a href="http://bitly.com/a/account">account page</a>.')
+							)
+						),
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
+	}
+
+	public function display_settings_section() {
+		if ( function_exists( 'wp_aff_record_remote_click' ) ) {
+			printf( self::__( '<a href="%s" target="_blank">WP Affiliate Platform</a> Has Been Automatically Integrated' ), 'http://groupbuyingsite.com/goto/WPAffiliatePlatform' );
+		} else {
+			printf( self::__( 'GBS supports basic integration with <a href="%s" target="_blank">WordPress Affiliate Platform</a> an easy to use WordPress plugin for affiliate recruitment, management and tracking that can be used on any WordPress blog/site.' ), 'http://groupbuyingsite.com/goto/WPAffiliatePlatform' );
 		}
-		if ( WP_AFFILIATE_PLATFORM_VERSION ) {
-			add_action( 'payment_authorized', array( get_class(), 'set_ad_id' ), 20, 1 );
-			add_action( 'payment_pending', array( get_class(), 'set_ad_id' ), 20, 1 );
-			add_action( 'payment_complete', array( get_class(), 'wp_affiliate' ), 5, 1 ); // Come before apply_credits
-		}
+	}
+
+	public static function validate_share_path_field( $value ) {
+		$value = trim( $value, "/" );
+		return $value;
 	}
 
 	///////////////
@@ -232,6 +307,10 @@ class Group_Buying_Affiliates extends Group_Buying_Controller {
 	///////////////////
 
 	public static function wp_affiliate( Group_Buying_Payment $payment ) {
+		// Make sure WP Affiliate is installed
+		if ( !function_exists( 'wp_aff_record_remote_click' ) )
+			return;
+
 		$source = $payment->get_source();
 		if ( $source ) {
 
@@ -242,7 +321,7 @@ class Group_Buying_Affiliates extends Group_Buying_Controller {
 			if ( !$purchase->get_post_meta( self::PURCHASE_WPAF_APPLIED_META ) ) {
 
 				// Hook Latest Versions of WP Affiliate Platform
-				if ( version_compare( WP_AFFILIATE_PLATFORM_VERSION, '4.8.9', '>' ) ) {
+				if ( TRUE ) {
 					do_action( 'wp_affiliate_process_cart_commission',
 						array(
 							'referrer' => apply_filters( 'gb_wp_affiliate_referrer', $source, $purchase),
@@ -283,6 +362,10 @@ class Group_Buying_Affiliates extends Group_Buying_Controller {
 	}
 
 	public static function set_ad_id( Group_Buying_Payment $payment ) {
+		// Make sure WP Affiliate is installed
+		if ( !function_exists( 'wp_aff_record_remote_click' ) )
+			return;
+		
 		if ( isset( $_COOKIE['ap_id'] ) && $_COOKIE['ap_id'] != '' ) {
 			$payment->set_source( $_COOKIE['ap_id'] );
 		}
@@ -411,77 +494,7 @@ class Group_Buying_Affiliates extends Group_Buying_Controller {
 		trigger_error( __CLASS__.' may not be serialized', E_USER_ERROR );
 	}
 
-
-	protected function __construct() {
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_affiliate_settings';
-		add_settings_section( $section, self::__( 'Affiliate/Share Settings' ), array( get_class(), 'display_settings_section' ), $page );
-		// Settings
-		register_setting( $page, self::AFFILIATE_CREDIT_OPTION );
-		register_setting( $page, self::AFFILIATE_COOKIE_EXP_OPTION );
-		register_setting( $page, self::SHARE_PATH_OPTION, array( get_class(), 'validate_share_path_field' ) );
-		register_setting( $page, self::BITLY_API_LOGIN );
-		register_setting( $page, self::BITLY_API_KEY );
-		// Fields
-		add_settings_field( self::AFFILIATE_CREDIT_OPTION, self::__( 'Social/Affiliate Credit' ), array( get_class(), 'display_payment_affiliate_credit' ), $page, $section );
-		add_settings_field( self::AFFILIATE_COOKIE_EXP_OPTION, self::__( 'Cookie Expiration' ), array( get_class(), 'display_affiliate_expiration' ), $page, $section );
-		add_settings_field( self::SHARE_PATH_OPTION, self::__( 'Share Path' ), array( get_class(), 'display_share_path_field' ), $page, $section );
-		add_settings_field( self::BITLY_API_LOGIN, self::__( 'Bitly Login' ), array( get_class(), 'display_bitly_field' ), $page, $section );
-		add_settings_field( self::BITLY_API_KEY, self::__( 'Bitly API Key' ), array( get_class(), 'display_bitly_api_field' ), $page, $section );
-		// WP Affiliate Platform settings for older versions of WPAP
-		$wp_section = 'gb_wp_affiliate_settings';
-		if ( version_compare( WP_AFFILIATE_PLATFORM_VERSION, '4.8.9', '<' ) ) {
-			add_settings_section( $wp_section, self::__( 'WP Affiliate Platform Settings' ), array( get_class(), 'display_wpaffilaite_settings_section' ), $page );
-			register_setting( $page, self::WP_AFFILIATE_POST );
-			register_setting( $page, self::WP_AFFILIATE_KEY );
-			add_settings_field( self::WP_AFFILIATE_KEY, self::__( 'WPAffiliate Key' ), array( get_class(), 'display_wpa_key_field' ), $page, $wp_section );
-			add_settings_field( self::WP_AFFILIATE_POST, self::__( 'WPAffiliate Post URL' ), array( get_class(), 'display_wpa_post_field' ), $page, $wp_section );
-		} else {
-			add_settings_section( $wp_section, self::__( 'WP Affiliate Platform Has Been Automatically Integrated' ), '', $page );
-		}
-	}
-
-	public function display_wpaffilaite_settings_section() {
-		printf( self::__( 'GBS supports basic integration with <a href="%s" target="_blank">WordPress Affiliate Platform</a> an easy to use WordPress plugin for affiliate recruitment, management and tracking that can be used on any WordPress blog/site.' ), 'http://groupbuyingsite.com/goto/WPAffiliatePlatform' );
-	}
-	public static function display_payment_affiliate_credit() {
-		echo '<input type="text" name="'.self::AFFILIATE_CREDIT_OPTION.'" value="'.self::$affiliate_credit.'" size="3" />';
-	}
-
-	public static function display_affiliate_expiration() {
-		echo '<input type="text" name="'.self::AFFILIATE_COOKIE_EXP_OPTION.'" value="'.self::$affiliate_cookie_exp.'" size="8" /> <small>seconds</small>';
-	}
-
-	public static function display_share_path_field() {
-		echo home_url().'/<input type="text" name="'.self::SHARE_PATH_OPTION.'" value="'.self::$share_path.'" size="20" />/&lt;'.self::__('member name').'&gt;/&lt;'.self::__('deal slug').'&gt;/';
-	}
-
-	public static function display_bitly_field() {
-		echo '<input type="text" name="'.self::BITLY_API_LOGIN.'" value="'.self::$bitly_login.'" />';
-		echo '<br/><span class="description">'.self::__( 'Use the Bitly API to shorten URLs and enables stat functions (e.g. total shares).  Be aware that shortened URLs can sometimes cause emails to be marked as spam or blocked.' ).'</small>';
-	}
-
-	public static function display_bitly_api_field() {
-		echo '<input type="text" name="'.self::BITLY_API_KEY.'" value="'.self::$bitly_api.'" size="70" />';
-		echo '<br/><span class="description">'.self::__( 'Find this API key on your <a href="http://bitly.com/a/account">account page</a>.' ).'</span>';
-	}
-
-	public static function display_wpa_post_field() {
-		echo '<input type="text" name="'.self::WP_AFFILIATE_POST.'" value="'.self::$affiliate_post.'" size="70" />';
-		echo '<br/><span class="description">'.self::__( 'The url the affiliate record needs to be posted to.' ).'</span>';
-	}
-
-	public static function display_wpa_key_field() {
-		echo '<input type="text" name="'.self::WP_AFFILIATE_KEY.'" value="'.self::$affiliate_key.'" size="20" />';
-	}
-
-	public static function validate_share_path_field( $value ) {
-		$value = trim( $value, "/" );
-		return $value;
-	}
+	protected function __construct() { }
 
 	public static function get_affiliate_credit() {
 		return self::$affiliate_credit;

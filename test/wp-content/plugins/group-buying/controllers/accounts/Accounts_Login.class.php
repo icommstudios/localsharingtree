@@ -10,18 +10,42 @@ class Group_Buying_Accounts_Login extends Group_Buying_Accounts {
 
 	public static function init() {
 		self::$login_path = get_option( self::LOGIN_PATH_OPTION, self::$login_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 1 );
+		self::register_settings();
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_edit_callback' ), 10, 1 );
 
 		// Hooked login
 		add_action( 'wp_login_failed', array( get_class(), 'login_failed' ), 10, 1 );
 
 		// wp-login.php
-		add_action( 'wp_loaded', array( get_class(), 'redirect_away_from_login' ) );
+		add_action( 'init', array( get_class(), 'redirect_away_from_login' ) );
 
 		// Replace WP Login URIs
 		add_filter( 'login_url', array( get_class(), 'login_url' ), 10, 2 );
 		add_filter( 'logout_url' , array( get_class(), 'log_out_url' ), 100, 2 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_account_login' => array(
+				'weight' => 102,
+				'settings' => array(
+					self::LOGIN_PATH_OPTION => array(
+						'label' => self::__( 'Login Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$login_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -44,19 +68,6 @@ class Group_Buying_Accounts_Login extends Group_Buying_Accounts {
 			),
 		);
 		$router->add_route( self::LOGIN_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_url_paths';
-
-		// Settings
-		register_setting( $page, self::LOGIN_PATH_OPTION );
-		add_settings_field( self::LOGIN_PATH_OPTION, self::__( 'Account Login Path' ), array( get_class(), 'display_account_registration_path' ), $page, $section );
-	}
-
-	public static function display_account_registration_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::LOGIN_PATH_OPTION . '" id="' . self::LOGIN_PATH_OPTION . '" value="' . esc_attr( self::$login_path ) . '" size="40"/><br />';
 	}
 
 	public static function on_login_page() {
@@ -246,6 +257,10 @@ class Group_Buying_Accounts_Login extends Group_Buying_Accounts {
 	 */
 	public function redirect_away_from_login() {
 		global $pagenow;
+
+		// check for password protected content
+		if ( isset( $_GET['action'] ) && isset( $_POST['post_password'] ) && $_GET['action'] == 'postpass' )
+			return;
 
 		// check if it's part of a flash upload.
 		if ( isset( $_POST ) && !empty( $_POST['_wpnonce'] ) )

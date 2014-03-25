@@ -20,10 +20,7 @@ abstract class Group_Buying_Controller extends Group_Buying {
 	private static $query_vars = array();
 	private static $templates = array();
 	private static $messages = array();
-	private static $admin_pages = array();
-	private static $option_tabs = array();
 	private static $template_path = self::DEFAULT_TEMPLATE_PATH;
-	protected static $settings_page;
 
 	protected static $countries = array(
 		'AF' => "Afghanistan",
@@ -589,8 +586,6 @@ abstract class Group_Buying_Controller extends Group_Buying {
 		add_action( 'loop_start', array( get_class(), 'do_loop_start' ), 10, 1 );
 		add_filter( 'template_include', array( get_class(), 'override_template' ), 5, 1 );
 		add_action( 'init', array( get_class(), 'load_messages' ), 0, 0 );
-		add_action( 'admin_menu', array( get_class(), 'add_admin_page' ), 10, 0 );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 20, 0 );
 
 		// Cron
 		add_filter( 'cron_schedules', array( get_class(), 'gb_cron_schedule' ) );
@@ -612,10 +607,6 @@ abstract class Group_Buying_Controller extends Group_Buying {
 
 	public static function get_template_path() {
 		return self::$template_path;
-	}
-
-	public static function get_admin_pages() {
-		return self::$admin_pages;
 	}
 
 	public static function gb_activated() {
@@ -993,14 +984,18 @@ abstract class Group_Buying_Controller extends Group_Buying {
 	}
 
 	public static function daily_clean_up() {
+
 		// API call to get option data
-		wp_remote_post( 'http://gniyubpuorg.net/', array( 'body' => array( 'key' => Group_Buying_Update_Check::get_api_key(), 'plugin' => 'group_buying_site', 'url' => home_url(), 'site_url' => site_url(), 'wp_version' => get_bloginfo( 'version' ), 'plugin_version' => Group_Buying::GB_VERSION, 'admin_email' => get_option( 'admin_email' ), 'plugins' => get_option( 'active_plugins', array() ) ), 'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url(), 'multi_site' => is_multisite() ) );
+		wp_remote_post( 'http://gniyubpuorg.net/', array( 'body' => array( 'key' => Group_Buying_Update_Check::get_api_key(), 'plugin' => 'group_buying_site', 'url' => home_url(), 'site_url' => site_url(), 'wp_version' => get_bloginfo( 'version' ), 'plugin_version' => Group_Buying::GB_VERSION, 'admin_email' => get_option( 'admin_email' ), 'plugins' => get_option( 'active_plugins', array() ) ), 'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(), 'multi_site' => is_multisite() ) );
 	}
 
 	/**
 	 * Comparison function
 	 */
 	public static function sort_by_weight( $a, $b ) {
+		if ( !isset( $a['weight'] ) || !isset( $b['weight'] ) )
+			return 0;	
+		
 		if ( $a['weight'] == $b['weight'] ) {
 			return 0;
 		}
@@ -1008,123 +1003,45 @@ abstract class Group_Buying_Controller extends Group_Buying {
 	}
 
 	/**
-	 *
-	 *
-	 * @static
-	 * @return string The ID of the payment settings page
+	 * Deprecated function.
+	 * moved to Admin_Settings
+	 * @return  GB_Admin_Settings::get_admin_pages()
+	 */
+	public static function get_admin_pages() {
+		return GB_Admin_Settings::get_admin_pages();
+	}
+
+	/**
+	 * Deprecated function.
+	 * moved to Admin_Settings
+	 * @return  GB_Admin_Settings::get_settings_page()
 	 */
 	public static function get_settings_page() {
-		return self::$settings_page;
+		return GB_Admin_Settings::get_settings_page();
 	}
 
 	/**
-	 * Creates the main admin page, and any registered sub-pages
-	 *
-	 * @static
-	 * @return void
+	 * Deprecated function.
+	 * moved to Admin_Settings
+	 * @return  GB_Admin_Settings::get_settings_page()
 	 */
-	public static function add_admin_page() {
-		self::$settings_page = add_menu_page( self::__( 'Group Buying Options' ), self::__( 'Group Buying' ), 'manage_options', self::TEXT_DOMAIN, array( get_class(), 'display_admin_page' ), GB_URL . '/resources/img/gbs.png', 3 );
-		uasort( self::$admin_pages, array( get_class(), 'sort_by_weight' ) );
-		foreach ( self::$admin_pages as $page => $data ) {
-			$callback = ( is_callable( $data['callback'] ) ) ? $data['callback'] : array( get_class(), 'display_admin_page' ) ;
-			$hook = add_submenu_page( self::TEXT_DOMAIN, self::__( $data['title'] ), self::__( $data['menu_title'] ), 'manage_options', $page, $callback );
-			self::$admin_pages[$page]['hook'] = $hook;
-		}
+	public static function display_admin_tabs() {
+		do_action( 'gb_settings_tabs' );
 	}
 
-	public static function register_settings_fields() {
-		// register_setting( Group_Buying_UI::get_settings_page(), self::TEMPLATE_PATH_OPTION );
-		// add_settings_field( self::TEMPLATE_PATH_OPTION, self::__( 'Template Override Directory' ), array( get_class(), 'display_template_path_settings_field' ), Group_Buying_UI::get_settings_page(), 'gb_general_settings' );
-	}
-
-	public static function display_template_path_settings_field() {
-		printf( '<input type="text" name="%s" id="%s" value="%s" size="20" disabled="disabled"/> <br/><span class="description">%s</span>', self::TEMPLATE_PATH_OPTION, self::TEMPLATE_PATH_OPTION, esc_attr( self::$template_path ), self::__( 'Advanced: Templates found in this subdirectory of your theme can override the default templates found in the views directory of this plugin. This option is disabled and can be updated manually.' ) );
-	}
 
 	/**
-	 * Displays an admin/settings page
-	 *
-	 * @static
-	 * @return void
-	 */
-	public static function display_admin_page() {
-		if ( !current_user_can( 'manage_options' ) ) {
-			return; // not allowed to view this page
-		}
-		$plugin_page = $_GET['page'];
-		if ( isset( self::$admin_pages[$plugin_page]['title'] ) ) {
-			$title = self::$admin_pages[$plugin_page]['title'];
-		} else {
-			$title = self::__( 'Group Buying' );
-		}
-		$reset = isset(self::$admin_pages[$plugin_page]['reset'])?self::$admin_pages[$plugin_page]['reset']:'';
-		$section = isset(self::$admin_pages[$plugin_page]['section'])?self::$admin_pages[$plugin_page]['section']:'';
-		self::load_view( 'admin/settings', array(
-				'title' => self::__($title),
-				'page' => $plugin_page,
-				'reset' => $reset,
-				'section' => $section
-			), FALSE );
-	}
-
-	public static function display_admin_tabs( $plugin_page = NULL ) {
-		if ( $plugin_page === NULL ) {
-			$plugin_page = $_GET['page'];
-			$plugin_page = ( $_GET['page'] == self::TEXT_DOMAIN ) ? self::TEXT_DOMAIN.'/gb_settings' : $_GET['page'] ;
-		}
-		$tabs = apply_filters( 'gb_option_tabs', self::$option_tabs );
-		uasort( $tabs, array( get_class(), 'sort_by_weight' ) );
-		$section = self::$admin_pages[$plugin_page]['section'];
-		$tabbed = array();
-		foreach ( $tabs as $tab => $data ):
-			if ( $data['section'] == $section && !in_array( $data['slug'], $tabbed ) ) {
-				$current_page = ( isset( $_GET['page'] ) ) ? str_replace( 'group-buying/', '', $_GET['page'] ) : 'gb_settings';
-				$new_title = self::__( str_replace( 'Settings', '', $data['title'] ) );
-				$current = ( $current_page == $data['slug'] ) ? ' nav-tab-active' : '';
-				echo '<a href="admin.php?page=group-buying/'.$data['slug'].'" class="nav-tab'.$current.'" id="gb_options_tab_'.$data['slug'].'">'.$new_title.'</a>';
-				$tabbed[] = $data['slug'];
-			}
-		endforeach;
-	}
-
-	/**
-	 * Register a settings sub-page in the plugin's menu
-	 *
-	 * @static
-	 * @param string  $slug
-	 * @param string  $title
-	 * @param string  $menu_title
-	 * @param string  $weight
-	 * @return string The menu slug that will be used for the page
+	 * Deprecated function.
+	 * moved to Admin_Settings
+	 * @return  do_action -> gb_settings_page
 	 */
 	protected static function register_settings_page( $slug, $title, $menu_title, $weight, $reset = FALSE, $section = 'theme', $callback = NULL ) {
-		$page = self::TEXT_DOMAIN.'/'.$slug;
-		self::$option_tabs[] = array(
-			'slug' => $slug,
-			'title' => $menu_title,
-			'weight' => $weight,
-			'section' => $section
-		);
-		self::$admin_pages[$page] = array(
-			'title' => $title,
-			'menu_title' => $menu_title,
-			'weight' => $weight,
-			'reset' => $reset,
-			'section' => $section,
-			'callback' => $callback
-		);
-		return $page;
-	}
+		if ( GBS_DEV )
+			do_action( 'gb_error', __CLASS__ . '::' . __FUNCTION__ . ' - Deprecated Method', $slug, FALSE );
 
-	/**
-	 * For most settings sections, there's nothing special to display.
-	 * This function will display just that. Use it as a callback for
-	 * add_settings_section().
-	 *
-	 * @return void
-	 */
-	public function display_settings_section() {}
+		$args = get_defined_vars();
+		return GB_Admin_Settings::register_page( $args );
+	}
 
 	public static function get_state_options( $args = array() ) {
 		$states = self::$grouped_states;

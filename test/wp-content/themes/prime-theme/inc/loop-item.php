@@ -1,6 +1,6 @@
 <div id="post_content <?php the_ID() ?>" <?php post_class('post loop_deal background_alt deal_status-'.gb_get_status().' clearfix'); ?>>
 	<?php 
-		if ( gb_has_merchant() ) {
+		if ( gb_has_active_merchant() ) {
 			?>
 				<h3 class="deal_merchant_title alt_text font_small gb_ff clearfix"><a href="<?php gb_merchant_url(gb_get_merchant_id()) ?>" title="<?php the_title(gb_get_merchant_id()) ?>" class="alt_text"><?php gb_merchant_name(gb_get_merchant_id()); ?></a></h3>
 			<?php
@@ -33,11 +33,11 @@
 					</div>
 				<?php endif ?>
 				<div class="deals-loop-buy">
-					<?php if ( gb_can_purchase() || ( function_exists('gb_is_deal_aggregated') && gb_is_deal_aggregated() ) ) { ?>
+					<?php if ( gb_deal_availability() || !gb_is_deal_complete() ): ?>
 						<a href="<?php gb_add_to_cart_url() ?>" class="button form-submit"><?php gb_e('Buy it!') ?> <span class="button_price"><?php gb_price(); ?></span></a>
-					<?php  }  else { ?>
+					<?php  else : ?>
 						<a href="<?php gb_add_to_cart_url() ?>" class="button form-submit"><?php gb_e('Unavailable') ?></a>
-					<?php } ?>
+					<?php endif; ?>
 				</div>	
 
 	</div>

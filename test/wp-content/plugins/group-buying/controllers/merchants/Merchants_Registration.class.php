@@ -9,9 +9,34 @@ class Group_Buying_Merchants_Registration extends Group_Buying_Merchants {
 
 	public static function init() {
 		self::$register_path = get_option( self::REGISTER_PATH_OPTION, self::$register_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 50, 0 );
+		self::register_settings();
+
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_registration_callback' ), 10, 1 );
 		add_action( 'parse_request', array( get_class(), 'maybe_process_form' ) );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_merchant_registration' => array(
+				'weight' => 134,
+				'settings' => array(
+					self::REGISTER_PATH_OPTION => array(
+						'label' => self::__( 'Merchant Registration Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$register_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -35,19 +60,6 @@ class Group_Buying_Merchants_Registration extends Group_Buying_Merchants {
 			),
 		);
 		$router->add_route( self::REGISTER_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_merchant_paths';
-
-		// Settings
-		register_setting( $page, self::REGISTER_PATH_OPTION );
-		add_settings_field( self::REGISTER_PATH_OPTION, self::__( 'Merchant Registration Path' ), array( get_class(), 'display_merchant_registration_path' ), $page, $section );
-	}
-
-	public static function display_merchant_registration_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::REGISTER_PATH_OPTION . '" id="' . self::REGISTER_PATH_OPTION . '" value="' . esc_attr( self::$register_path ) . '" size="40"/><br />';
 	}
 
 	public static function on_registration_page() {
@@ -101,7 +113,7 @@ class Group_Buying_Merchants_Registration extends Group_Buying_Merchants {
 	 * @return bool Whether the current query is a cart page
 	 */
 	public static function is_merchant_registration_page() {
-		return GB_Router_Utility::is_on_page( self::MERCHANT_QUERY_VAR );
+		return GB_Router_Utility::is_on_page( self::REGISTER_QUERY_VAR );
 	}
 
 	/**

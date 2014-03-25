@@ -43,7 +43,40 @@ class Group_Buying_ConstantContact extends Group_Buying_List_Services {
 		self::$login = get_option( self::LOGIN, '' );
 		self::$password = get_option( self::PASSWORD, '' );
 
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'gb_constantcontact_sub' => array(
+				'title' => self::__( 'ConstantContact Subscription Service' ),
+				'weight' => 500,
+				'settings' => array(
+					self::LOGIN => array(
+						'label' => self::__( 'Login' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$login
+							)
+						),
+					self::PASSWORD => array(
+						'label' => self::__( 'Password' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$password
+							)
+						),
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_List_Services::SETTINGS_PAGE );
 	}
 
 	public static function register() {
@@ -121,24 +154,6 @@ class Group_Buying_ConstantContact extends Group_Buying_List_Services {
 			}
 		}
 		return;
-	}
-
-	public function register_settings() {
-		$page = Group_Buying_List_Services::get_settings_page();
-		$section = 'gb_constantcontact_sub';
-		add_settings_section( $section, self::__( 'ConstantContact Subscription' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::LOGIN );
-		register_setting( $page, self::PASSWORD );
-		add_settings_field( self::LOGIN, self::__( 'Login' ), array( $this, 'display_login_field' ), $page, $section );
-		add_settings_field( self::PASSWORD, self::__( 'Password' ), array( $this, 'display_password_field' ), $page, $section );
-	}
-
-	public static function display_login_field() {
-		echo '<input type="text" name="'.self::LOGIN.'" value="'.self::$login.'" />';
-	}
-
-	public static function display_password_field() {
-		echo '<input type="password" name="'.self::PASSWORD.'" value="'.self::$password.'" />';
 	}
 }
 Group_Buying_ConstantContact::register();

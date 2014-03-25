@@ -9,12 +9,13 @@
 
 abstract class GB_Aggregator_Plugin extends Group_Buying_Controller {
 	const COMPONENTS_TO_LOAD_OPTION = 'gb_load_aggregator_components';
-	protected static $settings_page = '';
+	protected static $settings_page = 'group-buying/gb_aggregator_settings';
 	protected static $about_link = 'http://groupbuyingsite.com/forum/showthread.php?2843-Welcome-to-the-Syndication-Service';
 
 	public static function init() {
 		self::load_plugin();
-		self::$settings_page = self::register_settings_page( 'gb_aggregator_settings', self::__( 'Group Buying Network Syndication Settings' ), self::__( 'Syndication' ), 500, FALSE, 'general', TRUE );
+		// TODO use new Settings API
+		self::register_settings_page( 'gb_aggregator_settings', self::__( 'Group Buying Network Syndication Settings' ), self::__( 'Syndication Options' ), 500, FALSE, 'general', TRUE );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ), 10, 0 );
 		add_action( self::CRON_HOOK, array( __CLASS__, 'flush_taxa_cache' ), 0, 0 );
 	}
@@ -68,7 +69,7 @@ abstract class GB_Aggregator_Plugin extends Group_Buying_Controller {
 			GB_Aggregator_Web_Service::init();
 		}
 
-		require_once GB_PATH.'/template_tags/syndication.php';
+		require_once GB_PATH.'/template-tags/add-ons/syndication.php';
 	}
 
 	/**

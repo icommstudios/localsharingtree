@@ -136,7 +136,7 @@ class Group_Buying_Merchant extends Group_Buying_Post_Type {
 	}
 
 	public static function blank_merchant() { // removed dependency in 4.6
-		do_action( 'gb_error', __CLASS__ . '::' . __FUNCTION__ );
+		do_action( 'gb_error', __CLASS__ . '::' . __FUNCTION__, FALSE );
 	}
 
 	/**

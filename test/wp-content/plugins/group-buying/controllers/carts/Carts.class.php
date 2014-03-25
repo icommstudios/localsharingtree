@@ -16,9 +16,33 @@ class Group_Buying_Carts extends Group_Buying_Controller {
 
 	public static function init() {
 		self::$cart_path = get_option( self::CART_PATH_OPTION, self::$cart_path );
+		self::register_settings();
 		self::register_query_var( self::ADD_TO_CART_QUERY_VAR, array( get_class(), 'add_to_cart' ) );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 50, 1 );
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_path_callback' ), 10, 1 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_cart' => array(
+				'weight' => 105,
+				'settings' => array(
+					self::CART_PATH_OPTION => array(
+						'label' => self::__( 'Cart Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$cart_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -42,24 +66,6 @@ class Group_Buying_Carts extends Group_Buying_Controller {
 			),
 		);
 		$router->add_route( self::CART_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_cart_paths';
-		add_settings_section( $section, null, array( get_class(), 'display_cart_paths_section' ), $page );
-
-		// Settings
-		register_setting( $page, self::CART_PATH_OPTION );
-		add_settings_field( self::CART_PATH_OPTION, self::__( 'Cart Path' ), array( get_class(), 'display_cart_path' ), $page, $section );
-	}
-
-	public static function display_cart_paths_section() {
-		echo self::__( '<h4>Customize the Cart paths.</h4>' );
-	}
-
-	public static function display_cart_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::CART_PATH_OPTION . '" id="' . self::CART_PATH_OPTION . '" value="' . esc_attr( self::$cart_path ) . '" size="40"/><br />';
 	}
 
 	/**

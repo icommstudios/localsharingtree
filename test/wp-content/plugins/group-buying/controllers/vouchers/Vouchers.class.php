@@ -7,7 +7,7 @@
  * @subpackage Voucher
  */
 class Group_Buying_Vouchers extends Group_Buying_Controller {
-
+	const SETTINGS_PAGE = 'voucher_records';
 	const FILTER_QUERY_VAR = 'filter_gb_vouchers';
 	const FILTER_EXPIRED_QUERY_VAR = 'expired';
 	const FILTER_USED_QUERY_VAR = 'used';
@@ -43,17 +43,14 @@ class Group_Buying_Vouchers extends Group_Buying_Controller {
 		self::$expired_path = get_option( self::VOUCHER_OPTION_EXP_PATH, self::FILTER_EXPIRED_QUERY_VAR );
 		self::$used_path = get_option( self::VOUCHER_OPTION_USED_PATH, self::FILTER_USED_QUERY_VAR );
 		self::$active_path = get_option( self::VOUCHER_OPTION_ACTIVE_PATH, self::FILTER_ACTIVE_QUERY_VAR );
+
 		add_action( 'generate_rewrite_rules', array( get_class(), 'add_voucher_rewrite_rules' ), 10, 1 );
 		self::register_query_var( self::FILTER_QUERY_VAR );
+		
 		add_action( 'pre_get_posts', array( get_class(), 'filter_voucher_query' ), 50, 1 );
 		add_action( 'parse_query', array( get_class(), 'filter_voucher_query' ), 50, 1 );
 
-		// Hook into GB settings page ( after it's created )
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 20, 0 );
-
 		if ( is_admin() ) {
-			// Admin
-			self::$settings_page = self::register_settings_page( 'voucher_records', self::__( 'Voucher Records' ), self::__( 'Vouchers' ), 6, FALSE, 'records', array( get_class(), 'display_table' ) );
 			add_action( 'parse_request', array( get_class(), 'manually_activate_vouchers' ), 1, 0 );
 		}
 
@@ -64,9 +61,126 @@ class Group_Buying_Vouchers extends Group_Buying_Controller {
 		self::$voucher_legal = get_option( self::VOUCHER_OPTION_LEGAL );
 		self::$voucher_prefix = get_option( self::VOUCHER_OPTION_PREFIX );
 		self::$voucher_ids_option = get_option( self::VOUCHER_OPTION_IDS, 'random' );
+		self::register_settings();
 
 		// AJAX Functions
 		add_action( 'wp_ajax_gb_mark_voucher', array( get_class(), 'mark_voucher' ) );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'Vouchers' ),
+			'menu_title' => self::__( 'Vouchers' ),
+			'weight' => 16,
+			'reset' => FALSE, 
+			'section' => 'records',
+			'callback' => array( get_class(), 'display_table' )
+			);
+		do_action( 'gb_settings_page', $args );
+
+		// Settings
+		$settings = array(
+
+			'gb_url_path_vouchers' => array(
+				'weight' => 190,
+				'settings' => array(
+					self::VOUCHER_OPTION_EXP_PATH => array(
+						'label' => self::__( 'Expired Voucher Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ).'vouchers/', // TODO use archive link (doesn't work)
+							'type' => 'text',
+							'default' => self::$expired_path
+							)
+						),
+					self::VOUCHER_OPTION_USED_PATH => array(
+						'label' => self::__( 'Used Voucher Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ).'vouchers/', // TODO use archive link (doesn't work)
+							'type' => 'text',
+							'default' => self::$used_path
+							)
+						),
+					self::VOUCHER_OPTION_ACTIVE_PATH => array(
+						'label' => self::__( 'Active Voucher Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ).'vouchers/', // TODO use archive link (doesn't work)
+							'type' => 'text',
+							'default' => self::$active_path
+							)
+						)
+					)
+				),
+			'gb_general_voucher_settings' => array(
+				'title' => self::__( 'Voucher Settings' ),
+				'weight' => 250,
+				'settings' => array(
+					self::VOUCHER_OPTION_LOGO => array(
+						'label' => self::__( 'Voucher Logo' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$voucher_logo
+							)
+						),
+					self::VOUCHER_OPTION_FINE_PRINT => array(
+						'label' => self::__( 'Voucher Fine Print' ),
+						'option' => array(
+							'type' => 'textarea',
+							'default' => self::$voucher_fine_print
+							)
+						),
+					self::VOUCHER_OPTION_SUPPORT1 => array(
+						'label' => self::__( 'Voucher Support Contact' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$voucher_support1
+							)
+						),
+					self::VOUCHER_OPTION_SUPPORT2 => array(
+						'label' => self::__( 'Voucher Support Contact' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$voucher_support2
+							)
+						),
+					self::VOUCHER_OPTION_LEGAL => array(
+						'label' => self::__( 'Voucher Legal Info' ),
+						'option' => array(
+							'type' => 'textarea',
+							'default' => self::$voucher_legal
+							)
+						),
+					self::VOUCHER_OPTION_PREFIX => array(
+						'label' => self::__( 'Voucher Voucher Prefix' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$voucher_prefix
+							)
+						),
+					/*/
+					self::VOUCHER_OPTION_IDS => array(
+						'label' => self::__( 'Voucher IDs' ),
+						'option' => array(
+							'type' => 'select',
+							'options' => array(
+								'random' => self::__('Random'),
+								'sequential' => self::__('Sequential'),
+								'none' => self::__('None'),
+								),
+							'default' => self::$voucher_ids_option
+							)
+						)
+					/**/
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -382,51 +496,6 @@ class Group_Buying_Vouchers extends Group_Buying_Controller {
 		exit();
 	}
 
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_general_voucher_settings';
-		add_settings_section( $section, self::__( 'Voucher Settings' ), array( get_class(), 'display_settings_section' ), $page );
-		// Settings
-		register_setting( $page, self::VOUCHER_OPTION_LOGO );
-		register_setting( $page, self::VOUCHER_OPTION_FINE_PRINT );
-		register_setting( $page, self::VOUCHER_OPTION_SUPPORT1 );
-		register_setting( $page, self::VOUCHER_OPTION_SUPPORT2 );
-		register_setting( $page, self::VOUCHER_OPTION_LEGAL );
-		register_setting( $page, self::VOUCHER_OPTION_PREFIX );
-		register_setting( $page, self::VOUCHER_OPTION_IDS );
-
-		add_settings_field( self::VOUCHER_OPTION_LOGO, self::__( 'Voucher Logo' ), array( get_class(), 'display_voucher_option_logo' ), $page, $section );
-		add_settings_field( self::VOUCHER_OPTION_FINE_PRINT, self::__( 'Voucher Fine Print' ), array( get_class(), 'display_voucher_option_fine_print' ), $page, $section );
-		add_settings_field( self::VOUCHER_OPTION_SUPPORT1, self::__( 'Voucher Support Contact' ), array( get_class(), 'display_voucher_option_support1' ), $page, $section );
-		add_settings_field( self::VOUCHER_OPTION_SUPPORT2, self::__( 'Voucher Support Contact' ), array( get_class(), 'display_voucher_option_support2' ), $page, $section );
-		add_settings_field( self::VOUCHER_OPTION_LEGAL, self::__( 'Voucher Legal Info' ), array( get_class(), 'display_voucher_option_legal' ), $page, $section );
-		add_settings_field( self::VOUCHER_OPTION_PREFIX, self::__( 'Voucher Prefix' ), array( get_class(), 'display_voucher_option_prefix' ), $page, $section );
-		//add_settings_field(self::VOUCHER_OPTION_IDS, self::__('Voucher IDs'), array(get_class(), 'display_voucher_option_ids'), $page, $section);
-
-	}
-
-	public static function display_voucher_option_logo() {
-		echo '<input type="text" name="'.self::VOUCHER_OPTION_LOGO.'" value="'.self::$voucher_logo.'" size="40">';
-	}
-	public static function display_voucher_option_fine_print() {
-		echo '<textarea rows="3" cols="40" name="'.self::VOUCHER_OPTION_FINE_PRINT.'" id="'.self::VOUCHER_OPTION_FINE_PRINT.'" class="tinymce" style="width:400">'.esc_textarea( self::$voucher_fine_print ).'</textarea>';
-	}
-	public static function display_voucher_option_support1() {
-		echo '<input type="text" name="'.self::VOUCHER_OPTION_SUPPORT1.'" value="'.self::$voucher_support1.'" size="40">';
-	}
-	public static function display_voucher_option_support2() {
-		echo '<input type="text" name="'.self::VOUCHER_OPTION_SUPPORT2.'" value="'.self::$voucher_support2.'" size="40">';
-	}
-	public static function display_voucher_option_legal() {
-		echo '<textarea rows="3" cols="40" name="'.self::VOUCHER_OPTION_LEGAL.'" id="'.self::VOUCHER_OPTION_LEGAL.'" class="tinymce" style="width:400">'.esc_textarea( self::$voucher_legal ).'</textarea>';
-	}
-	public static function display_voucher_option_prefix() {
-		echo '<input type="text" name="'.self::VOUCHER_OPTION_PREFIX.'" value="'.self::$voucher_prefix.'">';
-	}
-	public static function display_voucher_option_ids() {
-		echo '<select name="'.self::VOUCHER_OPTION_IDS.'"><option value="random" '.selected( 'random', self::$voucher_ids_option, FALSE ).'>Random</option><option value="sequantial" '.selected( 'sequantial', self::$voucher_ids_option, FALSE ).'>Sequential</option><option value="none" '.selected( 'none', self::$voucher_ids_option, FALSE ).'>None</option>';
-	}
-
 	public static function get_voucher_logo() {
 		return self::$voucher_logo;
 	}
@@ -526,7 +595,7 @@ class Group_Buying_Vouchers extends Group_Buying_Controller {
 		<div class="wrap">
 			<?php screen_icon(); ?>
 			<h2 class="nav-tab-wrapper">
-				<?php self::display_admin_tabs(); ?>
+				<?php do_action( 'gb_settings_tabs' ); ?>
 			</h2>
 
 			 <?php $wp_list_table->views() ?>

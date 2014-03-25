@@ -91,9 +91,10 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 	public function process_payment( Group_Buying_Checkouts $checkout, Group_Buying_Purchase $purchase ) {
 		$account = Group_Buying_Account::get_instance();
 		// $balance = $account->get_credit_balance($this->get_credit_type()); // FUTURE warn the person that the balance doesn't match their submission.
-		$total = isset($checkout->cache['account_balance'])?$checkout->cache['account_balance']:0;
-		$total_value = $total/self::get_credit_exchange_rate( $this->get_credit_type() );
-		$account->reserve_credit( $total, $this->get_credit_type() );
+		$credit_to_use = isset($checkout->cache['account_balance'])?$checkout->cache['account_balance']:0;
+		$total_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+		$account->reserve_credit( $credit_to_use, $this->get_credit_type() );
+
 		$deal_info = array();
 		foreach ( $purchase->get_products() as $item ) {
 			if ( isset( $item['payment_method'][$this->get_payment_method()] ) ) {
@@ -133,7 +134,7 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 		do_action( 'payment_authorized', $payment );
 
 		// make note of how much credit we're reserving for this payment
-		update_post_meta( $payment_id, self::RESERVED_CREDIT_META, $total );
+		update_post_meta( $payment_id, self::RESERVED_CREDIT_META, $credit_to_use );
 
 		return $payment;
 	}
@@ -163,26 +164,36 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 		}
 		elseif ( isset( $checkout->cache['account_balance'] ) && $checkout->cache['account_balance'] ) {
 			$credit_to_use = $checkout->cache['account_balance'];
-			$credits_to_use_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+			$calculated_credits = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
 			$items = $purchase->get_products();
 			foreach ( $items as $key => $item ) {
-				$remaining = $item['price'];
+				$remaining_price = $item['price'];
+				// Remove cost from payment methods already accounting the price.
 				foreach ( $item['payment_method'] as $processor => $amount ) {
-					$remaining -= $amount;
+					$remaining_price -= $amount;
 				}
-				if ( $remaining >= 0.01 ) { // leave a bit of room for floating point arithmetic
-					// need to leave some room for tax an shipping, so we don't allocate too much credit
+				// Register as a payment method that need it.
+				if ( $remaining_price >= 0.01 ) { // leave a bit of room for floating point arithmetic
+
+					// need to leave some room for tax and shipping, so we don't allocate too much credit
 					$extras = $purchase->get_item_shipping( $item )+$purchase->get_item_tax( $item );
-					if ( $remaining+$extras <= $credits_to_use_value ) {
-						$items[$key]['payment_method'][$this->get_payment_method()] = $remaining;
-						$credit_to_use -= $remaining+$extras;
+					$remaining_price_and_extras = $remaining_price+$extras;
+
+					// Price with extras is less than the credit value attempted to use.
+					if ( $remaining_price_and_extras <= $calculated_credits ) {
+						// Set as a payment method.
+						$items[$key]['payment_method'][$this->get_payment_method()] = $remaining_price; // don't include the extras since they're somewhere else?
+						// Subtract the cost that is registered just above, so that the remaining can be looped for other items.
+						$calculated_credits -= $remaining_price_and_extras;
 					} else {
-						$ratio = @( $credits_to_use_value/( $item['price']+$extras ) );
-						$items[$key]['payment_method'][$this->get_payment_method()] = $ratio*$item['price'];
-						$credit_to_use = 0;
+						// Remaining credits is less than the price plus extras.
+						// Calculate the amount to register for the cost of the item.
+						$ratio = @( $calculated_credits/$remaining_price_and_extras );
+						$items[$key]['payment_method'][$this->get_payment_method()] = $ratio*$remaining_price;
+						$calculated_credits = 0;
 					}
 				}
-				if ( $credit_to_use < 0.01 ) {
+				if ( $calculated_credits < 0.01 ) {
 					break;
 				}
 			}
@@ -194,7 +205,7 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 	public function payment_fields( $fields, $payment_processor_class, $checkout ) {
 		$account = Group_Buying_Account::get_instance();
 		$balance = $account->get_credit_balance( $this->get_credit_type() );
-		$credit_value = $account->get_credit_balance( $this->get_credit_type() )/self::get_credit_exchange_rate( $this->get_credit_type() );
+		$balance_value = $account->get_credit_balance( $this->get_credit_type() )/self::get_credit_exchange_rate( $this->get_credit_type() );
 		$cart = Group_Buying_Cart::get_instance();
 		$total = $cart->get_total();
 
@@ -224,18 +235,21 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 
 		if ( $balance ) {
 			$default = isset( $checkout->cache['account_balance'] )?$checkout->cache['account_balance']:0;
+			$description = ( $balance_value == $balance ) ? sprintf( self::__( 'You have a account balance of %s. How much of your balance would you like to apply to this purchase?' ), gb_get_formatted_money( $balance_value ) ) : sprintf( self::__( 'You have an account balance of %s at a value of %s. How many account balance points would you like to apply to this purchase?' ), gb_get_number_format( $balance, '.', ',' ), gb_get_formatted_money( $balance_value ) ) ;
 			$fields['account_balance'] = array(
 				'type' => 'text',
 				'weight' => -5,
 				'label' => self::__( 'Account Balance' ),
-				'description' => sprintf( self::__( 'You have a account balance of %s. How much of your balance would you like to apply to this purchase?' ), gb_get_formatted_money( $credit_value ) ),
+				'description' => $description,
 				'size' => 10,
 				'required' => FALSE,
 				'default' => $default,
 			);
 		}
 		if ( isset( $checkout->cache['account_balance'] ) && $checkout->cache['account_balance'] >= 0.01 ) {
-			if ( $total <= $checkout->cache['account_balance'] ) {
+			$credit_to_use = $checkout->cache['account_balance'];
+			$calculated_credits = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+			if ( $total <= $calculated_credits ) {
 				foreach ( array_keys( $fields ) as $key ) {
 					$fields[$key]['required'] = FALSE;
 				}
@@ -268,7 +282,9 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 			return $fields;
 		}
 		if ( isset( $checkout->cache['account_balance'] ) && $checkout->cache['account_balance'] > 0 ) {
-			if ( $checkout->cache['account_balance'] >= $total ) {
+			$credit_to_use = $checkout->cache['account_balance'];
+			$calculated_credits = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+			if ( $calculated_credits >= $total ) {
 				// get rid of credit card info, since there won't be any
 				unset( $fields['cc_name'] );
 				unset( $fields['cc_number'] );
@@ -277,14 +293,13 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 				unset( $fields['method'] );
 				$fields['account_balance'] = array(
 					'label' => self::__( 'Payment Method' ),
-					'value' => self::__( 'Account Balance' ),
+					'value' => sprintf( self::__( '%s will be paid from your account balance' ), gb_get_formatted_money( $calculated_credits ) ),
 					'weight' => 1,
 				);
 			} else {
-				$amount_paid = $checkout->cache['account_balance']/self::get_credit_exchange_rate( $this->get_credit_type() );
 				$fields['account_balance'] = array(
 					'label' => self::__( 'Account Balance' ),
-					'value' => sprintf( self::__( '%s will be paid from your account balance' ), gb_get_formatted_money( $amount_paid  ) ),
+					'value' => sprintf( self::__( '%s will be paid from your account balance' ), gb_get_formatted_money( $calculated_credits  ) ),
 					'weight' => 10,
 				);
 			}
@@ -305,15 +320,12 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 
 		}
 		if ( isset( $_POST['gb_credit_account_balance'] ) && $_POST['gb_credit_account_balance'] ) {
-			$submitted_credit_to_use = $_POST['gb_credit_account_balance'];
-			if ( !is_numeric( $submitted_credit_to_use ) ) {
+			$credit_to_use = $_POST['gb_credit_account_balance'];
+			if ( !is_numeric( $credit_to_use ) ) {
 				self::set_message( "Unknown value for Account Balance field", self::MESSAGE_STATUS_ERROR );
 				$checkout->mark_page_incomplete( Group_Buying_Checkouts::PAYMENT_PAGE );
 				return;
 			}
-			// Account balances is a dollar amount,
-			// convert whats submitted to a credit value. 
-			$credit_to_use = number_format( floatval( $submitted_credit_to_use*self::get_credit_exchange_rate( $this->get_credit_type() ) ), 2 );
 
 			$account = Group_Buying_Account::get_instance();
 			$balance = $account->get_credit_balance( $this->get_credit_type() );
@@ -323,10 +335,14 @@ class Group_Buying_Account_Balance_Payments extends Group_Buying_Payment_Process
 			}
 			$cart = Group_Buying_Cart::get_instance();
 			$total = $cart->get_total();
-			// If the submission is more than the total
-			if ( $submitted_credit_to_use > $total ) {
+
+
+			// Calculate the value of the credits attempted to be used.
+			$calculated_credit_value = number_format( floatval( $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() ) ), 2 );
+
+			// If the calculated value of the credits is more than the total
+			if ( $calculated_credit_value > $total ) {
 				// Don't use any more credits than necessary.
-				// Convert back to the credit total to use.
 				$credit_to_use = $total*self::get_credit_exchange_rate( $this->get_credit_type() );
 			}
 			$checkout->cache['account_balance'] = $credit_to_use; // force a formatted dollar amount just in case.

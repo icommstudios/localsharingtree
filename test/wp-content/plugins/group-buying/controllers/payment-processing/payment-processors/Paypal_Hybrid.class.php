@@ -55,12 +55,16 @@ class Group_Buying_Paypal_Hybrid extends Group_Buying_Payment_Processors {
 		$options = get_option( self::ENABLED_PROCESSORS_OPTION, 'both' );
 		$this->use_ec = ( $options == 'ec' || $options == 'both' );
 		$this->use_wpp = ( $options == 'wpp' || $options == 'both' );
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+
+
 		add_action( 'gb_processing_cart', array( $this, 'load_enabled_processors' ), 10, 0 );
 		add_action( self::CRON_HOOK, array( $this, 'load_enabled_processors' ), -100, 0 );
 		add_filter( 'gb_payment_fields', array( $this, 'payment_fields' ), 10, 3 );
 		add_filter( 'gb_checkout_payment_controls', array( $this, 'payment_controls' ), 10, 2 );
-
+		
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
 
 		// always load both processors on admin pages
 		if ( is_admin() ) {
@@ -78,6 +82,35 @@ class Group_Buying_Paypal_Hybrid extends Group_Buying_Payment_Processors {
 		//add_action('purchase_completed', array($this, 'capture_purchase'), 10, 1);
 		// let the sub-processors handle this
 		//add_action(self::CRON_HOOK, array($this, 'capture_pending_payments'));
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'gb_paypal_hybrid_settings' => array(
+				'title' => self::__( 'PayPal' ),
+				'weight' => 200,
+				'settings' => array(
+					self::ENABLED_PROCESSORS_OPTION => array(
+						'label' => self::__( 'Payment Methods' ),
+						'option' => array(
+							'type' => 'radios',
+							'options' => array(
+								'ec' => self::__( 'Payments Standard (off site)' ),
+								'wpp' => self::__( 'Payments Pro (on site)' ),
+								'both' => self::__( 'Both' )
+								),
+							'default' => self::$api_mode
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_Payment_Processors::SETTINGS_PAGE );
 	}
 
 	public function payment_fields( $fields, $payment_processor_class, $checkout ) {
@@ -240,26 +273,6 @@ class Group_Buying_Paypal_Hybrid extends Group_Buying_Payment_Processors {
 
 	public static function register() {
 		self::add_payment_processor( __CLASS__, self::__( 'PayPal Payments Pro' ) );
-	}
-
-	/**
-	 * Add options to choose which payment processors to enable
-	 *
-	 * @return void
-	 */
-	public function register_settings() {
-		$page = Group_Buying_Payment_Processors::get_settings_page();
-		$section = 'gb_paypal_hybrid_settings';
-		add_settings_section( $section, self::__( 'PayPal' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::ENABLED_PROCESSORS_OPTION );
-		add_settings_field( self::ENABLED_PROCESSORS_OPTION, self::__( 'Payment Methods' ), array( $this, 'display_payment_methods_field' ), $page, $section );
-	}
-
-	public function display_payment_methods_field() {
-		echo '<p><label><input type="radio" name="'.self::ENABLED_PROCESSORS_OPTION.'" value="ec" '.checked( TRUE, $this->use_ec && !$this->use_wpp, FALSE ).' /> '.self::__( 'Payments Standard (off site)' ).'</label></p>';
-		echo '<p><label><input type="radio" name="'.self::ENABLED_PROCESSORS_OPTION.'" value="wpp" '.checked( TRUE, $this->use_wpp && !$this->use_ec, FALSE ).' /> '.self::__( 'Payments Pro (on site)' ).'</label></p>';
-		echo '<p><label><input type="radio" name="'.self::ENABLED_PROCESSORS_OPTION.'" value="both" '.checked( TRUE, $this->use_wpp && $this->use_ec, FALSE ).' /> '.self::__( 'Both' ).'</label></p>';
-
 	}
 
 	/**
