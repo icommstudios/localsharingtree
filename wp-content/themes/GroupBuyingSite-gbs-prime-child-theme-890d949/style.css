@@ -381,10 +381,10 @@ width: 100%;
 }
 
 .checkout-controls {
-    width: 250px;
+    width: 96%;
     display: block;
     margin: 20px auto;
-    padding: 20px;
+    padding: 1% 2%;
     clear: none;
     background: rgba(0,0,0,0.05);
 }
@@ -396,6 +396,11 @@ margin: auto;
 
 #gb_checkout_payment input.form-submit, #gb_checkout_review input.form-submit {
 float: none;
+}
+
+h2.section_heading, legend.section_heading {
+    width:96%;
+    padding: 1% 2%;
 }
 
 @media (min-width: 600px) {
@@ -467,10 +472,6 @@ input.button-primary,
 }
 .merchant-title a {
     color: white
-}
-.checkout-controls {
-    display: inline-block;
-    clear: none;
 }
 .form-submit {
     background-size: cover

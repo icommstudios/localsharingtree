@@ -95,16 +95,15 @@
 	
 	?>
 
-<div class="checkout_block left_form clearfix">
+<div class="checkout_block charities clearfix">
 
 	<div class="paymentform_info">
-		<h2 class="table_heading section_heading background_alt font_medium gb_ff"><?php self::_e( 'Select a Non Profit Organization' ); ?></h2>
+		<h2 class="table_heading section_heading background_alt font_medium gb_ff"><?php printf(self::__("Non Profit Organization to receive %s donation:"), $donation_percentage."%"); ?></h2>
 	</div>
 	<fieldset id="gb-charity">
 		<table class="charity">
 			<tbody>
 				<tr>
-					<td valign="top" style="vertical-align: top;"><label for="gb_charity"><?php printf(self::__("Non Profit Organization to receive %s donation:"), $donation_percentage."%"); ?></label></td>
 					<td valign="top" class="select-checkout-charity">
                     <?php
 					 //Category locations
@@ -131,11 +130,11 @@
                     */
 					?>
                     	<hr>
-                   		<select name="gb_charity" id="gb_charity"/>
+                   		<select name="gb_charity" id="gb_charity" style="font-size:200%;"/>
 
 							<?php
 								$selected = ( isset( $_POST[ 'gb_charity' ] ) ) ? $_POST[ 'gb_charity' ] : '' ;
-								echo '<option value="">'.gb__( ' -- Select a Non Profit -- ' ).'</option>';
+								echo '<option value="">'.gb__( ' - - Select a Non Profit - - ' ).'</option>';
 								foreach ( $charity_ids as $charity_id ) {
 									$option = '<option value="'.$charity_id.'" '.selected( $selected, $charity_id ).'>'.get_the_title( $charity_id ).'</option>';
 									print $option;
