@@ -100,7 +100,7 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 					$this_voucher_deal_id 	= $this_voucher->get_deal_id();
 					
 					//Exclude any non merchant deal ( if merchant report )
-					if ( $_GET['report'] == 'merchant_purchase' && $_GET['id'] ) {
+					if ( ($_GET['report'] == 'merchant_purchase' || $_GET['report'] == 'deal_purchase' ) && $_GET['id'] ) {
 						$order_item_merchant_id = gb_get_merchant_id ($this_voucher_deal_id );
 						$current_merchant_id = gb_get_merchant_id ($_GET['id']);
 						if ( $current_merchant_id && $order_item_merchant_id && $order_item_merchant_id == $current_merchant_id ) {
