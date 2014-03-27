@@ -35,6 +35,8 @@ class GB_SF_Charity extends Group_Buying_Post_Type {
 		
 		//Add location taxonomy
 		add_action('init', array(get_class(), 'custom_add_locations_taxonomy'), 999);
+		
+		add_filter( 'template_include', array( get_class(), 'override_template' ) );
 
 	}
 
@@ -154,6 +156,28 @@ class GB_SF_Charity extends Group_Buying_Post_Type {
 	
 	public static function custom_add_locations_taxonomy() {
 		register_taxonomy_for_object_type( Group_Buying_Deal::LOCATION_TAXONOMY, 'gb_charities' );
+	}
+	
+	public static function override_template( $template ) {
+		if ( self::is_charity_query() ) {
+			if ( is_single() ) {
+				if ( file_exists( get_stylesheet_directory().'/single-gb_charities.php' ) ) {
+					$template = get_stylesheet_directory().'/single-gb_charities.php';
+				}
+				
+			} else {
+				if ( file_exists( get_stylesheet_directory().'/archive-gb_charities.php' ) ) {
+					$template = get_stylesheet_directory().'/archive-gb_charities.php';
+				}
+			}
+		}
+		if ( false ) {
+			$taxonomy = get_query_var( 'taxonomy' );
+			if ( file_exists( get_stylesheet_directory().'/archive-gb_charities.php' ) ) {
+				$template = get_stylesheet_directory().'/archive-gb_charities.php';
+			}
+		}
+		return $template;
 	}
 	
 	
