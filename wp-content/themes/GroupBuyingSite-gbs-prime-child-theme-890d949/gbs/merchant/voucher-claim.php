@@ -12,12 +12,21 @@
 	?>	
 <?php if ( FALSE != $claimed ) : ?>
 	<div id="voucher_claimed_warning" class="main_block clearfix">
-		<p class="warning button font_xx_large"><?php gb_e('Voucher Already Redeemed!') ?></p>
-		<?php $redemption_data = $voucher->get_redemption_data(); ?>
-		<span class="voucher_info_title gb_ff"><?php gb_e('Voucher marked claimed:') ?></span> <span class="voucher_info button warning"><?php echo date(get_option('date_format'),$claimed) ?></span>
-		<div class="alert"><small>*this voucher is no longer valid - do not accept</small></div>
+    
+		<?php if ( !isset($_POST['gb_voucher_claim'] ) ) : ?>
+       	 	<p class="warning button font_xx_large"><?php gb_e('Voucher Already Redeemed!') ?></p>
+        	<?php $redemption_data = $voucher->get_redemption_data(); ?>
+			<span class="voucher_info_title gb_ff"><?php gb_e('Voucher marked claimed:') ?></span> <span class="voucher_info button warning"><?php echo date(get_option('date_format'),$claimed) ?></span>
+      		<div class="alert"><small>*this voucher is no longer valid - do not accept</small></div>
+        <?php else : ?>
+        	<?php $redemption_data = $voucher->get_redemption_data(); ?>
+			<span class="voucher_info_title gb_ff"><?php gb_e('Voucher marked claimed:') ?></span> <span class="voucher_info button success"><?php echo date(get_option('date_format'),$claimed) ?></span>
+        <?php endif; ?>
+	
 	</div>
 <?php else: ?>
+
+
 	<form id="claim_voucher"  class="main_block registration_layout"  action="" method="post">
 
 	<table class="collapsable form-table">
