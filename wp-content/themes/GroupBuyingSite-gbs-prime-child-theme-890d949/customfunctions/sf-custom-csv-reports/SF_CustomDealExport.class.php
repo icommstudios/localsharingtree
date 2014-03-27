@@ -21,9 +21,11 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 		// Changes to GBS Purchase Reports
 		add_filter('set_deal_purchase_report_data_column', array( get_class(),'purchase_report_data_column'), 999, 1);
 		add_filter('set_deal_purchase_report_data_records', array( get_class(),'purchase_report_data_records'), 999, 1);
+		
 		// Merchant Deal purcahse Report
 		add_filter('set_merchant_purchase_report_column', array( get_class(),'purchase_report_data_column'), 999, 1);
 		add_filter('set_merchant_purchase_report_records', array( get_class(),'purchase_report_data_records'), 999, 1);
+		
 		// Merchant all purchases Report
 		add_filter('set_merchant_purchases_report_data_column', array( get_class(),'purchase_report_data_column'), 999, 1);
 		add_filter('set_merchant_purchases_report_data_records', array( get_class(),'purchase_report_data_records'), 999, 1);
@@ -96,6 +98,18 @@ class SF_CustomCSVReports extends Group_Buying_Controller {
 				foreach ($vouchers as $voucher_id) {
 					$this_voucher = Group_Buying_Voucher::get_instance($voucher_id);
 					$this_voucher_deal_id 	= $this_voucher->get_deal_id();
+					
+					//Exclude any non merchant deal ( if merchant report )
+					if ( $_GET['report'] == 'merchant_purchase' && $_GET['id'] ) {
+						$order_item_merchant_id = gb_get_merchant_id ($this_voucher_deal_id );
+						$current_merchant_id = gb_get_merchant_id ($_GET['id']);
+						if ( $current_merchant_id && $order_item_merchant_id && $order_item_merchant_id == $current_merchant_id ) {
+							//this is the merchant id for the current merchant report
+						} else {
+							continue; //skip this	
+						}
+						
+					}
 					$this_voucher_code 		= $this_voucher->get_serial_number();
 					$deal_names[] = get_the_title( $this_voucher_deal_id );
 					$voucher_codes[] = $this_voucher_code;
