@@ -371,9 +371,13 @@ cursor: pointer;
 
 /*  Checkout Page */
 
-.checkout_block.billing_info, .checkout_block.charities {
+.checkout_block, .checkout_block.billing_info, .checkout_block.charities {
     width:100%;
     padding: 0px;
+}
+
+.checkout_block.right_form, .checkout_block.left_form {
+    float:none !important;
 }
 
 #gb_checkout_payment table, #gb_checkout_review table {
