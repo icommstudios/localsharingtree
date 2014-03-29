@@ -29,10 +29,6 @@
 					<?php get_template_part( 'inc/loop-nav', 'inc/index-nav' ); ?>
 				<?php endif; ?>
 			</div><!-- #content -->
-			<div class="sidebar clearfix">
-				<?php dynamic_sidebar( 'merchant-sidebar' ); ?>
-			</div>	
-			
 		</div>
 		
 <?php get_footer(); ?>

@@ -44,6 +44,7 @@ width: 100%;
  /* Page Navigation */
 .pagination {
 margin: 20px 0;
+clear: both;
 }
 .pagination ul {
 display: inline-block;
@@ -407,6 +408,61 @@ h2.section_heading, legend.section_heading {
     padding: 1% 2%;
 }
 
+
+/*  Business & Charity Directory */
+.biz_listing {
+    width:100%;
+    margin: 20px 0px 30px;
+    padding: 0px;
+
+}
+
+.biz_content {
+float: none;
+width: 90%;
+padding: 5%;
+height: 80px;
+font-size: 15px;
+line-height: 30px;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.merchant_logo {
+    float: none;
+    margin-right: 0px;
+    margin-bottom: 5px;
+    padding: 0;
+    width: 100%;
+    background: none;
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+}
+
+.merchant_logo img {
+    float: none;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0;
+}
+
+.merchant_logo a, .merchant_logo a:hover {
+    background: none;
+}
+
+@media (min-width: 768px) {
+
+    /*  Business & Charity Directory */
+    .biz_listing {
+        width:27.3%;
+        margin: 20px 1% 30px;
+        float: left;
+        padding: 2%;
+    }
+}
+
+
 @media (min-width: 600px) {
 
     .topnav li a {
@@ -425,6 +481,7 @@ h2.section_heading, legend.section_heading {
     #s {
     width:80%;
     }
+
 
 }
 
