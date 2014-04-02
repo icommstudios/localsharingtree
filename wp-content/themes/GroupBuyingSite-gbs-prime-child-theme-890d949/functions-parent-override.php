@@ -682,6 +682,22 @@ function wp_pagination($this_query = null) {
 
 //Add Filter by letter
 function custom_show_filter_letters() {
+
+	//Also show locations filter
+	$locations = get_terms("gb_location", array('hide_empty' => false, 'fields' => 'all'));
+	
+	$selected_locations = ( !empty($_GET['sf_filter_loc']) ) ? explode(',', $_GET['sf_filter_loc']) : array();
+	echo '<div class="filter_by_location">';
+	echo '<span class="filter_by_location_label">Locations: </span>';
+	foreach ( $locations as $location ) {
+		if ( !isset( $_GET['sf_filter_loc']) || in_array( $location->term_id, $selected_locations) ) {
+			$checked_location = 'checked="checked"';
+		} else {
+			$checked_location = '';
+		}
+		echo '<label for="location_filter_'.$location->term_id.'"><input '.$checked_location.' type="checkbox" name="filter_by_location_checkbox" class="filter_by_location_checkbox" value="'.$location->term_id.'"> '.$location->name.'</label> ';
+	}
+	echo '</div>';
 	
 	//Show letters filter
 	$letters = array('A','B','C','D','E','F','G','H','I','J','K','L','M',
@@ -699,22 +715,6 @@ function custom_show_filter_letters() {
 		}
 	}
    	echo '</ul></div>';
-	
-	//Also show locations filter
-	$locations = get_terms("gb_location", array('hide_empty' => false, 'fields' => 'all'));
-	
-	$selected_locations = ( !empty($_GET['sf_filter_loc']) ) ? explode(',', $_GET['sf_filter_loc']) : array();
-	echo '<div class="filter_by_location">';
-	echo '<span class="filter_by_location_label">Locations: </span>';
-	foreach ( $locations as $location ) {
-		if ( !isset( $_GET['sf_filter_loc']) || in_array( $location->term_id, $selected_locations) ) {
-			$checked_location = 'checked="checked"';
-		} else {
-			$checked_location = '';
-		}
-		echo '<label for="location_filter_'.$location->term_id.'"><input '.$checked_location.' type="checkbox" name="filter_by_location_checkbox" class="filter_by_location_checkbox" value="'.$location->term_id.'"> '.$location->name.'</label> ';
-	}
-	echo '</div>';
 	
 	?>
     <script type="text/javascript">

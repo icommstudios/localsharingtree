@@ -4,8 +4,9 @@ get_header(); ?>
 <div id="archive" class="gb_charities_archive container prime main clearfix">
             
     <div class="clearfix">
-
+        <div class="page_title">
 <h1 class="gb_ff"><?php gb_e('Local Sharing Tree Charities'); ?></h1>
+</div>
 
 <?php if ( function_exists('custom_show_filter_letters') ) custom_show_filter_letters(); ?>
                 

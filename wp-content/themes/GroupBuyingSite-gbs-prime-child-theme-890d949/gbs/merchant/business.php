@@ -4,6 +4,8 @@
 	
 		<div id="content_wrap" class="clearfix">
 
+			<?php if ( function_exists('custom_show_filter_letters') ) custom_show_filter_letters(); ?>
+
 			<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 				
 				<div id="merchant_<?php the_ID(); ?>" class="clearfix">
