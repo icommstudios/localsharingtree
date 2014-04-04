@@ -11,9 +11,6 @@
 				<h1 class="page_title gb_ff clearfix">
 					<span><?php gb_e('Featured Deal:') ?></span><br />
 					<?php the_title(); ?>
-					<div class="gb_ff social_share bold font_x_small">
-						<?php get_template_part('inc/social-share') ?>
-					</div>
 				</h1>
 
 				<div id="main_deal_wrap" <?php post_class('clearfix'); ?>>
@@ -51,7 +48,7 @@
 
 						<div class="deal_meta gb_ff background_alt clearfix">
 							<div class="deal_meta_wrapper clearfix">
-								<div class="meta_column clearfix">
+								<div class="meta_column">
 									<span class="meta_title">
 										<?php gb_e('Value') ?>
 									</span>
@@ -59,7 +56,7 @@
 										<?php echo str_replace('.00','',gb_get_formatted_money(gb_get_deal_worth())) ?>
 									</div>
 								</div>
-								<div class="meta_column clearfix">
+								<div class="meta_column">
 									<span class="meta_title">
 										<?php gb_e('Savings') ?>
 									</span>
@@ -116,6 +113,13 @@
 									<?php
 								}
 							?>
+						</div>
+						<div class="gb_ff social_share">
+						<h4>Get Rewards by Sharing Deals!</h4>
+						<?php get_template_part('inc/social-share') ?>
+						<hr>
+						<small><img class="info-icon" width="20" height="20" src="<?php echo get_stylesheet_directory_uri(); ?>/img/info-icon.png">
+							<a href="<?php echo home_url(); ?>/share-and-earn/">Find out how to share and earn here.</a></small>
 						</div>
 					</div> <!-- .purchase_options_meta -->
 

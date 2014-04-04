@@ -370,6 +370,57 @@ cursor: pointer;
     padding: 2%;
 }
 
+/*  Single Deal Page - Share buttons */
+.social_share {
+    float:none;
+    margin: -2px 0px 10px 0px;
+    padding: 2%;
+    background: #f4f4f4;
+    border-radius: 0px 0px 5px 5px;
+    border-left: 1px solid #d5d5d5;
+    border-right: 1px solid #d5d5d5;
+    border-bottom: 1px solid #d5d5d5;
+}
+
+.social_share .social_buttons {
+    margin-top: 5px;
+    display: inline-block !important;
+}
+
+.social_share .info-icon {
+    height:auto;
+}
+
+.deal_meta {
+    width: auto !important;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.deal_meta_wrapper {
+    padding: 2%;
+}
+
+.meta_column {
+    width: 48%;
+    margin: 1%;
+    padding: 2%;
+        -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+
+/*  LiveChat Hack */
+
+@media (max-width: 600px) {
+    #livechat-eye-catcher {
+        display:none !important;
+    }
+}
+
 /*  Checkout Page */
 
 .checkout_block, .checkout_block.billing_info, .checkout_block.charities {
