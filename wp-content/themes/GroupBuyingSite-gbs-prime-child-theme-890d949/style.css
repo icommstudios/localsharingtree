@@ -419,6 +419,11 @@ cursor: pointer;
     #livechat-eye-catcher {
         display:none !important;
     }
+
+    #livechat-full {
+        width:100% !important;
+        right: 0px !important;
+    }
 }
 
 /*  Checkout Page */

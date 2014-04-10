@@ -134,7 +134,8 @@
 				<div <?php post_class('deal_details clearfix'); ?>>
 					<div class="description section clearfix">
 						<div class="section_title clearfix">
-							<h4 class="font_large gb_ff"><?php gb_e('About This Deal') ?><span class="expand font_x_small background_alt"><?php gb_e('Toggle') ?></span></h4>
+							<h4 class="font_large gb_ff"><?php gb_e('About This Deal') ?></h4>
+							<span class="expand font_x_small background_alt"><?php gb_e('More info') ?></span>
 						</div>
 						<div class="section_content">
 							<?php the_content(); ?>
@@ -144,7 +145,8 @@
 					<?php if ( gb_has_merchant() ): ?>
 						<div class="business section clearfix">
 							<div class="section_title clearfix">
-								<h4 class="font_large gb_ff"><?php gb_e('Business:') ?> <a href="<?php gb_merchant_url(gb_get_merchant_id()) ?>" title="<?php gb_merchant_name(gb_get_merchant_id()) ?>"><?php gb_merchant_name(gb_get_merchant_id()); ?></a><span class="expand font_x_small background_alt"><?php gb_e('Toggle') ?></span></h4>
+								<h4 class="font_large gb_ff"><?php gb_e('Business:') ?> <a href="<?php gb_merchant_url(gb_get_merchant_id()) ?>" title="<?php gb_merchant_name(gb_get_merchant_id()) ?>"><?php gb_merchant_name(gb_get_merchant_id()); ?></a></h4>
+								<span class="expand font_x_small background_alt"><?php gb_e('More info') ?></span>
 							</div>
 							<div class="section_content">
 								<div class="merchant_thumb_meta contrast_light clearfix">
@@ -176,7 +178,8 @@
 
 					<div class="deal_information section clearfix">
 						<div class="section_title clearfix">
-							<h4 class="font_large gb_ff"><?php gb_e('Deal Information') ?><span class="expand font_x_small background_alt"><?php gb_e('Toggle') ?></span></h4>
+							<h4 class="font_large gb_ff"><?php gb_e('Deal Information') ?></h4>
+							<span class="expand font_x_small background_alt"><?php gb_e('More info') ?></span>
 						</div>
 						<div class="section_content">
 							<div class="section_content_column">
@@ -193,7 +196,8 @@
 					<?php if ( gb_has_map() ) : ?>
 						<div class="map section clearfix">
 							<div class="section_title clearfix">
-								<h4 class="font_large gb_ff"><?php gb_e('Map') ?><span class="expand font_x_small background_alt"><?php gb_e('Toggle') ?></span></h4>
+								<h4 class="font_large gb_ff"><?php gb_e('Map') ?></h4>
+								<span class="expand font_x_small background_alt"><?php gb_e('More info') ?></span>
 							</div>
 							<div class="section_content">
 								<?php gb_map(); ?>
@@ -204,7 +208,8 @@
 					<?php if ( comments_open() || '0' != get_comments_number() ) : ?>
 						<div class="discussion section clearfix">
 							<div class="section_title clearfix">
-								<h4 class="font_large gb_ff"><?php gb_e('Discuss This Deal') ?><span class="expand font_x_small background_alt"><?php gb_e('Toggle') ?></span></h4>
+								<h4 class="font_large gb_ff"><?php gb_e('Discuss This Deal') ?></h4>
+								<span class="expand font_x_small background_alt"><?php gb_e('More info') ?></span>
 							</div>
 							<div class="section_content">
 								<?php comments_template( '', true ); ?>
@@ -214,7 +219,8 @@
 
 					<div class="more section clearfix">
 						<div class="section_title clearfix">
-							<h4 class="font_large gb_ff"><?php gb_e('More Stuff') ?><span class="expand font_x_small background_alt"><?php gb_e('Toggle') ?></span></h4>
+							<h4 class="font_large gb_ff"><?php gb_e('More Stuff') ?></h4>
+							<span class="expand font_x_small background_alt"><?php gb_e('More info') ?></span>
 						</div>
 						<div class="section_content">
 						</div>
