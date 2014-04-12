@@ -703,10 +703,15 @@ function custom_show_filter_letters() {
 	$letters = array('A','B','C','D','E','F','G','H','I','J','K','L','M',
 					 'N', 'O','P','Q','R','S','T','U','V','W','X','Y','Z');
 	
-	echo '<div class="pagination filter_by_letter"><ul>';
+	echo '<div class="pagination filter_by_letter" style="margin-top: 0;"><ul style="padding-left: 0;">';
 	echo '<li><span>Starts with: </span></li>';
 	foreach ( $letters as $l) {
 		$letter_url = add_query_arg(array('sf_filter_l' => $l), home_url($_SERVER['REQUEST_URI']));
+		//replace page number back to 0
+		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+		if ( $paged > 1 ) {
+			$letter_url = str_replace('/page/'.$paged, '', $letter_url); //replace paged # in url with 1 ( return to beginning )
+		}
 		
 		if ( $_GET['sf_filter_l'] == $l ) {
 			echo '<li class="current_letter"><span class="current">'.$l.'</span></li>';
@@ -722,7 +727,14 @@ function custom_show_filter_letters() {
 		
 		jQuery('.filter_by_location input').click(function(e){
 			
-			var filter_url = '<?php echo remove_query_arg(array('sf_filter_loc', 'sf_filter_l'), site_url($_SERVER['REQUEST_URI'])); echo '?sf_filter_l='.$_GET['sf_filter_l']; ?>';
+			<?php
+				$filter_url = site_url($_SERVER['REQUEST_URI']);
+				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+				if ( $paged > 1 ) {
+					$filter_url = str_replace('/page/'.$paged, '', $filter_url); //replace paged # in url with 1 ( return to beginning )
+				}
+			?>
+			var filter_url = '<?php echo remove_query_arg(array('sf_filter_loc', 'sf_filter_l'), $filter_url); echo '?sf_filter_l='.$_GET['sf_filter_l']; ?>';
 			
 			//var locations = $(".filter_by_location_checkbox").serialize();
 			var checkedValues = $('.filter_by_location input:checked').map(function() {
