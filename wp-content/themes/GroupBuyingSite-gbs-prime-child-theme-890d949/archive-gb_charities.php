@@ -9,15 +9,9 @@ get_header(); ?>
 </div>
 <div class="gb_filters clearfix">
 <?php if ( function_exists('custom_show_filter_letters') ) custom_show_filter_letters(); ?>
-<<<<<<< HEAD
 <hr>
 <div class="button_reset_filters_wrap"><a href="<?php echo site_url('charities'); ?>" class="button font_small">Reset filters</a></div>
 </div>
-=======
-
-<div class="button_reset_filters_wrap"><a href="<?php echo site_url('charities'); ?>" class="button font_small">Reset filters</a></div>
-				
->>>>>>> FETCH_HEAD
                 
                 <?php if ( ! have_posts() ) : ?>
                     
