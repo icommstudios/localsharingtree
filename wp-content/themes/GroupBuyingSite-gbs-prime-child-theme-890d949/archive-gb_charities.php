@@ -7,8 +7,11 @@ get_header(); ?>
         <div class="page_title">
 <h1 class="gb_ff"><?php gb_e('Local Sharing Tree Charities'); ?></h1>
 </div>
-
+<div class="gb_filters clearfix">
 <?php if ( function_exists('custom_show_filter_letters') ) custom_show_filter_letters(); ?>
+<hr>
+<div class="button_reset_filters_wrap"><a href="<?php echo site_url('charities'); ?>" class="button font_small">Reset filters</a></div>
+</div>
                 
                 <?php if ( ! have_posts() ) : ?>
                     
@@ -42,7 +45,7 @@ get_header(); ?>
                         
                             <div class="biz_content contrast">
                         
-                                <h2 class="gb_ff merchant-title"><a href="<?php the_permalink() ?>" title="<?php the_title() ?>"><?php the_title() ?></a></h2>
+                                <h2 class="gb_ff charity-title"><a href="<?php the_permalink() ?>" title="<?php the_title() ?>"><?php the_title() ?></a></h2>
                             </div>
                         
                         </div>

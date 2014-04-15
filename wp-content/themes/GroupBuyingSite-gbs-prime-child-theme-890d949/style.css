@@ -37,9 +37,6 @@ display: inline-block;
 width: 100%;
 }
 
-.page_title {
-    padding-bottom: 10px;
-}
 
  /* Page Navigation */
 .pagination {
@@ -74,11 +71,6 @@ border-left-width: 0;
 }
 .pagination ul>li>a:hover, .pagination ul>li>a:focus {
     background: #f4f4f4;
-}
-
- /* Filter by Letter */
-.filter_by_letter>ul>li>a {
-padding: 4px 8px;
 }
  
 .video-container {
@@ -466,6 +458,15 @@ h2.section_heading, legend.section_heading {
 
 
 /*  Business & Charity Directory */
+
+.page_title {
+    padding-bottom: 10px;
+}
+
+.business_page h1.gb_ff {
+float:left;
+}
+
 .biz_listing {
     width:100%;
     margin: 20px 0px 30px;
@@ -484,6 +485,16 @@ overflow: hidden;
 text-overflow: ellipsis;
 }
 
+.biz_content .merchant-title, .biz_content .charity-title {
+    text-align: center;
+    text-shadow: #999 0 1px 1px;
+    text-shadow: rgba(0,0,0,0.6) 0 1px 1px;
+}
+
+.biz_content .charity-title a:hover {
+    color: #222;
+}
+
 .merchant_logo {
     float: none;
     margin-right: 0px;
@@ -492,7 +503,7 @@ text-overflow: ellipsis;
     width: 100%;
     background: none;
     position: relative;
-    height: 160px;
+    height: 180px;
     overflow: hidden;
 }
 
@@ -505,6 +516,35 @@ text-overflow: ellipsis;
 
 .merchant_logo a, .merchant_logo a:hover {
     background: none;
+}
+
+.button_reset_filters_wrap {
+    float:right;
+}
+.button_reset_filters_wrap a.button {
+    margin-right: 20px;
+}
+
+ /* Filter by Letter */
+.filter_by_letter>ul>li>a {
+padding: 4px 8px;
+}
+
+.filter_by_letter {
+    margin: 0px;
+}
+.filter_by_letter ul {
+    padding: 0;
+    margin: 0;
+}
+
+.gb_filters {
+    padding: 20px;
+    background: #f4f4f4;
+}
+
+.gb_filters > div {
+    margin: 10px 0px;
 }
 
 @media (min-width: 768px) {

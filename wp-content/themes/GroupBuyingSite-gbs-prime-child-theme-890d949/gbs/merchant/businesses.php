@@ -6,12 +6,39 @@
 				<div class="page_title business-page"><!-- Begin #page_title -->
 					<h1 class="gb_ff"><?php gb_e('Local Sharing Tree Business Directory'); ?></h1>
 				</div><!-- End #page_title -->
-				<div class="filter_biz section"><!-- Begin .filter_biz -->
-					<a class="biz_toggler font_large bold gb_ff" href="javascript:void(0)" title="<?php gb_e('Browse by Type'); ?>"><?php gb_e('Browse by Type'); ?><span class="expand font_x_small boo"><?php gb_e('Toggle') ?></span></a>
-					<?php gb_get_all_merchant_types_list( 'ul', 'All', 'biz_filter_links inline' ) ?>
-				</div><!-- End .filter_biz -->
+				<div class="gb_filters clearfix">
+				<div class="browse_by_type">
+				<?php gb_e('Browse by Type'); ?>
+                <?php
+				$types = gb_get_merchant_types();
+				echo '<select id="merchant_type_select" name="merchant_type_select" onChange="javascript:onCatChange();">';
+				echo '<option value="" '.$active.'>All types</option>';
+				foreach ( $types as $type ) {
+					$active = ( $type->name == gb_get_current_merchant_type() ) ? 'selected="selected"' : '';
+					echo '<option value="'.$type->slug.'" '.$active.'>'.$type->name.'</option>';
+					
+				}
+				echo '</select>';
+				?>
+				<script type="text/javascript"><!--
+				jQuery(document).ready( function($){
+					$('#merchant_type_select').on('change', function() {
+					  //alert( this.value ); // or $(this).val()
+					  if ( this.value == '' ) {
+						   location.href = "<?php echo home_url('/business'); ?>";
+					  } else {
+					  	 location.href = "<?php echo home_url('/business-type'); ?>/"+this.value;
+					 }
+					 
+					});
+				});
+                --></script>
+            	</div>
                 
                 <?php if ( function_exists('custom_show_filter_letters') ) custom_show_filter_letters(); ?>
+                <hr>
+                <div class="button_reset_filters_wrap"><a href="<?php echo site_url('business'); ?>" class="button font_small">Reset filters</a></div>
+            	</div>
 				
 				<?php if ( ! have_posts() ) : ?>
 					
