@@ -5,13 +5,43 @@ get_header(); ?>
             
     <div class="clearfix">
         <div class="page_title">
-<h1 class="gb_ff"><?php gb_e('Local Sharing Tree Charities'); ?></h1>
-</div>
-<div class="gb_filters clearfix">
-<?php if ( function_exists('custom_show_filter_letters') ) custom_show_filter_letters(); ?>
-<hr>
-<div class="button_reset_filters_wrap"><a href="<?php echo site_url('charities'); ?>" class="button font_small">Reset filters</a></div>
-</div>
+        <h1 class="gb_ff"><?php gb_e('Local Sharing Tree Charities'); ?></h1>
+        </div>
+        
+        <div class="gb_filters clearfix">
+        	<div class="browse_by_type">
+				<?php gb_e('Browse by Type'); ?>
+                <?php
+				global $wp_query;
+				$types = get_terms( GB_SF_Charity::CHARITY_TYPE_TAXONOMY, array( 'hide_empty'=>$empty, 'fields'=>'all' ) );
+			
+				echo '<select id="charity_type_select" name="charity_type_select" onChange="javascript:onCatChange();">';
+				echo '<option value="" '.$active.'>All types</option>';
+				foreach ( $types as $type ) {
+					$active = ( $type->name == $wp_query->get_queried_object()->name ) ? 'selected="selected"' : '';
+					echo '<option value="'.$type->slug.'" '.$active.'>'.$type->name.'</option>';
+					
+				}
+				echo '</select>';
+				?>
+				<script type="text/javascript"><!--
+				jQuery(document).ready( function($){
+					$('#charity_type_select').on('change', function() {
+					  //alert( this.value ); // or $(this).val()
+					  if ( this.value == '' ) {
+						   location.href = "<?php echo home_url('/charities'); ?>";
+					  } else {
+					  	 location.href = "<?php echo home_url('/charity-type'); ?>/"+this.value;
+					 }
+					 
+					});
+				});
+                --></script>
+            </div>
+			<?php if ( function_exists('custom_show_filter_letters') ) custom_show_filter_letters(); ?>
+            <hr>
+            <div class="button_reset_filters_wrap"><a href="<?php echo home_url('charities'); ?>" class="button font_small">Reset filters</a></div>
+        </div>
                 
                 <?php if ( ! have_posts() ) : ?>
                     

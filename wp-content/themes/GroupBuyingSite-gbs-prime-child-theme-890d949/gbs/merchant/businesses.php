@@ -14,7 +14,7 @@
 				echo '<select id="merchant_type_select" name="merchant_type_select" onChange="javascript:onCatChange();">';
 				echo '<option value="" '.$active.'>All types</option>';
 				foreach ( $types as $type ) {
-					$active = ( $type->name == gb_get_current_merchant_type() ) ? 'selected="selected"' : '';
+					$active = ( $type->name == $wp_query->get_queried_object()->name ) ? 'selected="selected"' : '';
 					echo '<option value="'.$type->slug.'" '.$active.'>'.$type->name.'</option>';
 					
 				}
