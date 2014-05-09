@@ -94,7 +94,7 @@ function custom_do_unsubscribe_mailchimp( $merge_vars, $group_id = '' ) {
 	// Continue with regular Mailchimp subscribe process
 	return $merge_vars;
 }
-//Custom function to get user's Mailchim location subscriptions
+//Custom function to get user's Mailchimp location subscriptions
 function sf_get_users_mailchimp_locations($user_id = null) {
 	if ( !$user_id ) {
 		$user_id = get_current_user_id();	
@@ -242,7 +242,7 @@ unset($fields['guest_purchase']);
 return $fields;
 }
 
-//Relace scripts
+//Replace scripts
 add_action( 'wp_print_scripts', 'custom_gbs_scripts_changes', 50 );
 function custom_gbs_scripts_changes() {
 	wp_dequeue_script( 'gbs-jquery-template');
@@ -396,7 +396,8 @@ function custom_gb_redirect_away_from_home() {
 			//$deals_link = gb_get_deals_link( gb_get_location_preference() );
 			//$deals_link = gb_get_latest_deal_link();
 			
-			wp_redirect( site_url('/home/') );
+			$featured_deal_link = gb_get_latest_deal_link();
+			wp_redirect( $featured_deal_link );
 			exit();
 			
 		} else {
@@ -405,12 +406,15 @@ function custom_gb_redirect_away_from_home() {
 			if ( isset($_GET['location']) && term_exists( $_GET[ 'location' ]) ) {
 				//$deals_link = gb_get_deals_link( $_GET['location'] );
 				//wp_redirect( $deals_link  );
-				wp_redirect( site_url('/home/') );
+				//wp_redirect( site_url('/home/') );
+				$featured_deal_link = gb_get_latest_deal_link();
+				wp_redirect( $featured_deal_link );
 				exit();
 			} elseif ( isset($_COOKIE['gb_location_preference']) && term_exists( $_COOKIE[ 'gb_location_preference' ]) ) {
 				//$deals_link = gb_get_deals_link( $_COOKIE[ 'gb_location_preference' ] );
 				//wp_redirect( $deals_link  );
-				wp_redirect( site_url('/home/') );
+				$featured_deal_link = gb_get_latest_deal_link();
+				wp_redirect( $featured_deal_link );
 				exit();
 			}
 			

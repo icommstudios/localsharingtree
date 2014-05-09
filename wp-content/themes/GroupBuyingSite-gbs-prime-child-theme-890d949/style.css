@@ -519,11 +519,24 @@ text-overflow: ellipsis;
 }
 
 .button_reset_filters_wrap {
-    float:right;
+    margin: 12px 0px;
+
 }
+
 .button_reset_filters_wrap a.button {
-    margin-right: 20px;
+   display:block; 
 }
+
+#business .button_reset_filters_wrap a.button, #deal_single .button_reset_filters_wrap a.button {
+   display:inline;
+   float:right; 
+}
+
+#merchant_loop .button_reset_filters_wrap a.button {
+    display:inline;
+   float:none; 
+}
+
 
  /* Filter by Letter */
 .filter_by_letter>ul>li>a {
