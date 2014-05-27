@@ -1,4 +1,3 @@
-/* *
  * Theme Name: Local Sharing Tree Child Theme
  * Theme URI: http://groupbuyingsite.com
  * Description: Custom modifications for Local Sharing Tree.
@@ -325,10 +324,9 @@ width:78%;
 font-weight: normal;
 font-family: "Arvo", Arial, Helvetica, Geneva, sans-serif;
 font-size: 16px;
--moz-opacity: 0.60;
- opacity: 0.60;
- -ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=60);
-
+background-color: #EAEAEA;
+border: none;
+text-shadow: none;
  -webkit-transition: all .3s ease-in-out;
 -moz-transition: all .3s ease-in-out;
 -ms-transition: all .3s ease-in-out;
@@ -337,9 +335,7 @@ transition: all .3s ease-in-out;
 }
 
 #lst_header #s:focus {
--moz-opacity: 1.0;
- opacity: 1.0;
- -ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=100); 
+background: white;
 }
 
 #searchsubmit {
@@ -598,16 +594,24 @@ padding: 4px 8px;
    ================================================== */
 @media only screen and (max-width: 680px) {
 
-    img {
+body {
+    padding-top: 0px;
+}
+
+img {
         width: auto;
         height: auto;
         max-width: 100%;
-    }
-    
-    .fancybox_message_banner {
-        min-width: 100px
-    }
 }
+    
+.fancybox_message_banner {
+        min-width: 100px
+}
+
+.topnav-wrap {
+position: relative;
+}
+
 
 #navigation ul.sub-menu {
     z-index: 200

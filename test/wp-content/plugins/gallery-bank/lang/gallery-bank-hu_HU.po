@@ -1,0 +1,692 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gallery-Bank\n"
+"POT-Creation-Date: 2014-05-06 14:59+0530\n"
+"PO-Revision-Date: 2014-05-06 16:25+0530\n"
+"Last-Translator: \n"
+"Language-Team: Tech-Banker <support@tech-banker.com>\n"
+"Language: hu_HU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: I:\\Kiran-work-Backup\\2014\\Gallery-Bank-Latest"
+"\\3.8.2\\Standard\\gallery-bank\\\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: front_views/gallery-bank-shortcode.php:4
+msgid "Insert Gallery Bank Shortcode"
+msgstr "Beszúrás Gallery - Bank Rövid kód"
+
+#: front_views/gallery-bank-shortcode.php:6
+msgid "Select an album below to add it to your post or page."
+msgstr "Válasszon egy album alatt, hogy add meg a postán vagy az oldalon."
+
+#: front_views/gallery-bank-shortcode.php:11
+msgid "Gallery Type"
+msgstr "Galéria típusa"
+
+#: front_views/gallery-bank-shortcode.php:13
+msgid "Albums with Images"
+msgstr "Albumok -val képek"
+
+#: front_views/gallery-bank-shortcode.php:15
+msgid "Only Images"
+msgstr "Csak képek"
+
+#: front_views/gallery-bank-shortcode.php:18
+msgid "Album Format"
+msgstr "Albumot -Formátum"
+
+#: front_views/gallery-bank-shortcode.php:20
+msgid "Select Album Format"
+msgstr "Válassza Az albumot Formátum"
+
+#: front_views/gallery-bank-shortcode.php:27
+msgid "Select Album"
+msgstr "Válassza ki az albumot"
+
+#: front_views/gallery-bank-shortcode.php:29
+msgid "Select an Album"
+msgstr "Válassza ki az albumot"
+
+#: front_views/gallery-bank-shortcode.php:45
+msgid "Gallery Format"
+msgstr "Galéria Formátum"
+
+#: front_views/gallery-bank-shortcode.php:47
+msgid "Select Gallery Format "
+msgstr "Válassza ki a galéria formátum"
+
+#: front_views/gallery-bank-shortcode.php:56 views/album-preview.php:29
+#: views/images-sorting.php:220
+msgid "Images in Row"
+msgstr "Képek -ben zenebona"
+
+#: front_views/gallery-bank-shortcode.php:61
+msgid "Image Width"
+msgstr "kép szélessége"
+
+#: front_views/gallery-bank-shortcode.php:68 views/album-sorting.php:170
+msgid "Albums in Row"
+msgstr "Albumok -ben zenebona"
+
+#: front_views/gallery-bank-shortcode.php:73
+msgid "Text Format"
+msgstr "szöveg Formátum"
+
+#: front_views/gallery-bank-shortcode.php:75
+msgid "Select Format "
+msgstr "Válassza ki a formátumot"
+
+#: front_views/gallery-bank-shortcode.php:82
+msgid "Special Effects"
+msgstr "különleges- hatások"
+
+#: front_views/gallery-bank-shortcode.php:104
+msgid "Animation Effects"
+msgstr "Animation Effects"
+
+#: front_views/gallery-bank-shortcode.php:157
+msgid "Show Responsive Gallery"
+msgstr "Megjeleníteni-Responsive Galéria"
+
+#: front_views/gallery-bank-shortcode.php:161
+msgid "Show Album Title"
+msgstr "Mutasd Album címe"
+
+#: front_views/gallery-bank-shortcode.php:166
+msgid "Insert Album"
+msgstr "Helyezze be albumot"
+
+#: front_views/gallery-bank-shortcode.php:169
+msgid "Cancel"
+msgstr "Mégsem"
+
+#: front_views/gallery-bank-shortcode.php:481
+msgid "Please select an Album"
+msgstr "Kérjük, válasszon ki egy albumot"
+
+#: front_views/gallery-bank-shortcode.php:485
+msgid "Please select an Album Format"
+msgstr "Kérjük, válasszon ki egy albumot Formátum"
+
+#: front_views/gallery-bank-shortcode.php:489
+msgid "Please select a Gallery Images Format"
+msgstr "Kérem Válasszon A Galéria- Képek Formátum"
+
+#: front_views/gallery-bank-shortcode.php:493
+msgid "Please select a Text Format for the Gallery"
+msgstr "Kérjük, Válassza ki a szöveg Formátum  mert  Galéria"
+
+#: gallery-bank.php:80
+msgid "<img src=\""
+msgstr ""
+
+#: gallery-bank.php:82
+msgid "/wp-admin/admin.php?page=gallery_bank"
+msgstr ""
+
+#: gallery-bank.php:89 lib/gallery-bank-class.php:10 views/dashboard.php:164
+msgid "Dashboard"
+msgstr "irányítópult"
+
+#: gallery-bank.php:96 lib/gallery-bank-class.php:17
+#: views/add-new-album.php:95 views/dashboard.php:175
+msgid "Add New Album"
+msgstr "Tól hozzáadják Új albumot"
+
+#: gallery-bank.php:103 lib/gallery-bank-class.php:20
+msgid "Album Sorting"
+msgstr "képalbum szortírozás"
+
+#: gallery-bank.php:110 lib/gallery-bank-class.php:21 views/settings.php:259
+msgid "Global Settings"
+msgstr "Globális -beállítások"
+
+#: gallery-bank.php:117 lib/gallery-bank-class.php:22
+#: views/gallery-bank-system-report.php:11
+msgid "System Status"
+msgstr "rendszer- állapota"
+
+#: gallery-bank.php:124 lib/gallery-bank-class.php:23
+msgid "Purchase Pro Version"
+msgstr "Vásárlás Pro verzió"
+
+#: lib/add-new-album-class.php:49 views/edit-album.php:266
+#: views/edit-album.php:273
+msgid " Set as Album Cover"
+msgstr "Beállítani mint Az albumot Borító"
+
+#: lib/add-new-album-class.php:52 views/edit-album.php:215
+#: views/edit-album.php:279
+msgid "Enter your Title"
+msgstr "Adja meg Ön cím"
+
+#: lib/add-new-album-class.php:53 views/edit-album.php:220
+#: views/edit-album.php:284
+msgid "Enter your Description "
+msgstr "Írja be Ön leírása"
+
+#: lib/add-new-album-class.php:55 views/edit-album.php:226
+#: views/edit-album.php:290
+msgid "Enter your Tags"
+msgstr "Írja be Ön Tagek"
+
+#: lib/add-new-album-class.php:59 views/edit-album.php:311
+msgid "Delete Image"
+msgstr "Kép törlése"
+
+#: lib/gallery-bank-class.php:9 views/header.php:57
+msgid "Gallery Bank"
+msgstr "Gallery Bank"
+
+#: lib/gallery-bank-class.php:19 views/dashboard.php:198
+msgid "Short-Codes"
+msgstr "Rövid kódok"
+
+#: lib/gallery-bank-class.php:262
+msgid "Add Gallery using Gallery Bank"
+msgstr "Betenni Galériába Segítségével Gallery - Bank "
+
+#: views/add-new-album.php:99 views/add-new-album.php:229
+#: views/album-preview.php:16 views/album-sorting.php:138
+#: views/edit-album.php:85 views/edit-album.php:332
+#: views/images-sorting.php:182 views/settings.php:262 views/shortcode.php:12
+msgid "Back to Albums"
+msgstr "Vissza az Albumok"
+
+#: views/add-new-album.php:102 views/add-new-album.php:227
+msgid "Save and Submit Changes"
+msgstr "Mentse és a  benyújtása- változása"
+
+#: views/add-new-album.php:108
+msgid "Album Published. Kindly wait for the redirect to happen."
+msgstr "Az albumot Publikálva. Kérjük várjon az átirányítás felé történik."
+
+#: views/add-new-album.php:117 views/edit-album.php:97
+msgid "Album Details"
+msgstr "Az albumot Részletek"
+
+#: views/add-new-album.php:122 views/edit-album.php:101
+msgid "Album Title"
+msgstr "Az albumot címének"
+
+#: views/add-new-album.php:128 views/edit-album.php:106
+msgid "Enter your Album Title"
+msgstr "Írja be Ön Album Címének"
+
+#: views/add-new-album.php:134 views/edit-album.php:113
+msgid "Description"
+msgstr "leírása"
+
+#: views/add-new-album.php:148 views/edit-album.php:127
+msgid "Upload Images"
+msgstr "Képek feltöltése"
+
+#: views/add-new-album.php:151 views/edit-album.php:130
+msgid "Your browser doesn\"t have Flash, Silverlight or HTML5 support."
+msgstr "Az Ön böngészője nem van Flash, Silverlight vagy a HTML5 támogatás."
+
+#: views/add-new-album.php:158 views/edit-album.php:137
+msgid "Upload Videos"
+msgstr "feltöltése Videók"
+
+#: views/add-new-album.php:159 views/add-new-album.php:210
+#: views/edit-album.php:138 views/edit-album.php:183 views/settings.php:271
+#: views/settings.php:487 views/settings.php:717 views/settings.php:828
+#: views/settings.php:927 views/settings.php:1249 views/settings.php:1365
+#: views/settings.php:1416 views/settings.php:1468
+msgid " (Available in Premium Versions)"
+msgstr "(Elérhető Prémium verziók)"
+
+#: views/add-new-album.php:165 views/edit-album.php:143
+msgid "Video Url"
+msgstr "videót URL"
+
+#: views/add-new-album.php:171 views/edit-album.php:147
+msgid "Enter your Video Url"
+msgstr "Adja meg -Ön videót Url"
+
+#: views/add-new-album.php:178 views/edit-album.php:153
+msgid "Upload Video"
+msgstr "Videó feltöltése"
+
+#: views/add-new-album.php:189 views/edit-album.php:164
+msgid "Your Gallery Bank Album"
+msgstr "Az Ön -Gallery - Bank Az albumot"
+
+#: views/add-new-album.php:200 views/edit-album.php:173
+msgid "Delete"
+msgstr "törléséhez"
+
+#: views/add-new-album.php:203 views/dashboard.php:194
+#: views/edit-album.php:176
+msgid "Thumbnail"
+msgstr "Bélyegkép"
+
+#: views/add-new-album.php:206 views/edit-album.php:179
+msgid "Title & Description"
+msgstr "címének és leírás"
+
+#: views/add-new-album.php:209 views/edit-album.php:182
+msgid "Tags (comma separated list)"
+msgstr "Címkék (vesszővel elválasztott lista)"
+
+#: views/add-new-album.php:213 views/edit-album.php:186
+msgid "Url to Redirect on click of an Image"
+msgstr "URL- Átirányítási be kattintásra közül Kép"
+
+#: views/add-new-album.php:277
+msgid ""
+"You will be only allowed to add 2 galleries. Kindly purchase Premium Version "
+"for full access!"
+msgstr ""
+"Lesz csak megengedik, hogy hozzá 2 galériák. Kedves vásárolni Premium verzió "
+"teljes hozzáférést!"
+
+#: views/add-new-album.php:381 views/edit-album.php:504
+msgid "Are you sure you want to delete this Image?"
+msgstr "Biztos benne, hogy törli ezt a fényképek?"
+
+#: views/add-new-album.php:391 views/add-new-album.php:405
+#: views/album-sorting.php:252 views/dashboard.php:434 views/dashboard.php:438
+#: views/dashboard.php:442 views/edit-album.php:520 views/edit-album.php:536
+#: views/images-sorting.php:285
+msgid "This feature is only available in Paid Premium Version!"
+msgstr "Ez a funkció csak a fizetős Prémium verzió!"
+
+#: views/album-preview.php:13
+msgid "Album Preview"
+msgstr "Az albumot Előnézet"
+
+#: views/album-preview.php:34 views/album-sorting.php:175
+#: views/images-sorting.php:224
+msgid "Please Choose"
+msgstr "Kérem Válassz"
+
+#: views/album-sorting.php:134
+msgid "Re-Order Albums"
+msgstr "Újbóli-Rendelje Albumok"
+
+#: views/album-sorting.php:140 views/images-sorting.php:184
+msgid "Update Order"
+msgstr "frissítés- Rendelés"
+
+#: views/album-sorting.php:143 views/images-sorting.php:187
+msgid "Sorting Order has been updated."
+msgstr "Rendezési sorrendet rendelkezik frissült."
+
+#: views/dashboard.php:134
+msgid "Getting Started"
+msgstr ""
+
+#: views/dashboard.php:138
+msgid "Watch the Walk-Through Video"
+msgstr ""
+
+#: views/dashboard.php:147
+msgid "Gallery Bank, a Superlative High quality WordPress Plugin!"
+msgstr ""
+
+#: views/dashboard.php:154
+msgid "Get Gallery Bank Pro Features"
+msgstr ""
+
+#: views/dashboard.php:179
+msgid "Delete All Albums"
+msgstr "Törölni Az összes album"
+
+#: views/dashboard.php:180
+msgid "Purge Images & Albums"
+msgstr "Tisztogatás Képek és Albumok"
+
+#: views/dashboard.php:181
+msgid "Restore Factory Settings"
+msgstr "Gyári beállítások visszaállítása"
+
+#: views/dashboard.php:188
+msgid "Existing Albums Overview"
+msgstr "Létező Albumok - áttekintése"
+
+#: views/dashboard.php:195
+msgid "Title"
+msgstr "címének"
+
+#: views/dashboard.php:196
+msgid "Total Images"
+msgstr "Totális Képek"
+
+#: views/dashboard.php:197
+msgid "Date"
+msgstr "dátum"
+
+#: views/dashboard.php:262 views/edit-album.php:82
+msgid "Edit Album"
+msgstr "Szerkesztés albumot"
+
+#: views/dashboard.php:267 views/images-sorting.php:178
+msgid "Re-Order Images"
+msgstr "Újbóli-Rendelje Képek"
+
+#: views/dashboard.php:272
+msgid "Preview Album"
+msgstr "Előnézet - albumot"
+
+#: views/dashboard.php:277
+msgid "Delete Album"
+msgstr "Törölni Az albumot"
+
+#: views/dashboard.php:302 views/purchase_pro_version.php:635
+msgid "Need Support Help?"
+msgstr ""
+
+#: views/dashboard.php:314 views/purchase_pro_version.php:647
+msgid "Lets get in touch!"
+msgstr ""
+
+#: views/dashboard.php:318 views/purchase_pro_version.php:651
+msgid "Order Now!"
+msgstr ""
+
+#: views/dashboard.php:421
+msgid "Are you sure you want to delete this Album?"
+msgstr "Biztos benne, hogy törölni kívánja ezt az albumot?"
+
+#: views/edit-album.php:86 views/edit-album.php:331
+msgid "Update Album"
+msgstr "Album módosítása"
+
+#: views/edit-album.php:90
+msgid "Album Updated. Kindly wait for the redirect to happen."
+msgstr "Albumot frissített. Kérjük várjon az átirányítás felé történik."
+
+#: views/edit-album.php:236
+msgid "Delete Video"
+msgstr "Videoklip törlése"
+
+#: views/gallery-bank-system-report.php:14
+msgid "Get System Report"
+msgstr "Kap Rendszer jelentés"
+
+#: views/gallery-bank-system-report.php:18
+msgid "Close System Report"
+msgstr "Bezárni Rendszer jelentés"
+
+#: views/gallery-bank-system-report.php:109
+msgid "Default"
+msgstr "Alapértelmezés"
+
+#: views/purchase_pro_version.php:25
+msgid "Gallery Bank Pricing"
+msgstr "Gallery Bank árazás"
+
+#: views/settings.php:263
+msgid "Update Settings"
+msgstr "frissítési -Beállítások"
+
+#: views/settings.php:270
+msgid "Thumbnail Settings"
+msgstr "Bélyegkép beállításait"
+
+#: views/settings.php:282
+msgid "Thumbnail Size"
+msgstr "Bélyegkép méret"
+
+#: views/settings.php:289 views/settings.php:297 views/settings.php:505
+#: views/settings.php:513
+msgid "Original"
+msgstr "eredeti"
+
+#: views/settings.php:292 views/settings.php:300 views/settings.php:508
+#: views/settings.php:516
+msgid "Custom"
+msgstr "szokás"
+
+#: views/settings.php:309 views/settings.php:525
+msgid "Width"
+msgstr "mm Szélesség"
+
+#: views/settings.php:319 views/settings.php:535
+msgid "Height"
+msgstr "magasságát"
+
+#: views/settings.php:331 views/settings.php:546 views/settings.php:968
+msgid "Opacity"
+msgstr "Opacitás"
+
+#: views/settings.php:343 views/settings.php:558 views/settings.php:979
+msgid "Border Size"
+msgstr "Szegély méret"
+
+#: views/settings.php:354 views/settings.php:570 views/settings.php:990
+msgid "Border Radius"
+msgstr "Szegély Sugara"
+
+#: views/settings.php:365 views/settings.php:582 views/settings.php:1015
+msgid "Border Color"
+msgstr "Szegély Szín"
+
+#: views/settings.php:379
+msgid "Margin Between Images"
+msgstr "Margó a képek között"
+
+#: views/settings.php:389 views/settings.php:616 views/settings.php:1001
+msgid "Text Color"
+msgstr "szöveg Színe"
+
+#: views/settings.php:403 views/settings.php:633 views/settings.php:1075
+msgid "Text-Align"
+msgstr "Szöveges- beigazítás"
+
+#: views/settings.php:417 views/settings.php:647 views/settings.php:784
+#: views/settings.php:1089 views/settings.php:1297
+msgid "Font-Family"
+msgstr "Betűkészlet Családi"
+
+#: views/settings.php:440 views/settings.php:670 views/settings.php:1112
+msgid "Heading Font-Size"
+msgstr "Címsor betűméret"
+
+#: views/settings.php:457 views/settings.php:687 views/settings.php:1129
+msgid "Text Font-Size"
+msgstr "Szöveges- Betűméret"
+
+#: views/settings.php:474 views/settings.php:704
+msgid "Description Length"
+msgstr "Megnevezés Hossz"
+
+#: views/settings.php:486
+msgid "Album Cover Settings"
+msgstr "Albumborító beállításait"
+
+#: views/settings.php:498
+msgid "Cover Size"
+msgstr "Borító- méret"
+
+#: views/settings.php:596
+msgid "Margin Between Albums"
+msgstr "Margó Között Albumok"
+
+#: views/settings.php:606
+msgid "Text for Album Click"
+msgstr "Szöveg minta Az albumot Kettyenés"
+
+#: views/settings.php:716
+msgid "Filter Settings"
+msgstr "Szűrési beállításokat"
+
+#: views/settings.php:728
+msgid "Filters"
+msgstr "Szűrők"
+
+#: views/settings.php:735 views/settings.php:743 views/settings.php:1153
+#: views/settings.php:1161 views/settings.php:1179 views/settings.php:1186
+#: views/settings.php:1204 views/settings.php:1211 views/settings.php:1228
+#: views/settings.php:1235 views/settings.php:1343 views/settings.php:1350
+#: views/settings.php:1383 views/settings.php:1391 views/settings.php:1434
+#: views/settings.php:1442
+msgid "Enable"
+msgstr "engedélyezése"
+
+#: views/settings.php:738 views/settings.php:746 views/settings.php:1156
+#: views/settings.php:1164 views/settings.php:1181 views/settings.php:1189
+#: views/settings.php:1206 views/settings.php:1213 views/settings.php:1230
+#: views/settings.php:1237 views/settings.php:1345 views/settings.php:1353
+#: views/settings.php:1386 views/settings.php:1394 views/settings.php:1437
+#: views/settings.php:1445
+msgid "Disable"
+msgstr "tiltása"
+
+#: views/settings.php:756
+msgid "Filter Color"
+msgstr "Szűrő - Színe"
+
+#: views/settings.php:770
+msgid "Filter Text Color"
+msgstr "Szűrő - Szöveg Színe"
+
+#: views/settings.php:807 views/settings.php:1320
+msgid "Font-Size"
+msgstr "Betűkészlet - méretű"
+
+#: views/settings.php:827
+msgid "Roles & Capabilities"
+msgstr "Szerepek és képességek"
+
+#: views/settings.php:839
+msgid "Privileges for Admin"
+msgstr "Kiváltságairól for Admin programot"
+
+#: views/settings.php:843 views/settings.php:859 views/settings.php:875
+#: views/settings.php:892 views/settings.php:910
+msgid "Full Control"
+msgstr "a Teljes hozzáférés beállítást"
+
+#: views/settings.php:846 views/settings.php:862 views/settings.php:878
+#: views/settings.php:895 views/settings.php:913
+msgid "Read"
+msgstr "Olvassa"
+
+#: views/settings.php:849 views/settings.php:865 views/settings.php:881
+#: views/settings.php:898 views/settings.php:916
+msgid "Write"
+msgstr "Írja"
+
+#: views/settings.php:855
+msgid "Privileges for Editor"
+msgstr "Kiváltságairól  szerkesztőben Számára "
+
+#: views/settings.php:871
+msgid "Privileges for Author"
+msgstr "Kiváltságairól számára Feltöltõ"
+
+#: views/settings.php:887
+msgid "Privileges for Contributor"
+msgstr "Kiváltságairól Számára- Közreműködő"
+
+#: views/settings.php:904
+msgid "Privileges for Subscriber"
+msgstr "Kiváltságairól számára Előfizető"
+
+#: views/settings.php:926
+msgid "Lightbox Settings"
+msgstr "Fény-doboz beállításokat"
+
+#: views/settings.php:938
+msgid "Lightbox Type"
+msgstr "Fénydoboz típus"
+
+#: views/settings.php:1029
+msgid "Inline Background"
+msgstr "Szövegközi Háttér"
+
+#: views/settings.php:1043
+msgid "Overlay Background"
+msgstr "lefedési Háttér"
+
+#: views/settings.php:1057
+msgid "Fade In Time"
+msgstr "Fakulnak in időpont"
+
+#: views/settings.php:1066
+msgid "Fade Out Time"
+msgstr "Fakulnak- Kifogyott Idő"
+
+#: views/settings.php:1146
+msgid "Facebook Comments"
+msgstr "Facebook Hozzászólások"
+
+#: views/settings.php:1173
+msgid "Social Sharing"
+msgstr "Szociális- megosztását"
+
+#: views/settings.php:1198
+msgid "Image Title"
+msgstr "Képre - címének"
+
+#: views/settings.php:1222
+msgid "Image Description"
+msgstr "Leírása képre "
+
+#: views/settings.php:1248
+msgid "Front - End Layout Settings"
+msgstr "Elöl - Végére az Elrendezés beállításokat"
+
+#: views/settings.php:1260
+msgid "Text for Back Button"
+msgstr "Szöveg minta Vissza gomb"
+
+#: views/settings.php:1270
+msgid "Button Color"
+msgstr "Gomb- Színe"
+
+#: views/settings.php:1283
+msgid "Button Text Color"
+msgstr "Gomb Szöveg színe"
+
+#: views/settings.php:1337
+msgid "Album Seperator"
+msgstr "Az albumot lista Divider"
+
+#: views/settings.php:1364
+msgid "Pagination Settings for Images"
+msgstr "Oldalszámozás beállításai számára  Képek"
+
+#: views/settings.php:1376
+msgid "Paging"
+msgstr "személyhívó"
+
+#: views/settings.php:1403
+msgid "No. of Images Per Page "
+msgstr "Képek száma oldalanként"
+
+#: views/settings.php:1415
+msgid "Slide Show Settings"
+msgstr "Diavetítés beállításokat"
+
+#: views/settings.php:1427
+msgid "Auto Play"
+msgstr "Automatikus lejátszás"
+
+#: views/settings.php:1454
+msgid "Interval"
+msgstr "Intervallum"
+
+#: views/settings.php:1467
+msgid "Language Direction Settings"
+msgstr "Nyelve tájolása beállítások"
+
+#: views/settings.php:1479
+msgid "Language Direction"
+msgstr "Nyelve Iránya"
+
+#: views/settings.php:1636
+msgid "This Feature is only available in Paid Premium Version!"
+msgstr "Ez a funkció csak a fizetős Prémium verzió!"
+
+#: views/shortcode.php:8
+msgid "Gallery Bank Short-Codes"
+msgstr "Gallery Bank rövid-kódok"
