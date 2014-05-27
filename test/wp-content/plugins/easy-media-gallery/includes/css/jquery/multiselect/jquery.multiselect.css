@@ -11,7 +11,7 @@
 .emg-multiselect-header span.emg-icon { float:left }
 .emg-multiselect-header li.emg-multiselect-close { float:right; text-align:right; padding-right:0 }
 
-.emg-multiselect-menu { display:none; padding:3px; position:absolute; z-index:1000000 !important;  text-align: left }
+.emg-multiselect-menu { display:none; padding:3px; position:absolute; z-index:16777271 !important;  text-align: left }
 .emg-multiselect-checkboxes { position:relative /* fixes bug in IE6/7 */; overflow-y:auto }
 .emg-multiselect-checkboxes label { cursor:default; display:block; border:1px solid transparent; padding:3px 1px }
 .emg-multiselect-checkboxes label input { position:relative; top:1px }

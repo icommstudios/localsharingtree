@@ -8,8 +8,9 @@
 				
 				<div id="merchant_<?php the_ID(); ?>" class="clearfix">
 					
-					<div class="page_title business_page"><!-- Begin #page_title -->
+					<div class="page_title business_page clearfix"><!-- Begin #page_title -->
 						<h1 class="gb_ff"><?php the_title() ?></h1>
+						<div class="button_reset_filters_wrap"><a href="<?php echo site_url('business'); ?>" class="button font_small">← Return to Directory Home</a></div>
 					</div><!-- End #page_title -->
 
 					<div id="merchant_meta" class="clearfix">

@@ -218,7 +218,7 @@ class Group_Buying_Accounts_Checkout extends Group_Buying_Controller {
 
 			global $wpdb;
 			$purchase_id = $purchase->get_id();
-			$wpdb->query( $wpdb->prepare(  "UPDATE $wpdb->users SET user_login = '$purchase_id' WHERE ID = '$user_id'" ) ); // Not sure why the $wpdb->udpate method is undefined at this point.
+			$wpdb->query( $wpdb->prepare(  "UPDATE $wpdb->users SET user_login = %s WHERE ID = %s", $purchase_id, $user_id ) ); // Not sure why the $wpdb->udpate method is undefined at this point.
 
 			// Logout
 	 		wp_logout();

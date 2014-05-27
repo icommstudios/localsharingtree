@@ -10,13 +10,38 @@
 /* ===[ Add your custom styles below: ]===
    ================================================== */
 
-.page_title {
-    padding-bottom: 10px;
+body {
+    padding-top: 40px;
 }
+
+body.logged-in  {
+    padding-top: 0px;
+}
+
+.button-light {
+    border-radius: 0.4em;
+    background-color: rgba(0,0,0,.4) !important;
+
+    text-shadow: rgba(0,0,0,0.5) 0 1px 1px;
+    border: none;
+    padding: 8px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+
+h2.section_heading, legend.section_heading, .section_heading a, .table_heading {
+display: inline-block;
+width: 100%;
+}
+
 
  /* Page Navigation */
 .pagination {
 margin: 20px 0;
+clear: both;
 }
 .pagination ul {
 display: inline-block;
@@ -44,7 +69,9 @@ background-color: #ffffff;
 border: 1px solid #dddddd;
 border-left-width: 0;
 }
-
+.pagination ul>li>a:hover, .pagination ul>li>a:focus {
+    background: #f4f4f4;
+}
  
 .video-container {
     position: relative;
@@ -155,18 +182,6 @@ span.csv_download_link a {
     margin: 10px 0;
 }
 
-#searchsubmit {
-border: 1px solid rgba(0,0,0,0.2);
-padding: 14px 20px 12px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-background-color: rgba(0,0,0,0.05);
-color: white;
-cursor: pointer;
-}
-
-
 /*  Reworked Header */
 
 #lst_header {
@@ -175,14 +190,24 @@ cursor: pointer;
 
 #header_wrap {
     padding: 0 .5em;
+    padding-top: 15px;
 }
 
 .topnav-wrap {
-background:#025A78;
+background:#1c5d27;
 min-height: 40px;
 margin: 0px;
 padding:0px;
+position: fixed;
+top: 0px; left: 0px;
+width: 100%;
+z-index: 1200;
 }
+
+
+/*.logged-in .topnav-wrap {
+top:32px;
+}*/
 
 .topnav {
 position: relative;
@@ -311,7 +336,7 @@ font-size: 16px;
 transition: all .3s ease-in-out;
 }
 
-#s:focus {
+#lst_header #s:focus {
 -moz-opacity: 1.0;
  opacity: 1.0;
  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=100); 
@@ -321,6 +346,14 @@ transition: all .3s ease-in-out;
     width: 16%;
     float:right;
     padding: 10px 20px;
+
+    border: 1px solid rgba(0,0,0,0.2);
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+background-color: #4D95D5;
+color: white;
+cursor: pointer;
 }
 
 #navigation select {
@@ -328,7 +361,6 @@ transition: all .3s ease-in-out;
     margin: 2%;
     padding: 2%;
 }
-
 
 /*  Single Deal Page - Share buttons */
 .social_share {
@@ -372,6 +404,20 @@ transition: all .3s ease-in-out;
 }
 
 
+
+/*  LiveChat Hack */
+
+@media (max-width: 600px) {
+    #livechat-eye-catcher {
+        display:none !important;
+    }
+
+    #livechat-full {
+        width:100% !important;
+        right: 0px !important;
+    }
+}
+
 /*  Checkout Page */
 
 .checkout_block, .checkout_block.billing_info, .checkout_block.charities {
@@ -388,10 +434,10 @@ width: 100%;
 }
 
 .checkout-controls {
-    width: 250px;
+    width: 96%;
     display: block;
     margin: 20px auto;
-    padding: 20px;
+    padding: 1% 2%;
     clear: none;
     background: rgba(0,0,0,0.05);
 }
@@ -405,18 +451,134 @@ margin: auto;
 float: none;
 }
 
-/*  LiveChat Hack */
+h2.section_heading, legend.section_heading {
+    width:96%;
+    padding: 1% 2%;
+}
 
-@media (max-width: 600px) {
-    #livechat-eye-catcher {
-        display:none !important;
+
+/*  Business & Charity Directory */
+
+.page_title {
+    padding-bottom: 10px;
+}
+
+.business_page h1.gb_ff {
+float:left;
+}
+
+.biz_listing {
+    width:100%;
+    margin: 20px 0px 30px;
+    padding: 0px;
+
+}
+
+.biz_content {
+float: none;
+width: 90%;
+padding: 5%;
+height: 80px;
+font-size: 15px;
+line-height: 30px;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.biz_content .merchant-title, .biz_content .charity-title {
+    text-align: center;
+    text-shadow: #999 0 1px 1px;
+    text-shadow: rgba(0,0,0,0.6) 0 1px 1px;
+}
+
+.biz_content .charity-title a:hover {
+    color: #222;
+}
+
+.merchant_logo {
+    float: none;
+    margin-right: 0px;
+    margin-bottom: 5px;
+    padding: 0;
+    width: 100%;
+    background: none;
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+
+.merchant_logo img {
+    float: none;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0;
+}
+
+.merchant_logo a, .merchant_logo a:hover {
+    background: none;
+}
+
+.button_reset_filters_wrap {
+    margin: 12px 0px;
+
+}
+
+.button_reset_filters_wrap a.button {
+   display:block; 
+}
+
+#business .button_reset_filters_wrap a.button, #deal_single .button_reset_filters_wrap a.button {
+   display:inline;
+   float:right; 
+}
+
+#merchant_loop .button_reset_filters_wrap a.button {
+    display:inline;
+   float:none; 
+}
+
+
+ /* Filter by Letter */
+.filter_by_letter>ul>li>a {
+padding: 4px 8px;
+}
+
+.filter_by_letter {
+    margin: 0px;
+}
+.filter_by_letter ul {
+    padding: 0;
+    margin: 0;
+}
+
+.gb_filters {
+    padding: 20px;
+    background: #f4f4f4;
+}
+
+.gb_filters > div {
+    margin: 10px 0px;
+}
+
+@media (min-width: 768px) {
+
+    /*  Business & Charity Directory */
+    .biz_listing {
+        width:27.3%;
+        margin: 20px 1% 30px;
+        float: left;
+        padding: 2%;
     }
 }
 
+
 @media (min-width: 600px) {
 
+    .topnav li a {
+    font-size: 15px;
+    }
+
     #lst_logo {
-    margin-top: 15px;
     max-width: 60%;
     float: left;
     }
@@ -429,19 +591,27 @@ float: none;
     width:80%;
     }
 
+
 }
 
 /* ===[ Phone-sized devices and the like ]===
    ================================================== */
-@media only screen and (max-width: 680px) { 
+@media only screen and (max-width: 680px) {
+
+    img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+    }
+    
     .fancybox_message_banner {
         min-width: 100px
     }
 }
+
 #navigation ul.sub-menu {
     z-index: 200
 }
-
 .mini_header {
     padding: 0px;
     margin-bottom: 10px;
@@ -473,7 +643,6 @@ input.button-primary,
 .merchant-title a {
     color: white
 }
-
 .form-submit {
     background-size: cover
 }
@@ -486,7 +655,6 @@ div.row {
     text-align: center;
 }
 @media (min-width: 768px) and (max-width: 979px) { 
-    
     
     a.mainImg {
         margin: 0 2%
@@ -519,13 +687,14 @@ div.row {
     #navigation {
         padding: 0px
     }
+
     .font_large {
         font-size: 1.25em
     }
+
     #header {
         min-height: 160px
     }
-    
 }
 @media (max-width: 767px) { 
     a.mainImg img {
@@ -538,12 +707,7 @@ div.row {
     .container.main {
         width: 90%
     }
-    img {
-        width: auto;
-        height: auto;
-        vertical-align: middle;
-        margin-bottom: 1em;
-    }
+   
     #footer img {
         max-width: 50%;
         width: auto;
@@ -576,12 +740,6 @@ div.row {
 @media (max-width: 480px) { 
     #header {
         min-height: 140px
-    }
-
-    img {
-        width: auto;
-        height: auto;
-        max-width: 100%;
     }
     #footer .footer_widget_wrap {
         padding-top: 1em

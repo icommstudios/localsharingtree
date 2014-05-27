@@ -31,10 +31,7 @@
 			        global $wpdb;
 			        $albums = $wpdb->get_results
 		            (
-		                $wpdb->prepare
-	                    (
-	                        "SELECT * FROM ".gallery_bank_albums()." order by album_order asc ",""
-	                    )
+	                    "SELECT * FROM ".gallery_bank_albums()." order by album_order asc "
 		            );
 			        for ($flag = 0; $flag < count($albums); $flag++) {
 			            ?>

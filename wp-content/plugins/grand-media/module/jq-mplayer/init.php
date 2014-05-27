@@ -1,68 +1,59 @@
 <?php
-/** @var $module_meta
- *  @var  $jsInit
- *  @var  $jsRun
+/** @var $gmDB
+ * @var  $gmCore
+ * @var  $gmGallery
+ * @var  $gallery
+ * @var  $module
+ * @var  $settings
+ * @var  $term
+ * @var  $gmedia
+ * @var  $is_bot
  **/
-$jsInit .= "var gmMusicPlayer_ID{$module_meta['term_id']}_Settings = {\n";
-$a = array();
-if ( isset( $module_meta['width'] ) )
-	$a[] = "	'width': '" . intval( $module_meta['width'] ) . ( strpos( $module_meta['width'], '%' ) ? '%' : '' ) . "'";
-if ( isset( $module_meta['autoPlay'][0] ) )
-	$a[] = "	'autoPlay': " . ( empty( $module_meta['autoPlay'][0] ) ? 'false' : 'true' );
-if ( isset( $module_meta['buttonText'] ) )
-	$a[] = "	'linkText': " . json_encode($module_meta['buttonText']);
-if ( isset( $module_meta['tracksToShow'] ) )
-	$a[] = "	'tracksToShow': " . intval( $module_meta['tracksToShow'] );
-if ( isset( $module_meta['moreText'] ) )
-	$a[] = "	'moreText': " . json_encode($module_meta['moreText']);
+$content = array();
+$tab = sanitize_title($gallery['name']);
+foreach($terms as $term){
 
-if ( isset( $module_meta['description'] ) )
-	$a[] = "	'description': " . json_encode($module_meta['description']);
-
-$a[] = "	'jPlayer': { 'swfPath': " . json_encode( plugins_url( GRAND_FOLDER ).'/assets/jplayer' ) . " }";
-$a[] = "	'moduleName': '" . esc_js( $module_meta['name'] ) . "'";
-$a[] = "	'pluginUrl': '" . plugins_url( GRAND_FOLDER ) . "'";
-$a[] = "	'libraryUrl': '" . rtrim( $upload['url'], '/' ) . "'";
-$a[] = "	'moduleUrl': '" . $module_dir['url'] . "'";
-
-
-$jsInit .= implode( ",\n", $a ) . "\n";
-$jsInit .= "},\n";
-
-$jsInit .= "gmMusicPlayer_ID{$module_meta['term_id']}_Content = [\n";
-$a = array();
-/**
- * @var $gMDb
- * @var $grandCore
- */
-foreach ( $module_meta['gMediaQuery'] as $i => $tab ) {
-	$gMediaQuery = $gMDb->get_gmedias( $tab );
-	if ( empty( $gMediaQuery ) ) {
-		continue;
-	}
-	foreach ( $gMediaQuery as $item ) {
-		$ext  = substr( $item->gmuid, -3 );
+	foreach($gmedia[$term->term_id] as $item){
+		$ext = substr( $item->gmuid, -3 );
 		if(!in_array($ext, array('mp3', 'ogg'))){
 			continue;
 		}
-		$meta  = $gMDb->get_metadata( 'gmedia', $item->ID );
-		$preview_image = '';
-		if(isset($meta['preview'][0]) && intval($meta['preview'][0])){
-			$preview_item = $gMDb->get_gmedia( intval($meta['preview'][0]) );
-			$preview_image = $grandCore->gm_get_media_image( $preview_item, 'thumb', array(), 'src' );
+		if($ext == 'ogg'){
+			$ext = 'oga';
 		}
-		$button = isset($meta['link'][0])? json_encode($meta['link'][0]) : "''";
-		if($ext == 'ogg'){$ext = 'oga';}
-		$a[]   = "	{{$ext}: '" . rtrim( $upload['url'], '/' ) . "/{$gmOptions['folder']['audio']}/{$item->gmuid}', cover: '{$preview_image}', title: " . json_encode( $item->title ) . ", text: " .  json_encode( str_replace(array("\r\n", "\r", "\n"), '', wpautop($item->description)) ) . ", rating: '', button: {$button}}";
+		$cover = $gmCore->gm_get_media_image($item, 'thumb', true, '');
+		$rating = $gmDB->get_metadata('gmedia', $item->ID, 'rating', true);
+		$rating = array_merge(array('value' => 0, 'votes' => 0), (array) $rating);
+		$content[] = array(
+			 'id' => $item->ID
+			,$ext => "{$gmCore->upload['url']}/{$gmGallery->options['folder']['audio']}/{$item->gmuid}"
+			,'cover' => $cover
+			,'title' => $item->title
+			,'text' => str_replace(array("\r\n", "\r", "\n"), '', wpautop($item->description))
+			,'button' => $item->link
+			,'rating' => $rating['value']
+			,'votes' => $rating['votes']
+		);
 	}
 }
-if ( empty( $a ) ) {
-	$continue = true;
+
+if(!empty($content)){
+	$settings = array_merge($settings, array(
+		'ID' => $gallery['term_id'],
+		'moduleUrl' => $module['url'],
+		'pluginUrl' => $gmCore->gmedia_url,
+		'libraryUrl' => $gmCore->upload['url'],
+		'ip' => str_replace('.', '', $_SERVER['REMOTE_ADDR'])
+	));
+	?>
+<script type="text/javascript">
+	jQuery(function(){
+		var settings = <?php echo json_encode($settings); ?>;
+		var content = <?php echo json_encode($content); ?>;
+		jQuery('#GmediaGallery_<?php echo $gallery['term_id'] ?>').gmMusicPlayer(content, settings);
+	});
+</script>
+<?php
+} else{
+	echo GMEDIA_GALLERY_EMPTY;
 }
-
-$jsInit .= implode( ",\n", $a ) . "\n";
-$jsInit .= "];\n\n";
-
-$jsRun .= "	jQuery('#gmMusicPlayer_ID{$module_meta['term_id']}').gmMusicPlayer(gmMusicPlayer_ID{$module_meta['term_id']}_Content, gmMusicPlayer_ID{$module_meta['term_id']}_Settings);\n\n";
-
-?>

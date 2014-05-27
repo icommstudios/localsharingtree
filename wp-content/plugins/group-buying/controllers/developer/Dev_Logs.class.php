@@ -15,7 +15,7 @@ class Group_Buying_Dev_Logs extends Group_Buying {
 	public function init() {
 		// Admin option
 		self::$record_logs = (bool)get_option( self::LOG_OPTION, 0 );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 500, 0 );
+		add_action( 'init', array( get_class(), 'init_settings' ), 20 );
 
 		// after
 		add_action( 'init', array( get_class(), 'record_stored_logs_and_errors' ), PHP_INT_MAX );
@@ -26,6 +26,37 @@ class Group_Buying_Dev_Logs extends Group_Buying {
 
 		// purge old logs
 		add_action( 'gb_cron', array( get_class(), 'purge_old_logs' ) );
+	}
+
+	public function init_settings() {
+		self::register_settings();
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_developer' => array(
+				'title' => self::__('Advanced'),
+				'weight' => 2000,
+				'settings' => array(
+					self::LOG_OPTION => array(
+						'label' => self::__( 'Save Logs' ),
+						'option' => array(
+							'label' => self::__('Save all logs as a gbs records (dev_log).'),
+							'type' => 'checkbox',
+							'default' => self::$record_logs,
+							'value' => '1',
+							'description' => self::__('GBS Records are found under Tools within the admin.')
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	public static function log( $subject, $data = array() ) {
@@ -125,23 +156,6 @@ class Group_Buying_Dev_Logs extends Group_Buying {
 		$offset = apply_filters( 'gb_logs_purge_filter_delay', date( 'Y-m-d', strtotime( '-15 days' ) ), $where );
 		$where .= " AND post_date <= '" . $offset . "'";
 		return $where;
-	}
-
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_developer';
-		add_settings_section( $section, self::__( 'Advanced' ), array( get_class(), 'display_settings_section' ), $page );
-		// Settings
-		register_setting( $page, self::LOG_OPTION );
-		// Fields
-		add_settings_field( self::LOG_OPTION, self::__( 'Save Logs' ), array( get_class(), 'display_option' ), $page, $section );
-
-	}
-
-	public static function display_option() {
-		printf( '<input type="checkbox" name="%s" value="1" %s />&nbsp;%s', self::LOG_OPTION, checked( '1', self::$record_logs, FALSE ), self::__( 'Save all logs as a gbs records (dev_log).' ) );
-		printf( '<p class="description">%s</p>', self::__( 'GBS Records are found under Tools within the admin.' ) );
 	}
 
 }

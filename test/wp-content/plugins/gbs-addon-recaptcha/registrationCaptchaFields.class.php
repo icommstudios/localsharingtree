@@ -86,7 +86,7 @@ class Registration_Captcha extends Group_Buying_Controller {
 		if ( !function_exists( 'recaptcha_get_html' ) ) {
 			require_once GBS_REG_CAP_FIELDS . '/library/recaptchalib.php';
 		}
-		return '<script type="text/javascript"> var RecaptchaOptions = { theme : "clean" };</script><div class="recaptcha_wrapper clearfix" style="width:450px; margin-left:120px; margin-bottom:20px">'.recaptcha_get_html( self::$publickey, null, TRUE ).'</div>';
+		return '<script type="text/javascript"> var RecaptchaOptions = { theme : "clean" };</script><div class="clearfix" style="width:450px;">'.recaptcha_get_html( self::$publickey, null, TRUE ).'</div>';
 	}
 
 	/**
@@ -94,7 +94,7 @@ class Registration_Captcha extends Group_Buying_Controller {
 	 *
 	 * @return array
 	 */
-	public function validate_account_fields( $errors, $username, $email_address, $post ) {
+	public function validate_account_fields( $errors = array(), $username, $email_address, $post ) {
 		if ( !function_exists( 'recaptcha_get_html' ) ) {
 			require_once GBS_REG_CAP_FIELDS . '/library/recaptchalib.php';
 		}
@@ -123,7 +123,7 @@ class Registration_Captcha extends Group_Buying_Controller {
 
 			if ( !$resp->is_valid ) {
 				gb_set_message( gb__('The reCAPTCHA wasn’t entered correctly. Try again.'), 'error' );
-				wp_redirect( add_query_arg( array( 'message' => 'captcha_error' ), Group_Buying_Accounts_Retrieve_Password::get_url() ) );
+				wp_redirect( add_query_arg( array( 'message' => 'captcha_error', 'user_login' => urlencode( $_POST['user_login'] ) ), Group_Buying_Accounts_Retrieve_Password::get_url() ) );
 				exit();
 			}
 		}

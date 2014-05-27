@@ -405,3 +405,25 @@ table#gb_purchases_tables  {
 	left: 60px;
 	background: #26ca28;
 }
+/**
+ * Select2 Styling
+ */
+.select2-container {
+	min-width: 275px;
+}
+
+#ajax_saving {
+	color: #ffffff;
+	font-weight: 700;
+	font-size: 1.5em;
+	text-align: center;
+	padding: 20px 50px 20px 50px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	background: rgba(0, 0, 0, 0.75);;
+	box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+	-moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+	-webkit-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+	z-index: 20000;
+}

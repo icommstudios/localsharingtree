@@ -8,11 +8,35 @@ class Group_Buying_Accounts_Retrieve_Password extends Group_Buying_Accounts {
 
 	public static function init() {
 		self::$rp_path = get_option( self::RP_PATH_OPTION, self::$rp_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 1 );
+		self::register_settings();
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_rp_callback' ), 10, 1 );
 
 		// Replace WP Login URIs
 		add_filter( 'lostpassword_url', array( get_class(), 'get_url' ), 10, 2 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_account_rp' => array(
+				'weight' => 108,
+				'settings' => array(
+					self::RP_PATH_OPTION => array(
+						'label' => self::__( 'Account Retrieve Password Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$rp_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -35,19 +59,6 @@ class Group_Buying_Accounts_Retrieve_Password extends Group_Buying_Accounts {
 			),
 		);
 		$router->add_route( self::RP_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_url_paths';
-
-		// Settings
-		register_setting( $page, self::RP_PATH_OPTION );
-		add_settings_field( self::RP_PATH_OPTION, self::__( 'Account Retrieve Password Path' ), array( get_class(), 'display_account_login_path' ), $page, $section );
-	}
-
-	public static function display_account_login_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::RP_PATH_OPTION . '" id="' . self::RP_PATH_OPTION . '" value="' . esc_attr( self::$rp_path ) . '" size="40"/><br />';
 	}
 
 

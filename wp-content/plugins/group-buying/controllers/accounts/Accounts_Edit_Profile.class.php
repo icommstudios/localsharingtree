@@ -9,9 +9,33 @@ class Group_Buying_Accounts_Edit_Profile extends Group_Buying_Accounts {
 
 	public static function init() {
 		self::$edit_path = get_option( self::EDIT_PROFILE_PATH_OPTION, self::$edit_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 1 );
+		self::register_settings();
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_edit_callback' ), 10, 1 );
 		add_action( 'parse_request', array( get_class(), 'maybe_process_form' ) );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_account_edit' => array(
+				'weight' => 101,
+				'settings' => array(
+					self::EDIT_PROFILE_PATH_OPTION => array(
+						'label' => self::__( 'Account Edit Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$edit_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -35,19 +59,6 @@ class Group_Buying_Accounts_Edit_Profile extends Group_Buying_Accounts {
 			),
 		);
 		$router->add_route( self::EDIT_PROFILE_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_url_paths';
-
-		// Settings
-		register_setting( $page, self::EDIT_PROFILE_PATH_OPTION );
-		add_settings_field( self::EDIT_PROFILE_PATH_OPTION, self::__( 'Account Edit Path' ), array( get_class(), 'display_account_edit_path' ), $page, $section );
-	}
-
-	public static function display_account_edit_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::EDIT_PROFILE_PATH_OPTION . '" id="' . self::EDIT_PROFILE_PATH_OPTION . '" value="' . esc_attr( self::$edit_path ) . '" size="40"/><br />';
 	}
 
 	public static function on_edit_page() {

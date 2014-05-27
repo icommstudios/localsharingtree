@@ -160,7 +160,7 @@ class GB_Aggregator_Source extends GB_Aggregator_Plugin {
 		$option = ( defined( 'WP_AFFILIATE_PLATFORM_VERSION' ) ) ? get_option( self::OPTION_AFFILIATE_APP, 'WordPress Affiliate Platform' ) : get_option( self::OPTION_AFFILIATE_APP ) ;
 		echo '<input type="text" name="'.self::OPTION_AFFILIATE_APP.'" value="'.$option.'" />';
 		echo '<br/>';
-		printf( self::__( 'Let potential affiliates know what affiliate platform you use (e.g. <a href="%s" target="_blank">WordPress Affiliate Platform</a>).' ), 'http://groupbuyingsite.com/goto/WPAffiliatePlatform' );
+		printf( self::__( 'Let potential affiliates know what affiliate platform you use (e.g. <a href="%s" target="_blank">WordPress Affiliate Platform</a>).' ), 'http://smartecart.com/goto/WPAffiliatePlatform' );
 	}
 
 	public function display_affiliate_signup_setting() {

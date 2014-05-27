@@ -412,7 +412,7 @@ function gb_user_has_voucher( $deal_id = 0, $user_id = 0, $all_statuses = FALSE 
 			}
 		}
 	}
-	return in_array( $deal_id, $deal_ids );
+	return apply_filters( 'gb_user_has_voucher', in_array( $deal_id, $deal_ids ), $deal_id, $user_id, $all_statuses );
 }
 
 ///////////////////////

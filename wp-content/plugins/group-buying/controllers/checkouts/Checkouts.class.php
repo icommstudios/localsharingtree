@@ -28,11 +28,56 @@ class Group_Buying_Checkouts extends Group_Buying_Controller {
 	public static function init() {
 		self::$use_ssl = get_option( self::USE_SSL_OPTION, FALSE );
 		self::$checkout_path = get_option( self::CHECKOUT_PATH_OPTION, self::$checkout_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 20, 0 );
+		self::register_settings();
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_checkout_callback' ), 10, 1 );
 
 		add_filter( 'gbs_require_ssl', array( get_class(), 'require_ssl_on_checkout_pages' ), 10, 2 );
 		add_filter( 'gb_get_form_field', array( get_class(), 'filter_required_attribute' ), 10, 4 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_checkout_path' => array(
+				'weight' => 110,
+				'settings' => array(
+					self::CHECKOUT_PATH_OPTION => array(
+						'label' => self::__( 'Checkout Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$checkout_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
+
+		// Settings
+		$settings = array(
+			'gb_checkout_use_ssl' => array(
+				'title' => self::__('Advanced Settings'),
+				'weight' => 10000,
+				'settings' => array(
+					self::USE_SSL_OPTION => array(
+						'label' => self::__( 'Force SSL on Checkout Pages' ),
+						'option' => array(
+							'label' => self::__('Advanced: SSL is highly recommended for production sites accepting credit cards.'),
+							'type' => 'checkbox',
+							'default' => self::$use_ssl,
+							'value' => 'TRUE',
+							'description' => self::__('GBS recommends changing your site address scheme to https:// instead of redirecting users on checkout to an SSL connection. Improperly setting up your server can cause adverse affects, including a redirect loop.')
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_Payment_Processors::SETTINGS_PAGE );
 	}
 
 	/**
@@ -95,25 +140,6 @@ class Group_Buying_Checkouts extends Group_Buying_Controller {
 			return TRUE;
 		}
 		return $required;
-	}
-
-	public static function register_settings_fields() {
-		register_setting( Group_Buying_Payment_Processors::get_settings_page(), self::USE_SSL_OPTION );
-		add_settings_field( self::USE_SSL_OPTION, self::__( 'Force SSL on Checkout Pages' ), array( get_class(), 'display_use_ssl_option' ), Group_Buying_Payment_Processors::get_settings_page() );
-
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_cart_paths';
-		register_setting( $page, self::CHECKOUT_PATH_OPTION );
-		add_settings_field( self::CHECKOUT_PATH_OPTION, self::__( 'Checkout Path' ), array( get_class(), 'display_path' ), $page, $section );
-	}
-
-	public static function display_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="'.self::CHECKOUT_PATH_OPTION.'" id="'.self::CHECKOUT_PATH_OPTION.'" value="' . esc_attr( self::$checkout_path ) . '"  size="40" /><br />';
-	}
-
-	public static function display_use_ssl_option() {
-		printf( '<label><input type="checkbox" value="1" name="%s" id="%s" %s /> %s</label>', self::USE_SSL_OPTION, self::USE_SSL_OPTION, checked( self::$use_ssl, TRUE, FALSE ), __( 'Advanced: SSL is highly recommended for production sites accepting credit cards.' ) );
-		echo '<br/><span class="description">'.self::__('GBS recommends changing your site address scheme to https:// instead of redirecting users on checkout to an SSL connection. Improperly setting up your server can cause adverse affects, including a redirect loop.').'</span>';
 	}
 
 	/*

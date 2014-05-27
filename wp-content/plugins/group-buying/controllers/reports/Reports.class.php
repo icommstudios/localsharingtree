@@ -20,8 +20,41 @@ class Group_Buying_Reports extends Group_Buying_Controller {
 	final public static function init() {
 		self::$reports_path = get_option( self::REPORTS_PATH_OPTION, self::$reports_path );
 		self::$reports_csv_path = get_option( self::REPORTS_PATH_CSV_OPTION, self::$reports_csv_path );
+		self::register_settings();
+
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_csv_callbacks' ), 100, 1 );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 50, 0 );
+	}
+	
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_records' => array(
+				'weight' => 160,
+				'settings' => array(
+					self::REPORTS_PATH_OPTION => array(
+						'label' => self::__( 'Report Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$reports_path
+							)
+						),
+					self::REPORTS_PATH_CSV_OPTION => array(
+						'label' => self::__( 'Report CSV Downloads' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$reports_csv_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -59,28 +92,6 @@ class Group_Buying_Reports extends Group_Buying_Controller {
 			),
 		);
 		$router->add_route( self::CSV_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_reports_paths';
-		add_settings_section( $section, null, array( get_class(), 'display_paths_section' ), $page );
-		register_setting( $page, self::REPORTS_PATH_OPTION );
-		register_setting( $page, self::REPORTS_PATH_CSV_OPTION );
-		add_settings_field( self::REPORTS_PATH_OPTION, self::__( 'Report Path' ), array( get_class(), 'display_path' ), $page, $section );
-		add_settings_field( self::REPORTS_PATH_CSV_OPTION, self::__( 'Report Path for CSV Downloads' ), array( get_class(), 'display_csv_path' ), $page, $section );
-	}
-
-	public static function display_paths_section() {
-		echo self::__( '<h4>Customize the Report paths</h4>' );
-	}
-
-	public static function display_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="'.self::REPORTS_PATH_OPTION.'" id="'.self::REPORTS_PATH_OPTION.'" value="' . esc_attr( self::$reports_path ) . '"  size="40" /><br />';
-	}
-
-	public static function display_csv_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="'.self::REPORTS_PATH_CSV_OPTION.'" id="'.self::REPORTS_PATH_CSV_OPTION.'" value="' . esc_attr( self::$reports_csv_path ) . '"  size="40" /><br />';
 	}
 
 	public static function on_gbs_report() {
@@ -137,6 +148,29 @@ class Group_Buying_Reports extends Group_Buying_Controller {
 		self::load_view( 'reports/csv', array( 'filename' => 'gbs_report.csv', 'columns' => $columns, 'records' => $records ), FALSE );
 		exit();
 	}
+
+
+	/**
+	 *
+	 *
+	 * @static
+	 * @return bool Whether the current query is a report page
+	 */
+	public static function is_report_page() {
+		return GB_Router_Utility::is_on_page( self::REPORT_QUERY_VAR );
+	}
+
+
+	/**
+	 *
+	 *
+	 * @static
+	 * @return bool Whether the current query is a report page
+	 */
+	public static function is_csv_page() {
+		return GB_Router_Utility::is_on_page( self::CSV_QUERY_VAR );
+	}
+
 
 	public function get_title( $title ) {
 		$report_name = str_replace( '_', ' ', self::$report );

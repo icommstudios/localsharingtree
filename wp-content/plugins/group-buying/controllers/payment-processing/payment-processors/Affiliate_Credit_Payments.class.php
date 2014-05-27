@@ -59,7 +59,7 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 	public function filter_payment_request_total( $total, Group_Buying_Checkouts $checkout ) {
 		if ( isset( $checkout->cache['affiliate_credits'] ) && $checkout->cache['affiliate_credits'] ) {
 			$credit_to_use = $checkout->cache['affiliate_credits'];
-			$credit_to_use_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+			$credit_to_use_value = number_format( floatval( $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() ) ), 2 );
 			return max( $total - $credit_to_use_value, 0 ); // no, you can't use credit to get free money
 		}
 		return $total;
@@ -78,6 +78,7 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 		$credit_to_use = isset($checkout->cache['affiliate_credits'])?$checkout->cache['affiliate_credits']:0;
 		$total_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
 		$account->reserve_credit( $credit_to_use, $this->get_credit_type() );
+
 		$deal_info = array();
 		foreach ( $purchase->get_products() as $item ) {
 			if ( isset( $item['payment_method'][$this->get_payment_method()] ) ) {
@@ -147,26 +148,36 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 		}
 		elseif ( isset( $checkout->cache['affiliate_credits'] ) && $checkout->cache['affiliate_credits'] ) {
 			$credit_to_use = $checkout->cache['affiliate_credits'];
-			$credits_to_use_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+			$calculated_credits = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
 			$items = $purchase->get_products();
 			foreach ( $items as $key => $item ) {
-				$remaining = $item['price'];
+				$remaining_price = $item['price'];
+				// Remove cost from payment methods already accounting the price.
 				foreach ( $item['payment_method'] as $processor => $amount ) {
-					$remaining -= $amount;
+					$remaining_price -= $amount;
 				}
-				if ( $remaining >= 0.01 ) { // leave a bit of room for floating point arithmetic
-					// need to leave some room for tax an shipping, so we don't allocate too much credit
+				// Register as a payment method that need it.
+				if ( $remaining_price >= 0.01 ) { // leave a bit of room for floating point arithmetic
+
+					// need to leave some room for tax and shipping, so we don't allocate too much credit
 					$extras = $purchase->get_item_shipping( $item )+$purchase->get_item_tax( $item );
-					if ( $remaining+$extras <= $credits_to_use_value ) {
-						$items[$key]['payment_method'][$this->get_payment_method()] = $remaining;
-						$credit_to_use -= $remaining+$extras;
+					$remaining_price_and_extras = $remaining_price+$extras;
+
+					// Price with extras is less than the credit value attempted to use.
+					if ( $remaining_price_and_extras <= $calculated_credits ) {
+						// Set as a payment method.
+						$items[$key]['payment_method'][$this->get_payment_method()] = $remaining_price; // don't include the extras since they're somewhere else?
+						// Subtract the cost that is registered just above, so that the remaining can be looped for other items.
+						$calculated_credits -= $remaining_price_and_extras;
 					} else {
-						$ratio = @( $credits_to_use_value/( $item['price']+$extras ) );
-						$items[$key]['payment_method'][$this->get_payment_method()] = $ratio*$item['price'];
-						$credit_to_use = 0;
+						// Remaining credits is less than the price plus extras.
+						// Calculate the amount to register for the cost of the item.
+						$ratio = @( $calculated_credits/$remaining_price_and_extras );
+						$items[$key]['payment_method'][$this->get_payment_method()] = $ratio*$remaining_price;
+						$calculated_credits = 0;
 					}
 				}
-				if ( $credit_to_use < 0.01 ) {
+				if ( $calculated_credits < 0.01 ) {
 					break;
 				}
 			}
@@ -178,7 +189,7 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 	public function payment_fields( $fields, $payment_processor_class, $checkout ) {
 		$account = Group_Buying_Account::get_instance();
 		$balance = $account->get_credit_balance( $this->get_credit_type() );
-		$credit_value = $account->get_credit_balance( $this->get_credit_type() )/self::get_credit_exchange_rate( $this->get_credit_type() );
+		$balance_value = $account->get_credit_balance( $this->get_credit_type() )/self::get_credit_exchange_rate( $this->get_credit_type() );
 		$cart = Group_Buying_Cart::get_instance();
 		$total = $cart->get_total();
 
@@ -208,18 +219,21 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 
 		if ( $balance ) {
 			$default = isset( $checkout->cache['affiliate_credits'] )?$checkout->cache['affiliate_credits']:0;
+			$description = ( $balance_value == $balance ) ? sprintf( self::__( 'You have %s in reward points. How much of your balance would you like to apply to this purchase?' ), gb_get_formatted_money( $balance_value ) ) : sprintf( self::__( 'You have %s reward points a value of %s. How many points would you like to apply to this purchase?' ), gb_get_number_format( $balance, '.', ',' ), gb_get_formatted_money( $balance_value ) ) ;
 			$fields['affiliate_credits'] = array(
 				'type' => 'text',
 				'weight' => -5,
 				'label' => self::__( 'Reward Points' ),
-				'description' => sprintf( self::__( 'You have %s reward points a value of %s. How many points would you like to apply to this purchase?' ), gb_get_number_format( $balance, '.', ',' ), gb_get_formatted_money( $credit_value ) ),
+				'description' => $description,
 				'size' => 10,
 				'required' => FALSE,
 				'default' => $default,
 			);
 		}
 		if ( isset( $checkout->cache['affiliate_credits'] ) && $checkout->cache['affiliate_credits'] >= 0.01 ) {
-			if ( $total <= $checkout->cache['affiliate_credits'] ) {
+			$credit_to_use = $checkout->cache['affiliate_credits'];
+			$calculated_credits = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+			if ( $total <= $calculated_credits ) {
 				foreach ( array_keys( $fields ) as $key ) {
 					$fields[$key]['required'] = FALSE;
 				}
@@ -252,7 +266,9 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 			return $fields;
 		}
 		if ( isset( $checkout->cache['affiliate_credits'] ) && $checkout->cache['affiliate_credits'] > 0 ) {
-			if ( $checkout->cache['affiliate_credits'] >= $total ) {
+			$credit_to_use = $checkout->cache['affiliate_credits'];
+			$calculated_credits = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
+			if ( $calculated_credits >= $total ) {
 				// get rid of credit card info, since there won't be any
 				unset( $fields['cc_name'] );
 				unset( $fields['cc_number'] );
@@ -261,14 +277,13 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 				unset( $fields['method'] );
 				$fields['affiliate_credits'] = array(
 					'label' => self::__( 'Payment Method' ),
-					'value' => self::__( 'Rewards Points' ),
+					'value' => sprintf( self::__( '%s will be paid from your rewards balance' ), gb_get_formatted_money( $calculated_credits ) ),
 					'weight' => 1,
 				);
 			} else {
-				$amount_paid = $checkout->cache['affiliate_credits']/self::get_credit_exchange_rate( $this->get_credit_type() );
 				$fields['affiliate_credits'] = array(
 					'label' => self::__( 'Reward Points' ),
-					'value' => sprintf( self::__( '%s will be paid from your rewards balance' ), gb_get_formatted_money( $amount_paid ) ),
+					'value' => sprintf( self::__( '%s will be paid from your rewards balance' ), gb_get_formatted_money( $calculated_credits ) ),
 					'weight' => 10,
 				);
 			}
@@ -295,11 +310,13 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 				$checkout->mark_page_incomplete( Group_Buying_Checkouts::PAYMENT_PAGE );
 				return;
 			}
+			
 			// Credits are not fractions
 			$credit_to_use = (float)$credit_to_use;
 			if ( $credit_to_use < 0.01 ) {
 				return;
 			}
+			
 			$account = Group_Buying_Account::get_instance();
 			$balance = $account->get_credit_balance( $this->get_credit_type() );
 			// Force the max credits possible.
@@ -308,12 +325,13 @@ class Group_Buying_Affiliate_Credit_Payments extends Group_Buying_Payment_Proces
 			}
 			$cart = Group_Buying_Cart::get_instance();
 			$total = $cart->get_total();
+
 			// Calculate the value of the credits attempted to be used.
 			$calculated_credit_value = $credit_to_use/self::get_credit_exchange_rate( $this->get_credit_type() );
 			// If the calculated value of the credits is more than the total
 			if ( $calculated_credit_value > $total ) {
 				// Don't use any more credits than necessary.
-				$credit_to_use = $total/self::get_credit_exchange_rate( $this->get_credit_type() );
+				$credit_to_use = $total*self::get_credit_exchange_rate( $this->get_credit_type() );
 			}
 			$checkout->cache['affiliate_credits'] = $credit_to_use;
 		}

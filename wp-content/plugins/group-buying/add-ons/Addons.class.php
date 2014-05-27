@@ -7,14 +7,24 @@
  * @subpackage Base
  */
 class Group_Buying_Addons extends Group_Buying_Controller {
+	const SETTINGS_PAGE = 'gb_addons';
+	const SETTINGS_PAGE_MP = 'gb_addon_marketplace';
 	const ADDONS_SETTING = 'gb_enabled_addons';
-	protected static $settings_page;
-	protected static $marketplace_settings_page;
-	protected static $api_url = 'http://groupbuyingsite.com/api/json/addon/';
+
+	protected static $api_url = 'http://smartecart.com/api/json/addon/';
 	// protected static $api_url = 'http://staging.groupbuyingsite.com/api/json/addon/';
-	protected static $cart_url = 'http://groupbuyingsite.com/marketplace/checkout/';
+	protected static $cart_url = 'http://smartecart.com/marketplace/checkout/';
 	// protected static $cart_url = 'http://staging.groupbuyingsite.com/checkout/';
 	private static $addons = array();
+	private static $addon_data = array();
+
+	public static function get_settings_page( $mp = FALSE, $prefixed = TRUE ) {
+		$page = ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+		if ( $mp ) {
+			$page = ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE_MP : self::SETTINGS_PAGE_MP ;
+		}
+		return $page;
+	}
 
 	/**
 	 * Declare all of the addons available
@@ -30,7 +40,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Deal Attributes' ),
 			'description' => self::__( 'Add attributes (e.g. color, size) that customers can choose when buying deals. Categories are used to filter the selection and additional categories can be added via a basic filter (see forum for details).' ),
 			'url' => 'http://groupbuyingsite.com/features-item/deal-product-attributes/',
-			'support_url' => 'http://groupbuyingsite.com/forum/showthread.php?1899-Using-Attributes-in-3.1',
+			'support_url' => 'http://smartecart.com/forum/showthread.php?1899-Using-Attributes-in-3.1',
 			'files' => array(
 				GB_PATH.'/add-ons/attributes/Attribute.model.class.php',
 				GB_PATH.'/add-ons/attributes/Attributes.controller.class.php',
@@ -45,7 +55,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'GBS API' ),
 			'description' => self::__( 'JSON API for GBS. Temp API Doc. found <a href="http://dl.dropbox.com/u/403305/api-doc.html">here</a>.' ),
 			'url' => 'http://groupbuyingsite.com/inventory-management-order-fulfillment-json-api-scaling-v4-1/',
-			'support_url' => 'http://groupbuyingsite.com/forum/showthread.php?6311-GBS-API-Discussion',
+			'support_url' => 'http://smartecart.com/forum/showthread.php?6311-GBS-API-Discussion',
 			'files' => array(
 				GB_PATH.'/add-ons/api/API.class.php'
 			),
@@ -57,7 +67,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Order Fulfillment and Inventory Mngt.' ),
 			'description' => self::__( 'Basic method to manage order status and low inventory notifications.' ),
 			'url' => 'http://groupbuyingsite.com/inventory-management-order-fulfillment-json-api-scaling-v4-1/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/fulfillment/Fulfillment.class.php',
 				GB_PATH.'/template-tags/add-ons/fulfillment.php',
@@ -70,7 +80,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Gifting' ),
 			'description' => self::__( 'Allows a user to gift an entire purchase to someone else.' ),
 			'url' => 'http://groupbuyingsite.com/features-item/gift-purchasing/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/gifts/Gift.model.class.php',
 				GB_PATH.'/add-ons/gifts/Gifts.controller.class.php',
@@ -85,7 +95,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Advanced: Query Optimization' ),
 			'description' => self::__( 'This optimization should be used with caution and should only be used if advised. It will make database queries more efficient by adding additional tables.' ),
 			'url' => 'http://groupbuyingsite.com/inventory-management-order-fulfillment-json-api-scaling-v4-1/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/query-optimization/Query_Optimization.class.php',
 			),
@@ -97,7 +107,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Dynamic Attribute Selection' ),
 			'description' => self::__( 'Instead of sifting through a long list of "labels" (e.g.  "Medium – Orange", "Small – Orange", "Large – Orange", "XL – Orange"...etc.) the customer can select from separate category dropdowns (e.g.  "size" and "color") and a dynamically generated add-to-cart button will show. ' ),
 			'url' => 'http://groupbuyingsite.com/features-item/deal-product-attributes/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(),
 			'callbacks' => array(
 				array( 'Group_Buying_Attributes', 'activate_dynamic_category_selection' ),
@@ -107,7 +117,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => __( 'Group Buying Network Syndication' ),
 			'description' => __( 'The Group Buying Syndication service allows for site owners to syndicate deals to the GBS network of sites that wish to aggregate deals.' ),
 			'url' => 'http://groupbuyingsite.com/v3-5-5-gbs-syndication-aggregation-beta-available/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?69-Group-Buying-Syndication-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?69-Group-Buying-Syndication-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/syndication-service/group-buying-aggregator.php'
 			),
@@ -119,7 +129,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => __( 'API Import Framework' ),
 			'description' => __( 'A framework for importing deals from other sites. Used in conjunction with add-on importers (i.e. LivingSocial Importer).' ),
 			'url' => 'http://groupbuyingsite.com/4-5-external-deal-aggregation-adaptive-payments-reports-ip-logging/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/importer/GBS_Importer_Framework.php',
 				GB_PATH.'/add-ons/importer/GBS_Importer_Deal.php',
@@ -138,10 +148,9 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 	 * @return void
 	 */
 	public static function init() {
-		self::$settings_page = self::register_settings_page( 'gb_addons', self::__( 'Add-on Management' ), self::__( 'Add-ons' ), 100000, FALSE, 'addons' );
-		self::$marketplace_settings_page = self::register_settings_page( 'gb_addon_marketplace', self::__( 'GBS Marketplace' ), self::__( 'Marketplace' ), 100001, FALSE, 'addons', array( get_class(), 'shop_view') );
+		self::register_settings();
+
 		add_action( 'init', array( get_class(), 'load_enabled_addons' ), -1, 0 );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 20, 0 );
 
 		// Plugin upgrade hooks
 		add_filter( 'pre_set_site_transient_update_plugins', array( get_class(), 'site_transient_update_plugins' ) );
@@ -153,6 +162,45 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 		// Theme Info for purchase
 		add_filter( 'themes_api_result', array( get_class(), 'plugins_api_result' ), 10, 3 );
 
+	}
+
+	public function register_settings() {
+
+		// Addon page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'Add-on Management' ),
+			'menu_title' => self::__( 'Add-ons' ),
+			'weight' => PHP_INT_MAX-100,
+			'reset' => FALSE, 
+			'section' => 'addons',
+			'ajax' => TRUE
+			);
+		do_action( 'gb_settings_page', $args );
+
+		// Marketplace page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE_MP,
+			'title' => self::__( 'GBS Marketplace' ),
+			'menu_title' => self::__( 'Marketplace' ),
+			'weight' => PHP_INT_MAX,
+			'reset' => FALSE, 
+			'section' => 'addons',
+			'callback' => array( get_class(), 'shop_view')
+			);
+		do_action( 'gb_settings_page', $args );
+
+		// Settings
+		$settings = array(
+			'gb_addons' => array(
+				'settings' => array(
+					self::ADDONS_SETTING => array(
+						'option' => array( get_class(), 'display_addons_options' )
+					),
+				)
+			)
+		);
+		do_action( 'gb_settings', $settings, self::SETTINGS_PAGE );
 	}
 
 	/**
@@ -256,7 +304,18 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 				( isset( $_GET['action'] ) && $_GET['action'] == 'install-theme' )
 				) ? TRUE : FALSE;
 
-			$api_data = self::get_addon_data( $api_args->slug, array(), $refresh );
+			if( isset( $api_args->slug ) ) {
+				$slug = $api_args->slug;
+			}
+			elseif ( isset( $api_args['body']['request'] ) ) {
+				$request = maybe_unserialize( $api_args['body']['request'] );
+				$slug = $request->slug;
+			} 
+			else {
+				return $response;
+			}
+
+			$api_data = self::get_addon_data( $slug, array(), $refresh );
 
 			// Is this an addon that GBS has data for?
 			if ( $api_data ) {
@@ -269,7 +328,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 
 				// If there's no download url and we're trying to download the addon than something is wrong. Probably it wasn't purchased yet.
 				if ( isset( $_GET['action'] ) && $_GET['action'] == 'install-plugin' && $response->download_link == '' ) {
-					$response = new WP_Error('plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with GroupBuyingSite.com, this server&#8217;s configuration or your purchase has not been recorded yet. If you continue to have problems, please try the <a href="http://groupbuyingsite.com/forum/">support forums</a> or download your add-on from your <a href="http://groupbuyingsite.com/account/">account page</a>.' ), 4200 );
+					$response = new WP_Error('plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with GroupBuyingSite.com, this server&#8217;s configuration or your purchase has not been recorded yet. If you continue to have problems, please try the <a href="http://smartecart.com/forum/">support forums</a> or download your add-on from your <a href="http://groupbuyingsite.com/account/">account page</a>.' ), 4200 );
 				}
 			}
 		}
@@ -277,20 +336,32 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 	}
 
 	public static function get_addon_data( $token = 'pull', $query_args = array(), $fresh = FALSE ) {
-
+		// Create key off query vars, do not add the token since the 'pull' is used for ind. add-ons
 		$transient_key = 'gbs_' . substr( md5( serialize( $query_args ) ), -60 );
-		// delete_site_transient( $transient_key );
-		$addon_data = get_site_transient( $transient_key ); // Look for transient cache
-		if ( empty( $addon_data ) || $fresh ) {
-			do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - get_addon_data not cached' );
-			$addon_data = self::api_get( 'pull', $query_args, $fresh );
-			if ( !$addon_data ) {
-				return NULL;
-			}
-			// Set a transient to cache
-			set_site_transient( $transient_key, $addon_data, 60*60*24 ); // 60*60*24
+
+		// Is variable set
+		if ( isset( self::$addon_data[$transient_key] ) ) {
+			$addon_data = self::$addon_data[$transient_key];
 		}
+		else {
+			// delete_site_transient( $transient_key );
+			// Look for transient cache based off key.
+			$addon_data = get_site_transient( $transient_key );
+			if ( empty( $addon_data ) || $fresh ) {
+				do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - get_addon_data not cached' );
+				$addon_data = self::api_get( 'pull', $query_args, $fresh );
+				if ( !$addon_data ) {
+					return NULL;
+				}
+				// Set a transient to cache
+				set_site_transient( $transient_key, $addon_data, 60*60*24 ); // 60*60*24
+			}
+			// Set variable with new addon data.
+			self::$addon_data[$transient_key] = $addon_data;
+		}
+		// If looking for a specific deal information
 		if ( $token != 'pull' ) {
+			// $addon_data at this point can be based on class variable, transient data or an API call.
 			if ( isset( $addon_data[$token] ) ) {
 				return $addon_data[$token];
 			}
@@ -300,19 +371,26 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 	}
 
 	public static function get_addon_info( $addon = '', $fresh = FALSE ) {
-
 		$transient_key = 'gbs_' . substr( md5( serialize( $addon ) ), -60 );
-		// delete_site_transient( $transient_key );
-		$addon_data = get_site_transient( $transient_key ); // Look for transient cache
 
-		if ( !$addon_info || $fresh ) {
-			do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - get_addon_info not cached' );
-			$addon_data = self::api_get( 'info', null, $fresh );
-			if ( !$addon_data ) {
-				return NULL;
+		// Is variable set
+		if ( isset( self::$addon_data[$transient_key] ) ) {
+			$addon_data = self::$addon_data[$transient_key];
+		}
+		else {
+			// delete_site_transient( $transient_key );
+			$addon_data = get_site_transient( $transient_key ); // Look for transient cache
+			if ( !$addon_info || $fresh ) {
+				do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - get_addon_info not cached' );
+				$addon_data = self::api_get( 'info', null, $fresh );
+				if ( !$addon_data ) {
+					return NULL;
+				}
+				// Set a transient to cache
+				set_site_transient( $transient_key, $addon_info, 60*60*24 );
 			}
-			// Set a transient to cache
-			set_site_transient( $transient_key, $addon_info, 60*60*24 );
+			// Set variable with new addon data.
+			self::$addon_data[$transient_key] = $addon_data;
 		}
 
 		if ( $addon != '' ) {
@@ -324,10 +402,10 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 		return $addon_data;
 	}
 
-	public static function get_category_data() {
+	public static function get_category_data( $fresh = FALSE ) {
 		$transient_key = 'gbs_addon_categories';
 		$categories = get_site_transient( $transient_key ); // Look for transient cache
-		if ( !$categories ) {
+		if ( !$categories || $fresh ) {
 			do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - cats not cached' );
 			$categories = array();
 			$category_data = self::api_get( 'categories' );
@@ -349,6 +427,18 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 		}
 
 		return $categories;
+	}
+
+	function upgrade_popup() {
+		if ( FALSE === strpos( $_GET['plugin'], 'gbs' ) )
+			return;
+
+		$plugin = basename( $_GET['plugin'], ".php" );
+		$data = self::get_addon_info( $plugin );
+		if ( !empty( $data['update_info'] ) ) {
+			print $data['update_info'];
+			exit;
+		}
 	}
 
 	/////////////
@@ -450,7 +540,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 		if ( !empty( $url_args ) ) { // Add query args
 			$url = add_query_arg( $url_args, $url );
 		}
-
+		error_log( 'url: ' . print_r( $url, TRUE ) );
 		// remote get
 		$response = wp_remote_get( $url, self::api_args() );
 		if ( !$response || is_wp_error( $response ) ) {
@@ -477,28 +567,16 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 	}
 
 	/**
-	 * Get Settings page
-	 *
-	 * @static
-	 * @return string The ID of the payment settings page
+	 * Is addon enabled
+	 * @param string  $addon key/slug of addon to check
+	 * @return boolean
 	 */
-	public static function get_settings_page() {
-		return self::$settings_page;
-	}
-
-	/**
-	 * Register options
-	 * @return void
-	 */
-	public static function register_settings_fields() {
-		if ( !self::addon_definitions() ) {
-			return; // nothing to register
+	public static function is_enabled( $addon ) {
+		$enabled = get_option( self::ADDONS_SETTING, array() );
+		if ( isset( $enabled[$addon] ) && $enabled[$addon] ) {
+			return TRUE;
 		}
-		$page = self::$settings_page;
-		// Settings
-		register_setting( $page, self::ADDONS_SETTING );
-
-		add_settings_field( self::ADDONS_SETTING, '', array( get_class(), 'display_addons_options' ), $page );
+		return FALSE;
 	}
 
 	/**
@@ -516,19 +594,6 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 	}
 
 	/**
-	 * Is addon enabled
-	 * @param string  $addon key/slug of addon to check
-	 * @return boolean
-	 */
-	public static function is_enabled( $addon ) {
-		$enabled = get_option( self::ADDONS_SETTING, array() );
-		if ( isset( $enabled[$addon] ) && $enabled[$addon] ) {
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	/**
 	 * Show addons marketplace iframe
 	 * @return string
 	 */
@@ -537,7 +602,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			<div class="wrap">
 				<?php screen_icon(); ?>
 				<h2 class="nav-tab-wrapper">
-					<?php self::display_admin_tabs(); ?>
+					<?php do_action( 'gb_settings_tabs' ); ?>
 				</h2>
 
 				<?php
@@ -634,7 +699,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 						<div class="item_data clearfix">
 							<div class="item_thumb clearfix">
 								<img src="<?php echo $data['post_thumbnail'][0] ?>">
-								<?php if ( $keys['alt_price'] ): ?>
+								<?php if ( isset( $keys['alt_price'] ) && $keys['alt_price'] ): ?>
 									<span class="price">$<?php echo $data['alt_price'] ?></span>
 								<?php else: ?>
 									<span class="price">$<?php echo $data['price'] ?></span>
@@ -710,17 +775,5 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 		), self_admin_url( 'update.php' ) );
 
 		return esc_url( wp_nonce_url( $install_url, 'install-'.$context.'_' . $addon ) );
-	}
-
-	function upgrade_popup() {
-		if ( FALSE === strpos( $_GET['plugin'], 'gbs' ) )
-			return;
-
-		$plugin = basename( $_GET['plugin'], ".php" );
-		$data = self::get_addon_info( $plugin );
-		if ( !empty( $data['update_info'] ) ) {
-			print $data['update_info'];
-			exit;
-		}
 	}
 }

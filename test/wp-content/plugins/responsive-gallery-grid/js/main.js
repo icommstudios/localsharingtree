@@ -54,12 +54,12 @@ jQuery(document).ready(function(){
                 
                 var prev_box_shadow = $clone.css('box-shadow');
                 $clone.css({'z-index': newzindex, 'box-shadow' : '0px 0px 4px #000'});
-                $clone.animate({position:'absolute', left: newoffset.left, top: newoffset.top, height: newheight, width: newwidth },p.intime);
+                $clone.animate({ left: newoffset.left, top: newoffset.top, height: newheight, width: newwidth },p.intime);
                 
                 
                 $clone.mouseleave(function() {  
                     $clone.css({'z-index': zindex, 'box-shadow' : prev_box_shadow});         
-                    $clone.animate({position:'absolute', left: offset.left, top: offset.top, height: height, width: width, 'z-index' : zindex},p.outtime);
+                    $clone.animate({left: offset.left, top: offset.top, height: height, width: width, 'z-index' : zindex},p.outtime);
                     $clone.unbind('mouseleave');
                 });
             });

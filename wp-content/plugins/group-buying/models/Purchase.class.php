@@ -10,10 +10,12 @@ class Group_Buying_Purchase extends Group_Buying_Post_Type {
 	const POST_TYPE = 'gb_purchase';
 	const REWRITE_SLUG = 'purchase';
 	const NO_USER = -1;
+	const STATUS_VOID = 'void'; // payment has been voided
 	private static $instances = array();
 
 
 	protected static $meta_keys = array(
+		'admin_notes' => '_admin_notes', // int
 		'account_id' => '_account_id', // int
 		'auth_key' => '_auth_key', // string
 		'deal_id' => '_deal_id', // int, multiple
@@ -459,7 +461,17 @@ class Group_Buying_Purchase extends Group_Buying_Post_Type {
 	}
 
 	public function get_original_user() {
-		return (int)$this->get_post_meta( self::$meta_keys['original_owner'] );
+		return $this->get_post_meta( self::$meta_keys['original_owner'] );
+	}
+
+	public function set_admin_notes( $admin_notes ) {
+		$this->save_post_meta( array(
+				self::$meta_keys['admin_notes'] => $admin_notes,
+			) );
+	}
+
+	public function get_admin_notes() {
+		return $this->get_post_meta( self::$meta_keys['admin_notes'] );
 	}
 
 	public function set_auth_key( $auth_key ) {
@@ -511,6 +523,11 @@ class Group_Buying_Purchase extends Group_Buying_Post_Type {
 
 	public function set_pending() {
 		$this->post->post_status = 'pending';
+		$this->save_post();
+	}
+
+	public function set_void() {
+		$this->post->post_status = self::STATUS_VOID;
 		$this->save_post();
 	}
 

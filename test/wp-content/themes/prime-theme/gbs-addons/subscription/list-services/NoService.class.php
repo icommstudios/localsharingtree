@@ -46,7 +46,7 @@ class Group_Buying_None extends Group_Buying_List_Services {
 				$no_city_text = get_option( Group_Buying_List_Services::SIGNUP_CITYNAME_OPTION );
 				if ( ( !empty( $locations ) || !empty( $no_city_text ) ) && $show_locations ) { ?>
 					<span class="option location_options_wrap clearfix">
-						<label for="locations"><?php gb_e( $select_location_text ); ?></label>
+						<label for="locations"><?php sec_e( $select_location_text ); ?></label>
 						<?php
 							global $wp_query;
 							if ( $wp_query->get_queried_object() ) {
@@ -66,7 +66,7 @@ class Group_Buying_None extends Group_Buying_List_Services {
 					</span> <?php
 				} ?>
 			<?php wp_nonce_field( 'gb_subscription' );?>
-			<span class="submit clearfix"><input type="submit" class="button-primary" name="gb_subscription" id="gb_subscription" value="<?php gb_e( $button_text ); ?>"></span>
+			<span class="submit clearfix"><input type="submit" class="button-primary" name="gb_subscription" id="gb_subscription" value="<?php sec_e( $button_text ); ?>"></span>
 		</form>
 		<?php
 	}

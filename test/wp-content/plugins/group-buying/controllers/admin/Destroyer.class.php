@@ -99,7 +99,7 @@ class Group_Buying_Destroy extends Group_Buying_Controller {
 				return;
 
 			if ( $voucher->is_active() ) {
-				$voucher->deactivate();
+				$voucher->mark_pending();
 				do_action( 'gb_voucher_deactivated', $voucher_id );
 			}
 		}

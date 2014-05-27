@@ -70,7 +70,7 @@ class Group_Buying_Notifications_Table extends WP_List_Table {
 	}
 
 	function column_message( $item ) {
-		echo $item->post_content;
+		echo substr( esc_html($item->post_content), 0, 200 ) . '...';
 	}
 
 	/**

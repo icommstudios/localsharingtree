@@ -71,26 +71,26 @@
 	// Add the category selections
 	$drop_down = wp_dropdown_categories( array(
 				'taxonomy' => 'gb_location',
-				'name' => 'gb_location',
+				'name' => 'gb_checkout_charity_location',
 				'class' => 'gb-charity-category-selections',
 				'hide_empty' => FALSE,
 				'echo' => 0,
 				'hierarchical' => true,
 				'show_option_none'   => ' -- Select one -- ',
 			) );
-	$fields[] = '<span class="category_charity_selection clearfix"><label for="gb_location">Filter by Location: </label>' . $drop_down . '</span>';
+	$fields[] = '<span class="category_charity_selection clearfix"><label for="gb_checkout_charity_location">Filter by Location: </label>' . $drop_down . '</span>';
 
 	// Add the category selections
 	$drop_down = wp_dropdown_categories( array(
 				'taxonomy' => 'gb_charity_type',
-				'name' => 'gb_charity_type',
+				'name' => 'gb_checkout_charity_type',
 				'class' => 'gb-charity-category-selections',
 				'hide_empty' => FALSE,
 				'echo' => 0,
 				'hierarchical' => true,
 				'show_option_none'   => ' -- Select one -- ',
 			) );
-	$fields[] = '<span class="category_charity_selection clearfix"><label for="gb_charity_type">Filter by Type: </label>' . $drop_down . '</span>';
+	$fields[] = '<span class="category_charity_selection clearfix"><label for="gb_checkout_charity_type">Filter by Type: </label>' . $drop_down . '</span>';
 
 	
 	?>

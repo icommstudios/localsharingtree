@@ -24,20 +24,55 @@ class Group_Buying_Infusionsoft extends Group_Buying_List_Services {
 		parent::__construct();
 		self::$app_name = get_option( self::APPNAME, '' );
 		self::$app_key = get_option( self::APPKEY, '' );
-
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
 
 		// Location meta
-		add_action ( gb_get_location_tax_slug().'_edit_form_fields', array( get_class(), 'infusion_input_metabox' ), 10, 2 );
-		add_action ( gb_get_location_tax_slug().'_add_form_fields', array( get_class(), 'infusion_input_metabox' ), 2 );
-		add_action ( 'edited_terms', array( get_class(), 'save_infusion_meta_data' ) );
+		add_action( gb_get_location_tax_slug().'_edit_form_fields', array( get_class(), 'infusion_input_metabox' ), 10, 2 );
+		add_action( gb_get_location_tax_slug().'_add_form_fields', array( get_class(), 'infusion_input_metabox' ), 2 );
+		add_action( 'edited_terms', array( get_class(), 'save_infusion_meta_data' ) );
 
-		// TODO finish these off
+		// Meta box
+		add_action( gb_get_location_tax_slug().'_edit_form_fields', array( get_class(), 'infusion_input_metabox' ), 10, 2 );
+		add_action( 'edited_terms', array( get_class(), 'save_infusion_meta_data' ) );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'infusionsoft' => array(
+				'title' => self::__( 'Inufusionsoft Subscription Service' ),
+				'weight' => 500,
+				'settings' => array(
+					self::APPNAME => array(
+						'label' => self::__( 'App Name' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$app_name
+							)
+						),
+					self::APPKEY => array(
+						'label' => self::__( 'App Key' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$app_key
+							)
+						),
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_List_Services::SETTINGS_PAGE );
 	}
 
 	public static function register() {
-		self::add_list_service( __CLASS__, self::__( 'Infusionsoft (in development)' ) );
+		self::add_list_service( __CLASS__, self::__( 'Infusionsoft' ) );
 	}
+
 	public function process_subscription() {
 
 		//##Include our XMLRPC Library###
@@ -110,7 +145,7 @@ class Group_Buying_Infusionsoft extends Group_Buying_List_Services {
 			parent::success( $_POST['deal_location'], $_POST['email_address'] );
 
 		} else {
-			Group_Buying_Controller::set_message( $result->faultString() );
+			SEC_Controller::set_message( $result->faultString() );
 		}
 
 		return;
@@ -155,32 +190,9 @@ class Group_Buying_Infusionsoft extends Group_Buying_List_Services {
 		return;
 	}
 
-	public function register_settings() {
-		$page = Group_Buying_List_Services::get_settings_page();
-		$section = 'gb_constantcontact_sub';
-		add_settings_section( $section, self::__( 'Inufusionsoft Subscription Service' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::APPNAME );
-		register_setting( $page, self::APPKEY );
-		add_settings_field( self::APPNAME, self::__( 'App Name' ), null, $page, $section );
-		add_settings_field( self::APPNAME, self::__( 'App Name' ), array( $this, 'display_name_field' ), $page, $section );
-		add_settings_field( self::APPKEY, self::__( 'App Key' ), array( $this, 'display_key_field' ), $page, $section );
-
-		// Location meta
-		add_action ( gb_get_location_tax_slug().'_edit_form_fields', array( get_class(), 'infusion_input_metabox' ), 10, 2 );
-		add_action ( 'edited_terms', array( get_class(), 'save_infusion_meta_data' ) );
-	}
-
-	public static function display_name_field() {
-		echo '<input type="text" name="'.self::APPNAME.'" value="'.self::$app_name.'" />';
-	}
-
-	public static function display_key_field() {
-		echo '<input type="text" name="'.self::APPKEY.'" value="'.self::$app_key.'" />';
-	}
 
 	public static function infusion_input_metabox( $tag ) {
-		$infusion_group = get_metadata( 'location_terms', $tag->term_id, 'infusion_group', TRUE );
-?>
+		$infusion_group = get_metadata( 'location_terms', $tag->term_id, 'infusion_group', TRUE ); ?>
 			</tbody>
 		</table>
 		<h3>Infusionsoft</h3>

@@ -4,11 +4,11 @@ if ( is_admin() ) {
 	add_filter( 'pre_set_site_transient_update_themes', 'gb_check_for_premium_theme_update' );
 }
 function gb_check_for_premium_theme_update( $trans ) {
-	$theme_slug = GBS_THEME_SLUG;
+	$theme_slug = SEC_THEME_SLUG;
 	$basename = basename( get_template_directory() );
-	$current_version = GBS_THEME_VERSION;
+	$current_version = SEC_THEME_VERSION;
 	
-	if ( method_exists( 'Group_Buying_Addons', 'get_addon_data' ) ) { // GBS 4.0+
+	if ( method_exists( 'Group_Buying_Addons', 'get_addon_data' ) ) { // SeC 4.0+
 		$theme_data = Group_Buying_Addons::get_addon_data( $theme_slug );
 		if ( $theme_data ) {
 			// Add addon upgrade data

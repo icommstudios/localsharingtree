@@ -283,7 +283,15 @@ class Group_Buying_Paypal_WPP extends Group_Buying_Credit_Card_Processors {
 								$payment->set_status( Group_Buying_Payment::STATUS_PARTIAL );
 							}
 						} else {
-							$this->set_error_messages( $response, FALSE );
+							$error = array(
+									'items_to_capture' => $items_to_capture,
+									'payment_id' => $payment->get_id(),
+									'response' => $response,
+								);
+							$this->set_error_messages( $error, FALSE );
+							if ( $response['L_ERRORCODE0'] == 10601 || 10602 ) { // authorization expired or authorization complete
+								$payment->set_status(Group_Buying_Payment::STATUS_VOID);
+							}
 						}
 					}
 				}

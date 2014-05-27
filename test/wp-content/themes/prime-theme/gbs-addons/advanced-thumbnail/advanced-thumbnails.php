@@ -1,12 +1,12 @@
 <?php
 
 /*
-Plugin Name: Group Buying Advanced Thumbnails
+Plugin Name: Smart eCart Advanced Thumbnails
 Version: 3.0
-Plugin URI: http://groupbuyingsite.com/features
+Plugin URI: http://smartecart.com/features
 Description: Allows users to use TimThumb for thumbnail cropping
-Author: GroupBuyingSite.com
-Author URI: http://groupbuyingsite.com/features
+Author: Smart eCart
+Author URI: http://smartecart.com/features
 Plugin Author: Dan Cameron
 Plugin Author URI: http://sproutventure.com/
 */
@@ -145,7 +145,7 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) && !class_exists( 'Group_Buying_Adv
 					'title'   => self::__( 'Advanced Thumbnails' ),
 					'content' =>
 					'<p><strong>' . self::__( 'Advanced Thumbnails?' ) . '</strong></p>' .
-					'<p>' . sprintf( self::__( 'The WordPress cropping functionality is rather limited, GBS includes TimThumb to allow advanced cropping and resizing. Documentation for the settings below and how to setup your server for caching can be found <a href="%s">here</a>. Warning: some hosts will not allow this functionality and some additional (unsupported) configuration may be required.' ), Group_Buying_Advanced_Thumbs::$documentation ) . '</p>'
+					'<p>' . sprintf( self::__( 'The WordPress cropping functionality is rather limited, SeC includes TimThumb to allow advanced cropping and resizing. Documentation for the settings below and how to setup your server for caching can be found <a href="%s">here</a>. Warning: some hosts will not allow this functionality and some additional (unsupported) configuration may be required.' ), Group_Buying_Advanced_Thumbs::$documentation ) . '</p>'
 				) );
 		}
 
@@ -154,7 +154,7 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) && !class_exists( 'Group_Buying_Adv
 
 			if ( is_array( $_wp_additional_image_sizes ) && ( is_array( $size ) || array_key_exists( $size, $_wp_additional_image_sizes ) ) ) {
 
-				$src = wp_get_attachment_image_src( $id, 'full' );
+				$src = wp_get_attachment_image_src( $id, 'large' );
 				$src = $src[0];
 
 				if ( is_array( $size ) ) {
@@ -176,7 +176,7 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) && !class_exists( 'Group_Buying_Adv
 						'q' => self::$quality,
 						'cc' => str_replace( '#', '', self::$cc),
 					),
-					get_bloginfo( 'template_url' ) . '/gbs-addons/advanced-thumbnail/timthumb.php' );
+					SEC_Theme_Setup::addons_folder_url() . '/advanced-thumbnail/timthumb.php' );
 
 				return array( $url, $w, $h, false );
 			}
@@ -205,6 +205,4 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) && !class_exists( 'Group_Buying_Adv
 	}
 }
 
-if ( !is_multisite() ) {
-	add_action( 'init', array( 'Group_Buying_Advanced_Thumbs', 'init' ), 5 );
-}
+add_action( 'init', array( 'Group_Buying_Advanced_Thumbs', 'init' ), 5 );

@@ -598,16 +598,24 @@ padding: 4px 8px;
    ================================================== */
 @media only screen and (max-width: 680px) {
 
-    img {
+body {
+    padding-top: 0px;
+}
+
+img {
         width: auto;
         height: auto;
         max-width: 100%;
-    }
-    
-    .fancybox_message_banner {
-        min-width: 100px
-    }
 }
+    
+.fancybox_message_banner {
+        min-width: 100px
+}
+
+.topnav-wrap {
+position: relative;
+}
+
 
 #navigation ul.sub-menu {
     z-index: 200

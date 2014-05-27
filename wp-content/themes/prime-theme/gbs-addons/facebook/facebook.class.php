@@ -1,12 +1,12 @@
 <?php
 
 /*
-Plugin Name: Group Buying Facebook Login Module
+Plugin Name: Smart eCart Facebook Login Module
 Version: 3.0
-Plugin URI: http://groupbuyingsite.com/features
+Plugin URI: http://smartecart.com/features
 Description: Allows users to login using their Facebook credentials and creates a Wordpress account for them.
-Author: GroupBuyingSite.com
-Author URI: http://groupbuyingsite.com/features
+Author: Smart eCart
+Author URI: http://smartecart.com/features
 Plugin Author: Nathan Stryker & Dan Cameron
 Plugin Author URI: http://sproutventure.com/
 */
@@ -36,7 +36,10 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 			self::$fb_app_id = get_option( self::APP_ID );
 			self::$fb_sec = get_option( self::KEY );
 			self::$reg_redirect = get_option( self::REG_REDIRECT, gb_get_account_url() );
-			add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
+
+			if ( is_admin() ) {
+				add_action( 'init', array( get_class(), 'register_options') );
+			}
 
 			if ( self::$fb_app_id != '' || self::$fb_app_id != '' ) {
 				add_action( 'parse_request', array( get_class(), 'connect' ) );
@@ -52,6 +55,45 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 
 		}
 
+		/**
+		 * Hooked on init add the settings page and options.
+		 *
+		 */
+		public static function register_options() {
+			// Settings
+			$settings = array(
+				'gb_facebook' => array(
+					'title' => self::__( 'Facebook Connect Settings' ),
+					'description' => self::__( 'Your facebook settings to allow members to login and visitors to register.' ),
+					'weight' => 200,
+					'settings' => array(
+						self::APP_ID => array(
+							'label' => self::__( 'Facebook App ID' ),
+							'option' => array(
+								'type' => 'text',
+								'default' => self::$fb_app_id
+								)
+							),
+						self::KEY => array(
+							'label' => self::__( 'Facebook Secret' ),
+							'option' => array(
+								'type' => 'text',
+								'default' => self::$fb_sec
+								)
+							),
+						self::REG_REDIRECT => array(
+							'label' => self::__( 'Redirect to this URL after Registration' ),
+							'option' => array(
+								'type' => 'text',
+								'default' => self::$reg_redirect
+								)
+							),
+						)
+					)
+				);
+			do_action( 'gb_settings', $settings, Group_Buying_Theme_UI::SETTINGS_PAGE );
+		}
+
 		public static function options_help_section() {
 			$screen = get_current_screen();
 			$screen->add_help_tab( array(
@@ -64,8 +106,10 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 		}
 
 		public static function fb_avatar( $gravatar, $user_id = 0, $size = 18, $default = null ) {
-			$current_user = wp_get_current_user();
-			if ( $user_id == $current_user->ID && self::is_facebook_logged_in() ) {
+			if ( !is_int( $user_id ) )
+				return $gravatar;
+				
+			if ( $user_id == get_current_user_id() && self::is_facebook_logged_in() ) {
 				return '<img src="https://graph.facebook.com/'.self::get_facebook_uid().'/picture?return_ssl_resources=1" width="'.$size.'" height="'.$size.'" />';
 			}
 			return $gravatar;
@@ -113,7 +157,7 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 
 		public static function log_out_url( $link ) {
 			if ( self::is_facebook_logged_in() != false ) {
-				$fb_link = '<a onclick="logoutFacebookUser()" href="javascript:void()" title="'.gb__( 'Logout' ).'" class="logout">'.gb__( 'Logout' ).'</a>';
+				$fb_link = '<a onclick="logoutFacebookUser()" href="javascript:void()" title="'.sec__( 'Logout' ).'" class="logout">'.sec__( 'Logout' ).'</a>';
 				$link = apply_filters( 'gb_facebook_log_out_url', $fb_link );
 			}
 			echo $link;
@@ -220,34 +264,6 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 			}
 		}
 
-		public static function register_settings_fields() {
-			$page = parent::$theme_settings_page;
-			$section = 'gb_facebook';
-			add_settings_section( $section, self::__( 'Facebook Connect Section' ), array( get_class(), 'display_facebook_section' ), $page );
-			register_setting( $page, self::APP_ID );
-			register_setting( $page, self::KEY );
-			register_setting( $page, self::REG_REDIRECT );
-
-			add_settings_field( self::APP_ID, self::__( 'Facebook App ID' ), array( get_class(), 'display_app_id' ), $page, $section );
-			add_settings_field( self::KEY, self::__( 'Facebook Secret' ), array( get_class(), 'display_security_key' ), $page, $section );
-			add_settings_field( self::REG_REDIRECT, self::__( 'Redirect to this URL after Registration' ), array( get_class(), 'display_reg_redirect' ), $page, $section );
-		}
-
-		public static function display_facebook_section() {
-			echo self::__( 'Your facebook settings to allow members to login and visitors to register.' );
-		}
-
-		public static function display_app_id() {
-			echo '<input type="text" class="regular-text" name="'.self::APP_ID.'" value="'.self::$fb_app_id.'" />';
-		}
-
-		public static function display_security_key() {
-			echo '<input type="text" class="regular-text" name="'.self::KEY.'" value="'.self::$fb_sec.'" />';
-		}
-
-		public static function display_reg_redirect() {
-			echo '<input type="text" class="regular-text" name="'.self::REG_REDIRECT.'" value="'.self::$reg_redirect.'" />';
-		}
 		/*
 		 * Singleton Design Pattern
 		 * ------------------------------------------------------------- */
@@ -324,7 +340,7 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 				}
 				else {
 					$errors = json_decode( $access_token_response );
-					if ( self::DEBUG ) gb_set_message( gb__('<strong>Facebook Connect Error:</strong> ') . $errors->error->message, Group_Buying_Controller::MESSAGE_STATUS_ERROR );
+					if ( self::DEBUG ) gb_set_message( sec__('<strong>Facebook Connect Error:</strong> ') . $errors->error->message, SEC_Controller::MESSAGE_STATUS_ERROR );
 				}
 
 			}
@@ -491,7 +507,7 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 
 		public static function show_registration_option() {
 			echo '<fb:login-button id="facebook_registration_button" class="facebook_button clearfix">';
-			echo self::button( 'Register with Facebook' );
+			echo self::button( gb__('Register with Facebook') );
 			echo '</fb:login-button><!-- #facebook_registration_button.facebook_button-->';
 
 		}
@@ -499,4 +515,4 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 
 	}
 }
-add_action( 'init', array( 'Group_Buying_Facebook_Connect', 'init' )  );
+add_action( 'init', array( 'Group_Buying_Facebook_Connect', 'init' ), 5  );

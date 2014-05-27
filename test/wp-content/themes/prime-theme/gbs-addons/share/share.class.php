@@ -1,12 +1,12 @@
 <?php
 
 /*
-Plugin Name: Group Buying Advanced Thumbnails
+Plugin Name: Smart eCart Advanced Thumbnails
 Version: 3.0
-Plugin URI: http://groupbuyingsite.com/features
+Plugin URI: http://smartecart.com/features
 Description: Allows users to use TimThumb for thumbnail cropping
-Author: GroupBuyingSite.com
-Author URI: http://groupbuyingsite.com/features
+Author: Smart eCart
+Author URI: http://smartecart.com/features
 Plugin Author: Dan Cameron
 Plugin Author URI: http://sproutventure.com/
 */

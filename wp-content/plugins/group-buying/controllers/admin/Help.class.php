@@ -80,14 +80,14 @@ class Group_Buying_Help extends Group_Buying_Controller {
 					'title'   => self::__( 'Payments Settings' ),
 					'content' =>
 					'<p><strong>' . self::__( 'Configuring Payment Settings.' ) . '</strong></p>' .
-					'<p>' . sprintf( self::__( '<a href="%s">A walkthrough video</a> is provided in the support forums.' ), 'http://groupbuyingsite.com/forum/showthread.php?813-Payment-Settings' ) . '</p>'
+					'<p>' . sprintf( self::__( '<a href="%s">A walkthrough video</a> is provided in the support forums.' ), 'http://smartecart.com/forum/showthread.php?813-Payment-Settings' ) . '</p>'
 				) );
 			$screen->add_help_tab( array(
 					'id'      => 'payments-help-ssl', // This should be unique for the screen.
 					'title'   => self::__( 'SSL on Checkout' ),
 					'content' =>
 					'<p><strong>' . self::__( 'Highly recommended for production sites accepting credit cards.' ) . '</strong></p>' .
-					'<p>' . sprintf( self::__( 'When using on-site purchasing options like PayPal Pro and Authorize.net, it&rsquo;s highly recommended that GBS users purchase and integrate an SSL (Secure Sockets Layer) Certificate for their group buying site. Ideally, you would want your hosting provider to install the SSL certificate for you. You will also need to follow the additional steps in our <a href="%s">SSL Integration Documentation</a> to fully secure your checkout pages.' ), 'http://groupbuyingsite.com/forum/showthread.php?810-SSL-Integration' ) . '</p>'
+					'<p>' . sprintf( self::__( 'When using on-site purchasing options like PayPal Pro and Authorize.net, it&rsquo;s highly recommended that GBS users purchase and integrate an SSL (Secure Sockets Layer) Certificate for their group buying site. Ideally, you would want your hosting provider to install the SSL certificate for you. You will also need to follow the additional steps in our <a href="%s">SSL Integration Documentation</a> to fully secure your checkout pages.' ), 'http://smartecart.com/forum/showthread.php?810-SSL-Integration' ) . '</p>'
 				) );
 			$screen->add_help_tab( array(
 					'id'      => 'payments-help-addons', // This should be unique for the screen.
@@ -196,21 +196,21 @@ class Group_Buying_Help extends Group_Buying_Controller {
 				'title'   => self::__( 'Question about GBS' ),
 				'content' =>
 				'<p><strong>' . self::__( 'Do you have a question about GBS?' ) . '</strong></p>' .
-				'<p>' . sprintf( self::__( 'Try <a href="%s">searching the forums</a> to find a quick answer.' ), 'http://groupbuyingsite.com/forum/search.php' ) . '</p>'
+				'<p>' . sprintf( self::__( 'Try <a href="%s">searching the forums</a> to find a quick answer.' ), 'http://smartecart.com/forum/search.php' ) . '</p>'
 			) );
 		$screen->add_help_tab( array(
 				'id'      => 'general-options-problem', // This should be unique for the screen.
 				'title'   => self::__( 'Experiencing a problem' ),
 				'content' =>
 				'<p><strong>' . self::__( 'Are you experiencing trouble with your GBS site?' ) . '</strong></p>' .
-				'<p>' . sprintf( self::__( 'Please see these <a href="%s">tips for troubleshooting</a> and search the forums for a solution. If you can\'t find a solution after searching the forums, create a forum post and someone will assist you as soon as possible.' ), 'http://groupbuyingsite.com/forum/forumdisplay.php?39-Troubleshooting-Help' ) . '</p>'
+				'<p>' . sprintf( self::__( 'Please see these <a href="%s">tips for troubleshooting</a> and search the forums for a solution. If you can\'t find a solution after searching the forums, create a forum post and someone will assist you as soon as possible.' ), 'http://smartecart.com/forum/forumdisplay.php?39-Troubleshooting-Help' ) . '</p>'
 			) );
 		$screen->add_help_tab( array(
 				'id'      => 'general-options-critical', // This should be unique for the screen.
 				'title'   => self::__( 'Critical problem' ),
 				'content' =>
 				'<p><strong>' . self::__( 'Critical problem with a production/live site after a recent GBS update?' ) . '</strong></p>' .
-				'<p>' . sprintf( self::__( '<a href="%s">Submit a helpdesk ticket</a> (making sure to read the helpdesk criteria) after creating a forum thread.' ), 'http://groupbuyingsite.com/forum/support.php?do=newticket' ) . '</p>'.
+				'<p>' . sprintf( self::__( '<a href="%s">Submit a helpdesk ticket</a> (making sure to read the helpdesk criteria) after creating a forum thread.' ), 'http://smartecart.com/forum/support.php?do=newticket' ) . '</p>'.
 				'<p>' . self::__( 'Helpdesk support is limited, so please make sure to read the criteria and notes before submitting a new ticket.' ) . '</p>'
 			) );
 		$screen->add_help_tab( array(
@@ -218,14 +218,14 @@ class Group_Buying_Help extends Group_Buying_Controller {
 				'title'   => self::__( 'Customizations' ),
 				'content' =>
 				'<p><strong>' . self::__( 'In need of a custom feature or custom theme for your site?' ) . '</strong></p>' .
-				'<p>' . sprintf( self::__( 'You should never edit GBS plugins or themes directly.  All customizations should be made using a <a href="%s">child theme</a>.' ), 'http://groupbuyingsite.com/forum/showthread.php?3203-Setting-Up-and-Using-a-Child-Theme' ) . '</p>'.
-				'<p>' . sprintf( self::__( 'GBS developers provide some custom development services for GBS site owners. Select the &quot;Development Request&quot; option when <a href="%s">submitting a new helpdesk ticket</a> and we will provide assistance.' ), 'http://groupbuyingsite.com/forum/support.php?do=newticket' ) . '</p>'.
+				'<p>' . sprintf( self::__( 'You should never edit GBS plugins or themes directly.  All customizations should be made using a <a href="%s">child theme</a>.' ), 'http://smartecart.com/forum/showthread.php?3203-Setting-Up-and-Using-a-Child-Theme' ) . '</p>'.
+				'<p>' . sprintf( self::__( 'GBS developers provide some custom development services for GBS site owners. Select the &quot;Development Request&quot; option when <a href="%s">submitting a new helpdesk ticket</a> and we will provide assistance.' ), 'http://smartecart.com/forum/support.php?do=newticket' ) . '</p>'.
 				'<p>' . sprintf( self::__( 'GBS has a flourishing developer community, a select few have <a href="%s">profiles on our site</a>.' ), 'http://groupbuyingsite.com/developers/' ) . '</p>'
 			) );
 		$screen->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
 			'<p>' . self::__( '<a href="http://groupbuyingsite.com/docs/" target="_blank">Documentation on GBS</a>' ) . '</p>' .
-			'<p>' . self::__( '<a href="http://groupbuyingsite.com/forum/" target="_blank">Support Forums</a>' ) . '</p>'
+			'<p>' . self::__( '<a href="http://smartecart.com/forum/" target="_blank">Support Forums</a>' ) . '</p>'
 		);
 	}
 
@@ -248,15 +248,15 @@ class Group_Buying_Help extends Group_Buying_Controller {
 					'title'   => self::__( 'Deal Management' ),
 					'content' =>
 					'<p><strong>' . self::__( 'How to add a deal.' ) . '</strong></p>' .
-					'<p>' . sprintf( self::__( 'A video walkthrough of <a href="%s">adding a deal</a> is available in the forum.' ), 'http://groupbuyingsite.com/forum/showthread.php?745-Adding-a-Deal' ) . '</p>' .
+					'<p>' . sprintf( self::__( 'A video walkthrough of <a href="%s">adding a deal</a> is available in the forum.' ), 'http://smartecart.com/forum/showthread.php?745-Adding-a-Deal' ) . '</p>' .
 					'<p><strong>' . self::__( 'Warning:' ) . '</strong></p>' .
 					'<p>' . self::__( 'Deleting completed deals can cause front facing error messages on users\' account pages.' ) . '</p>'
 				) );
 
 			$screen->set_help_sidebar(
 				'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
-				'<p>' . self::__( '<a href="http://groupbuyingsite.com/forum/showthread.php?745-Adding-a-Deal" target="_blank">Documentation on Adding Deals</a>' ) . '</p>' .
-				'<p>' . self::__( '<a href="http://groupbuyingsite.com/forum/" target="_blank">Support Forums</a>' ) . '</p>'
+				'<p>' . self::__( '<a href="http://smartecart.com/forum/showthread.php?745-Adding-a-Deal" target="_blank">Documentation on Adding Deals</a>' ) . '</p>' .
+				'<p>' . self::__( '<a href="http://smartecart.com/forum/" target="_blank">Support Forums</a>' ) . '</p>'
 			);
 		}
 		/**
@@ -271,7 +271,7 @@ class Group_Buying_Help extends Group_Buying_Controller {
 					'content' =>
 					'<p><strong>' . self::__( 'What is a Merchant?' ) . '</strong></p>' .
 					'<p>' . self::__( 'Merchants provide a method to profile the business associated with a deal. Create merchants is simple.' ) . '</p>' .
-					'<p>' . sprintf( self::__( 'A video walkthrough of <a href="%s">adding a merchant</a> is available in the forum.' ), 'http://groupbuyingsite.com/forum/showthread.php?808-Adding-a-Merchant' ) . '</p>',
+					'<p>' . sprintf( self::__( 'A video walkthrough of <a href="%s">adding a merchant</a> is available in the forum.' ), 'http://smartecart.com/forum/showthread.php?808-Adding-a-Merchant' ) . '</p>',
 				) );
 			$screen->add_help_tab( array(
 					'id'      => 'merchant-help-assign', // This should be unique for the screen.
@@ -282,8 +282,8 @@ class Group_Buying_Help extends Group_Buying_Controller {
 				) );
 			$screen->set_help_sidebar(
 				'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
-				'<p>' . self::__( '<a href="http://groupbuyingsite.com/forum/showthread.php?808-Adding-a-Merchant" target="_blank">Documentation on Adding Merchants</a>' ) . '</p>' .
-				'<p>' . self::__( '<a href="http://groupbuyingsite.com/forum/" target="_blank">Support Forums</a>' ) . '</p>'
+				'<p>' . self::__( '<a href="http://smartecart.com/forum/showthread.php?808-Adding-a-Merchant" target="_blank">Documentation on Adding Merchants</a>' ) . '</p>' .
+				'<p>' . self::__( '<a href="http://smartecart.com/forum/" target="_blank">Support Forums</a>' ) . '</p>'
 			);
 		}
 		/**
@@ -435,15 +435,15 @@ class Group_Buying_Help extends Group_Buying_Controller {
 					'<p><strong>' . self::__( 'Deal Pricing.' ) . '</strong></p>' .
 					'<p>' . self::__( 'Options to set the deal pricing.' ) . '</p>' .
 					'<p><strong>' . self::__( 'Dynamic Pricing.' ) . '</strong></p>' .
-					'<p>' . sprintf( self::__( 'The milestone pricing (a.k.a. dynamic pricing) feature allows you to set lower prices as more sales are generated for a deal or product. Sales milestones must be achieved before a lower price is activated for all buyers and all buyers will pay the same price when the deal ends (<a href="%s">compatible gateway required</a>).' ), 'http://groupbuyingsite.com/forum/showthread.php?1138-Purchase-Limits-Missing' ) . '</p>' .
+					'<p>' . sprintf( self::__( 'The milestone pricing (a.k.a. dynamic pricing) feature allows you to set lower prices as more sales are generated for a deal or product. Sales milestones must be achieved before a lower price is activated for all buyers and all buyers will pay the same price when the deal ends (<a href="%s">compatible gateway required</a>).' ), 'http://smartecart.com/forum/showthread.php?1138-Purchase-Limits-Missing' ) . '</p>' .
 
 					'<p><strong>' . self::__( 'Tax Settings.' ) . '</strong></p>' .
 					'<p>' . sprintf( self::__( 'Tax rates and options are <a href="%s">are available here</a>.' ), admin_url( 'admin.php?page=group-buying/gb_tax_settings' ) ) . '</p>' .
-					'<p>' . sprintf( self::__( 'A video walkthrough of <a href="%s">the tax settings</a> is available in the forum.' ), 'http://groupbuyingsite.com/forum/showthread.php?3456-Tax-Settings' ) . '</p>' .
+					'<p>' . sprintf( self::__( 'A video walkthrough of <a href="%s">the tax settings</a> is available in the forum.' ), 'http://smartecart.com/forum/showthread.php?3456-Tax-Settings' ) . '</p>' .
 
 					'<p><strong>' . self::__( 'Shipping Settings.' ) . '</strong></p>' .
 					'<p>' . sprintf( self::__( 'Shipping rates and options are <a href="%s">are available here</a>.' ), admin_url( 'admin.php?page=group-buying/gb_shipping_settings' ) ) . '</p>' .
-					'<p>' . sprintf( self::__( 'A video walkthrough of <a href="%s">the shipping settings</a> is available in the forum.' ), 'http://groupbuyingsite.com/forum/showthread.php?3457-Shipping-Settings' ) . '</p>',
+					'<p>' . sprintf( self::__( 'A video walkthrough of <a href="%s">the shipping settings</a> is available in the forum.' ), 'http://smartecart.com/forum/showthread.php?3457-Shipping-Settings' ) . '</p>',
 
 				) );
 			$screen->add_help_tab( array(
@@ -451,7 +451,7 @@ class Group_Buying_Help extends Group_Buying_Controller {
 					'title'   => self::__( 'Purchase Limits' ),
 					'content' =>
 					'<p><strong>' . self::__( 'Minimum Sales Required.' ) . '</strong></p>' .
-					'<p>' . sprintf( self::__( 'Some gateways don\'t allow multiple captures of the same authorization the purchase needs to be captured immediately.  In those cases, there are no tipping points or purchase requirements. <a href="%s">Read more about it here</a>.' ), 'http://groupbuyingsite.com/forum/showthread.php?1138-Purchase-Limits-Missing' ) . '</p>' .
+					'<p>' . sprintf( self::__( 'Some gateways don\'t allow multiple captures of the same authorization the purchase needs to be captured immediately.  In those cases, there are no tipping points or purchase requirements. <a href="%s">Read more about it here</a>.' ), 'http://smartecart.com/forum/showthread.php?1138-Purchase-Limits-Missing' ) . '</p>' .
 					'<p>' . sprintf( self::__( 'If you require purchase limits and your gateway has this restriction, GBS has an add-on module that limits the cart to only allow for a single deal purchase; with custom payment gateways that allow for authorization and capturing of funds so purchase limits can be used.' ), 'http://groupbuyingsite.com/marketplace/single-deal-purchases-with-purchase-limits/' ) . '</p>'
 
 				) );

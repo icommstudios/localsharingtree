@@ -7,6 +7,7 @@
  * @subpackage Payment Processing
  */
 abstract class Group_Buying_Payment_Processors extends Group_Buying_Controller {
+	const SETTINGS_PAGE = 'payment';
 	const PAYMENT_PROCESSOR_OPTION = 'gb_payment_processor';
 	const CURRENCY_SYMBOL_OPTION = 'gb_currency_symbol';
 	const MONEY_FORMAT_OPTION = 'gb_money_format';
@@ -14,19 +15,95 @@ abstract class Group_Buying_Payment_Processors extends Group_Buying_Controller {
 	const AJAX_NONCE = 'gbs_payment_processors_nonce';
 	private static $payment_processor;
 	private static $active_payment_processor_class;
-	protected static $settings_page;
 	private static $potential_processors = array();
 	private static $currency_symbol;
 	private static $money_format;
 
+	public static function get_settings_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
+
 	final public static function init() {
-		self::$settings_page = self::register_settings_page( 'payment', self::__( 'Group Buying Payment Options' ), self::__( 'Payment Settings' ), 15, FALSE, 'general' );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
-		self::get_payment_processor();
 		self::$currency_symbol = get_option( self::CURRENCY_SYMBOL_OPTION, '$' );
 		self::$money_format = get_option( self::MONEY_FORMAT_OPTION, '%0.2f' );
+		self::get_payment_processor();
+		self::register_settings();
 
 		add_action( 'wp_ajax_gb_manually_capture_payment',  array( get_class(), 'manually_capture_payment' ), 10, 0 );
+	}
+
+	public function register_settings() {
+
+		// Addon page
+		$args = array(
+			'slug' => self::get_settings_page( FALSE ),
+			'title' => self::__( 'Group Buying Payment Options' ),
+			'menu_title' => self::__( 'Payment Settings' ),
+			'weight' => 3,
+			'reset' => FALSE, 
+			'section' => 'general',
+			'ajax' => TRUE,
+			'ajax_full_page' => TRUE
+			);
+		do_action( 'gb_settings_page', $args );
+
+
+		// Settings
+		$settings = array(
+			'gb_general_settings' => array(
+				'title' => 'General Options',
+				'weight' => 0,
+				'settings' => array(
+					self::PAYMENT_PROCESSOR_OPTION => array(
+						'label' => self::__( 'Payment Processor' ),
+						'option' => array(
+							'type' => 'select',
+							'options' => self::$potential_processors,
+							'default' => self::$active_payment_processor_class
+						)
+					),
+					self::CURRENCY_SYMBOL_OPTION => array(
+						'label' => self::__( 'Currency Symbol' ),
+						'option' => array(
+							'type' => 'text',
+							'label' => '',
+							'default' => self::$currency_symbol,
+							'attributes' => array( 'class' => 'small-text' )
+						),
+						'description' => self::__( 'If you want the symbol after the value, use a % before your currency symbol. Example, %&pound; ' )
+					),
+					self::CREDIT_TYPE_EXCHANGE_RATES => array(
+						'label' => self::__( 'Credit Exchange Rates' ),
+						'option' => array( get_class(), 'display_credit_type_exchange' ),
+						'sanitize_callback' => array( get_class(), 'save_exchange_rates' )
+					)
+				)
+			)
+		);
+		do_action( 'gb_settings', $settings, self::SETTINGS_PAGE );
+
+	}
+
+	public static function display_credit_type_exchange() {
+		$types = apply_filters( 'gb_account_credit_types', array() );
+		foreach ( $types as $type => $name ) {
+			?>
+			<p>
+				<em><?php echo $name ?>:</em> <input type="number" name="<?php echo self::CREDIT_TYPE_EXCHANGE_RATES.'_'.$type ?>" value="<?php echo self::get_credit_exchange_rate( $type ) ?>" class="small-text"> <?php printf( self::__('credit equals %s for purchases.'), gb_get_formatted_money(1,FALSE) ) ?>
+			</p>
+			<?php
+		}
+		echo '<p class="description">'.self::__( 'Changing a ratio does not change your customers/accounts credit balance. It is not recommended to change the "Account Balance" ratio, since most GBS themes have this "credit" formatted as money.' ).'</p>';
+	}
+
+	public static function save_exchange_rates( $value = null ) {
+		$types = apply_filters( 'gb_account_credit_types', array() );
+		foreach ( $types as $type => $name ) {
+			$key = self::CREDIT_TYPE_EXCHANGE_RATES . '_' . $type;
+			if ( isset( $_POST[ $key ] ) ) {
+				update_option( $key, $_POST[ $key ] );
+			}
+		}
 	}
 
 	/**
@@ -44,16 +121,6 @@ abstract class Group_Buying_Payment_Processors extends Group_Buying_Controller {
 		} else {
 			return NULL;
 		}
-	}
-
-	/**
-	 *
-	 *
-	 * @static
-	 * @return string The ID of the payment settings page
-	 */
-	public static function get_settings_page() {
-		return self::$settings_page;
 	}
 
 	/*
@@ -151,23 +218,6 @@ abstract class Group_Buying_Payment_Processors extends Group_Buying_Controller {
 		$checkout->mark_page_incomplete( Group_Buying_Checkouts::PAYMENT_PAGE );
 	}
 
-	public static function register_settings_fields() {
-		register_setting( self::$settings_page, self::PAYMENT_PROCESSOR_OPTION );
-		register_setting( self::$settings_page, self::CURRENCY_SYMBOL_OPTION );
-		register_setting( self::$settings_page, self::CREDIT_TYPE_EXCHANGE_RATES, array( get_class(), 'save_exchange_rates' )  );
-		add_settings_field( self::PAYMENT_PROCESSOR_OPTION, self::__( 'Payment Processor' ), array( get_class(), 'display_payment_processor_selection' ), self::$settings_page );
-		add_settings_field( self::CURRENCY_SYMBOL_OPTION, self::__( 'Currency Symbol' ), array( get_class(), 'display_currency_symbol_selection' ), self::$settings_page );
-		add_settings_field( self::CREDIT_TYPE_EXCHANGE_RATES, self::__( 'Credit Exchange Rates' ), array( get_class(), 'display_credit_type_exchange' ), self::$settings_page );
-	}
-
-	public static function display_payment_processor_selection() {
-		echo '<select name="'.self::PAYMENT_PROCESSOR_OPTION.'">';
-		foreach ( self::$potential_processors as $class => $label ) {
-			echo '<option value="'.$class.'" '.selected( self::$active_payment_processor_class, $class ).'>'.$label.'</option>';
-		}
-		echo '</select>';
-	}
-
 	public static function get_registered_processors( $filter = '' ) {
 		$processors = self::$potential_processors;
 		switch ( $filter ) {
@@ -197,33 +247,6 @@ abstract class Group_Buying_Payment_Processors extends Group_Buying_Controller {
 
 	public static function is_offsite_processor( $class ) {
 		return is_subclass_of($class, 'Group_Buying_Offsite_Processors');
-	}
-
-	public static function display_currency_symbol_selection() {
-		echo '<input type="text" name="'.self::CURRENCY_SYMBOL_OPTION.'" value="'.self::$currency_symbol.'" size="5" /><br/><small>'.self::__( 'If you want the symbol after the value, use a % before your currency symbol. Example, %&pound; ' ).'</small>';
-	}
-
-	public static function display_credit_type_exchange() {
-		$types = apply_filters( 'gb_account_credit_types', array() );
-		foreach ( $types as $type => $name ) {
-			?>
-			<p>
-
-				<em><?php echo $name ?>:</em> <input type="number" name="<?php echo self::CREDIT_TYPE_EXCHANGE_RATES.'_'.$type ?>" value="<?php echo self::get_credit_exchange_rate( $type ) ?>" class="small-text"> <?php printf( self::__('credit equals %s for purchases.'), gb_get_formatted_money(1,FALSE) ) ?>
-			</p>
-			<?php
-		}
-		echo '<small>'.self::__( 'Changing a ratio does not change your customers/accounts credit balance. It is not recommended to change the "Account Balance" ratio, since most GBS themes have this "credit" formatted as money.' ).'</small>';
-	}
-
-	public static function save_exchange_rates( $value = null ) {
-		$types = apply_filters( 'gb_account_credit_types', array() );
-		foreach ( $types as $type => $name ) {
-			$key = self::CREDIT_TYPE_EXCHANGE_RATES . '_' . $type;
-			if ( isset( $_POST[ $key ] ) ) {
-				update_option( $key, $_POST[ $key ] );
-			}
-		}
 	}
 
 	public static function get_credit_exchange_rate( $credit_type ) {

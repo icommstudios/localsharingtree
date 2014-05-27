@@ -836,7 +836,7 @@ function gb_get_deal_savings( $post_id = 0 ) {
 	}
 	$deal = Group_Buying_Deal::get_instance( $post_id );
 	$savings = $deal->get_amount_saved();
-	if ( empty( $savings ) || $savings = '' ) {
+	if ( empty( $savings ) || $savings == '' ) {
 		$original_price = str_replace( '$', '', gb_get_deal_worth( $post_id ) );
 		if ( empty( $original_price ) ) {
 			return apply_filters( 'gb_get_deal_savings', '' );

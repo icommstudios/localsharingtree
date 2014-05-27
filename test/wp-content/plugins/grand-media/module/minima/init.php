@@ -1,132 +1,106 @@
 <?php
-/** @var $module_meta
- * @var  $module_dir
- * @var  $upload
- * @var  $jsInit
- * @var  $jsRun
+/** @var $gmDB
+ * @var  $gmCore
+ * @var  $gmGallery
+ * @var  $gallery
+ * @var  $module
+ * @var  $settings
+ * @var  $term
+ * @var  $gmedia
+ * @var  $is_bot
  **/
-$jsInit .= "var gmMinima_ID{$module_meta['term_id']},\n";
-$jsInit .= "gmMinima_ID{$module_meta['term_id']}_Settings = {\n";
-$a = array();
-if ( isset( $module_meta['width'] ) )
-	$a[] = "	'width': '" . intval( $module_meta['width'] ) . ( strpos( $module_meta['width'], '%' ) ? '%' : '' ) . "'";
-if ( isset( $module_meta['height'] ) )
-	$a[] = "	'height': '" . intval( $module_meta['height'] ) . ( strpos( $module_meta['height'], '%' ) ? '%' : '' ) . "'";
-if ( isset( $module_meta['autoSlideshow'][0] ) )
-	$a[] = "	'autoSlideshow': " . ( empty( $module_meta['autoSlideshow'][0] ) ? 'false' : 'true' ) . ' /* autoSlideshow */';
-if ( isset( $module_meta['slideshowDelay'] ) )
-	$a[] = "	'slideshowDelay': " . intval( $module_meta['slideshowDelay'] ) . ' /* slideshowDelay */';
-if ( isset( $module_meta['thumbnailsWidth'] ) )
-	$a[] = "	'thumbnailsWidth': " . intval( $module_meta['thumbnailsWidth'] ) . ' /* thumbnailsWidth */';
-if ( isset( $module_meta['thumbnailsHeight'] ) )
-	$a[] = "	'thumbnailsHeight': " . intval( $module_meta['thumbnailsHeight'] ) . ' /* thumbnailsHeight */';
-if ( isset( $module_meta['property0'] ) )
-	$a[] = "	'property0': '{$module_meta['property0']}'" . ' /* wmode */';
-if ( isset( $module_meta['property1'] ) )
-	$a[] = "	'property1': '0x{$module_meta['property1']}'" . ' /* bgColor */';
-if ( isset( $module_meta['counterStatus'][0] ) )
-	$a[] = "	'counterStatus': " . ( empty( $module_meta['counterStatus'][0] ) ? 'false' : 'true' ) . ' /* counterStatus */';
-if ( isset( $module_meta['barBgColor'] ) )
-	$a[] = "	'barBgColor': '0x{$module_meta['barBgColor']}'" . ' /* barBgColor */';
-if ( isset( $module_meta['labelColor'] ) )
-	$a[] = "	'labelColor': '0x{$module_meta['labelColor']}'" . ' /* labelColor */';
-if ( isset( $module_meta['labelColorOver'] ) )
-	$a[] = "	'labelColorOver': '0x{$module_meta['labelColorOver']}'" . ' /* labelColorOver */';
-if ( isset( $module_meta['backgroundColorButton'] ) )
-	$a[] = "	'backgroundColorButton': '0x{$module_meta['backgroundColorButton']}'" . ' /* backgroundColorButton */';
-if ( isset( $module_meta['descriptionBGColor'] ) )
-	$a[] = "	'descriptionBGColor': '0x{$module_meta['descriptionBGColor']}'" . ' /* descriptionBGColor */';
-if ( isset( $module_meta['descriptionBGAlpha'] ) )
-	$a[] = "	'descriptionBGAlpha': " . intval( $module_meta['descriptionBGAlpha'] ) . ' /* descriptionBGAlpha */';
-if ( isset( $module_meta['imageTitleColor'] ) )
-	$a[] = "	'imageTitleColor': '0x{$module_meta['imageTitleColor']}'" . ' /* imageTitleColor */';
-if ( isset( $module_meta['galleryTitleFontSize'] ) )
-	$a[] = "	'galleryTitleFontSize': " . intval( $module_meta['galleryTitleFontSize'] ) . ' /* galleryTitleFontSize */';
-if ( isset( $module_meta['titleFontSize'] ) )
-	$a[] = "	'titleFontSize': " . intval( $module_meta['titleFontSize'] ) . ' /* titleFontSize */';
-if ( isset( $module_meta['imageDescriptionColor'] ) )
-	$a[] = "	'imageDescriptionColor': '0x{$module_meta['imageDescriptionColor']}'" . ' /* imageDescriptionColor */';
-if ( isset( $module_meta['descriptionFontSize'] ) )
-	$a[] = "	'descriptionFontSize': " . intval( $module_meta['descriptionFontSize'] ) . ' /* descriptionFontSize */';
-if ( isset( $module_meta['linkColor'] ) )
-	$a[] = "	'linkColor': '0x{$module_meta['linkColor']}'" . ' /* linkColor */';
+$content = array();
+if(!isset($is_bot)){ $is_bot = false; }
+$tab = sanitize_title($gallery['name']);
+foreach($terms as $term){
 
-if ( isset( $module_meta['backButtonColorText'] ) )
-	$a[] = "	'backButtonColorText': '0x{$module_meta['backButtonColorText']}'" . ' /* backButtonTextColor */';
-if ( isset( $module_meta['backButtonColorBg'] ) )
-	$a[] = "	'backButtonColorBg': '0x{$module_meta['backButtonColorBg']}'" . ' /* backButtonBgColor */';
+	$c = array(
+		'gid' => "{$tab}_{$term->term_id}",
+		'name' => sanitize_key($term->name),
+		'title' => $term->name,
+		'description' => str_replace(array("\r\n", "\r", "\n"), '', wpautop($term->description)),
+		'path' => $gmCore->upload['url'],
+		'data' => array()
+	);
 
-if ( isset( $module_meta['swfMouseWheel'][0] ) )
-	$a[] = "	'swfMouseWheel': " . ( empty( $module_meta['swfMouseWheel'][0] ) ? 'false' : 'true' );
-if ( isset( $module_meta['hitcounter'][0] ) )
-	$a[] = "	'hitcounter': " . ( empty( $module_meta['hitcounter'][0] ) ? 'false' : 'true' );
-
-if ( isset( $module_meta['loveLink'][0] ) )
-	$a[] = "	'loveLink': " . ( empty( $module_meta['loveLink'][0] ) ? 'false' : 'true' );
-
-$a[] = "	'moduleName': '" . esc_js( $module_meta['name'] ) . "'";
-$a[] = "	'pluginUrl': '" . plugins_url( GRAND_FOLDER ) . "'";
-$a[] = "	'libraryUrl': '" . rtrim( $upload['url'], '/' ) . "'";
-$a[] = "	'moduleUrl': '" . $module_dir['url'] . "'";
-
-if ( is_page() ) {
-	global $post;
-	$a[] = "	'postID': " . intval( $post->ID );
-	$a[] = "	'postTitle': '" . esc_url( $post->title ) . "'";
-}
-
-$jsInit .= implode( ",\n", $a ) . "\n";
-$jsInit .= "},\n";
-
-$jsInit .= "gmMinima_ID{$module_meta['term_id']}_Content = [\n";
-$a = array();
-$crunch = array();
-/**
- * @var $gMDb
- * @var $grandCore
- */
-foreach ( $module_meta['gMediaQuery'] as $i => $tab ) {
-
-	$gMediaQuery = $gMDb->get_gmedias( $tab );
-	if ( empty( $gMediaQuery ) ) {
+	foreach($gmedia[$term->term_id] as $item){
+		if('image' != substr($item->mime_type, 0, 5)){
+			continue;
+		}
+		$meta['views'] = intval($gmDB->get_metadata('gmedia', $item->ID, 'views', true));
+		$meta['likes'] = intval($gmDB->get_metadata('gmedia', $item->ID, 'likes', true));
+		$_metadata = $gmDB->get_metadata('gmedia', $item->ID, '_metadata', true);
+		if(!empty($item->link)){
+			$item->title = '<a href="' . $item->link . '"><b>' . $item->title . '</b></a>';
+		}
+		$c['data'][] = array(
+			'pid' => $item->ID,
+			'filename' => "/{$gmGallery->options['folder']['image']}/{$item->gmuid}",
+			'thumb' => "/{$gmGallery->options['folder']['image_thumb']}/{$item->gmuid}",
+			'alttext' => $item->title,
+			'description' => str_replace(array("\r\n", "\r", "\n"), '', wpautop($item->description)),
+			'link' => $item->link,
+			'date' => $item->date,
+			'views' => $meta['views'],
+			'likes' => $meta['likes'],
+			'websize' => array_values($_metadata['web']),
+			'thumbsize' => array_values($_metadata['thumb'])
+		);
+	}
+	if(!count($c['data'])){
 		continue;
 	}
-
-	$name   = isset( $tab['tabname'] ) ? $tab['tabname'] : $module_meta['name'];
-	$tabkey = sanitize_key( $name );
-	$a[$i]  = "	{'gid':'{$i}','name':'{$tabkey}','title':" . json_encode( $name ) . ",'galdesc':" . json_encode( $module_meta['description'] ) . ",'path':" . json_encode(rtrim( $upload['url'], '/' )) . ",'data':[\n";
-
-	$b = array();
-	foreach ( $gMediaQuery as $item ) {
-		$meta['views'] = intval($gMDb->get_metadata('gmedia', $item->ID, 'views', true));
-		$meta['likes'] = intval($gMDb->get_metadata('gmedia', $item->ID, 'likes', true));
-		$meta['link'] = $gMDb->get_metadata('gmedia', $item->ID, 'link', true);
-		$_metadata = $gMDb->get_metadata('gmedia', $item->ID, '_metadata', true);
-		$args = array(
-			'id' => $item->ID,
-			'file' => $item->gmuid,
-			'width' => $_metadata['width'],
-			'height' => $_metadata['height'],
-			'crop' => 1,
-			'max_w' => isset($module_meta['thumbnailsWidth'])? $module_meta['thumbnailsWidth'] : 75,
-			'max_h' => isset($module_meta['thumbnailsHeight'])? $module_meta['thumbnailsHeight'] : 75
-		);
-		$thumb = $grandCore->linked_img($args, false);
-		if(isset($thumb['crunch'])){
-			$crunch[] = $thumb['crunch'];
-		}
-		$b[]   = "		{'pid': '{$item->ID}','filename': '/{$gmOptions['folder']['image']}/{$item->gmuid}','thumb': '/{$gmOptions['folder']['link']}/{$thumb['file']}','alttext': " . json_encode( $item->title ) . ",'description': " . json_encode( str_replace(array("\r\n", "\r", "\n"), '', wpautop($item->description)) ) . ",'link':" . json_encode($meta['link']) . ",'imagedate': '{$item->date}','views': '{$meta['views']}','likes': '{$meta['likes']}','w': '{$_metadata['width']}','h': '{$_metadata['height']}'}";
-	}
-	$a[$i] .= implode( ",\n", $b ) . "\n";
-	$a[$i] .= "	]}";
-}
-if ( empty( $a ) ) {
-	$continue = true;
+	$content[] = $c;
 }
 
-$jsInit .= implode( ",\n", $a ) . "\n";
-$jsInit .= "];\n\n";
-if (!empty($crunch)){
-	$jsInit .= "var gmMinima_ID{$module_meta['term_id']}_Crunch = ".json_encode($crunch).";\n\n";
+if(!empty($content)){
+	$settings = array_merge($settings, array(
+		'ID' => $gallery['term_id'],
+		'moduleName' => $gallery['name'],
+		'moduleUrl' => $module['url'],
+		'pluginUrl' => $gmCore->gmedia_url,
+		'libraryUrl' => $gmCore->upload['url']
+	));
+	?>
+	<div id="gmMinima_ID<?php echo $gallery['term_id']; ?>_Container">
+		<script type="text/javascript">
+			var GmediaGallery_<?php echo $gallery['term_id']; ?>;
+			jQuery(function(){
+				var settings = <?php echo json_encode($settings); ?>;
+				var content = <?php echo json_encode($content); ?>;
+				GmediaGallery_<?php echo $gallery['term_id']; ?> = jQuery('#GmediaGallery_<?php echo $gallery['term_id'] ?>').gmMinima([content, settings]);
+			});
+		</script>
+		<?php if(!$is_bot) { echo '<script type="text/html" id="flashmodule_alternative_'.$gallery['term_id'].'">'; }
+		?><div class="flashmodule_alternative <?php if(!$is_bot) { echo 'delay'; } ?> noLightbox">
+			<div class="gmcatlinks"><?php
+				foreach($content as $cat){
+					echo "<a class='gmcat' href='#{$cat['gid']}'>{$cat['title']}</a>";
+				}
+				?></div>
+<?php foreach($content as $cat){ ?>
+			<div class="gmcategory" id="<?php echo $cat['gid']; ?>"><div class="gmcatmeta"><h4><?php echo $cat['title']; ?></h4><?php echo $cat['description']; ?></div>
+				<?php $i = 0;
+				foreach($cat['data'] as $item){
+					$orientation = (1 < $item['thumbsize'][0]/$item['thumbsize'][1])? 'landscape' : 'portrait';
+					?><div class="gmcatimage gm_<?php echo $i; ?>" id="gmid_<?php echo $item['pid']; ?>"><?php
+					?><a class="photoswipe" href="<?php echo $settings['libraryUrl'].$item['filename']; ?>" title="<?php echo esc_attr($item['alttext']); ?>" rel="<?php echo $cat['gid']; ?>" data-id="<?php echo $item['pid']; ?>" data-width="<?php echo $item['websize'][0]; ?>" data-height="<?php echo $item['websize'][1]; ?>" data-date="<?php echo $item['date']; ?>"><?php
+					?><img class="<?php echo $orientation; ?>" src="<?php echo $settings['libraryUrl'].$item['thumb']; ?>" alt="<?php echo esc_attr($item['alttext']); ?>" /><?php
+					//$views = (intval($item['views']) < 10000) ? $item['views'] : round($item['views']/1000, 1).'k';
+					//$likes = (intval($item['likes']) < 10000) ? $item['likes'] : round($item['likes']/1000, 1).'k';
+					//echo '<span class="gmcatimage_counters"><i>'.$views.'</i><b>'.$likes.'</b></span>';
+					?></a><?php
+					?><div class="gmcatimage_caption"><div class="gmcatimage_title"><?php echo $item['alttext']; ?></div><div class="gmcatimage_description"><?php echo $item['description']; ?></div></div><?php
+					?></div><?php
+					$i++;
+				} ?></div>
+<?php } ?>
+		</div><?php
+		if(!$is_bot) { echo '</script>'; } ?>
+	</div>
+<?php
+} else{
+	echo GMEDIA_GALLERY_EMPTY;
 }
-$jsRun .= "	gmMinima_ID{$module_meta['term_id']} = jQuery('#gmMinima_ID{$module_meta['term_id']}').gmMinima();\n\n";
+
+

@@ -7,13 +7,35 @@
  * @subpackage Payment
  */
 class Group_Buying_Payments extends Group_Buying_Controller {
-	protected static $settings_page;
+	const SETTINGS_PAGE = 'payment_records';
+
+	public static function get_admin_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
 
 	public static function init() {
-		//add_action('admin_menu', array(get_class(), 'payments_menu'),10);
-		self::$settings_page = self::register_settings_page( 'payment_records', self::__( 'Payment Records' ), self::__( 'Payments' ), 8, FALSE, 'records', array( get_class(), 'display_table' ) );
+		self::register_settings();
 
 		add_filter( 'views_group-buying_page_group-buying/payment_records', array( get_class(), 'modify_views' ) );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'Payments' ),
+			'menu_title' => self::__( 'Payments' ),
+			'weight' => 14,
+			'reset' => FALSE, 
+			'section' => 'records',
+			'callback' => array( get_class(), 'display_table' )
+			);
+		do_action( 'gb_settings_page', $args );
 	}
 
 	public function modify_views( $views ) {
@@ -73,7 +95,7 @@ class Group_Buying_Payments extends Group_Buying_Controller {
 		<div class="wrap">
 			<?php screen_icon(); ?>
 			<h2 class="nav-tab-wrapper">
-				<?php self::display_admin_tabs(); ?>
+				<?php do_action( 'gb_settings_tabs' ); ?>
 			</h2>
 
 			 <?php $wp_list_table->views() ?>

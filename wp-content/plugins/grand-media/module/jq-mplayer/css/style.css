@@ -11,14 +11,19 @@
 .gm-music-player .gmmp-player {
 	width: 100%;
 	overflow: hidden;
+	height: auto;
+	border: none;
+	background: transparent none;
 }
 
 /** Album Cover **/
 .gm-music-player .gmmp-album-cover {
 	position: relative;
+	overflow: hidden;
+	text-align:center;
 	float: left;
 	margin: 0 20px 10px 0;
-	background: #333 url(../img/album-cover-bg.jpg) no-repeat 0 0 scroll;;
+	background: #333 url(../img/album-cover-bg.jpg) no-repeat 0 0 scroll;
 	box-shadow: 0px 1px 4px rgba(0, 0, 0, .75);
 	-moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, .75);
 	-webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, .75);
@@ -31,6 +36,10 @@
 	background-position:center center;
 	background-repeat:no-repeat;
 	background-color:transparent;
+	height:125px;
+	display:inline-block;
+	position:relative;
+	left:50%;
 }
 
 .gm-music-player .gmmp-album-cover .gmmp-highlight {
@@ -44,21 +53,25 @@
 }
 
 .gm-music-player .gmmp-album-cover,
-.gm-music-player .gmmp-album-cover .gmmp-img,
 .gm-music-player .gmmp-album-cover .gmmp-highlight {
 	display: block;
 	height: 125px;
 	width: 125px;
 }
 
-.gm-music-player .gmmp-album-cover img,
-.gm-music-player .gmmp-album-cover .gmmp-img,
 .gm-music-player .gmmp-album-cover .gmmp-highlight {
 	position: absolute;
 	top: 0;
 	left: 0;
 	height:125px;
 	width:125px;
+}
+.gm-music-player .gmmp-album-cover img {
+	display:block;
+	margin:0 0 0 -50%;
+	border:none;
+	height:125px;
+	width:auto;
 }
 
 /** Track Info **/
@@ -77,10 +90,12 @@
 	font-style: italic;
 }
 
-.gm-music-player .gmmp-rating {
-	display: none;
+.gmmp-player .gmmp-rating {
 	width: 75px;
 	height: 16px;
+	position: absolute;
+	left: 50%; bottom:5px;
+	margin-left:-38px;
 }
 
 .gm-music-player .gmmp-rating-star {
@@ -93,8 +108,8 @@
 }
 
 .gm-music-player .gmmp-rating-star:hover,
-.gm-music-player .gmmp-rating-star.on,
-.gm-music-player .gmmp-rating-star.hover {
+.gm-music-player .gmmp-rating-star.gmmp-on,
+.gm-music-player .gmmp-rating-star.gmmp-hover {
 	background: transparent url(../img/rating-on.png) no-repeat center center scroll;
 }
 
@@ -273,11 +288,11 @@
 }
 
 .gm-music-player .gmmp-tracklist .gmmp-rating {
-	display: none;
 	overflow: hidden;
 	width: auto;
 	height: auto;
 	white-space: nowrap;
+	margin-left:10px;
 }
 
 .gm-music-player .gmmp-rating-bar {
@@ -290,12 +305,13 @@
 
 .gm-music-player .gmmp-rating-bar.gmmp-on,
 .gm-music-player .gmmp-rating-bar:hover,
-.gm-music-player .gmmp-rating-bar.hover {
+.gm-music-player .gmmp-rating-bar.gmmp-hover {
 	background: transparent url(../img/rating-bar-on.png) no-repeat 0 0 scroll;
 }
 
 body div.gm-music-player .gmmp-button {
 	display: inline-block;
+	vertical-align:middle;
 	border-radius: 8px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;

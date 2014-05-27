@@ -52,13 +52,58 @@ class Group_Buying_Authorize_Net extends Group_Buying_Credit_Card_Processors {
 		$this->api_password = get_option( self::API_PASSWORD_OPTION, '' );
 		$this->api_mode = get_option( self::API_MODE_OPTION, self::MODE_TEST );
 
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
+		
 		add_action( 'purchase_completed', array( $this, 'complete_purchase' ), 10, 1 );
 
 		// Limitations
 		add_filter( 'group_buying_template_meta_boxes/deal-expiration.php', array( $this, 'display_exp_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-price.php', array( $this, 'display_price_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-limits.php', array( $this, 'display_limits_meta_box' ), 10 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'gb_authorizenet_settings' => array(
+				'title' => self::__( 'Authorize.net' ),
+				'weight' => 200,
+				'settings' => array(
+					self::API_MODE_OPTION => array(
+						'label' => self::__( 'Mode' ),
+						'option' => array(
+							'type' => 'radios',
+							'options' => array(
+								self::MODE_LIVE => self::__( 'Live' ),
+								self::MODE_TEST => self::__( 'Sandbox' ),
+								),
+							'default' => get_option( self::API_MODE_OPTION, self::MODE_TEST )
+							)
+						),
+					self::API_USERNAME_OPTION => array(
+						'label' => self::__( 'API Login (Username)' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => get_option( self::API_USERNAME_OPTION, '' )
+							)
+						),
+					self::API_PASSWORD_OPTION => array(
+						'label' => self::__( 'Transaction Key (Password)' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => get_option( self::API_PASSWORD_OPTION, '' )
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_Payment_Processors::SETTINGS_PAGE );
 	}
 
 	public static function register() {
@@ -408,32 +453,6 @@ class Group_Buying_Authorize_Net extends Group_Buying_Credit_Card_Processors {
 
 		//$AIMdata= array_map('rawurlencode', $AIMdata);
 		return $AIMdata;
-	}
-
-	public function register_settings() {
-		$page = Group_Buying_Payment_Processors::get_settings_page();
-		$section = 'gb_authorizenet_settings';
-		add_settings_section( $section, self::__( 'Authorize.net' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::API_MODE_OPTION );
-		register_setting( $page, self::API_USERNAME_OPTION );
-		register_setting( $page, self::API_PASSWORD_OPTION );
-		add_settings_field( self::API_MODE_OPTION, self::__( 'Mode' ), array( $this, 'display_api_mode_field' ), $page, $section );
-		add_settings_field( self::API_USERNAME_OPTION, self::__( 'API Login (Username)' ), array( $this, 'display_api_username_field' ), $page, $section );
-		add_settings_field( self::API_PASSWORD_OPTION, self::__( 'Transaction Key (Password)' ), array( $this, 'display_api_password_field' ), $page, $section );
-		//add_settings_field(null, self::__('Currency'), array($this, 'display_currency_code_field'), $page, $section);
-	}
-
-	public function display_api_username_field() {
-		echo '<input type="text" name="'.self::API_USERNAME_OPTION.'" value="'.$this->api_username.'" size="80" />';
-	}
-
-	public function display_api_password_field() {
-		echo '<input type="text" name="'.self::API_PASSWORD_OPTION.'" value="'.$this->api_password.'" size="80" />';
-	}
-
-	public function display_api_mode_field() {
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_LIVE.'" '.checked( self::MODE_LIVE, $this->api_mode, FALSE ).'/> '.self::__( 'Live' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_TEST.'" '.checked( self::MODE_TEST, $this->api_mode, FALSE ).'/> '.self::__( 'Sandbox' ).'</label>';
 	}
 
 	public function display_currency_code_field() {

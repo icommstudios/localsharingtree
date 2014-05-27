@@ -10,7 +10,7 @@
 abstract class GB_Aggregator_Plugin extends Group_Buying_Controller {
 	const COMPONENTS_TO_LOAD_OPTION = 'gb_load_aggregator_components';
 	protected static $settings_page = 'group-buying/gb_aggregator_settings';
-	protected static $about_link = 'http://groupbuyingsite.com/forum/showthread.php?2843-Welcome-to-the-Syndication-Service';
+	protected static $about_link = 'http://smartecart.com/forum/showthread.php?2843-Welcome-to-the-Syndication-Service';
 
 	public static function init() {
 		self::load_plugin();

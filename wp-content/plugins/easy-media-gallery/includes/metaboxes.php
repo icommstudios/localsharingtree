@@ -4,13 +4,13 @@
 /*-----------------------------------------------------------------------------------*/
 /*  Featured Image Meta
 /*-----------------------------------------------------------------------------------*/
-function customposttype_image_box() {
+function emg_customposttype_image_box() {
 	remove_meta_box( 'postimagediv', 'easymediagallery', 'side' );
 	remove_meta_box( 'emediagallerydiv', 'easymediagallery', 'side' );
 	add_meta_box( 'categorydiv', __( 'Media Categories' ), 'easymediagallery_categories_meta_box', 'easymediagallery', 'normal', 'high' );
 	add_meta_box( 'donatediv', __( 'Donate Us' ), 'easmedia_donate_metabox', 'easymediagallery', 'side', 'default' );
 }
-add_action( 'do_meta_boxes', 'customposttype_image_box' );
+add_action( 'do_meta_boxes', 'emg_customposttype_image_box' );
 
 /*-----------------------------------------------------------------------------------*/
 /*	get rid of WordPress SEO metabox - http://wordpress.stackexchange.com/a/91184/2015
@@ -542,7 +542,7 @@ function easmedia_metabox_work(){
 	    $meta_box = array(
 		'id' => 'easmedia_metaboxmediatypeselect',
 		'title' =>  __( 'Media Options', 'easmedia' ),
-		'description' => __( '<div class="emginfobox">Upgrade to PRO and you can select <a href="http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/" target="_blank">Grid Gallery</a>, <a href="http://ghozylab.com/best-photo-albums-wordpress-plugin/" target="_blank">Photo Albums</a>, <a href="http://ghozylab.com/wordpress-filterable-gallery-and-filterable-media-plugin/" target="_blank">Filterable Media</a>, HTML5 Video/Audio, Google Maps/Street View, embed from Soundcloud or Reverbnation and also Link to specific URL. You can learn more and see version comparison <a href="edit.php?post_type=easymediagallery&page=comparison">here</a> or go to Pro Version DEMO <a href="http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/" target="_blank">here</a></div><br>Select videos, images, gallery or audio files.', 'easmedia' ),
+		'description' => __( '<div class="emginfobox"><span class="emg_blink">Upgrade to PRO</span> and you can select <a href="http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/" target="_blank">Grid Gallery</a>, <a href="http://ghozylab.com/best-photo-albums-wordpress-plugin/" target="_blank">Photo Albums</a>, <a href="http://ghozylab.com/wordpress-filterable-gallery-and-filterable-media-plugin/" target="_blank">Filterable Media</a>, HTML5 Video/Audio, Google Maps/Street View, embed from Soundcloud or Reverbnation and also Link to specific URL. You can learn more and see version comparison <a href="edit.php?post_type=easymediagallery&page=comparison">here</a> or go to Pro Version DEMO <a href="http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/" target="_blank">here</a></div><br>Select videos, images, gallery or audio files.', 'easmedia' ),
 		'page' => 'easymediagallery',
 		'context' => 'normal',
 		'priority' => 'default',

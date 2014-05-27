@@ -123,7 +123,9 @@ class Group_Buying_Paypal_AP extends Group_Buying_Offsite_Processors {
 		add_action( 'save_post', array( $this, 'save_meta_box' ), 10, 2 );
 
 		// payment options
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
 
 		// Send offsite and handle the return
 		add_action( 'gb_send_offsite_for_payment', array( $this, 'send_offsite' ), 10, 1 );
@@ -142,6 +144,84 @@ class Group_Buying_Paypal_AP extends Group_Buying_Offsite_Processors {
 
 		// checkout controls customizations
 		add_filter( 'gb_checkout_payment_controls', array( $this, 'payment_controls' ), 20, 2 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'gb_paypalwpp_settings' => array(
+				'title' => self::__( 'PayPal Adaptive Payments' ),
+				'weight' => 200,
+				'settings' => array(
+					self::API_MODE_OPTION => array(
+						'label' => self::__( 'Mode' ),
+						'option' => array(
+							'type' => 'radios',
+							'options' => array(
+								self::MODE_LIVE => self::__( 'Live' ),
+								self::MODE_TEST => self::__( 'Sandbox' ),
+								),
+							'default' => self::$api_mode
+							)
+						),
+					self::API_USERNAME_OPTION => array(
+						'label' => self::__( 'API Username' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$api_username
+							)
+						),
+					self::API_PASSWORD_OPTION => array(
+						'label' => self::__( 'API Password' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$api_password
+							)
+						),
+					self::API_SIGNATURE_OPTION => array(
+						'label' => self::__( 'API Signature' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$api_signature
+							)
+						),
+					self::APP_ID_OPTION => array(
+						'label' => self::__( 'Application ID' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$app_id
+							)
+						),
+					self::CURRENCY_CODE_OPTION => array(
+						'label' => self::__( 'Currency Code' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$currency_code,
+							'attributes' => array( 'class' => 'small-text' )
+							)
+						),
+					self::RETURN_URL_OPTION => array(
+						'label' => self::__( 'Return URL' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$return_url
+							)
+						),
+					self::CANCEL_URL_OPTION => array(
+						'label' => self::__( 'Cancel URL' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$cancel_url
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_Payment_Processors::SETTINGS_PAGE );
 	}
 
 	/**
@@ -542,6 +622,7 @@ class Group_Buying_Paypal_AP extends Group_Buying_Offsite_Processors {
 		$url = self::get_api_url().'/'.$method_name;
 		$post_string = self::make_nvp( $post_array );
 		$response = wp_remote_post( $url, array(
+				'httpversion' => '1.1',
 				'method' => 'POST',
 				'headers' => array(
 					'X-PAYPAL-REQUEST-DATA-FORMAT' => 'NV',
@@ -603,67 +684,6 @@ class Group_Buying_Paypal_AP extends Group_Buying_Offsite_Processors {
 	public static function get_token() {
 		global $blog_id;
 		return get_user_meta( get_current_user_id(), $blog_id.'_'.self::TOKEN_KEY, TRUE );
-	}
-
-
-	/////////////
-	// Options //
-	/////////////
-
-
-	public function register_settings() {
-		$page = Group_Buying_Payment_Processors::get_settings_page();
-		$section = 'gb_paypalwpp_settings';
-		add_settings_section( $section, self::__( 'PayPal Adaptive Payments' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::API_MODE_OPTION );
-		register_setting( $page, self::API_USERNAME_OPTION );
-		register_setting( $page, self::API_PASSWORD_OPTION );
-		register_setting( $page, self::API_SIGNATURE_OPTION );
-		register_setting( $page, self::APP_ID_OPTION );
-		register_setting( $page, self::CURRENCY_CODE_OPTION );
-		register_setting( $page, self::RETURN_URL_OPTION );
-		register_setting( $page, self::CANCEL_URL_OPTION );
-		add_settings_field( self::API_MODE_OPTION, self::__( 'Mode' ), array( $this, 'display_api_mode_field' ), $page, $section );
-		add_settings_field( self::API_USERNAME_OPTION, self::__( 'API Username' ), array( $this, 'display_api_username_field' ), $page, $section );
-		add_settings_field( self::API_PASSWORD_OPTION, self::__( 'API Password' ), array( $this, 'display_api_password_field' ), $page, $section );
-		add_settings_field( self::API_SIGNATURE_OPTION, self::__( 'API Signature' ), array( $this, 'display_api_signature_field' ), $page, $section );
-		add_settings_field( self::APP_ID_OPTION, self::__( 'Application ID' ), array( $this, 'display_app_id_field' ), $page, $section );
-		add_settings_field( self::CURRENCY_CODE_OPTION, self::__( 'Currency Code' ), array( $this, 'display_currency_code_field' ), $page, $section );
-		add_settings_field( self::RETURN_URL_OPTION, self::__( 'Return URL' ), array( $this, 'display_return_field' ), $page, $section );
-		add_settings_field( self::CANCEL_URL_OPTION, self::__( 'Cancel URL' ), array( $this, 'display_cancel_field' ), $page, $section );
-	}
-
-	public function display_api_username_field() {
-		echo '<input type="text" name="'.self::API_USERNAME_OPTION.'" value="'.self::$api_username.'" size="80" />';
-	}
-
-	public function display_api_password_field() {
-		echo '<input type="text" name="'.self::API_PASSWORD_OPTION.'" value="'.self::$api_password.'" size="80" />';
-	}
-
-	public function display_api_signature_field() {
-		echo '<input type="text" name="'.self::API_SIGNATURE_OPTION.'" value="'.self::$api_signature.'" size="80" />';
-	}
-
-	public function display_app_id_field() {
-		echo '<input type="text" name="'.self::APP_ID_OPTION.'" value="'.self::$app_id.'" size="80" />';
-	}
-
-	public function display_return_field() {
-		echo '<input type="text" name="'.self::RETURN_URL_OPTION.'" value="'.self::$return_url.'" size="80" />';
-	}
-
-	public function display_cancel_field() {
-		echo '<input type="text" name="'.self::CANCEL_URL_OPTION.'" value="'.self::$cancel_url.'" size="80" />';
-	}
-
-	public function display_api_mode_field() {
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_LIVE.'" '.checked( self::MODE_LIVE, self::$api_mode, FALSE ).'/> '.self::__( 'Live' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_TEST.'" '.checked( self::MODE_TEST, self::$api_mode, FALSE ).'/> '.self::__( 'Sandbox' ).'</label>';
-	}
-
-	public function display_currency_code_field() {
-		echo '<input type="text" name="'.self::CURRENCY_CODE_OPTION.'" value="'.self::$currency_code.'" size="5" />';
 	}
 
 	////////////////
@@ -756,7 +776,7 @@ class Group_Buying_Paypal_AP extends Group_Buying_Offsite_Processors {
 
 	public function set_share_percentage( $post_id, $is_share_percentage = FALSE, Group_Buying_Deal $deal ) {
 		update_post_meta( $post_id, self::$meta_keys['share_percentage'], $is_share_percentage );
-		return $share_percentage;
+		return $is_share_percentage;
 	}
 
 	public function is_share_percentage( $post_id, $is_share_percentage = FALSE ) {

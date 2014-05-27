@@ -1,3 +1,15 @@
+Version 4.7
+-----------
+- New Administration changes
+- Add-on Marketplace fixes
+- WP Affiliate Platform changes
+- Allow for images to not be added to the description after deal submission, via gb_auto_add_multiple_images_to_description filter.
+- Child theme installation fix for certain version of WP.
+- Content feed bug repeating content
+
+4.7.0.1 - Bug Fix: Records returning arrays as strings in $record->data.
+4.7.2.1 - Notifications causing errors on account edit page.
+
 Version 4.6
 -----------
 
@@ -25,6 +37,13 @@ Developer info
 4.6.3.1 - Better Records conversion, fix for voucher filtering and fix force login issues.
 
 4.6.4 - New function gb_user_has_voucher and allow for errors to not be logged, SSL update for forcing https:// on checkout, SSL optimizations.
+
+4.6.4.1 - WordPress 3.7 compatibility update for redirecting away from wp-login.php and password protected content submissions.
+
+4.6.5 - Registration page showing blank content under certain circumstances.
+
+4.6.6 - Fix white screen issue on checkout if logs are created (happens with certain versions of PHP), fix guest checkout php notice, syndication bug fix, merchant purchase report fix, states and countries filter fix, select2 upgrade and other minor fixes.
+
 
 Version: 4.5
 ------------

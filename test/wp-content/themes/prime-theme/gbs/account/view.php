@@ -92,7 +92,7 @@
 						?>
 						<tr>
 							<td class="purchase_deal_title">
-								<span class="deal_title clearfix"><?php echo get_the_title($postID) ?></span>
+								<span class="deal_title clearfix"><?php echo get_the_title() ?></span>
 								<?php if (gb_has_merchant_name($dealID)): ?>
 									<br/>
 									<p class="merchant_link font_xx_small all_caps"><a href="<?php gb_merchant_url($dealID) ?>" class="button contrast_button"><?php gb_e('Merchant Info') ?></a></p>

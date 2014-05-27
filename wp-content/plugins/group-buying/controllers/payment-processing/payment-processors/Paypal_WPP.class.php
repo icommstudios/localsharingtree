@@ -52,10 +52,70 @@ class Group_Buying_Paypal_WPP extends Group_Buying_Credit_Card_Processors {
 		$this->api_mode = get_option( self::API_MODE_OPTION, self::MODE_TEST );
 		$this->currency_code = get_option( self::CURRENCY_CODE_OPTION, 'USD' );
 
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
+
 		add_action( 'purchase_completed', array( $this, 'capture_purchase' ), 10, 1 );
 		add_action( self::CRON_HOOK, array( $this, 'capture_pending_payments' ) );
 		add_action( 'gb_manually_capture_purchase', array( $this, 'manually_capture_purchase' ), 10, 1 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'gb_paypal_settings' => array(
+				'title' => self::__( 'PayPal Payments Pro' ),
+				'weight' => 200,
+				'settings' => array(
+					self::API_MODE_OPTION => array(
+						'label' => self::__( 'Mode' ),
+						'option' => array(
+							'type' => 'radios',
+							'options' => array(
+								self::MODE_LIVE => self::__( 'Live' ),
+								self::MODE_TEST => self::__( 'Sandbox' ),
+								),
+							'default' => get_option( self::API_MODE_OPTION, self::MODE_TEST )
+							)
+						),
+					self::API_USERNAME_OPTION => array(
+						'label' => self::__( 'API Username' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => get_option( self::API_USERNAME_OPTION, '' )
+							)
+						),
+					self::API_PASSWORD_OPTION => array(
+						'label' => self::__( 'API Password' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => get_option( self::API_PASSWORD_OPTION, '' )
+							)
+						),
+					self::API_SIGNATURE_OPTION => array(
+						'label' => self::__( 'API Signature' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => get_option( self::API_SIGNATURE_OPTION, '' )
+							)
+						),
+					self::CURRENCY_CODE_OPTION => array(
+						'label' => self::__( 'Currency Code' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => get_option( self::CURRENCY_CODE_OPTION, 'USD' ),
+							'attributes' => array( 'class' => 'small-text' )
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_Payment_Processors::SETTINGS_PAGE );
 	}
 
 	public static function register() {
@@ -97,6 +157,7 @@ class Group_Buying_Paypal_WPP extends Group_Buying_Credit_Card_Processors {
 		do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal WPP post_data', $post_data );
 
 		$response = wp_remote_post( $this->get_api_url(), array(
+				'httpversion' => '1.1',
 				'body' => $post_data,
 				'timeout' => apply_filters( 'http_request_timeout', 15 ),
 				'sslverify' => false
@@ -196,6 +257,7 @@ class Group_Buying_Paypal_WPP extends Group_Buying_Credit_Card_Processors {
 					do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal WPP DoCapture Request', $post_data );
 
 					$response = wp_remote_post( $this->get_api_url(), array(
+							'httpversion' => '1.1',
 							'body' => $post_data,
 							'timeout' => apply_filters( 'http_request_timeout', 15 ),
 							'sslverify' => false
@@ -221,7 +283,15 @@ class Group_Buying_Paypal_WPP extends Group_Buying_Credit_Card_Processors {
 								$payment->set_status( Group_Buying_Payment::STATUS_PARTIAL );
 							}
 						} else {
-							$this->set_error_messages( $response, FALSE );
+							$error = array(
+									'items_to_capture' => $items_to_capture,
+									'payment_id' => $payment->get_id(),
+									'response' => $response,
+								);
+							$this->set_error_messages( $error, FALSE );
+							if ( $response['L_ERRORCODE0'] == 10601 || 10602 ) { // authorization expired or authorization complete
+								$payment->set_status(Group_Buying_Payment::STATUS_VOID);
+							}
 						}
 					}
 				}
@@ -430,6 +500,7 @@ class Group_Buying_Paypal_WPP extends Group_Buying_Credit_Card_Processors {
 		do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal WPP Recurring Payment Request ', $nvpData );
 
 		$response = wp_remote_post( self::get_api_url(), array(
+				'httpversion' => '1.1',
 				'method' => 'POST',
 				'body' => $nvpData,
 				'timeout' => apply_filters( 'http_request_timeout', 15 ),
@@ -556,6 +627,7 @@ class Group_Buying_Paypal_WPP extends Group_Buying_Credit_Card_Processors {
 		do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal WPP Recurring Payment Details Request', $nvp );
 
 		$response = wp_remote_post( self::get_api_url(), array(
+				'httpversion' => '1.1',
 				'method' => 'POST',
 				'body' => $nvp,
 				'timeout' => apply_filters( 'http_request_timeout', 15 ),
@@ -614,6 +686,7 @@ class Group_Buying_Paypal_WPP extends Group_Buying_Credit_Card_Processors {
 		do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal WPP Cancel Recurring Payment Request', $nvp );
 
 		$response = wp_remote_post( self::get_api_url(), array(
+				'httpversion' => '1.1',
 				'method' => 'POST',
 				'body' => $nvp,
 				'timeout' => apply_filters( 'http_request_timeout', 15 ),
@@ -644,43 +717,6 @@ class Group_Buying_Paypal_WPP extends Group_Buying_Credit_Card_Processors {
 			return $country;
 		}
 		return 'US';
-	}
-
-	public function register_settings() {
-		$page = Group_Buying_Payment_Processors::get_settings_page();
-		$section = 'gb_paypal_settings';
-		add_settings_section( $section, self::__( 'PayPal Payments Pro' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::API_MODE_OPTION );
-		register_setting( $page, self::API_USERNAME_OPTION );
-		register_setting( $page, self::API_PASSWORD_OPTION );
-		register_setting( $page, self::API_SIGNATURE_OPTION );
-		register_setting( $page, self::CURRENCY_CODE_OPTION );
-		add_settings_field( self::API_MODE_OPTION, self::__( 'Mode' ), array( $this, 'display_api_mode_field' ), $page, $section );
-		add_settings_field( self::API_USERNAME_OPTION, self::__( 'API Username' ), array( $this, 'display_api_username_field' ), $page, $section );
-		add_settings_field( self::API_PASSWORD_OPTION, self::__( 'API Password' ), array( $this, 'display_api_password_field' ), $page, $section );
-		add_settings_field( self::API_SIGNATURE_OPTION, self::__( 'API Signature' ), array( $this, 'display_api_signature_field' ), $page, $section );
-		add_settings_field( self::CURRENCY_CODE_OPTION, self::__( 'Currency Code' ), array( $this, 'display_currency_code_field' ), $page, $section );
-	}
-
-	public function display_api_username_field() {
-		echo '<input type="text" name="'.self::API_USERNAME_OPTION.'" value="'.$this->api_username.'" size="80" />';
-	}
-
-	public function display_api_password_field() {
-		echo '<input type="text" name="'.self::API_PASSWORD_OPTION.'" value="'.$this->api_password.'" size="80" />';
-	}
-
-	public function display_api_signature_field() {
-		echo '<input type="text" name="'.self::API_SIGNATURE_OPTION.'" value="'.$this->api_signature.'" size="80" />';
-	}
-
-	public function display_api_mode_field() {
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_LIVE.'" '.checked( self::MODE_LIVE, $this->api_mode, FALSE ).'/> '.self::__( 'Live' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_TEST.'" '.checked( self::MODE_TEST, $this->api_mode, FALSE ).'/> '.self::__( 'Sandbox' ).'</label>';
-	}
-
-	public function display_currency_code_field() {
-		echo '<input type="text" name="'.self::CURRENCY_CODE_OPTION.'" value="'.$this->currency_code.'" size="5" />';
 	}
 }
 Group_Buying_Paypal_WPP::register();

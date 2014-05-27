@@ -31,8 +31,8 @@
 	$css_class = $widget == "true" ? "widget_width_thumb". $unique_id : "width_thumb ";
 	for($flag = 0; $flag< count($pics); $flag++) 
 	{
-        $image_title = $image_title_setting == 1 && $pics[$flag]->title != "" ? "<h5>" . html_entity_decode(stripcslashes(htmlspecialchars($pics[$flag]->title))). "</h5>" : "";
-        $image_description = $image_desc_setting == 1 && $pics[$flag]->description != ""  ? "<p>" . html_entity_decode(stripcslashes(htmlspecialchars($pics[$flag]->description))) ."</p>" : "";
+        $image_title = $image_title_setting == 1 && $pics[$flag]->title != "" ? "<h5>" . esc_attr(html_entity_decode(stripcslashes(htmlspecialchars($pics[$flag]->title)))). "</h5>" : "";
+        $image_description = $image_desc_setting == 1 && $pics[$flag]->description != ""  ? "<p>" . esc_attr(html_entity_decode(stripcslashes(htmlspecialchars($pics[$flag]->description)))) ."</p>" : "";
 		if( $pics[$flag]->url == "" || $pics[$flag]->url == "undefined" || $pics[$flag]->url == "http://")
 		{
 			if($pics[$flag]->video == 1)

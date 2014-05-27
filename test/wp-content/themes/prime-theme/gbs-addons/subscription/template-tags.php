@@ -30,8 +30,8 @@ function gb_subscription_form( $show_locations = TRUE, $select_location_text = '
 		?>
 		<form action="" id="gb_subscription_form" method="post" class="clearfix">
 			<span class="option email_input_wrap clearfix">
-				<label for="email_address" class="email_address"><?php gb_e( 'Join today to start getting awesome daily deals!' ); ?></label>
-				<input type="text" name="email_address" id="email_address" value="<?php gb_e( 'Enter your email' ); ?>" onblur="if (this.value == '')  {this.value = '<?php gb_e( 'Enter your email' ); ?>';}" onfocus="if (this.value == '<?php gb_e( 'Enter your email' ); ?>') {this.value = '';}" >
+				<label for="email_address" class="email_address"><?php sec_e( 'Join today to start getting awesome daily deals!' ); ?></label>
+				<input type="text" name="email_address" id="email_address" value="<?php sec_e( 'Enter your email' ); ?>" onblur="if (this.value == '')  {this.value = '<?php sec_e( 'Enter your email' ); ?>';}" onfocus="if (this.value == '<?php sec_e( 'Enter your email' ); ?>') {this.value = '';}" >
 			</span>
 			<?php
 				$locations = gb_get_locations( false );
@@ -39,7 +39,7 @@ function gb_subscription_form( $show_locations = TRUE, $select_location_text = '
 				if ( ( !empty( $locations ) || !empty( $no_city_text ) ) && $show_locations ) {
 					?>
 						<span class="option location_options_wrap clearfix">
-							<label for="locations"><?php gb_e( $select_location_text ); ?></label>
+							<label for="locations"><?php sec_e( $select_location_text ); ?></label>
 							<?php
 								$current_location = null;
 								if ( isset( $_COOKIE[ 'gb_location_preference' ] ) && $_COOKIE[ 'gb_location_preference' ] != '' ) {
@@ -63,7 +63,7 @@ function gb_subscription_form( $show_locations = TRUE, $select_location_text = '
 					<?php
 				} ?>
 			<?php wp_nonce_field( 'gb_subscription' );?>
-			<span class="submit clearfix"><input type="submit" class="button-primary" name="gb_subscription" id="gb_subscription" value="<?php gb_e( $button_text ); ?>"></span>
+			<span class="submit clearfix"><input type="submit" class="button-primary" name="gb_subscription" id="gb_subscription" value="<?php sec_e( $button_text ); ?>"></span>
 		</form>
 		<?php
 	$view = ob_get_clean();

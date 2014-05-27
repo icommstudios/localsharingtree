@@ -37,7 +37,9 @@ class Group_Buying_Hybrid_Payment_Processor extends Group_Buying_Payment_Process
 	protected function __construct() {
 		// don't want to call the parent constructor, we would just have to undo it
 		// parent::__construct();
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
 		add_action( 'gb_processing_cart', array( $this, 'load_enabled_processors' ), 10, 0 );
 		add_action( self::CRON_HOOK, array( $this, 'load_enabled_processors' ), -100, 0 );
 		add_filter( 'gb_payment_fields', array( $this, 'payment_fields' ), 10, 3 );
@@ -254,36 +256,45 @@ class Group_Buying_Hybrid_Payment_Processor extends Group_Buying_Payment_Process
 		self::add_payment_processor( __CLASS__, self::__( 'Multiple' ) );
 	}
 
+
 	/**
-	 * Add options to choose which payment processors to enable
+	 * Hooked on init add the settings page and options.
 	 *
-	 * @return void
 	 */
-	public function register_settings() {
-		$page = Group_Buying_Payment_Processors::get_settings_page();
-		$section = 'gb_hybrid_settings';
-		add_settings_section( $section, self::__( 'Payment Processors' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::ENABLED_PROCESSORS_OPTION );
-		add_settings_field( self::ENABLED_PROCESSORS_OPTION, self::__( 'Payment Methods' ), array( $this, 'display_payment_methods_field' ), $page, $section );
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'gb_hybrid_settings' => array(
+				'title' => self::__( 'Payment Processors' ),
+				'weight' => 100,
+				'settings' => array(
+					self::ENABLED_PROCESSORS_OPTION => array(
+						'label' => self::__( 'Enable Processors' ),
+						'option' => array( get_class(), 'display_payment_methods_field' )
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_Payment_Processors::SETTINGS_PAGE );
 	}
 
 	public function display_payment_methods_field() {
 		$offsite = self::get_registered_processors('offsite');
 		$credit = self::get_registered_processors('credit');
-		$enabled = $this->enabled_processors();
+		$enabled = self::enabled_processors();
 
 		if ( $offsite ) {
-			printf( '<h4>%s</h4>', self::__('Offsite Processors') );
+			printf( '<strong>%s</strong>', self::__('Offsite Processors') );
 			foreach ( $offsite as $class => $label ) {
 				printf('<p><label><input type="checkbox" name="%s[]" value="%s" %s /> %s</label></p>', self::ENABLED_PROCESSORS_OPTION, esc_attr($class), checked(TRUE, in_array($class, $enabled), FALSE), esc_html($label));
 			}
 		}
 		if ( $credit ) {
-			printf( '<h4>%s</h4>', self::__('Credit Card Processors') );
+			printf( '<strong>%s</strong>', self::__('Credit Card Processors') );
 			printf( '<p><select name="%s[]">', self::ENABLED_PROCESSORS_OPTION );
 			printf( '<option value="">%s</option>', self::__('-- None --') );
 			foreach ( $credit as $class => $label ) {
-				printf('<option value="%s" %s /> %s</option>', esc_attr($class), selected(TRUE, in_array($class, $enabled), FALSE), esc_html($label));
+				printf('<option value="%s" %s>%s</option>', esc_attr($class), selected(TRUE, in_array($class, $enabled), FALSE), esc_html($label));
 			}
 			echo '</select>';
 		}

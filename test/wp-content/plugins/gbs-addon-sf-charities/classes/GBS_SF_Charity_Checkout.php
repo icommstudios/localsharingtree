@@ -41,10 +41,16 @@ class GB_SF_Charities_Checkout extends Group_Buying_Controller {
 			);
 		wp_parse_str( $_POST['selections'], $selections );
 		foreach ( $selections as $term_name => $term_id ) {
-			if ( !empty($term_id ) && $term_id > 0) {
+			$tax_name = false;
+			if ( $term_name == 'gb_checkout_charity_location' ) {
+				$tax_name = 'gb_location';
+			} elseif ( $term_name == 'gb_checkout_charity_type' ) {
+				$tax_name = 'gb_charity_type';
+			}
+			if ( $tax_name && !empty($term_id ) && $term_id > 0) {
 				$args['tax_query']['relation'] = 'AND'; // in case it wasn't set earlier
 				$args['tax_query'][] = array(
-						'taxonomy' => $term_name,
+						'taxonomy' => $tax_name,
 						'field' => 'id',
 						'terms' => array($term_id),
 						'operator' => 'IN'

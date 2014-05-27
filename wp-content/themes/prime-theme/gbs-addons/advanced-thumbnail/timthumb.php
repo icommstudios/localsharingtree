@@ -7,7 +7,7 @@
  * GNU General Public License, version 2
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
- * Examples and documentation available on the project homepage
+ * Examples and documentation available on the offer homepage
  * http://www.binarymoon.co.uk/projects/timthumb/
  * 
  * $Rev$

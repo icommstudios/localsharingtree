@@ -1,3 +1,61 @@
+.gb_text_control
+{
+	color: #FFF;
+	font-size: 15px;
+	line-height: 26px;
+	margin-top: 8px;
+	float: left;
+	width: auto;
+	margin-left: 10px;
+}
+.gb_buy_pro
+{
+	cursor:pointer;
+	min-width: 800px;
+	border: 1px solid #1b6394;
+	padding: 5px;
+	margin: 12px 0;
+	background: #AE3A3A;
+	position: relative;
+	overflow: hidden;
+}
+.gb_text_control span {
+font-size: 13px;
+opacity: 0.8;
+
+}
+.gb_buy_pro .gb_message_buttons
+{
+	float: right;
+	border: 1px solid #FF6D1E;
+	font-size: 13px;
+	margin: 12px;
+	padding: 4px 0;
+	color: #FFF;
+	text-shadow: 0 1px 3px #FF6D1E;
+	font-weight: bold;
+	background: #FF6D1E;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	text-decoration: none;
+	height: 35px;
+	text-align: center;
+	width: 110px;
+	-moz-box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	-webkit-box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	
+}
+.gb_buy_pro .gb_message_buttons:hover, .gb_buy_pro .gb_message_buttons:focus
+{
+	background: #FF6D1E;
+	color: #FFF;
+	border: 1px solid #FF6D1E;
+	-moz-box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	-webkit-box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+}
 .widget_premium_feature
 {
 	color: #FF0000;
@@ -2437,6 +2495,211 @@ Popover
     line-height: 20px;
     outline: 0;
 }
+/*************************** Gallery Bank Information Popup********************************/
+.gallery_bank_popup_box .ui-dialog-titlebar {
+	background  : #E33A0C;
+	color       : #fff;
+	font-size   : 1.5em;
+	font-weight : normal;
+	height      : auto;
+	line-height : 2.5;
+	padding     : 0 1em;
+}
+
+.gallery_bank_popup_box .ui-dialog-titlebar span {
+	text-align : left;
+}
+
+.gallery_bank_popup_box .ui-dialog-titlebar button {
+	width   : 30px;
+	height  : 30px;
+	color   : #ffffff;
+	top     : 15px;
+	right   : 15px;
+	margin  : 0;
+	padding : 0;
+}
+
+.gallery_bank_popup_box .ui-dialog-titlebar button:before {
+	color : #ffffff;
+}
+
+.gallery_bank_popup_box .ui-dialog-titlebar button:hover:before {
+	color : #fff;
+}
+
+.gallery_bank_popup_box .ui-icon,
+.gallery_bank_popup_box .ui-icon:hover {
+	background : none !important;
+}
+
+#gallery_bank_popup {
+	padding : 0;
+	margin  : 0;
+}
+
+#gallery_bank_popup li {
+	border-bottom       : 1px solid #e5e5e5;
+	padding             : 1em 2em;
+	overflow            : hidden;
+	list-style          : decimal;
+	list-style-position : inside;
+}
+
+#gallery_bank_popup li p {
+	margin-top : 0;
+	margin-left: 13px;
+}
+
+#gallery_bank_popup li h4 {
+	margin : 0;
+}
+
+#gallery_bank_popup .gb_close_popup {
+	position    : relative;
+	display     : block;
+	width       : 98%;
+	line-height : 3;
+	text-align  : right;
+	color       : #AE3A3A;
+}
+.wp-core-ui .gb_buttons
+{
+	border: 1px solid #FF6D1E;
+	font-size: 13px;
+	padding: 4px 0;
+	color: #FFF;
+	text-shadow: 0 1px 3px #FF6D1E;
+	font-weight: bold;
+	background: #FF6D1E;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	text-decoration: none;
+	height: 35px;
+	text-align: center;
+	width: 100px;
+	-moz-box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	-webkit-box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	margin-left: 13px;
+}
+.wp-core-ui .gb_buttons:hover, .wp-core-ui .gb_buttons:focus
+{
+	background: #FF6D1E;
+	color: #FFF;
+	border: 1px solid #FF6D1E;
+	-moz-box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	-webkit-box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+	box-shadow: 0px 1px 1px 0 #FF6D1E inset;
+}
+/****************************** Gallery Bank Getting Started **********************************/
+	#gallery_bank_get_started .inside {
+	padding : 0;
+	margin  : 0;
+}
+
+#gallery_bank_get_started .gallery-bank-video {
+	position       : relative;
+	padding-bottom : 48.5%;
+	padding-top    : 25px;
+	height         : 0;
+	width          : 85%;
+	margin         : 1em auto 0 auto;
+}
+
+#gallery_bank_get_started .gallery-bank-video iframe {
+	position : absolute;
+	top      : 0;
+	left     : 0;
+	width    : 100%;
+	height   : 100%;
+}
+
+.gallery_bank_getting_started {
+	padding  : 0 2em;
+	overflow : hidden;
+}
+.gallery_bank_layout
+{
+	padding: 0px 10px 0 16px;
+}
+.gallery_bank_layout > a 
+{
+	margin-top:15px;
+	margin-bottom:10px;
+	text-decoration:none !important;
+}
+.gallery_bank_layout > .btn 
+{
+	margin-top:15px;
+	margin-bottom:10px;
+	text-decoration:none !important;
+}
+.gallery_bank_getting_started .column {
+	width          : 100%;
+	max-width      : 45%;
+	float          : left;
+	padding-right  : 2.5%;
+	
+	padding-bottom : 2em;
+}
+
+.gallery_bank_getting_started .column.two {
+	margin-right  : 0;
+	padding-right : 0;
+	padding-left  : 2.5%;
+	border        : 0;
+	max-width     : 49%;
+	border-left   : 1px solid #ebebeb;
+}
+
+.gallery_bank_getting_started .gallery-bank-video-link {
+	width     : 100%;
+	max-width : 200px;
+	float     : left;
+	margin    : 0 1.5em 1.5em 0;
+}
+
+.gallery_bank_getting_started .gallery-bank-video-link img {
+	max-width : 100%;
+	height    : auto;
+}
+
+.gallery_bank_getting_started .gallery_bank_video {
+	display : none;
+}
+
+
+.gallery-bank-video-popup .gallery_bank_video {
+	padding : 0;
+	margin  : 0 0 -5px 0;
+}
+
+.gallery-bank-video-popup .ui-dialog-titlebar {
+	line-height   : 1;
+	font-size     : 1em;
+	height        : 35px;
+	background    : #222;
+	border-bottom : none;
+}
+
+.gallery-bank-video-popup .ui-dialog-titlebar button {
+	width   : 30px;
+	height  : 30px;
+	color   : #ffffff;
+	top     : 0px;
+	right   : 0px;
+	margin  : 0;
+	padding : 0;
+}
+
+
+.breadcrumb > li > a
+{
+	text-decoration:none !important;
+}
+
 
 @media (min-width: 768px) and (max-width: 979px) {
     .hidden-desktop {

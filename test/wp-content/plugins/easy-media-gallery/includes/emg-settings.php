@@ -53,7 +53,7 @@ die;
 | REGISTER & ENQUEUE SCRIPTS/STYLES ONLY for a Specific Post Type 
 |--------------------------------------------------------------------------
 */			
-if ( is_admin() && ( isset( $_GET['page'] ) == 'emg_settings' ) && ( isset( $_GET['post_type'] ) == 'easymediagallery' ) ){
+if ( is_admin() && ( isset( $_GET['page'] ) == 'emg_settings' ) && $_GET['page'] == 'emg_settings' ){ //@since 1.2.33
 	
 	add_action( "admin_head", 'easymedia_admin_head_script' );
 	add_action( 'admin_enqueue_scripts', 'easymedia_cp_script' );
@@ -319,10 +319,10 @@ if ( isset( $_REQUEST['reset'] ) ) { echo '<script type="text/javascript">
 <div id="spg_container">
     <div id="header">
       <div class="logo">
-      <div class="icon-option-left"></div>
+      <div class="emg-icon-option-left"></div>
         <div class="emg-cp-title"><h2><?php echo $emgplugname . "  LITE (v " . easymedia_get_plugin_version() . ")"; ?></h2></div>
       </div>
-      <div class="icon-option"> </div>
+      <div class="emg-icon-option-right"> </div>
       <div style="clear: both;"></div>
     </div>
 
@@ -511,7 +511,7 @@ $i++;
 ?>
  
 <input type="hidden" name="action" value="save" />
-<p><a target="_blank" href="http://ghozylab.com/order" class="tsc_buttons2 red">Upgrade to Pro Version  &nbsp;for only $<?php echo EASYMEDIA_PRICE; ?></a> <span style="color:#666666;margin-left:2px; font-size:11px;">&nbsp; Need More Features? Upgrade to Pro Version!</span></p>
+<p><a target="_blank" href="http://ghozylab.com/order/?utm_source=easymediagallerylite&utm_medium=settingspage&utm_campaign=order" class="tsc_buttons2 red">Upgrade to Pro Version  &nbsp;for only $<?php echo EASYMEDIA_PRICE; ?></a> <span style="color:#666666;margin-left:2px; font-size:11px;">&nbsp; Need More Features? Upgrade to Pro Version!</span></p>
  </div> </div>
  </form>
  </div>

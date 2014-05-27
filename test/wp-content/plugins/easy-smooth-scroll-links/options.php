@@ -8,8 +8,8 @@
     <table class="widefat">
 		<thead>
 		   <tr>
-			 <th><a target="_blank" href="http://www.jeriffcheng.com/wordpress-plugins/easy-smooth-scroll-links">FAQs</a> - <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/easy-smooth-scroll-links?filter=5#postform">Rate it</a> - <a target="_blank" href="http://wordpress.org/support/plugin/easy-smooth-scroll-links">Support Forum</a>    ---- Suggestions? <a target="_blank" href="http://www.jeriffcheng.com/contact">Contact Me</a></th>
-		   </tr>
+			 <th><a target="_blank" href="http://www.jeriffcheng.com/wordpress-plugins/easy-smooth-scroll-links">FAQs</a> - <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/easy-smooth-scroll-links?filter=5#postform">Rate it</a> - <a target="_blank" href="http://wordpress.org/support/plugin/easy-smooth-scroll-links">Support Forum</a>    ---- Suggestions? <a target="_blank" href="http://www.jeriffcheng.com/contact">Contact Me</a><br><br><strong  style="color: #ff0000;">Everyone should Read this Article: <a target="_blank" href="http://www.jeriffcheng.com/html-5-using-attribute-id-instead-of-attribute-name-for-anchors.html">HTML 5 – Using attribute ‘id’ instead of attribute ‘name’ for Anchors</a></strong></th>
+			 <th>
 		</thead>
 
 		<tbody>

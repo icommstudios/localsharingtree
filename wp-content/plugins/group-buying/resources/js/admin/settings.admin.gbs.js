@@ -3,10 +3,80 @@ jQuery.noConflict();
 gbs_admin = {};
 
 jQuery(document).ready(function($){
-	gbs_admin.ready($);
+	gbs_admin.select2($);
+	gbs_admin.ajax_settings($);
 });
+gbs_admin.ajax_settings = function($) {
+	var form = $(".ajax_save");
+	var form_dialog = $("#ajax_saving");
+	var failed_save = false;
 
-gbs_admin.ready = function($) {
+	form.change( function( e ) {
+
+		// If the form is failing don't attempt again.
+		if ( failed_save ) { return };
+
+		// handle the payments form differently, only post if the payment selector is chosen.
+		if ( $(this).hasClass('group-buying/payment') ) {
+			if ( e.target.id == 'gb_payment_processor' ) {
+				ajax_post_form();
+				return;
+			};
+		}
+		// handle the full page ajax pages differently 
+		else if ( $(this).hasClass( 'full_page_ajax' ) ) {
+			ajax_post_form();
+			return;
+		}
+		else {
+			ajax_post_options();
+			return;
+		};
+	});
+
+	// Use wp_ajax to update each option without a full page return.
+	ajax_post_options = function() {
+		show_dialog();
+		$.post( ajaxurl, { action: 'gb_save_options', options: form.serialize() },
+			function( data ) {
+				form_dialog.html(data).delay(2000).fadeOut('slow');
+			}
+		);
+	};
+
+	// submit the form in the background and replace the DOM
+	ajax_post_form = function() {
+		show_dialog();
+		$.ajax( {
+			type: "POST",
+			url: form.attr( 'action' ),
+			data: form.serialize(),
+			success: function( response ) {
+				var new_form = $('<div />').html(response).find('form.ajax_save').html();
+				if ( new_form.length > 0 ) {
+					form_dialog.html('Saved').fadeOut('slow');
+					form.html(new_form);
+				}
+				else {
+					form_dialog.html('Auto save failed, use "Save Changes" button.').delay(2000).fadeOut('slow');
+					failed_save = true;
+				};
+			}
+		});
+	};
+
+	show_dialog = function() {
+		form_dialog.html( $('#ajax_saving').data( 'message' ) );
+		form_dialog
+			.css('position', 'fixed')
+			.css('left', '45%')
+			.css('top', '45%')
+			.show();
+	};
+
+};
+
+gbs_admin.select2 = function($) {
 	$('.select2').select2();
 	$('#gb_signup_redirect, #gb_signup_not_found, #gb_nodeal_content, #gb_pp_page, #gb_tos_page, #gb_added_deal_id').select2({
 		width: 'element'

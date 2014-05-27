@@ -7,14 +7,20 @@
  * @subpackage Purchase
  */
 class Group_Buying_Purchases extends Group_Buying_Controller {
+	const SETTINGS_PAGE = 'purchase_records';
 	const ORDER_LU_OPTION = 'gb_order_lookup_path';
 	const AUTH_FORM_INPUT = 'order_billing_city';
 	const AUTH_FORM_ID_INPUT = 'order_id';
 	const NONCE_ID = 'gb_order_lookup_nonce';
 	private static $lookup_path = 'order-lookup';
 
+	public static function get_admin_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
+
 	public static function init() {
 		self::$lookup_path = get_option( self::ORDER_LU_OPTION, self::$lookup_path );
+		self::register_settings();
 
 		// Wrapper Template
 		add_filter( 'template_include', array( get_class(), 'override_template' ) );
@@ -24,10 +30,43 @@ class Group_Buying_Purchases extends Group_Buying_Controller {
 
 		// Order Lookup
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_path_callback' ), 10, 1 );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 50, 1 );
+	}
 
-		// Admin
-		self::$settings_page = self::register_settings_page( 'purchase_records', self::__( 'Orders' ), self::__( 'Orders' ), 8.1, FALSE, 'records', array( get_class(), 'display_table' ) );
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'Orders' ),
+			'menu_title' => self::__( 'Orders' ),
+			'weight' => 12,
+			'reset' => FALSE, 
+			'section' => 'records',
+			'callback' => array( get_class(), 'display_table' )
+			);
+		do_action( 'gb_settings_page', $args );
+
+		// Settings
+		$settings = array(
+			'gb_url_path_order_lookup' => array(
+				'weight' => 140,
+				'settings' => array(
+					self::ORDER_LU_OPTION => array(
+						'label' => self::__( 'Order Lookup Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$lookup_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -230,21 +269,9 @@ class Group_Buying_Purchases extends Group_Buying_Controller {
 		}
 	}
 
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_cart_paths';
-
-		// Settings
-		register_setting( $page, self::ORDER_LU_OPTION );
-		add_settings_field( self::ORDER_LU_OPTION, self::__( 'Order Lookup Path' ), array( get_class(), 'display_path_option' ), $page, $section );
-	}
-
-	public static function display_path_option() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::ORDER_LU_OPTION . '" id="' . self::ORDER_LU_OPTION . '" value="' . esc_attr( self::$lookup_path ) . '" size="40"/><br />';
-	}
-
 
 	public static function display_table() {
+		add_thickbox();
 		//Create an instance of our package class...
 		$wp_list_table = new Group_Buying_Purchases_Table();
 		//Fetch, prepare, sort, and filter our data...
@@ -253,19 +280,33 @@ class Group_Buying_Purchases extends Group_Buying_Controller {
 		?>
 		<script type="text/javascript" charset="utf-8">
 			jQuery(document).ready(function($){
-				jQuery(".gb_destroy").on('click', function(event) {
+				jQuery(".gb_delete_payment").on('click', function(event) {
 					event.preventDefault();
-						if( confirm( '<?php gb_e( "This will permanently trash the purchase and its associated voucher(s) and payment(s) which cannot be reversed (without manually adjusting them in the DB). This will not reverse any payments or provide a credit to the customer, that must be done manually. Are you sure?" ) ?>' ) ) {
-							var $destroy_link = $( this ),
-							destroy_purchase_id = $destroy_link.attr( 'ref' );
-							$.post( ajaxurl, { action: 'gbs_destroyer', type: 'purchase', id: destroy_purchase_id, destroyer_nonce: '<?php echo wp_create_nonce( Group_Buying_Destroy::NONCE ) ?>' },
-								function( data ) {
-										$destroy_link.parent().parent().parent().parent().fadeOut();
-									}
-								);
-						} else {
-							// nothing to do.
+					var $delete_button = $( this ),
+					destroy_purchase_id = $delete_button.attr( 'ref' ),
+					notes_form = $( '#delete_note_' + destroy_purchase_id ).val();
+					$delete_button.html("<?php gb_e('Working...') ?>");
+					$.post( ajaxurl, { action: 'gbs_destroyer', type: 'purchase', id: destroy_purchase_id, notes: notes_form, destroyer_nonce: '<?php echo wp_create_nonce( Group_Buying_Destroy::NONCE ) ?>' },
+						function( data ) {
+							self.parent.tb_remove();
+							$('#void_link_'+destroy_purchase_id).closest('tr').fadeOut('slow');
 						}
+					);
+				});
+			});
+			jQuery(document).ready(function($){
+				jQuery(".gb_void_purchase").on('click', function(event) {
+					event.preventDefault();
+					var $void_button = $( this ),
+					void_purchase_id = $void_button.attr( 'ref' ),
+					notes_form = $( '#transaction_data_' + void_purchase_id ).val();
+					$void_button.html("<?php gb_e('Working...') ?>");
+					$.post( ajaxurl, { action: 'gbs_void_purchase', purchase_id: void_purchase_id, notes: notes_form, void_purchase_nonce: '<?php echo wp_create_nonce( Group_Buying_Destroy::NONCE ) ?>' },
+						function( data ) {
+							self.parent.tb_remove();
+							$('#void_link_'+void_purchase_id).closest('.column-status').html('<?php self::_e("Voided") ?>');
+						}
+					);
 				});
 			});
 		</script>
@@ -275,7 +316,7 @@ class Group_Buying_Purchases extends Group_Buying_Controller {
 		<div class="wrap">
 			<?php screen_icon(); ?>
 			<h2 class="nav-tab-wrapper">
-				<?php self::display_admin_tabs(); ?>
+				<?php do_action( 'gb_settings_tabs' ); ?>
 			</h2>
 
 			 <?php $wp_list_table->views() ?>

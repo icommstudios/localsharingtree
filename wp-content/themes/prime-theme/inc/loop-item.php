@@ -1,6 +1,6 @@
 <div id="post_content <?php the_ID() ?>" <?php post_class('post loop_deal background_alt deal_status-'.gb_get_status().' clearfix'); ?>>
 	<?php 
-		if ( gb_has_merchant() ) {
+		if ( gb_has_active_merchant() ) {
 			?>
 				<h3 class="deal_merchant_title alt_text font_small gb_ff clearfix"><a href="<?php gb_merchant_url(gb_get_merchant_id()) ?>" title="<?php the_title(gb_get_merchant_id()) ?>" class="alt_text"><?php gb_merchant_name(gb_get_merchant_id()); ?></a></h3>
 			<?php

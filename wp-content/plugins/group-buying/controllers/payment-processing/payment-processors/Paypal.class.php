@@ -76,7 +76,10 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 		self::$cancel_url = get_option( self::CANCEL_URL_OPTION, Group_Buying_Carts::get_url() );
 		self::$return_url = Group_Buying_Checkouts::get_url();
 
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
+
 		add_action( 'purchase_completed', array( $this, 'capture_purchase' ), 10, 1 );
 		add_action( self::CRON_HOOK, array( $this, 'capture_pending_payments' ) );
 		add_action( 'gb_manually_capture_purchase', array( $this, 'manually_capture_purchase' ), 10, 1 );
@@ -85,6 +88,70 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 
 		add_action( 'gb_send_offsite_for_payment', array( $this, 'send_offsite' ), 10, 1 );
 		add_action( 'gb_load_cart', array( $this, 'back_from_paypal' ), 10, 0 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'gb_paypal_settings' => array(
+				'title' => self::__( 'PayPal Payments Standard' ),
+				'weight' => 200,
+				'settings' => array(
+					self::API_MODE_OPTION => array(
+						'label' => self::__( 'Mode' ),
+						'option' => array(
+							'type' => 'radios',
+							'options' => array(
+								self::MODE_LIVE => self::__( 'Live' ),
+								self::MODE_TEST => self::__( 'Sandbox' ),
+								),
+							'default' => self::$api_mode
+							)
+						),
+					self::API_USERNAME_OPTION => array(
+						'label' => self::__( 'API Username' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$api_username
+							)
+						),
+					self::API_PASSWORD_OPTION => array(
+						'label' => self::__( 'API Password' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$api_password
+							)
+						),
+					self::API_SIGNATURE_OPTION => array(
+						'label' => self::__( 'API Signature' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$api_signature
+							)
+						),
+					self::CURRENCY_CODE_OPTION => array(
+						'label' => self::__( 'Currency Code' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$currency_code,
+							'attributes' => array( 'class' => 'small-text' )
+							)
+						),
+					self::CANCEL_URL_OPTION => array(
+						'label' => self::__( 'Cancel URL' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$cancel_url
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_Payment_Processors::SETTINGS_PAGE );
 	}
 
 	public static function register() {
@@ -121,8 +188,8 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 			}
 
 			do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - Filtered post_data', $post_data );
-
 			$response = wp_remote_post( self::get_api_url(), array(
+					'httpversion' => '1.1',
 					'method' => 'POST',
 					'body' => $post_data,
 					'timeout' => apply_filters( 'http_request_timeout', 15 ),
@@ -323,6 +390,7 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 		do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal EC Authorization Request', $post_data );
 
 		$response = wp_remote_post( self::get_api_url(), array(
+				'httpversion' => '1.1',
 				'method' => 'POST',
 				'body' => $post_data,
 				'timeout' => apply_filters( 'http_request_timeout', 15 ),
@@ -358,8 +426,8 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 				$deal_info[$item['deal_id']][] = $item;
 			}
 		}
+		$shipping_address = array();
 		if ( isset( $checkout->cache['shipping'] ) ) {
-			$shipping_address = array();
 			$shipping_address['first_name'] = $checkout->cache['shipping']['first_name'];
 			$shipping_address['last_name'] = $checkout->cache['shipping']['last_name'];
 			$shipping_address['street'] = $checkout->cache['shipping']['street'];
@@ -530,6 +598,7 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 					do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal EC DoCapture Request', $post_data );
 					
 					$response = wp_remote_post( $this->get_api_url(), array(
+							'httpversion' => '1.1',
 							'body' => $post_data,
 							'timeout' => apply_filters( 'http_request_timeout', 15 ),
 							'sslverify' => false
@@ -555,8 +624,14 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 								$payment->set_status( Group_Buying_Payment::STATUS_PARTIAL );
 							}
 						} else {
-							$this->set_error_messages( $response, FALSE );
-							if ( $response['L_ERRORCODE0'] == 10601 ) { // authorization expired
+							$error = array(
+									'items_to_capture' => $items_to_capture,
+									'payment_id' => $payment->get_id(),
+									'response' => $response,
+								);
+							do_action( 'gb_error', __CLASS__ . '::' . __FUNCTION__ . ' - capture response error', $error );
+							// authorization expired or authorization complete
+							if ( $response['L_ERRORCODE0'] == 10601 || 10602 ) { 
 								$payment->set_status(Group_Buying_Payment::STATUS_VOID);
 							}
 						}
@@ -644,6 +719,7 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 		do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal EC Recurring Payment Request', $nvpData );
 
 		$response = wp_remote_post( self::get_api_url(), array(
+				'httpversion' => '1.1',
 				'method' => 'POST',
 				'body' => $nvpData,
 				'timeout' => apply_filters( 'http_request_timeout', 15 ),
@@ -764,6 +840,7 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 		do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal EC Recurring Payment Details Request', $nvp );
 
 		$response = wp_remote_post( self::get_api_url(), array(
+				'httpversion' => '1.1',
 				'method' => 'POST',
 				'body' => $nvp,
 				'timeout' => apply_filters( 'http_request_timeout', 15 ),
@@ -821,6 +898,7 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 		do_action( 'gb_log', __CLASS__ . '::' . __FUNCTION__ . ' - PayPal EC Cancel Recurring Payment Request', $nvp );
 
 		$response = wp_remote_post( self::get_api_url(), array(
+				'httpversion' => '1.1',
 				'method' => 'POST',
 				'body' => $nvp,
 				'timeout' => apply_filters( 'http_request_timeout', 15 ),
@@ -832,55 +910,6 @@ class Group_Buying_Paypal_EC extends Group_Buying_Offsite_Processors {
 		// we don't really need to do anything with the response. It's either a success message
 		// or the profile is already cancelled/suspended. Either way, we're good.
 		parent::cancel_recurring_payment( $payment );
-	}
-
-	public function register_settings() {
-		$page = Group_Buying_Payment_Processors::get_settings_page();
-		$section = 'gb_paypal_settings';
-		add_settings_section( $section, self::__( 'PayPal Payments Standard' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::API_MODE_OPTION );
-		register_setting( $page, self::API_USERNAME_OPTION );
-		register_setting( $page, self::API_PASSWORD_OPTION );
-		register_setting( $page, self::API_SIGNATURE_OPTION );
-		register_setting( $page, self::CURRENCY_CODE_OPTION );
-		//register_setting($page, self::RETURN_URL_OPTION);
-		register_setting( $page, self::CANCEL_URL_OPTION );
-		add_settings_field( self::API_MODE_OPTION, self::__( 'Mode' ), array( get_class(), 'display_api_mode_field' ), $page, $section );
-		add_settings_field( self::API_USERNAME_OPTION, self::__( 'API Username' ), array( get_class(), 'display_api_username_field' ), $page, $section );
-		add_settings_field( self::API_PASSWORD_OPTION, self::__( 'API Password' ), array( get_class(), 'display_api_password_field' ), $page, $section );
-		add_settings_field( self::API_SIGNATURE_OPTION, self::__( 'API Signature' ), array( get_class(), 'display_api_signature_field' ), $page, $section );
-		add_settings_field( self::CURRENCY_CODE_OPTION, self::__( 'Currency Code' ), array( get_class(), 'display_currency_code_field' ), $page, $section );
-		//add_settings_field(self::RETURN_URL_OPTION, self::__('Return URL'), array(get_class(), 'display_return_field'), $page, $section);
-		add_settings_field( self::CANCEL_URL_OPTION, self::__( 'Cancel URL' ), array( get_class(), 'display_cancel_field' ), $page, $section );
-	}
-
-	public function display_api_username_field() {
-		echo '<input type="text" name="'.self::API_USERNAME_OPTION.'" value="'.self::$api_username.'" size="80" />';
-	}
-
-	public function display_api_password_field() {
-		echo '<input type="text" name="'.self::API_PASSWORD_OPTION.'" value="'.self::$api_password.'" size="80" />';
-	}
-
-	public function display_api_signature_field() {
-		echo '<input type="text" name="'.self::API_SIGNATURE_OPTION.'" value="'.self::$api_signature.'" size="80" />';
-	}
-
-	public function display_return_field() {
-		echo '<input type="text" name="'.self::RETURN_URL_OPTION.'" value="'.self::$return_url.'" size="80" />';
-	}
-
-	public function display_cancel_field() {
-		echo '<input type="text" name="'.self::CANCEL_URL_OPTION.'" value="'.self::$cancel_url.'" size="80" />';
-	}
-
-	public function display_api_mode_field() {
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_LIVE.'" '.checked( self::MODE_LIVE, self::$api_mode, FALSE ).'/> '.self::__( 'Live' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_TEST.'" '.checked( self::MODE_TEST, self::$api_mode, FALSE ).'/> '.self::__( 'Sandbox' ).'</label>';
-	}
-
-	public function display_currency_code_field() {
-		echo '<input type="text" name="'.self::CURRENCY_CODE_OPTION.'" value="'.self::$currency_code.'" size="5" />';
 	}
 
 	public function cart_controls( $controls ) {

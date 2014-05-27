@@ -33,11 +33,11 @@
 					</div>
 				<?php endif ?>
 				<div class="deals-loop-buy">
-					<?php if ( gb_deal_availability() || !gb_is_deal_complete() ): ?>
+					<?php if ( gb_can_purchase() || ( function_exists('gb_is_deal_aggregated') && gb_is_deal_aggregated() ) ) { ?>
 						<a href="<?php gb_add_to_cart_url() ?>" class="button form-submit"><?php gb_e('Buy it!') ?> <span class="button_price"><?php gb_price(); ?></span></a>
-					<?php  else : ?>
+					<?php  }  else { ?>
 						<a href="<?php gb_add_to_cart_url() ?>" class="button form-submit"><?php gb_e('Unavailable') ?></a>
-					<?php endif; ?>
+					<?php } ?>
 				</div>	
 
 	</div>

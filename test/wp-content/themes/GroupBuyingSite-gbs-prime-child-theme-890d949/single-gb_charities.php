@@ -15,6 +15,7 @@ get_header(); ?>
 			
 			</div>
 			<div id="page_sidebar" class="sidebar clearfix">
+				<div class="button_reset_filters_wrap"><a href="<?php echo site_url('charities'); ?>" class="button font_small">← Return to Directory Home</a></div>
 				<?php dynamic_sidebar( 'charity-sidebar' ); ?>
 			</div>
 			

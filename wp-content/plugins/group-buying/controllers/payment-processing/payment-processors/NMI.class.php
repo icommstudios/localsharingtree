@@ -35,13 +35,47 @@ class Group_Buying_NMI extends Group_Buying_Credit_Card_Processors {
 		$this->api_username = get_option( self::API_USERNAME_OPTION, '' );
 		$this->api_password = get_option( self::API_PASSWORD_OPTION, '' );
 
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
+
 		add_action( 'purchase_completed', array( $this, 'complete_purchase' ), 10, 1 );
 
 		// Limitations
 		add_filter( 'group_buying_template_meta_boxes/deal-expiration.php', array( $this, 'display_exp_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-price.php', array( $this, 'display_price_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-limits.php', array( $this, 'display_limits_meta_box' ), 10 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'gb_nmi_settings' => array(
+				'title' => self::__( 'NMI' ),
+				'weight' => 200,
+				'settings' => array(
+					self::API_USERNAME_OPTION => array(
+						'label' => self::__( 'Username' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => get_option( self::API_USERNAME_OPTION, '' )
+							)
+						),
+					self::API_PASSWORD_OPTION => array(
+						'label' => self::__( 'Password' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => get_option( self::API_PASSWORD_OPTION, '' )
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_Payment_Processors::SETTINGS_PAGE );
 	}
 
 	public static function register() {
@@ -256,29 +290,6 @@ class Group_Buying_NMI extends Group_Buying_Credit_Card_Processors {
 
 		//$DPdata = array_map('rawurlencode', $DPdata);
 		return $DPdata;
-	}
-
-	public function register_settings() {
-		$page = Group_Buying_Payment_Processors::get_settings_page();
-		$section = 'gb_authorizenet_settings';
-		add_settings_section( $section, self::__( 'NMI' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::API_USERNAME_OPTION );
-		register_setting( $page, self::API_PASSWORD_OPTION );
-		add_settings_field( self::API_USERNAME_OPTION, self::__( 'Username' ), array( $this, 'display_api_username_field' ), $page, $section );
-		add_settings_field( self::API_PASSWORD_OPTION, self::__( 'Password' ), array( $this, 'display_api_password_field' ), $page, $section );
-		//add_settings_field(null, self::__('Currency'), array($this, 'display_currency_code_field'), $page, $section);
-	}
-
-	public function display_api_username_field() {
-		echo '<input type="text" name="'.self::API_USERNAME_OPTION.'" value="'.$this->api_username.'" size="80" />';
-	}
-
-	public function display_api_password_field() {
-		echo '<input type="text" name="'.self::API_PASSWORD_OPTION.'" value="'.$this->api_password.'" size="80" />';
-	}
-
-	public function display_currency_code_field() {
-		echo 'Specified in your NMI Merchant Interface.';
 	}
 
 	public function display_exp_meta_box() {

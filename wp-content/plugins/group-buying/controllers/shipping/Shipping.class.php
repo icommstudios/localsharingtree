@@ -7,7 +7,7 @@
  * @subpackage Checkout
  */
 class Group_Buying_Core_Shipping extends Group_Buying_Controller {
-
+	const SETTINGS_PAGE = 'gb_shipping_settings';
 	const SHIPPING_OPTION = 'gb_enable_shipping';
 	const SHIPPING_OPTION_LOCAL = 'gb_enable_shipping_local';
 	const SHIPPING_RATES = 'gb_shipping_rate_table';
@@ -17,6 +17,10 @@ class Group_Buying_Core_Shipping extends Group_Buying_Controller {
 	private static $enable_local_based;
 	private static $rates;
 	protected static $mode;
+
+	public static function get_settings_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
 
 	final public static function init() {
 
@@ -49,12 +53,12 @@ class Group_Buying_Core_Shipping extends Group_Buying_Controller {
 
 
 		// Options
-		self::$settings_page = self::register_settings_page( 'gb_shipping_settings', self::__( 'Group Buying Shipping Settings' ), self::__( 'Shipping Settings' ), 16, FALSE, 'general' );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 40, 0 );
 		self::$enable = get_option( self::SHIPPING_OPTION, 'TRUE' );
 		self::$enable_local_based = get_option( self::SHIPPING_OPTION_LOCAL, 'FALSE' );
 		self::$rates = get_option( self::SHIPPING_RATES );
 		self::$mode = get_option( self::SHIPPING_MODES, "Flat Rate \$5\nFlat Rate \$10\nReduced Rate" );
+		self::register_settings();
+
 		add_action( 'admin_init', array( get_class(), 'queue_resources' ) );
 
 		if ( self::shipping_enabled() ) {
@@ -62,6 +66,64 @@ class Group_Buying_Core_Shipping extends Group_Buying_Controller {
 			// Add shipping to the purchase object
 			add_action( 'gb_new_purchase', array( get_class(), 'filter_new_purcase' ), 15, 2 );
 		}
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'GB Shipping Settings' ),
+			'menu_title' => self::__( 'Shipping Settings' ),
+			'weight' => 7,
+			'reset' => FALSE, 
+			'section' => 'general'
+			);
+		do_action( 'gb_settings_page', $args );
+
+		// Settings
+		$settings = array(
+			'gb_shipping' => array(
+				'settings' => array(
+					self::SHIPPING_OPTION => array(
+						'label' => self::__( 'Shipping Fees' ),
+						'option' => array(
+							'label' => self::__( 'Enable shipping.' ),
+							'type' => 'checkbox',
+							'value' => 'TRUE',
+							'default' => self::$enable
+							)
+						),
+					self::SHIPPING_OPTION_LOCAL => array(
+						'label' => self::__( 'Location Based' ),
+						'option' => array(
+							'label' => self::__( 'Enable shipping based on location.' ),
+							'type' => 'checkbox',
+							'value' => 'TRUE',
+							'default' => self::$enable_local_based
+							),
+						'sanitize_callback' => array( get_class(), 'save_local_option' )
+						),
+					self::SHIPPING_MODES => array(
+						'label' => self::__( 'Shipping Modes' ),
+						'option' => array(
+							'type' => 'textarea',
+							'default' => self::$mode,
+							'description' => self::__( 'List 1 per line.' )
+							)
+						),
+					self::SHIPPING_RATES => array(
+						'label' => self::__( 'Shipping Rates' ),
+						'option' => array( get_class(), 'display_rates' ),
+						'sanitize_callback' => array( get_class(), 'save_rates' )
+						),
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, self::SETTINGS_PAGE );
 	}
 
 
@@ -72,7 +134,7 @@ class Group_Buying_Core_Shipping extends Group_Buying_Controller {
 
 	public static function filter_shipping( $meta = null, Group_Buying_Deal $deal, $qty = 1, $local = null ) {
 		$option = $deal->get_shippable();
-		$ship = 0;
+		$ship = NULL;
 		switch ( $option ) {
 		case 'FLAT':
 			$ship = self::shipping_flat( $deal );
@@ -211,7 +273,7 @@ class Group_Buying_Core_Shipping extends Group_Buying_Controller {
 				// $bool_return available for a quick return since
 				// any item with a numeric return will have a shipping
 				// rate, even if zero.
-				if ( $bool_return && is_numeric( $deal_shipping ) && $deal_shipping >= 0.01 ) {
+				if ( $bool_return && is_numeric( $deal_shipping ) ) {
 					return apply_filters( 'gb_shipping_cart_shipping_total_bool', TRUE, $cart, $local );
 				}
 
@@ -306,6 +368,7 @@ class Group_Buying_Core_Shipping extends Group_Buying_Controller {
 			return;
 		}
 		$price = 0;
+		$per_item = FALSE;
 		foreach ( self::$rates as $rate_id => $data ) {
 			// local based
 			if ( NULL != $local && self::shipping_local_enabled() ) {
@@ -560,38 +623,6 @@ class Group_Buying_Core_Shipping extends Group_Buying_Controller {
 
 	protected function __construct() {}
 
-
-	public static function register_settings_fields() {
-		$page = self::$settings_page;
-		$section = 'gb_shipping';
-		add_settings_section( $section, '', array( get_class(), 'display_settings_section' ), $page );
-		// Settings
-		register_setting( $page, self::SHIPPING_OPTION );
-		register_setting( $page, self::SHIPPING_OPTION_LOCAL, array( get_class(), 'save_local_option' ) );
-		register_setting( $page, self::SHIPPING_MODES );
-		register_setting( $page, self::SHIPPING_RATES, array( get_class(), 'save_rates' ) );
-		// Fields
-		add_settings_field( self::SHIPPING_OPTION, self::__( 'Shipping Fees' ), array( get_class(), 'display_enable' ), $page, $section );
-		add_settings_field( self::SHIPPING_OPTION_LOCAL, self::__( 'Location Based' ), array( get_class(), 'display_enable_local' ), $page, $section );
-		add_settings_field( self::SHIPPING_RATES, self::__( 'Shipping Classes' ), array( get_class(), 'display_modes' ), $page, $section );
-		add_settings_field( self::SHIPPING_MODES, self::__( 'Shipping Rates' ), array( get_class(), 'display_rates' ), $page, $section );
-	}
-
-	public function display_settings_section() {
-		// printf(self::__('Group Buying Site shipping options.'));
-	}
-	public static function display_enable() {
-		echo '<input type="checkbox" name="'.self::SHIPPING_OPTION.'" value="TRUE" '.checked( 'TRUE', self::$enable, FALSE ).'>&nbsp;'.self::__( 'Enable shipping.' );
-	}
-	public static function display_enable_local() {
-		echo '<input type="checkbox" name="'.self::SHIPPING_OPTION_LOCAL.'" value="TRUE" '.checked( 'TRUE', self::$enable_local_based, FALSE ).'>&nbsp;'.self::__( 'Enable shipping based on location.' );
-	}
-
-	public static function display_modes() {
-		echo '<textarea name="'.self::SHIPPING_MODES.'" rows="5" cols="20">'.self::$mode.'</textarea>';
-		echo '<br/><span class="description">'.self::__( 'List 1 per line.' ).'</span>';
-	}
-
 	public static function save_local_option( $shipping_local ) {
 		if ( !isset( $_POST[self::SHIPPING_OPTION_LOCAL] ) )
 			return $shipping_local;
@@ -619,8 +650,7 @@ class Group_Buying_Core_Shipping extends Group_Buying_Controller {
 		return $values;
 	}
 
-	public static function display_rates() {
-?>
+	public static function display_rates() { ?>
 			<script type="text/javascript">
 
 			jQuery(document).ready( function($) {
@@ -720,7 +750,9 @@ class Group_Buying_Core_Shipping extends Group_Buying_Controller {
 			</div>
 			<h4><a class="button" href="#" id="gb_add_shipping_rate"><?php _e( 'Add New Rate' ); ?></a></h4>
 		<?php
-		echo '<br/><span class="description">'.self::__( 'Rate priority is set by list order above (top to bottom) and matching criteria in this order <big>Country+State</big> > State <small>> Country</small>.' ).'</span>';
+		if ( self::shipping_local_enabled() ) {
+			echo '<br/><span class="description">'.self::__( 'Rate priority is set by list order above (top to bottom) and matching criteria in this order <big>Country+State</big> > State <small>> Country</small>.' ).'</span>';
+		}
 	}
 
 	public static function display_shipping_meta( $price, $dynamic_price, $shipping, $shippable, $shipping_dyn, $shipping_mode, $tax, $taxable, $taxrate ) {

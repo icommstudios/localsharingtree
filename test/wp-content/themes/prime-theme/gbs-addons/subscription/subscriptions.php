@@ -1,10 +1,10 @@
 <?php
 
-if ( class_exists( 'Group_Buying_Controller' ) ) {
+if ( class_exists( 'SEC_Controller' ) ) {
 
 	include 'template-tags.php';
 
-	abstract class Group_Buying_List_Services extends Group_Buying_Controller {
+	abstract class Group_Buying_List_Services extends SEC_Controller {
 		const SETTINGS_PAGE = 'subscription';
 		const LIST_SUBSCRIBE_OPTION = 'gb_list_service';
 		const SIGNUP_REDIRECT_OPTION = 'gb_signup_redirect';
@@ -59,10 +59,11 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		public static function register_options() {
 			// Translator page
 			$args = array(
+				'parent' => Group_Buying_Theme_UI::SETTINGS_PAGE,
 				'slug' => self::SETTINGS_PAGE,
-				'title' => self::__( 'GB Subscription Options' ),
+				'title' => self::__( 'SeC Subscription Options' ),
 				'menu_title' => self::__( 'Subscription' ),
-				'weight' => 11000,
+				'weight' => PHP_INT_MAX-90,
 				'reset' => FALSE, 
 				'section' => 'theme',
 				'ajax' => TRUE,
@@ -154,8 +155,8 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 					'title'   => self::__( 'Subscription Services' ),
 					'content' =>
 					'<p><strong>' . self::__( 'Subscription Service?' ) . '</strong></p>' .
-					'<p>' . sprintf( self::__( 'Setting up a subscirption service is a key feature of the GBS themes. Subscriber&rsquo;s e-mail address and location preference are sent to the subscription service for the purpose of e-mail marketing. <ul><li>MailChimp setup instructions can be found <a href="%s">here</a>.</li><li>ConstantContact setup instructions can be found <a href="%s">here</a></li></ul>' ), 'http://groupbuyingsite.com/forum/showthread.php?711-MailChimp-Setup', 'http://groupbuyingsite.com/forum/showthread.php?713-Constant-Contact-Setup' ) . '</p>' .
-					'<p>' . self::__( 'Notes: InfusionSoft is stil under development and no setup documentation is provided. The "Custom Form" option simply replaces the GBS generated form with something you enter in a new option.' ) . '</p>'
+					'<p>' . sprintf( self::__( 'Setting up a subscirption service is a key feature of the SeC themes. Subscriber&rsquo;s e-mail address and location preference are sent to the subscription service for the purpose of e-mail marketing. <ul><li>MailChimp setup instructions can be found <a href="%s">here</a>.</li><li>ConstantContact setup instructions can be found <a href="%s">here</a></li></ul>' ), 'http://groupbuyingsite.com/forum/showthread.php?711-MailChimp-Setup', 'http://groupbuyingsite.com/forum/showthread.php?713-Constant-Contact-Setup' ) . '</p>' .
+					'<p>' . self::__( 'Notes: InfusionSoft is stil under development and no setup documentation is provided. The "Custom Form" option simply replaces the SeC generated form with something you enter in a new option.' ) . '</p>'
 				) );
 			$screen->add_help_tab( array(
 					'id'      => 'theme-options-ss', // This should be unique for the screen.
@@ -213,7 +214,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		 * @abstract
 		 * @return Group_Buying_List_Services|NULL
 		 */
-		protected static abstract function get_instance();
+		// protected static abstract function get_instance();
 
 		protected function __construct() {
 			self::process_subscription_post();
@@ -249,16 +250,16 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		 * @abstract
 		 * @return void
 		 */
-		public abstract static function register();
+		// public abstract static function register();
 
 		public static function success( $location = 0, $email = '' ) {
 
 			if ( !empty( $email ) ) {
-				$message = sprintf( gb__( 'CONTACT %s ADDED.' ), $email );
-				Group_Buying_Controller::set_message( $message, 'info' );
+				$message = sprintf( sec__( 'CONTACT %s ADDED.' ), $email );
+				SEC_Controller::set_message( $message, 'info' );
 			} else {
-				$message = sprintf( gb__( 'Thank You.' ), $email );
-				Group_Buying_Controller::set_message( $message, 'info' );
+				$message = sprintf( sec__( 'Thank You.' ), $email );
+				SEC_Controller::set_message( $message, 'info' );
 			}
 
 			// Set the redirect url
@@ -271,8 +272,8 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			if ( self::$redirect == '' ) {
 				self::$redirect = gb_get_latest_deal_link( $location );
 			}
-			if ( function_exists( 'gb_set_location_preference' ) && $location ) {
-				gb_set_location_preference( $location );
+			if ( function_exists( 'sec_set_location_preference' ) && $location ) {
+				sec_set_location_preference( $location );
 			}
 			self::$redirect = add_query_arg( array( 'signup-success' => '1' ), self::$redirect );
 			wp_redirect( apply_filters( 'gb_subscription_success_redirect_url', self::$redirect ) );
@@ -328,7 +329,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 
 	}
 	// subscription processors
-	foreach ( glob(  get_template_directory() . '/gbs-addons/subscription/list-services/*.class.php' ) as $file_path ) {
+	foreach ( glob(  SEC_Theme_Setup::addons_folder_directory() . '/subscription/list-services/*.class.php' ) as $file_path ) {
 		require_once $file_path;
 	}
 	Group_Buying_List_Services::init();

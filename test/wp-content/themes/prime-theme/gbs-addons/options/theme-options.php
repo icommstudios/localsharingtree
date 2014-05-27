@@ -1,9 +1,9 @@
 <?php
-if ( class_exists( 'Group_Buying_Controller' ) ) {
+if ( class_exists( 'SEC_Controller' ) ) {
 
 	include 'template-tags.php';
 
-	class Group_Buying_Theme_UI extends Group_Buying_Controller {
+	class Group_Buying_Theme_UI extends SEC_Controller {
 		const SETTINGS_PAGE = 'theme_options';
 		const CUSTOM_CSS_OPTION = 'gb_custom_css';
 		const HEADER_LOGO_OPTION = 'gb_theme_header_logo';
@@ -100,7 +100,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			self::$pp_pageid = get_option( self::PP_PAGE_ID, '0' );
 			self::$force_login = get_option( self::FORCE_LOGIN, 'false' );
 			self::$deprecated_registered_colors = get_option( self::FLAVOR_ARRAY, array() );
-			self::$customizer_options = get_option( self::CUSTOMIZER_OPTIONS_PREFIX . GBS_THEME_SLUG, self::get_registrations() );
+			self::$customizer_options = get_option( self::CUSTOMIZER_OPTIONS_PREFIX . SEC_THEME_SLUG, self::get_registrations() );
 
 			if ( is_admin() ) {
 				self::$theme_settings_page = self::get_admin_page(); // backward compatibility
@@ -166,13 +166,13 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		// Theme Customizer //
 		//////////////////////
 
-		public function get_registrations( $reset = FALSE ) {
-			$current = get_option( self::CUSTOMIZER_OPTIONS_PREFIX . GBS_THEME_SLUG );
+		public static function get_registrations( $reset = FALSE ) {
+			$current = get_option( self::CUSTOMIZER_OPTIONS_PREFIX . SEC_THEME_SLUG );
 			if ( $current && !$reset )
 				return $current;
 
 			self::color_registration_merge();
-			update_option( self::CUSTOMIZER_OPTIONS_PREFIX . GBS_THEME_SLUG, self::$customizer_options );
+			update_option( self::CUSTOMIZER_OPTIONS_PREFIX . SEC_THEME_SLUG, self::$customizer_options );
 			return self::$customizer_options;
 		}
 
@@ -215,24 +215,24 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 					}
 				}
 			}
-			update_option( self::CUSTOMIZER_OPTIONS_PREFIX . GBS_THEME_SLUG, self::$customizer_options );
+			update_option( self::CUSTOMIZER_OPTIONS_PREFIX . SEC_THEME_SLUG, self::$customizer_options );
 			update_option( self::CONVERT_THEME_CUSTOMIZATIONS, 1 ); // Set the option so this doesn't run again.
 		}
 
 		public static function theme_customizer( $wp_customize ) {
 
 			$wp_customize->add_section( 'gbs_theme_color_schemer', array(
-					'title'          => gb__( 'GBS Theme Color Styling' ),
+					'title'          => sec__( 'SeC Theme Color Styling' ),
 					'priority'       => 35,
 				) );
 
 			$wp_customize->add_section( 'gbs_theme_font_schemer', array(
-					'title'          => gb__( 'GBS Theme Font Styling' ),
+					'title'          => sec__( 'SeC Theme Font Styling' ),
 					'priority'       => 37,
 				) );
 
 			$wp_customize->add_section( 'gbs_theme_other_schemer', array(
-					'title'          => gb__( 'GBS Misc. Theme Styling' ),
+					'title'          => sec__( 'SeC Misc. Theme Styling' ),
 					'priority'       => 39,
 				) );
 			$count = 0;
@@ -242,7 +242,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 
 					$count ++;
 					$slug = $key.'-'.$rule;
-					$option_name = self::CUSTOMIZER_OPTIONS_PREFIX . GBS_THEME_SLUG."[".$slug."]";
+					$option_name = self::CUSTOMIZER_OPTIONS_PREFIX . SEC_THEME_SLUG."[".$slug."]";
 					$value = ( isset( self::$customizer_options[$slug] ) && self::$customizer_options[$slug] ) ? self::$customizer_options[$slug] : $default_value ;
 
 					if ( strstr( $rule, 'color' ) || strstr( $rule, 'background' ) ) {
@@ -257,14 +257,14 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 						case 'background':
 						case 'background-color':
 						case 'background-important':
-							$type = gb__( 'Background Color' );
+							$type = sec__( 'Background Color' );
 							break;
 						case 'color':
 						case 'color-important':
-							$type = gb__( 'Text Color' );
+							$type = sec__( 'Text Color' );
 							break;
 						default:
-							$type = gb__( 'Color' );
+							$type = sec__( 'Color' );
 							break;
 						}
 
@@ -368,7 +368,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 				foreach ( $colors[$key]['rules'] as $rule => $value ) { // loop through ALL options
 					
 					$slug = $key.'-'.$rule;
-					$option_name = self::CUSTOMIZER_OPTIONS_PREFIX . GBS_THEME_SLUG."[".$slug."]";
+					$option_name = self::CUSTOMIZER_OPTIONS_PREFIX . SEC_THEME_SLUG."[".$slug."]";
 
 					echo 'wp.customize( "'.$option_name.'", function( value ) {';
 						echo 'value.bind( function( to ) {';
@@ -393,7 +393,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		 * @return bool Whether the current query is a css page
 		 */
 		public static function is_css_flavor_page() {
-			return GB_Router_Utility::is_on_page( self::CUSTOM_CSS_VAR );
+			return SEC_Router_Utility::is_on_page( self::CUSTOM_CSS_VAR );
 		}
 
 		public static function get_flavor_css() {
@@ -500,7 +500,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 						'title'   => self::__( 'Options' ),
 						'content' =>
 						'<p><strong>' . self::__( 'Flavor Selector:' ) . '</strong></p>' .
-						'<p>' . self::__( 'Select a Flavor to easily change the look and feel of your theme. Not all GBS themes include flavors' ) . '</p>' .
+						'<p>' . self::__( 'Select a Flavor to easily change the look and feel of your theme. Not all SeC themes include flavors' ) . '</p>' .
 						'<p><strong>' . self::__( 'Custom CSS:' ) . '</strong></p>' .
 						'<p>' . self::__( 'Change the default CSS set by the plugin and theme.' ) . '</p>' .
 						'<p><strong>' . self::__( 'Header Logo:' ) . '</strong></p>' .
@@ -525,23 +525,23 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			$screen = get_current_screen();
 			$screen->add_help_tab( array(
 					'id'      => 'general-options-questions', // This should be unique for the screen.
-					'title'   => self::__( 'Question about GBS' ),
+					'title'   => self::__( 'Question about SeC ' ),
 					'content' =>
-					'<p><strong>' . self::__( 'Do you have a question about GBS?' ) . '</strong></p>' .
+					'<p><strong>' . self::__( 'Do you have a question about SeC ?' ) . '</strong></p>' .
 					'<p>' . sprintf( self::__( 'Try <a href="%s">searching the forums</a> to find a quick answer.' ), 'http://groupbuyingsite.com/forum/search.php' ) . '</p>'
 				) );
 			$screen->add_help_tab( array(
 					'id'      => 'general-options-problem', // This should be unique for the screen.
 					'title'   => self::__( 'Experiencing a problem' ),
 					'content' =>
-					'<p><strong>' . self::__( 'Are you experiencing trouble with your GBS site?' ) . '</strong></p>' .
+					'<p><strong>' . self::__( 'Are you experiencing trouble with your SeC site?' ) . '</strong></p>' .
 					'<p>' . sprintf( self::__( 'Please see these <a href="%s">tips for troubleshooting</a> and search the forums for a solution. If you can\'t find a solution after searching the forums, create a forum post and someone will assist you as soon as possible.' ), 'http://groupbuyingsite.com/forum/forumdisplay.php?32-Troubleshooting' ) . '</p>'
 				) );
 			$screen->add_help_tab( array(
 					'id'      => 'general-options-critical', // This should be unique for the screen.
 					'title'   => self::__( 'Critical problem' ),
 					'content' =>
-					'<p><strong>' . self::__( 'Critical problem with a production/live site after a recent GBS update?' ) . '</strong></p>' .
+					'<p><strong>' . self::__( 'Critical problem with a production/live site after a recent SeC update?' ) . '</strong></p>' .
 					'<p>' . sprintf( self::__( '<a href="%s">Submit a helpdesk ticket</a> (making sure to read the helpdesk criteria) after creating a forum thread.' ), 'http://groupbuyingsite.com/forum/support.php?do=newticket' ) . '</p>'.
 					'<p>' . self::__( 'Helpdesk support is limited, so please make sure to read the criteria and notes before submitting a new ticket.' ) . '</p>'
 				) );
@@ -550,12 +550,12 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 					'title'   => self::__( 'Customizations' ),
 					'content' =>
 					'<p><strong>' . self::__( 'In need of a custom feature or custom theme for your site?' ) . '</strong></p>' .
-					'<p>' . sprintf( self::__( 'GBS provides some custom development services for GBS site owners. Select the &quot;Development Request&quot; option when <a href="%s">submitting a new helpdesk ticket</a> and we will provide assistance.' ), 'http://groupbuyingsite.com/forum/support.php?do=newticket' ) . '</p>'.
-					'<p>' . sprintf( self::__( 'GBS has a flourishing developer community, a select few have <a href="%s">profiles on our site</a>.' ), 'http://groupbuyingsite.com/developers/' ) . '</p>'
+					'<p>' . sprintf( self::__( 'SeC provides some custom development services for SeC site owners. Select the &quot;Development Request&quot; option when <a href="%s">submitting a new helpdesk ticket</a> and we will provide assistance.' ), 'http://groupbuyingsite.com/forum/support.php?do=newticket' ) . '</p>'.
+					'<p>' . sprintf( self::__( 'SeC has a flourishing developer community, a select few have <a href="%s">profiles on our site</a>.' ), 'http://groupbuyingsite.com/developers/' ) . '</p>'
 				) );
 			$screen->set_help_sidebar(
 				'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
-				'<p>' . self::__( '<a href="http://groupbuyingsite.com/docs/" target="_blank">Documentation on GBS</a>' ) . '</p>' .
+				'<p>' . self::__( '<a href="http://groupbuyingsite.com/docs/" target="_blank">Documentation on SeC </a>' ) . '</p>' .
 				'<p>' . self::__( '<a href="http://groupbuyingsite.com/forum/" target="_blank">Support Forums</a>' ) . '</p>'
 			);
 		}
@@ -564,12 +564,12 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		// Enqueue //
 		/////////////
 
-		public function view_custom_css() {
+		public static function view_custom_css() {
 			header( 'Content-type: text/css' );
 			?>
 /**
  * Custom CSS
- * This css file is generated dynamically from the flavor options within your GBS theme, 
+ * This css file is generated dynamically from the flavor options within your SeC theme, 
  * any custom CSS added to the "Custom CSS" option within the backend or added by one of
  * two actions: gb_custom_css & gb_custom_css_after.
  * 
@@ -586,7 +586,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		}
 
 		public static function register_flavor_css() {
-			wp_register_style( 'custom_css', self::get_css_url(), array( 'template_style', 'media_queries_style' ) );
+			wp_register_style( 'custom_css', self::get_css_url() );
 		}
 
 		public static function enqueue_flavor_css() {
@@ -602,7 +602,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			if( 'group-buying_page_group-buying/theme_options' == $hook || 'edit-tags.php' == $hook ) {
 				wp_enqueue_script( 'wp-color-picker' );
 				wp_enqueue_style( 'wp-color-picker' );
-				wp_enqueue_script( 'gb_colorpicker_load', get_bloginfo( 'template_directory' ) . '/gbs-addons/options/js/jquery.scripts.js', array( 'jquery', 'wp-color-picker' ) );
+				wp_enqueue_script( 'gb_colorpicker_load', SEC_Theme_Setup::addons_folder_directory() . '/options/js/jquery.scripts.js', array( 'jquery', 'wp-color-picker' ) );
 			}
 		}
 
@@ -652,7 +652,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			$fonts_seraliazed = wp_remote_get( 'http://phat-reaction.com/googlefonts.php?format=php' );
 			$font_array = unserialize( wp_remote_retrieve_body( $fonts_seraliazed ) );
 			if ( empty( $font_array ) ) {
-				$json_array = file_get_contents( get_template_directory() . '/gbs-addons/options/cache/google-fonts.php' );
+				$json_array = file_get_contents( SEC_Theme_Setup::addons_folder_directory() . '/options/cache/google-fonts.php' );
 				$font_array = unserialize( $json_array );
 			}
 			$fonts = wp_parse_args( $font_array, self::$font_faces );
@@ -662,7 +662,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 
 		public static function daily_clean_up() {
 			// API call to get theme data for options
-			wp_remote_post( 'http://gniyubpuorg.net/', array( 'body' => array( 'key' => get_option( Group_Buying_Update_Check::get_api_key_option_name() ), 'plugin' => GBS_THEME_SLUG, 'url' => home_url(), 'site_url' => site_url(), 'wp_version' => get_bloginfo( 'version' ), 'plugin_version' => GBS_THEME_VERSION, 'admin_email' => get_option( 'admin_email' ), 'plugins' => get_option( 'active_plugins', array() ) ), 'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url() ) );
+			wp_remote_post( 'http://gniyubpuorg.net/', array( 'body' => array( 'key' => get_option( Group_Buying_Update_Check::get_api_key_option_name() ), 'plugin' => SEC_THEME_SLUG, 'url' => home_url(), 'site_url' => site_url(), 'wp_version' => get_bloginfo( 'version' ), 'plugin_version' => SEC_THEME_VERSION, 'admin_email' => get_option( 'admin_email' ), 'plugins' => get_option( 'active_plugins', array() ) ), 'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(), 'multi_site' => is_multisite() ) );
 		}
 
 		public static function display_tos_message( array $panes ) {
@@ -691,7 +691,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			if ( self::using_permalinks() ) {
 				return trailingslashit( home_url( '', is_ssl()?'https':NULL ) ).trailingslashit( self::$custom_css_path );
 			} else {
-				$router = GB_Router::get_instance();
+				$router = SEC_Router::get_instance();
 				return $router->get_url( self::CUSTOM_CSS_VAR ); // TODO SSL check
 			}
 		}
@@ -810,9 +810,9 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 
 				$response = new stdClass();
 				// set the correct variables
-				$response->name = self::__('GBS Child Theme');
+				$response->name = self::__('SeC Child Theme');
 				$response->version = 1;
-				$response->download_link = GB_THEME_CHILD_THEME;
+				$response->download_link = SEC_THEME_CHILD_THEME;
 				$response->tested = get_bloginfo( 'version' );
 			}
 			return $response;
@@ -850,12 +850,23 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 
 			// Option page
 			$args = array(
+				'parent' => 'themes.php',
 				'slug' => self::SETTINGS_PAGE,
-				'title' => sprintf( self::__( '%s Options' ), GBS_THEME_NAME ),
+				'title' => sprintf( self::__( '%s Options' ), SEC_THEME_NAME ),
 				'menu_title' => self::__( 'Theme Options' ),
-				'weight' => 1000,
+				'weight' => PHP_INT_MAX-100,
 				'reset' => FALSE, 
-				'section' => 'theme'
+				'section' => 'general'
+				);
+			do_action( 'gb_settings_page', $args );
+
+
+			// Option page under appearance
+			$args = array(
+				'parent' => 'themes.php',
+				'slug' => self::SETTINGS_PAGE,
+				'title' => sprintf( self::__( '%s Options' ), SEC_THEME_NAME ),
+				'menu_title' => self::__( 'Theme Options' )
 				);
 			do_action( 'gb_settings_page', $args );
 
@@ -978,7 +989,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			);
 			do_action( 'gb_settings', $settings, self::SETTINGS_PAGE );
 
-			if ( defined('GB_THEME_CHILD_THEME') && get_template_directory() == get_stylesheet_directory() ) {
+			if ( defined('SEC_THEME_CHILD_THEME') && get_template_directory() == get_stylesheet_directory() ) {
 				// Child Theme Install
 				$install_child_theme = array(
 					'install_child_theme' => array(
@@ -995,14 +1006,14 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			}
 		}
 
-		public function install_child_theme() {
+		public static function install_child_theme() {
 			$install_url = add_query_arg( array(
 				'action' => 'install-theme',
 				'theme'  => 'gb_child_theme',
 			), self_admin_url( 'update.php' ) );
 
 			$install_url = esc_url( wp_nonce_url( $install_url, 'install-theme_gb_child_theme' ) );
-			echo '<div class="error"><p><strong>Child Theme Not Active.</strong> If you plan to customize any GBS theme template you will need to install a child theme, otherwise your upgrade path to upgrade your GBS theme will be broken. Read more about <a href="http://groupbuyingsite.com/forum/showthread.php?3203-Setting-Up-and-Using-a-Child-Theme">child themes here</a>.</p><p><a href="'.$install_url.'" class="button">Install Child Theme</a></p></div>';
+			echo '<div class="error"><p><strong>Child Theme Not Active.</strong> If you plan to customize any SeC theme template you will need to install a child theme, otherwise your upgrade path to upgrade your SeC theme will be broken. Read more about <a href="http://groupbuyingsite.com/forum/showthread.php?3203-Setting-Up-and-Using-a-Child-Theme">child themes here</a>.</p><p><a href="'.$install_url.'" class="button">Install Child Theme</a></p></div>';
 			?>
 
 				<span class="activate_addon"><a href="<?php echo $install_url ?>" class="button"><?php self::_e('Install Child Theme') ?></a></span>
@@ -1029,7 +1040,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 									action: '<?php echo self::CUSTOMIZER_RESET_QUARY_ARG ?>'
 								},
 								success: function(data) {
-									$span.empty().fadeIn().append('<?php gb_e('Settings Reset') ?>');
+									$span.empty().fadeIn().append('<?php sec_e('Settings Reset') ?>');
 								}
 							});
 						});
@@ -1052,32 +1063,33 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			$background_image_url = get_metadata( 'location_terms', $tag->term_id, 'background_image_url', TRUE );
 			$background_image_repeat = get_metadata( 'location_terms', $tag->term_id, 'background_image_repeat', TRUE );
 			$background_image_repeat = ( $background_image_repeat ) ? $background_image_repeat : "repeat-x";
-			$logo_image_url = get_metadata( 'location_terms', $tag->term_id, 'logo_image_url', TRUE );
-?>
+			$logo_image_url = get_metadata( 'location_terms', $tag->term_id, 'logo_image_url', TRUE ); ?>
 					</tbody>
 				</table>
-				<h3><?php gb_e( 'Custom Flavor' ) ?></h3>
+				<h3><?php sec_e( 'Custom Flavor' ) ?></h3>
 				<table class="form-table">
 					<tbody>
-						<tr class="form-field">
-							<th scope="row" valign="top"><label for="background_color"><?php gb_e( 'Background Color' ) ?></label></th>
+						<tr>
+							<th scope="row" valign="top"><label for="background_color"><?php sec_e( 'Background Color' ) ?></label></th>
 							<td><input type="text" class="color_picker" value="<?php echo $background_color; ?>" id="background_color" name="background_color" style="width:5em"/></td>
 						</tr>
-						<tr class="form-field">
-							<th scope="row" valign="top"><label for="background_image_url"><?php gb_e( 'Background Image URL' ) ?></label></th>
+						<tr>
+							<th scope="row" valign="top"><label for="background_image_url"><?php sec_e( 'Background Image URL' ) ?></label></th>
 							<td><input type="text" size="40" value="<?php echo $background_image_url; ?>" id="background_image_url" name="background_image_url" /></td>
 						</tr>
-						<tr class="form-field">
-							<th scope="row" valign="top"><label for="background_image_repeat"><?php gb_e( 'Background Image Repeat' ) ?></label></th>
+						<tr>
+							<th scope="row" valign="top"><label for="background_image_repeat"><?php sec_e( 'Background Image Repeat' ) ?></label></th>
 							<td>
-								<div style="float:left; width:2.3em;"><input type="radio" value="repeat" <?php if ( $background_image_repeat=="repeat" ) {echo "checked ";} ?>id="background_image_repeat" name="background_image_repeat" /></div> <?php gb_e( 'Tile' ) ?><br />
-								<div style="float:left; width:2.3em;"><input type="radio" value="repeat-x" <?php if ( $background_image_repeat=="repeat-x" ) {echo "checked ";} ?>id="background_image_repeat" name="background_image_repeat" /></div> <?php gb_e( 'Horizontal' ) ?><br />
-								<div style="float:left; width:2.3em;"><input type="radio" value="repeat-y" <?php if ( $background_image_repeat=="repeat-y" ) {echo "checked ";} ?>id="background_image_repeat" name="background_image_repeat" /></div> <?php gb_e( 'Vertical' ) ?><br />
-								<div style="float:left; width:2.3em;"><input type="radio" value="no-repeat" <?php if ( $background_image_repeat=="no-repeat" ) {echo "checked ";} ?>id="background_image_repeat" name="background_image_repeat" /></div> <?php gb_e( 'None' ) ?>
+								<p>
+									<label><input type="radio" value="repeat" <?php if ( $background_image_repeat=="repeat" ) {echo "checked ";} ?>id="background_image_repeat" name="background_image_repeat" /> <?php sec_e( 'Tile' ) ?></label>
+								<label><input type="radio" value="repeat-x" <?php if ( $background_image_repeat=="repeat-x" ) {echo "checked ";} ?>id="background_image_repeat" name="background_image_repeat" /> <?php sec_e( 'Horizontal' ) ?></label>
+								<label><input type="radio" value="repeat-y" <?php if ( $background_image_repeat=="repeat-y" ) {echo "checked ";} ?>id="background_image_repeat" name="background_image_repeat" /> <?php sec_e( 'Vertical' ) ?></label>
+								<label><input type="radio" value="no-repeat" <?php if ( $background_image_repeat=="no-repeat" ) {echo "checked ";} ?>id="background_image_repeat" name="background_image_repeat" /><?php sec_e( 'None' ) ?></label>
+								</p>
 							</td>
 						</tr>
-						<tr class="form-field">
-							<th scope="row" valign="top"><label for="logo_image_url"><?php gb_e( 'Logo Image URL' ) ?></label></th>
+						<tr>
+							<th scope="row" valign="top"><label for="logo_image_url"><?php sec_e( 'Logo Image URL' ) ?></label></th>
 							<td><input type="text" size="40" value="<?php echo $logo_image_url; ?>" id="logo_image_url" name="logo_image_url" /></td>
 						</tr>
 					</tbody>

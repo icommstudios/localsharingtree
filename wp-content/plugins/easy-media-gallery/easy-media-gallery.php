@@ -4,7 +4,7 @@ Plugin Name: Easy Media Gallery
 Plugin URI: http://www.ghozylab.com/
 Description: Easy Media Gallery (Lite) - Displaying your images, videos (MP4, Youtube, Vimeo) and audio mp3 in elegant and fancy lightbox with very easy. Allows you to customize all media to get it looking exactly what you want. <a href="http://ghozylab.com/order" target="_blank"><strong> Upgrade to Pro Version Now</strong></a> and get a tons of awesome features.
 Author: GhozyLab, Inc.
-Version: 1.2.29
+Version: 1.2.35
 Author URI: http://www.ghozylab.com/
 */
 
@@ -77,8 +77,13 @@ if ( !defined( 'EASYMEDG_PLUGIN_NAME' ) )
 if ( !defined( 'EASYMEDG_PLUGIN_DIR' ) )
     define( 'EASYMEDG_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . EASYMEDG_PLUGIN_NAME . '/' );
 
-if ( !defined( 'EASYMEDG_PLUGIN_URL' ) )
-    define( 'EASYMEDG_PLUGIN_URL', WP_PLUGIN_URL . '/' . EASYMEDG_PLUGIN_NAME . '/' );
+if ( !defined( 'EASYMEDG_PLUGIN_URL' )) {
+	if (is_ssl()) {
+    define( 'EASYMEDG_PLUGIN_URL', str_replace('http', 'https', WP_PLUGIN_URL) . '/' . EASYMEDG_PLUGIN_NAME . '/' );
+	} else {
+		define( 'EASYMEDG_PLUGIN_URL', WP_PLUGIN_URL . '/' . EASYMEDG_PLUGIN_NAME . '/' );
+	}
+}	
 	
 	
 $wp_plugin_dir = substr(plugin_dir_path(__FILE__), 0, -1);
@@ -96,7 +101,7 @@ require_once( EASYMEDG_PLUGIN_DIR . 'includes/class/easymedia_resizer.php' );
 
 // Plugin Version
 if ( !defined( 'EASYMEDIA_VERSION' ) ) {
-	define( 'EASYMEDIA_VERSION', '1.2.29' );
+	define( 'EASYMEDIA_VERSION', '1.2.35' );
 }
 
 // Pro Price
@@ -442,26 +447,33 @@ include_once( EASYMEDG_PLUGIN_DIR . 'includes/functions/functions.php' );
 | CHECK PLUGIN DEFAULT SETTINGS
 |--------------------------------------------------------------------------
 */
-function emg_opt_init()
-{
-    // Incase it is first install and option doesn't exist
-    $emg_optval = get_option( 'easy_media_opt' );
-    if ( !is_array( $emg_optval ) ) update_option( 'easy_media_opt', array() );
-}
-add_action( 'init', 'emg_opt_init', 2 );
 
-if ( is_admin() ){
-	$tmp = get_option( 'easy_media_opt' );
-		if ( isset( $tmp['easymedia_deff_init'] ) != '1' ) {
-			
-			function easymedia_initialize_options() {
-				
-				// Plugin 1st Configuration
-				easymedia_1st_config();
-			}
-			add_action( 'admin_init', 'easymedia_initialize_options' );
-		}
+function emg_plugin_activate() {
+
+  add_option( 'Activated_Emg_Plugin', 'emg-activate' );
+
 }
+register_activation_hook( __FILE__, 'emg_plugin_activate' );
+
+function emg_load_plugin() {
+
+    if ( is_admin() && get_option( 'Activated_Emg_Plugin' ) == 'emg-activate' ) {
+		
+		$emg_optval = get_option( 'easy_media_opt' );
+		
+		if ( !is_array( $emg_optval ) ) update_option( 'easy_media_opt', array() );		
+		
+		$tmp = get_option( 'easy_media_opt' );
+		if ( isset( $tmp['easymedia_deff_init'] ) != '1' ) {
+			easymedia_1st_config();
+			}
+
+        delete_option( 'Activated_Emg_Plugin' );
+		wp_redirect("edit.php?post_type=easymediagallery&page=comparison");
+    }
+}
+add_action( 'admin_init', 'emg_load_plugin' );
+
 
 
 ?>

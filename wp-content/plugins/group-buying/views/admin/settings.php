@@ -1,14 +1,18 @@
 <?php require ABSPATH . 'wp-admin/options-head.php'; // not a general options page, so it must be included here ?>
 <div class="wrap">
+
 	<?php screen_icon(); ?>
 	<h2 class="nav-tab-wrapper">
-		<?php self::display_admin_tabs(); ?>
+		<?php do_action( 'gb_settings_tabs' ); ?>
 	</h2>
-
-	<h3><?php echo esc_html( $title ); ?></h3>
+	
+	<?php if ( $title != '' ): ?>
+		<h3><?php echo esc_html( $title ); ?></h3>
+	<?php endif ?>
 	<?php do_action( 'gb_settings_page_sub_heading_'.$page, $page ); ?>
 
-	<form method="post" enctype="multipart/form-data" action="<?php echo admin_url( 'options.php' ); ?>">
+	<span id="ajax_saving" style="display:none" data-message="<?php self::_e('Saving...') ?>"></span>
+	<form method="post" enctype="multipart/form-data" action="<?php echo admin_url( 'options.php' ); ?>" class="gb_settings_form <?php echo $page; if ( $ajax ) echo ' ajax_save'; if ( $ajax_full_page ) echo ' full_page_ajax';  ?>">
 		<?php settings_fields( $page ); ?>
 		<table class="form-table">
 			<?php do_settings_fields( $page, 'default' ); ?>

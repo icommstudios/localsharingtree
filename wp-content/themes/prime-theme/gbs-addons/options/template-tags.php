@@ -183,7 +183,8 @@ if ( !function_exists( 'gb_theme_footer_scripts' ) ) {
  */
 if ( !function_exists( 'gb_deals_index_title' ) ) {
 	function gb_deals_index_title() {
-		if ( is_tax() ) {
+		$title = '';
+		if ( is_tax() && !sec_is_offer_type_page() ) {
 			$location = get_query_var( gb_get_deal_location_tax() );
 			$category = get_query_var( 'gb_category' );
 			$tags = get_query_var( 'gb_tag' );
@@ -194,10 +195,10 @@ if ( !function_exists( 'gb_deals_index_title' ) ) {
 			} elseif ( !empty( $tags ) ) {
 				$term = get_term_by( 'slug', $tags, gb_get_deal_tag_slug() );
 			}
-			$title = $term->name . ' ' . gb__( 'Deals' );
+			$title = $term->name . ' ' . sec__( 'Deals' );
 		}
 		if ( empty( $title ) ) {
-			$title = gb__( 'Current Deals' );
+			$title = sec__( 'Current Deals' );
 		}
 		echo apply_filters( 'gb_deals_index_title', $title );
 	}
@@ -228,7 +229,7 @@ if ( !function_exists( 'gbs_feed_link' ) ) {
 				}
 				$feed_link = gb_get_deals_link() . '/feed/';
 			} else {
-				$feed_link = add_query_arg( array( 'deals' => $context, 'post_type' => gb_get_deal_post_type() ), get_bloginfo( 'rss2_url' ) );
+				$feed_link = add_query_arg( array( 'deals' => $context, 'post_type' => gb_get_offer_post_type() ), get_bloginfo( 'rss2_url' ) );
 			}
 		} else {
 			$feed_link = get_bloginfo( 'rss2_url' );
@@ -293,7 +294,7 @@ if ( !function_exists( 'gb_theme_facebook' ) ) {
 if ( !function_exists( 'gb_get_current_location_extended' ) ) {
 	function gb_get_current_location_extended( $return = 'name', $single = TRUE ) {
 		$return = ( $return == 'id' ) ? 'term_id' : strtolower( $return ) ;
-		$gb_get_current_location = gb__( 'Choose your city' );
+		$gb_get_current_location = sec__( 'Choose your city' );
 
 		$term_object = null;
 		if ( isset( $_GET['location'] ) && $_GET['location'] != '' ) {
@@ -338,7 +339,7 @@ if ( !function_exists( 'gb_get_current_location_extended' ) ) {
 if ( !function_exists( 'gb_current_location_extended' ) ) {
 	function gb_current_location_extended( $return = 'name' ) {
 		$get_current_location = gb_get_current_location_extended( $return );
-		$current_location = ( $get_current_location != '' ) ? $get_current_location : gb__( 'Choose your city' ) ;
+		$current_location = ( $get_current_location != '' ) ? $get_current_location : sec__( 'Choose your city' ) ;
 		echo apply_filters( 'gb_current_location_extended', $current_location );
 	}
 }

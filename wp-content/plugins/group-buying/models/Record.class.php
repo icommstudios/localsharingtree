@@ -94,7 +94,7 @@ class Group_Buying_Record extends Group_Buying_Post_Type {
 	 * @return array The data
 	 */
 	public function get_data() {
-		return maybe_unserialize( $this->post->post_content );
+		return (array) json_decode( $this->post->post_content );
 	}
 
 	/**
@@ -104,9 +104,8 @@ class Group_Buying_Record extends Group_Buying_Post_Type {
 	 * @return array The data
 	 */
 	public function set_data( $data ) {
-		// maybe_serialize will create an warning about __sleep preventing an object from serializing,
-		// in tests this doesn't create an error.
-		$this->post->post_content = @maybe_serialize( $data );
+		// __sleep preventing will prevent some objects from serializing
+		$this->post->post_content = json_encode( $data );
 		$this->save_post();
 		return $data;
 	}

@@ -5,10 +5,7 @@ $unique_id = rand(100, 10000);
 $effect = explode("-", $special_effect);
 $album_css = $wpdb->get_results
 (
-	$wpdb->prepare
-	(
-		"SELECT * FROM " . gallery_bank_settings(), ""
-	)
+	"SELECT * FROM " . gallery_bank_settings()
 );
 if (count($album_css) != 0) {
     $setting_keys = array();
@@ -71,12 +68,9 @@ switch ($album_type) {
             $img_in_row = 0;
         }
         $album = $wpdb->get_results
-            (
-                $wpdb->prepare
-                    (
-                        "SELECT * FROM " . gallery_bank_albums() . " order by album_order asc", ""
-                    )
-            );
+		(
+			"SELECT * FROM " . gallery_bank_albums() . " order by album_order asc"
+		);
 	break;
 }
 
@@ -204,9 +198,10 @@ switch ($album_type) {
 
         $index = array_search("language_direction", $setting_keys);
         $lang_dir_setting = $album_css[$index]->setting_value;
+		
+        $video_thumb_url = GALLERY_BK_PLUGIN_URL . "/assets/images/video.jpg";
+        
 
-        $index = array_search("video_thumb_url", $setting_keys);
-        $video_thumb_url = $album_css[$index]->setting_value;
 	break;
     case "grid" || "list" || "individual":
         $index = array_search("cover_thumbnail_width", $setting_keys);

@@ -154,7 +154,7 @@ function gb_get_form_label( $key, $data, $category ) {
  * @return string
  */
 function gb_get_quantity_select( $start = 1, $end = 10, $selected = 1, $name = 'quantity_select' ) {
-	if ( ( $end - $start ) > 100 ) {
+	if ( ( $end - $start ) > apply_filters( 'gb_get_quantity_select_threshold', 25 ) ) {
 		$input = '<input type="number" name="'.$name.'" value="'.$selected.'" min="'.$start.'" max="'.$end.'">';
 		return $input;
 	}
@@ -163,5 +163,5 @@ function gb_get_quantity_select( $start = 1, $end = 10, $selected = 1, $name = '
 		$select .= '<option value="'.$i.'" '.selected( $selected, $i, FALSE ).'>'.$i.'</option>';
 	}
 	$select .= "<select>";
-	return $select;
+	return apply_filters( 'gb_get_quantity_select', $select, $start, $end, $selected, $name );
 }

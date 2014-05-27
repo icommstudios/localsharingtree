@@ -1,27 +1,27 @@
 === Easy Media Gallery ===
 Contributors: GhozyLab
 Donate link: http://ghozylab.com/donate
-Tags: gallery, best gallery plugin, photo album, photo, photos, picture, pictures, best gallery, photo albums, html5 video, album, widget, fancy gallery, plugin for gallery, photo gallery, html5 player, plugin gallery, wp gallery, wordpress gallery plugin, responsive gallery, grid gallery, gallery plugin, pagination gallery, pagination portfolio, wp gallery plugin, photo slider, image slider, responsive gallery, wordpress portfolio plugin, plugin, post, links, page, admin, posts, images, seo image, twitter, image album, image, google, portfolio, best portfolio plugin, easy gallery plugin, easy portfolio plugin 
+Tags: gallery, photo gallery, photo album, nextgen, wordpress gallery plugin, best gallery, photo albums, wordpress portfolio plugin, best gallery plugin, plugin gallery, wp gallery, responsive gallery, grid gallery, gallery plugin, galerie, galleria, wp gallery plugin, photo slider, image slider, responsive gallery, photo, photos, picture, pictures, html5 video, html5 audio, album, widget, sidebar, fancy gallery, plugin for gallery, html5 player, pagination gallery, pagination portfolio, plugin, post, links, page, admin, posts, images, thumbnail, easy media gallery, seo image, twitter, image album, image, google, portfolio, best portfolio
 Requires at least: 3.3
-Tested up to: 3.8.1
-Stable tag: 1.2.29
+Tested up to: 3.9.1
+Stable tag: 1.2.35
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The best Wordpress gallery plugin enables you to create photo gallery or portfolio. Over 164,835+ sites are already using Easy Media Gallery.
-
+The best Wordpress gallery plugin enables you to create photo gallery or portfolio. Over 213,300+ sites are already using Easy Media Gallery.
 
 == Description ==
 
-Easy Media Gallery is a wordpress plugin designed to display various media support including grid gallery, galleries, photo album, multiple photo albums, portfolio, photo gallery or image gallery, image slider, google maps and google street view, youtube video, vimeo video, audio and link with very ease, fancy and elegant.
+### [Best Gallery Plugin - Photo Albums - Grid Gallery Plugin](http://ghozylab.com/best-photo-albums-wordpress-plugin/)
+Easy Media Gallery is a wordpress plugin designed to display various media support including grid gallery, galleries, photo album, multiple photo albums, portfolio, photo gallery or image gallery, image slider, google maps and google street view, youtube video, vimeo video, mp4 video, audio mp3 and link with very ease, fancy and elegant.
 
 > #### **Live Demos**
 
-> * [DEMO – Photo Albums](http://ghozylab.com/best-photo-albums-wordpress-plugin/)
-> * [DEMO – Photo Gallery / Grid Gallery](http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/)
-> * [DEMO – Filterable Media](http://ghozylab.com/wordpress-filterable-gallery-and-filterable-media-plugin/)
-> * [DEMO – Gallery with Pagination](http://ghozylab.com/wordpress-grid-gallery-with-pagination-plugin/)
-> * [DEMO – Image / Media Slider](http://ghozylab.com/wordpress-image-slider-and-media-slider-plugin/)
+> * [DEMO : Photo Albums](http://ghozylab.com/best-photo-albums-wordpress-plugin/)
+> * [DEMO : Photo Gallery / Grid Gallery](http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/)
+> * [DEMO : Filterable Media](http://ghozylab.com/wordpress-filterable-gallery-and-filterable-media-plugin/)
+> * [DEMO : Gallery with Pagination](http://ghozylab.com/wordpress-grid-gallery-with-pagination-plugin/)
+> * [DEMO : Image / Media Slider](http://ghozylab.com/wordpress-image-slider-and-media-slider-plugin/)
 
 = Full media support =
 <p>Easy Media Gallery plugin satisfy all your needs letting you create different types of wordpress portfolio, photo albums or wordpress media gallery. Each item can be:</p> 
@@ -52,9 +52,13 @@ Easy Media Gallery supports a wide range of media formats. Simply link to any im
 * Facebook
 * Showecho
 * YouKu
+* Break
+* Flickr
+* Megavideo
+* Rutube
+* Ustream
 * MP4 (<em>MP4 HTML5 player for Pro version and Flash player for Lite version</em>), MOV, SWF, M4V, M4A, FLV
 
-### [Best Gallery Plugin - Photo Albums - Grid Gallery Plugin](http://ghozylab.com/best-photo-albums-wordpress-plugin/)
 It is a very customizable wordpress gallery and portfolio plugin that allow you to set display whatever you want like adjust colors, positions, grid, media sizes, hover effect and much more with one easy control panel. That easy control panel for experts it would save your time, and for you who do not have more knowledge about website styling, of course this plugin will allow you to manage your website, gallery and portfolio much more easily. 
 
 = LITE VERSION Example =
@@ -205,6 +209,27 @@ But seriously, I just want to drink coffee for free, so help a developer out. Yo
 
 == Changelog ==
 
+= 1.2.35 =
+* Fixed : Small bugs and improvements
+* Removed : Disturbing upgrade notifications
+
+= 1.2.33 =
+* Fixed : Small bugs and improvements ( Settings Page )
+
+= 1.2.31 =
+* Updated : Wordpress 3.9 compatibility
+* Added : New shortcode button
+* Added : 5 Video supports
+* Fixed : SSL issue
+* Fixed : Small bugs and improvements
+* Many other PHP and CSS clean and optimization
+
+= 1.2.30 =
+* Added : New Wordpress 3.5 and above media uploader
+* Fixed : PHP Small bugs and CSS improvements
+* Many other PHP, Javascript and CSS clean and optimization
+* Added : New Language
+
 = 1.2.29 =
 * Fixed : New Patch for Security bugs reported by Nikolai Tschacher
 * Fixed : change Ajax relative path with wp_make_link_relative
@@ -217,7 +242,7 @@ But seriously, I just want to drink coffee for free, so help a developer out. Yo
 * Many other PHP, Javascript and CSS clean and optimization
 
 = 1.2.23 =
-* added : New Feature in pricing table
+* Added : New Feature in pricing table
 * Update : New Price for DEV Version
 
 = 1.2.21 =
@@ -369,5 +394,5 @@ But seriously, I just want to drink coffee for free, so help a developer out. Yo
 
 == Upgrade Notice ==
 
-= 1.2.29 =
+= 1.2.35 =
 IMPORTANT! Security bugs fix, update NOW!

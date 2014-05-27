@@ -1,777 +1,833 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery-Bank\n"
-"POT-Creation-Date: 2014-03-18 10:26+0530\n"
-"PO-Revision-Date: 2014-03-18 10:53+0530\n"
+"Project-Id-Version: Gallery Bank\n"
+"POT-Creation-Date: 2014-05-06 15:00+0530\n"
+"PO-Revision-Date: \n"
 "Last-Translator: \n"
-"Language-Team: Tech-Banker <support@tech-banker.com>\n"
-"Language: nl_NL\n"
+"Language-Team: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.4\n"
-"X-Poedit-Basepath: I:\\Kiran-work-Backup\\2014\\march\\Gallery-Bank-Latest"
-"\\standard\\gallery-bank\\\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: I:\\Kiran-work-Backup\\2014\\Gallery-Bank-Latest"
+"\\3.8.2\\Standard\\gallery-bank\\\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: front_views/gallery-bank-shortcode.php:4
 msgid "Insert Gallery Bank Shortcode"
-msgstr "Invoegen Gallery Bank Korte code"
+msgstr "Gallery Bank shortcode invoegen"
 
 #: front_views/gallery-bank-shortcode.php:6
 msgid "Select an album below to add it to your post or page."
-msgstr "Selecteer hieronder een album toevoegen het aan uw post of pagina."
+msgstr "Selecteer een album en voeg het toe aan uw post of pagina."
 
 #: front_views/gallery-bank-shortcode.php:11
 msgid "Gallery Type"
-msgstr "galerie Typ"
+msgstr "Galerij type"
 
 #: front_views/gallery-bank-shortcode.php:13
 msgid "Albums with Images"
-msgstr "Albums Er met beelden"
+msgstr "Albums met afbeeldingen"
 
 #: front_views/gallery-bank-shortcode.php:15
 msgid "Only Images"
-msgstr "alleen Afbeeldingen"
+msgstr "Alleen afbeeldingen"
 
 #: front_views/gallery-bank-shortcode.php:18
 msgid "Album Format"
-msgstr "album zijn formaat"
+msgstr "Album formaat"
 
 #: front_views/gallery-bank-shortcode.php:20
 msgid "Select Album Format"
-msgstr "Selecteer album zijn- Formaat"
+msgstr "Selecteer album formaat"
 
 #: front_views/gallery-bank-shortcode.php:27
 msgid "Select Album"
-msgstr "Selecteer album zijn"
+msgstr "Selecteer album"
 
 #: front_views/gallery-bank-shortcode.php:29
 msgid "Select an Album"
 msgstr "Selecteer een album"
 
-#: front_views/gallery-bank-shortcode.php:48
+#: front_views/gallery-bank-shortcode.php:45
 msgid "Gallery Format"
-msgstr "galerie Formaat"
+msgstr "Galerij Formaat"
 
-#: front_views/gallery-bank-shortcode.php:50
+#: front_views/gallery-bank-shortcode.php:47
 msgid "Select Gallery Format "
-msgstr "Selecteer Galerij Formaat"
+msgstr "Selecteer galerij formaat"
 
-#: front_views/gallery-bank-shortcode.php:59 views/album-preview.php:38
-#: views/images-sorting.php:232
+#: front_views/gallery-bank-shortcode.php:56 views/album-preview.php:29
+#: views/images-sorting.php:220
 msgid "Images in Row"
-msgstr "Afbeeldingen in Rij"
+msgstr "Aantal afbeeldingen in een rij"
 
-#: front_views/gallery-bank-shortcode.php:64
+#: front_views/gallery-bank-shortcode.php:61
 msgid "Image Width"
-msgstr "afbeelding Breedte"
+msgstr "Afbeelding breedte"
 
-#: front_views/gallery-bank-shortcode.php:71 views/album-sorting.php:202
+#: front_views/gallery-bank-shortcode.php:68 views/album-sorting.php:170
 msgid "Albums in Row"
-msgstr "Albums Er in rij"
+msgstr "Aantal albums in een rij"
 
-#: front_views/gallery-bank-shortcode.php:76
+#: front_views/gallery-bank-shortcode.php:73
 msgid "Text Format"
-msgstr "tekst Formaat"
+msgstr "Tekst formaat"
 
-#: front_views/gallery-bank-shortcode.php:78
+#: front_views/gallery-bank-shortcode.php:75
 msgid "Select Format "
-msgstr "selecteer Opmaak"
+msgstr "Selecteer een formaat"
 
-#: front_views/gallery-bank-shortcode.php:85
+#: front_views/gallery-bank-shortcode.php:82
 msgid "Special Effects"
-msgstr "speciale effecten"
+msgstr "Speciale effecten"
 
-#: front_views/gallery-bank-shortcode.php:107
+#: front_views/gallery-bank-shortcode.php:104
 msgid "Animation Effects"
-msgstr "animatie-effecten"
+msgstr "Animatie effecten"
 
-#: front_views/gallery-bank-shortcode.php:160
+#: front_views/gallery-bank-shortcode.php:157
 msgid "Show Responsive Gallery"
-msgstr "Toon- reagerende Gallery"
+msgstr "Toon responsive galerij"
 
-#: front_views/gallery-bank-shortcode.php:164
+#: front_views/gallery-bank-shortcode.php:161
 msgid "Show Album Title"
-msgstr "Tonen album zijn Titel"
+msgstr "Toon album titel"
+
+#: front_views/gallery-bank-shortcode.php:166
+msgid "Insert Album"
+msgstr "Album Toevoegen"
 
 #: front_views/gallery-bank-shortcode.php:169
-msgid "Insert Album"
-msgstr "Invoegen album zijn"
-
-#: front_views/gallery-bank-shortcode.php:172
 msgid "Cancel"
-msgstr "annuleren"
+msgstr "Annuleren"
 
-#: front_views/gallery-bank-shortcode.php:484
+#: front_views/gallery-bank-shortcode.php:481
 msgid "Please select an Album"
-msgstr "alstublieft Selecteer een album"
+msgstr "Selecteer een Album"
 
-#: front_views/gallery-bank-shortcode.php:488
+#: front_views/gallery-bank-shortcode.php:485
 msgid "Please select an Album Format"
-msgstr "alstublieft Selecteer een album Formaat"
+msgstr "Selecteer een Album Formaat"
 
-#: front_views/gallery-bank-shortcode.php:492
+#: front_views/gallery-bank-shortcode.php:489
 msgid "Please select a Gallery Images Format"
-msgstr "alstublieft Selecteer  een galerie Beelden Formaat"
+msgstr "Selecteer een Galerij Afbeeldingen Formaat"
 
-#: front_views/gallery-bank-shortcode.php:496
+#: front_views/gallery-bank-shortcode.php:493
 msgid "Please select a Text Format for the Gallery"
-msgstr "alstublieft Selecteer een Text Format voor de galerie"
+msgstr "Selecteer een Text Formaat voor de Galerij"
 
-#: gallery-bank.php:79
+#: gallery-bank.php:80
 msgid "<img src=\""
-msgstr ""
+msgstr "<img src=\""
 
-#: gallery-bank.php:81
+#: gallery-bank.php:82
 msgid "/wp-admin/admin.php?page=gallery_bank"
-msgstr ""
+msgstr "/wp-admin/admin.php?page=gallery_bank"
 
-#: gallery-bank.php:88 lib/gallery-bank-class.php:10
+#: gallery-bank.php:89 lib/gallery-bank-class.php:10 views/dashboard.php:164
 msgid "Dashboard"
-msgstr "instrumentenbord"
+msgstr "Dashboard"
 
-#: gallery-bank.php:95 lib/gallery-bank-class.php:20
-#: views/add-new-album.php:100 views/add-new-album.php:107
-#: views/dashboard.php:112
+#: gallery-bank.php:96 lib/gallery-bank-class.php:17
+#: views/add-new-album.php:95 views/dashboard.php:175
 msgid "Add New Album"
-msgstr "toevoegen Nieuwe album zijn"
+msgstr "Voeg Nieuw Album toe"
 
-#: gallery-bank.php:102 lib/gallery-bank-class.php:23
+#: gallery-bank.php:103 lib/gallery-bank-class.php:20
 msgid "Album Sorting"
-msgstr "Album zijn- Sortering"
+msgstr "Album Sortering"
 
-#: gallery-bank.php:109 lib/gallery-bank-class.php:24 views/settings.php:266
-#: views/settings.php:273
+#: gallery-bank.php:110 lib/gallery-bank-class.php:21 views/settings.php:259
 msgid "Global Settings"
-msgstr "mondiale Instellingen"
+msgstr "Globale Instellingen"
 
-#: gallery-bank.php:116 lib/gallery-bank-class.php:25
-#: views/gallery-bank-system-report.php:12
-#: views/gallery-bank-system-report.php:17
+#: gallery-bank.php:117 lib/gallery-bank-class.php:22
+#: views/gallery-bank-system-report.php:11
 msgid "System Status"
-msgstr "stelsel-rechtspositie "
+msgstr "Systeem Status"
 
-#: gallery-bank.php:123 lib/gallery-bank-class.php:26
+#: gallery-bank.php:124 lib/gallery-bank-class.php:23
 msgid "Purchase Pro Version"
-msgstr "Aankoop Premie Versie"
+msgstr "Kopen Pro Versie"
 
-#: lib/add-new-album-class.php:49 views/edit-album.php:278
-#: views/edit-album.php:285
+#: lib/add-new-album-class.php:49 views/edit-album.php:266
+#: views/edit-album.php:273
 msgid " Set as Album Cover"
-msgstr "Instellen als albumhoes"
+msgstr "Stel in als Album Cover"
 
-#: lib/add-new-album-class.php:52 views/edit-album.php:227
-#: views/edit-album.php:291
+#: lib/add-new-album-class.php:52 views/edit-album.php:215
+#: views/edit-album.php:279
 msgid "Enter your Title"
-msgstr "Vul uw titel"
+msgstr "Voer Titel in"
 
-#: lib/add-new-album-class.php:53 views/edit-album.php:232
-#: views/edit-album.php:296
+#: lib/add-new-album-class.php:53 views/edit-album.php:220
+#: views/edit-album.php:284
 msgid "Enter your Description "
-msgstr "Voer je Omschrijving"
+msgstr "Voer uw Omschrijving in"
 
-#: lib/add-new-album-class.php:55 views/edit-album.php:238
-#: views/edit-album.php:302
+#: lib/add-new-album-class.php:55 views/edit-album.php:226
+#: views/edit-album.php:290
 msgid "Enter your Tags"
-msgstr "Voer je Ons Tags"
+msgstr "Voer uw tags in"
 
-#: lib/add-new-album-class.php:59 views/edit-album.php:323
+#: lib/add-new-album-class.php:59 views/edit-album.php:311
 msgid "Delete Image"
-msgstr "doorhalen afbeelding"
+msgstr "Verwijder Afbeelding"
 
-#: lib/gallery-bank-class.php:9 views/add-new-album.php:98
-#: views/album-preview.php:12 views/album-sorting.php:156
-#: views/edit-album.php:84 views/gallery-bank-system-report.php:10
-#: views/images-sorting.php:180 views/purchase_pro_version.php:7
-#: views/settings.php:264 views/shortcode.php:7
+#: lib/gallery-bank-class.php:9 views/header.php:57
 msgid "Gallery Bank"
 msgstr "Gallery Bank"
 
-#: lib/gallery-bank-class.php:22 views/dashboard.php:135
+#: lib/gallery-bank-class.php:19 views/dashboard.php:198
 msgid "Short-Codes"
 msgstr "Korte-codes"
 
-#: lib/gallery-bank-class.php:266
+#: lib/gallery-bank-class.php:262
 msgid "Add Gallery using Gallery Bank"
-msgstr "Galerie toevoegen gebruikend Gallery Bank"
+msgstr "Voeg Galerij toe met Gallery Bank"
 
-#: views/add-new-album.php:112 views/add-new-album.php:242
-#: views/album-preview.php:25 views/album-sorting.php:170
-#: views/edit-album.php:97 views/edit-album.php:344
-#: views/images-sorting.php:194 views/settings.php:278 views/shortcode.php:21
+#: views/add-new-album.php:99 views/add-new-album.php:229
+#: views/album-preview.php:16 views/album-sorting.php:138
+#: views/edit-album.php:85 views/edit-album.php:332
+#: views/images-sorting.php:182 views/settings.php:262 views/shortcode.php:12
 msgid "Back to Albums"
-msgstr "Terug naar Albums Er"
+msgstr "Terug naar Albums"
 
-#: views/add-new-album.php:115 views/add-new-album.php:240
+#: views/add-new-album.php:102 views/add-new-album.php:227
 msgid "Save and Submit Changes"
-msgstr "Opslaan en voorleggen wijzigingen"
+msgstr "Wijzigingen Opslaan"
 
-#: views/add-new-album.php:121
+#: views/add-new-album.php:108
 msgid "Album Published. Kindly wait for the redirect to happen."
-msgstr ""
-"album zijn-Gepubliceerd . Vriendelijk wachten op de omleiden te gebeuren."
+msgstr "Album Gepubliceerd. U wordt doorverwezen"
 
-#: views/add-new-album.php:130 views/edit-album.php:109
+#: views/add-new-album.php:117 views/edit-album.php:97
 msgid "Album Details"
-msgstr "album zijn Details"
+msgstr "Albums Details"
 
-#: views/add-new-album.php:135 views/edit-album.php:113
+#: views/add-new-album.php:122 views/edit-album.php:101
 msgid "Album Title"
-msgstr "albumtitel"
+msgstr "Album Titel"
 
-#: views/add-new-album.php:141 views/edit-album.php:118
+#: views/add-new-album.php:128 views/edit-album.php:106
 msgid "Enter your Album Title"
-msgstr "Vul uw Albumtitel"
+msgstr "Voer uw Album Titel in"
 
-#: views/add-new-album.php:147 views/edit-album.php:125
+#: views/add-new-album.php:134 views/edit-album.php:113
 msgid "Description"
-msgstr "beschrijving"
+msgstr "Omschrijving"
 
-#: views/add-new-album.php:161 views/edit-album.php:139
+#: views/add-new-album.php:148 views/edit-album.php:127
 msgid "Upload Images"
-msgstr "Afbeeldingen te uploaden"
+msgstr "Afbeeldingen Uploaden"
 
-#: views/add-new-album.php:164 views/edit-album.php:142
+#: views/add-new-album.php:151 views/edit-album.php:130
 msgid "Your browser doesn\"t have Flash, Silverlight or HTML5 support."
-msgstr ""
-"Uw browsergebaseerde maakt niet 't hebben Flash, Silverlight of HTML5- "
-"ondersteunen"
+msgstr "Je browser ondersteunt geen Flash, Silverlight of HTML5."
 
-#: views/add-new-album.php:171 views/edit-album.php:149
+#: views/add-new-album.php:158 views/edit-album.php:137
 msgid "Upload Videos"
-msgstr "uploaden Videos"
+msgstr "Video's Uploaden"
 
-#: views/add-new-album.php:172 views/add-new-album.php:223
-#: views/edit-album.php:150 views/edit-album.php:195 views/settings.php:287
-#: views/settings.php:503 views/settings.php:733 views/settings.php:844
-#: views/settings.php:943 views/settings.php:1265 views/settings.php:1381
-#: views/settings.php:1432 views/settings.php:1484 views/settings.php:1512
+#: views/add-new-album.php:159 views/add-new-album.php:210
+#: views/edit-album.php:138 views/edit-album.php:183 views/settings.php:271
+#: views/settings.php:487 views/settings.php:717 views/settings.php:828
+#: views/settings.php:927 views/settings.php:1249 views/settings.php:1365
+#: views/settings.php:1416 views/settings.php:1468
 msgid " (Available in Premium Versions)"
 msgstr "(Verkrijgbaar in Premie versies)"
 
-#: views/add-new-album.php:178 views/edit-album.php:155
+#: views/add-new-album.php:165 views/edit-album.php:143
 msgid "Video Url"
-msgstr "de video Url"
+msgstr "Video Url"
 
-#: views/add-new-album.php:184 views/edit-album.php:159
+#: views/add-new-album.php:171 views/edit-album.php:147
 msgid "Enter your Video Url"
-msgstr "Vul uw de video Url"
+msgstr "Voer uw Video Url in"
 
-#: views/add-new-album.php:191 views/edit-album.php:165
+#: views/add-new-album.php:178 views/edit-album.php:153
 msgid "Upload Video"
-msgstr "uploaden VIDEO"
+msgstr "Video Uploaden"
 
-#: views/add-new-album.php:202 views/edit-album.php:176
+#: views/add-new-album.php:189 views/edit-album.php:164
 msgid "Your Gallery Bank Album"
-msgstr "Uw Gallery bank Album"
+msgstr "Uw Gallery Bank Album"
 
-#: views/add-new-album.php:213 views/edit-album.php:185
+#: views/add-new-album.php:200 views/edit-album.php:173
 msgid "Delete"
-msgstr "doorhalen"
+msgstr "Verwijderen"
 
-#: views/add-new-album.php:216 views/dashboard.php:131
-#: views/edit-album.php:188
+#: views/add-new-album.php:203 views/dashboard.php:194
+#: views/edit-album.php:176
 msgid "Thumbnail"
-msgstr "Miniatuurafbeelding"
+msgstr "Miniatuur"
 
-#: views/add-new-album.php:219 views/edit-album.php:191
+#: views/add-new-album.php:206 views/edit-album.php:179
 msgid "Title & Description"
-msgstr "Titel en beschrijving"
+msgstr "Titel & Omschrijving"
 
-#: views/add-new-album.php:222 views/edit-album.php:194
+#: views/add-new-album.php:209 views/edit-album.php:182
 msgid "Tags (comma separated list)"
-msgstr "Ons Tags (komma gescheiden lijst)"
+msgstr "Tags (gescheiden door komma's)"
 
-#: views/add-new-album.php:226 views/edit-album.php:198
+#: views/add-new-album.php:213 views/edit-album.php:186
 msgid "Url to Redirect on click of an Image"
-msgstr "URL als omleiden erop klik van een afbeelding"
+msgstr "Url voor Redirect bij klikken op een Afbeelding"
 
-#: views/add-new-album.php:382 views/edit-album.php:513
+#: views/add-new-album.php:277
+msgid ""
+"You will be only allowed to add 2 galleries. Kindly purchase Premium Version "
+"for full access!"
+msgstr ""
+"Je zal alleen worden toegestaan ​​2 galerijen toe te voegen. Gelieve te kopen "
+"Premium versie voor volledige toegang!"
+
+#: views/add-new-album.php:381 views/edit-album.php:504
 msgid "Are you sure you want to delete this Image?"
-msgstr "Weet u zeker dat u deze afbeelding wilt verwijderen?"
+msgstr "Bent u er zeker van dat u de afbeelding wilt verwijderen?"
 
-#: views/add-new-album.php:392 views/add-new-album.php:406
-#: views/album-sorting.php:282 views/dashboard.php:301 views/dashboard.php:305
-#: views/dashboard.php:309 views/edit-album.php:529 views/edit-album.php:545
-#: views/images-sorting.php:294
+#: views/add-new-album.php:391 views/add-new-album.php:405
+#: views/album-sorting.php:252 views/dashboard.php:434 views/dashboard.php:438
+#: views/dashboard.php:442 views/edit-album.php:520 views/edit-album.php:536
+#: views/images-sorting.php:285
 msgid "This feature is only available in Paid Premium Version!"
-msgstr "Deze functie ligt alleen beschikbaar - in Betaalde Premie Versie!"
+msgstr "Deze functie is alleen beschikbaar in de betaalde Premium versie!"
 
-#: views/album-preview.php:14 views/album-preview.php:21
+#: views/album-preview.php:13
 msgid "Album Preview"
-msgstr "album Voorluisteren"
+msgstr "Album Voorbeeld"
 
-#: views/album-preview.php:43 views/album-sorting.php:207
-#: views/images-sorting.php:236
+#: views/album-preview.php:34 views/album-sorting.php:175
+#: views/images-sorting.php:224
 msgid "Please Choose"
-msgstr "Maak keuze"
+msgstr "Kies"
 
-#: views/album-sorting.php:158 views/album-sorting.php:165
+#: views/album-sorting.php:134
 msgid "Re-Order Albums"
-msgstr "Opnieuw-Orde Albums Er"
+msgstr "Rangschik Albums"
 
-#: views/album-sorting.php:172 views/images-sorting.php:196
+#: views/album-sorting.php:140 views/images-sorting.php:184
 msgid "Update Order"
-msgstr "bijwerken-bestellen"
+msgstr "Update Rangschikking"
 
-#: views/album-sorting.php:175 views/images-sorting.php:199
+#: views/album-sorting.php:143 views/images-sorting.php:187
 msgid "Sorting Order has been updated."
-msgstr "Sorteervolgorde Als is geupdated."
+msgstr "De Rangschikking is geüpdate"
 
-#: views/dashboard.php:98
-msgid "Dashboard - Gallery Bank"
-msgstr "Dashboard plaatsen en - Gallery Bank"
+#: views/dashboard.php:134
+msgid "Getting Started"
+msgstr ""
 
-#: views/dashboard.php:116
+#: views/dashboard.php:138
+msgid "Watch the Walk-Through Video"
+msgstr ""
+
+#: views/dashboard.php:147
+msgid "Gallery Bank, a Superlative High quality WordPress Plugin!"
+msgstr ""
+
+#: views/dashboard.php:154
+msgid "Get Gallery Bank Pro Features"
+msgstr ""
+
+#: views/dashboard.php:179
 msgid "Delete All Albums"
-msgstr "\tdoorhalen alle Albums Er"
+msgstr "Verwijder Alle Albums"
 
-#: views/dashboard.php:117
+#: views/dashboard.php:180
 msgid "Purge Images & Albums"
-msgstr "Purge Afbeeldingen & Albums Er"
+msgstr "Ruim Afbeeldingen en Albums op"
 
-#: views/dashboard.php:118
+#: views/dashboard.php:181
 msgid "Restore Factory Settings"
-msgstr "Fabrieksinstellingen terugzetten"
+msgstr "Terug naar Fabrieksinstellingen"
 
-#: views/dashboard.php:125
+#: views/dashboard.php:188
 msgid "Existing Albums Overview"
-msgstr "Bestaande Albums Er Overzicht"
+msgstr "Overzicht Bestaande Albums"
 
-#: views/dashboard.php:132
+#: views/dashboard.php:195
 msgid "Title"
 msgstr "Titel"
 
-#: views/dashboard.php:133
+#: views/dashboard.php:196
 msgid "Total Images"
-msgstr "totale Beelden"
+msgstr "Totaal aan afbeeldingen"
 
-#: views/dashboard.php:134
+#: views/dashboard.php:197
 msgid "Date"
 msgstr "datum"
 
-#: views/dashboard.php:199 views/edit-album.php:86 views/edit-album.php:93
+#: views/dashboard.php:262 views/edit-album.php:82
 msgid "Edit Album"
-msgstr "Album bewerken"
+msgstr "Bewerk Album"
 
-#: views/dashboard.php:204 views/images-sorting.php:182
-#: views/images-sorting.php:189
+#: views/dashboard.php:267 views/images-sorting.php:178
 msgid "Re-Order Images"
-msgstr "Opnieuw-bestellen Afbeeldingen"
+msgstr "Hergroepeer Afbeeldingen"
 
-#: views/dashboard.php:209
+#: views/dashboard.php:272
 msgid "Preview Album"
-msgstr "voorvertoning album zijn"
+msgstr "Bekijk Voorbeeld Album"
 
-#: views/dashboard.php:214
+#: views/dashboard.php:277
 msgid "Delete Album"
-msgstr "Album verwijderen"
+msgstr "Verwijder Album"
 
-#: views/dashboard.php:288
+#: views/dashboard.php:302 views/purchase_pro_version.php:635
+msgid "Need Support Help?"
+msgstr ""
+
+#: views/dashboard.php:314 views/purchase_pro_version.php:647
+msgid "Lets get in touch!"
+msgstr ""
+
+#: views/dashboard.php:318 views/purchase_pro_version.php:651
+msgid "Order Now!"
+msgstr ""
+
+#: views/dashboard.php:421
 msgid "Are you sure you want to delete this Album?"
-msgstr "Weet je zeker dat je dit album wilt verwijderen?"
+msgstr "Bent u er zeker van dat u dit Album wilt verwijderen?"
 
-#: views/edit-album.php:98 views/edit-album.php:343
+#: views/edit-album.php:86 views/edit-album.php:331
 msgid "Update Album"
-msgstr "Aanpassen Album"
+msgstr "Update Album"
 
-#: views/edit-album.php:102
+#: views/edit-album.php:90
 msgid "Album Updated. Kindly wait for the redirect to happen."
-msgstr "album zijn-bijgewerkt. Vriendelijk wachten op de omleiden te gebeuren."
+msgstr "Album geüpdate. Een ogenblik geduld. De pagina wordt herladen."
 
-#: views/edit-album.php:248
+#: views/edit-album.php:236
 msgid "Delete Video"
-msgstr "doorhalen  video"
+msgstr "Verwijder Video"
 
-#: views/gallery-bank-system-report.php:20
+#: views/gallery-bank-system-report.php:14
 msgid "Get System Report"
-msgstr "Krijgen Systeemrapport"
+msgstr "Systeemrapport"
 
-#: views/gallery-bank-system-report.php:24
+#: views/gallery-bank-system-report.php:18
 msgid "Close System Report"
-msgstr "Sluiten Systeemrapport"
+msgstr "Sluit Systeemrapport"
 
-#: views/gallery-bank-system-report.php:115
+#: views/gallery-bank-system-report.php:109
 msgid "Default"
-msgstr "verzuim"
+msgstr "Default"
 
-#: views/purchase_pro_version.php:9 views/purchase_pro_version.php:16
+#: views/purchase_pro_version.php:25
 msgid "Gallery Bank Pricing"
-msgstr "Galiery Bank Tarifering"
+msgstr "Gallery Bank prijsstelling"
 
-#: views/settings.php:274
-msgid " (Premium Feature available in Paid Version)"
-msgstr "(Premie Opties en verkrijgbaar in betaalde versie)"
-
-#: views/settings.php:279
+#: views/settings.php:263
 msgid "Update Settings"
-msgstr "instellingen bijwerken"
+msgstr "Update Instellingen"
 
-#: views/settings.php:286
+#: views/settings.php:270
 msgid "Thumbnail Settings"
-msgstr "Miniatuurafbeelding Berichten Instellingen"
+msgstr "Miniatuurinstellingen"
 
-#: views/settings.php:298
+#: views/settings.php:282
 msgid "Thumbnail Size"
 msgstr "Miniatuurgrootte"
 
-#: views/settings.php:305 views/settings.php:313 views/settings.php:521
-#: views/settings.php:529
+#: views/settings.php:289 views/settings.php:297 views/settings.php:505
+#: views/settings.php:513
 msgid "Original"
-msgstr "origineel"
+msgstr "Origineel"
 
-#: views/settings.php:308 views/settings.php:316 views/settings.php:524
-#: views/settings.php:532
+#: views/settings.php:292 views/settings.php:300 views/settings.php:508
+#: views/settings.php:516
 msgid "Custom"
-msgstr "aangepaste"
+msgstr "Custom"
 
-#: views/settings.php:325 views/settings.php:541
+#: views/settings.php:309 views/settings.php:525
 msgid "Width"
-msgstr "breedte"
+msgstr "Breedte"
 
-#: views/settings.php:335 views/settings.php:551
+#: views/settings.php:319 views/settings.php:535
 msgid "Height"
-msgstr "hoogte"
+msgstr "Hoogte"
 
-#: views/settings.php:347 views/settings.php:562 views/settings.php:984
+#: views/settings.php:331 views/settings.php:546 views/settings.php:968
 msgid "Opacity"
-msgstr "opaciteit"
+msgstr "Opacity"
 
-#: views/settings.php:359 views/settings.php:574 views/settings.php:995
+#: views/settings.php:343 views/settings.php:558 views/settings.php:979
 msgid "Border Size"
-msgstr "Randgrootte"
+msgstr "Randdikte"
 
-#: views/settings.php:370 views/settings.php:586 views/settings.php:1006
+#: views/settings.php:354 views/settings.php:570 views/settings.php:990
 msgid "Border Radius"
-msgstr "grens spaakbeen"
+msgstr "Straal Rand"
 
-#: views/settings.php:381 views/settings.php:598 views/settings.php:1031
+#: views/settings.php:365 views/settings.php:582 views/settings.php:1015
 msgid "Border Color"
-msgstr "grens Kleur"
+msgstr "Randkleur"
 
-#: views/settings.php:395
+#: views/settings.php:379
 msgid "Margin Between Images"
 msgstr "Marge tussen Afbeeldingen"
 
-#: views/settings.php:405 views/settings.php:632 views/settings.php:1017
+#: views/settings.php:389 views/settings.php:616 views/settings.php:1001
 msgid "Text Color"
-msgstr "tekst Kleur"
+msgstr "Tekstkleur"
 
-#: views/settings.php:419 views/settings.php:649 views/settings.php:1091
+#: views/settings.php:403 views/settings.php:633 views/settings.php:1075
 msgid "Text-Align"
-msgstr "Tekst-uitlijnen"
+msgstr "Tekst Align"
 
-#: views/settings.php:433 views/settings.php:663 views/settings.php:800
-#: views/settings.php:1105 views/settings.php:1313
+#: views/settings.php:417 views/settings.php:647 views/settings.php:784
+#: views/settings.php:1089 views/settings.php:1297
 msgid "Font-Family"
-msgstr "doopvont- Gezin"
+msgstr "Lettertype"
 
-#: views/settings.php:456 views/settings.php:686 views/settings.php:1128
+#: views/settings.php:440 views/settings.php:670 views/settings.php:1112
 msgid "Heading Font-Size"
-msgstr "Bedoeld bij post Lettergrootte"
+msgstr "Titel Tekstgrootte"
 
-#: views/settings.php:473 views/settings.php:703 views/settings.php:1145
+#: views/settings.php:457 views/settings.php:687 views/settings.php:1129
 msgid "Text Font-Size"
-msgstr "Tekst doopvont-Grootte"
+msgstr "Tekstgrootte"
 
-#: views/settings.php:490 views/settings.php:720
+#: views/settings.php:474 views/settings.php:704
 msgid "Description Length"
-msgstr "Omschrijving Lengte"
+msgstr "Lengte Omschrijving"
 
-#: views/settings.php:502
+#: views/settings.php:486
 msgid "Album Cover Settings"
-msgstr "Albumhoes Berichten Instellingen"
+msgstr "Instellingen Albumhoes"
 
-#: views/settings.php:514
+#: views/settings.php:498
 msgid "Cover Size"
-msgstr "dekking Grootte"
+msgstr "Grootte Albumhoes"
 
-#: views/settings.php:612
+#: views/settings.php:596
 msgid "Margin Between Albums"
-msgstr "Marge tussen Albums Er"
+msgstr "Marge tussen Albums"
 
-#: views/settings.php:622
+#: views/settings.php:606
 msgid "Text for Album Click"
-msgstr "Tekst vanwege album-Klik"
+msgstr "Tekst voor klik op Album"
 
-#: views/settings.php:732
+#: views/settings.php:716
 msgid "Filter Settings"
-msgstr " filteren De Berichten Instellingen"
+msgstr "Filter Instellingen"
 
-#: views/settings.php:744
+#: views/settings.php:728
 msgid "Filters"
-msgstr "uitgevoerd Filters"
+msgstr "Filters"
 
-#: views/settings.php:751 views/settings.php:759 views/settings.php:1169
-#: views/settings.php:1177 views/settings.php:1195 views/settings.php:1202
-#: views/settings.php:1220 views/settings.php:1227 views/settings.php:1244
-#: views/settings.php:1251 views/settings.php:1359 views/settings.php:1366
-#: views/settings.php:1399 views/settings.php:1407 views/settings.php:1450
-#: views/settings.php:1458
+#: views/settings.php:735 views/settings.php:743 views/settings.php:1153
+#: views/settings.php:1161 views/settings.php:1179 views/settings.php:1186
+#: views/settings.php:1204 views/settings.php:1211 views/settings.php:1228
+#: views/settings.php:1235 views/settings.php:1343 views/settings.php:1350
+#: views/settings.php:1383 views/settings.php:1391 views/settings.php:1434
+#: views/settings.php:1442
 msgid "Enable"
-msgstr "in staat stellen"
+msgstr "Inschakelen"
 
-#: views/settings.php:754 views/settings.php:762 views/settings.php:1172
-#: views/settings.php:1180 views/settings.php:1197 views/settings.php:1205
-#: views/settings.php:1222 views/settings.php:1229 views/settings.php:1246
-#: views/settings.php:1253 views/settings.php:1361 views/settings.php:1369
-#: views/settings.php:1402 views/settings.php:1410 views/settings.php:1453
-#: views/settings.php:1461
+#: views/settings.php:738 views/settings.php:746 views/settings.php:1156
+#: views/settings.php:1164 views/settings.php:1181 views/settings.php:1189
+#: views/settings.php:1206 views/settings.php:1213 views/settings.php:1230
+#: views/settings.php:1237 views/settings.php:1345 views/settings.php:1353
+#: views/settings.php:1386 views/settings.php:1394 views/settings.php:1437
+#: views/settings.php:1445
 msgid "Disable"
-msgstr "onbruikbaar maken"
+msgstr "Uitschakelen"
 
-#: views/settings.php:772
+#: views/settings.php:756
 msgid "Filter Color"
-msgstr "filteren De Kleur"
+msgstr "Filterkleur"
 
-#: views/settings.php:786
+#: views/settings.php:770
 msgid "Filter Text Color"
-msgstr "filteren De Tekstkleur"
+msgstr "Filter Tekstkleur"
 
-#: views/settings.php:823 views/settings.php:1336
+#: views/settings.php:807 views/settings.php:1320
 msgid "Font-Size"
-msgstr "doopvont-Grootte"
+msgstr "Lettergrootte"
 
-#: views/settings.php:843
+#: views/settings.php:827
 msgid "Roles & Capabilities"
-msgstr "Rollen & vermogens"
+msgstr "Rollen & Mogelijkheden"
+
+#: views/settings.php:839
+msgid "Privileges for Admin"
+msgstr "Privileges voor Admin"
+
+#: views/settings.php:843 views/settings.php:859 views/settings.php:875
+#: views/settings.php:892 views/settings.php:910
+msgid "Full Control"
+msgstr "Volledige Controle"
+
+#: views/settings.php:846 views/settings.php:862 views/settings.php:878
+#: views/settings.php:895 views/settings.php:913
+msgid "Read"
+msgstr "Lees"
+
+#: views/settings.php:849 views/settings.php:865 views/settings.php:881
+#: views/settings.php:898 views/settings.php:916
+msgid "Write"
+msgstr "Schrijf"
 
 #: views/settings.php:855
-msgid "Privileges for Admin"
-msgstr "voorrechten voor Beheerder"
-
-#: views/settings.php:859 views/settings.php:875 views/settings.php:891
-#: views/settings.php:908 views/settings.php:926
-msgid "Full Control"
-msgstr "Volledig beheer"
-
-#: views/settings.php:862 views/settings.php:878 views/settings.php:894
-#: views/settings.php:911 views/settings.php:929
-msgid "Read"
-msgstr "lezen"
-
-#: views/settings.php:865 views/settings.php:881 views/settings.php:897
-#: views/settings.php:914 views/settings.php:932
-msgid "Write"
-msgstr "schrijven"
+msgid "Privileges for Editor"
+msgstr "Privileges voor Bewerker"
 
 #: views/settings.php:871
-msgid "Privileges for Editor"
-msgstr "voorrechten voor Redacteur"
+msgid "Privileges for Author"
+msgstr "Privileges voor Auteur"
 
 #: views/settings.php:887
-msgid "Privileges for Author"
-msgstr "voorrechten voorAuteur"
-
-#: views/settings.php:903
 msgid "Privileges for Contributor"
-msgstr "voorrechten voor Inzender"
+msgstr "Privileges voor Bijdrager"
 
-#: views/settings.php:920
+#: views/settings.php:904
 msgid "Privileges for Subscriber"
-msgstr "voorrechten voor Abonnee"
+msgstr "Privileges voor Abonnee"
 
-#: views/settings.php:942
+#: views/settings.php:926
 msgid "Lightbox Settings"
-msgstr "lichttafel Berichten Instellingen"
+msgstr "Instellingen Lightbox"
 
-#: views/settings.php:954
+#: views/settings.php:938
 msgid "Lightbox Type"
-msgstr "lichttafel-Typ"
+msgstr "Soort Lightbox"
 
-#: views/settings.php:1045
+#: views/settings.php:1029
 msgid "Inline Background"
-msgstr "gealigneerde Achtergrond"
+msgstr "Inline Achtergrond"
 
-#: views/settings.php:1059
+#: views/settings.php:1043
 msgid "Overlay Background"
-msgstr "omslagen- Achtergrond"
+msgstr "Overlay Achtergrond"
 
-#: views/settings.php:1073
+#: views/settings.php:1057
 msgid "Fade In Time"
-msgstr "Vervagen te-tijd"
+msgstr "Tijd Fade In"
 
-#: views/settings.php:1082
+#: views/settings.php:1066
 msgid "Fade Out Time"
-msgstr "Vervagen eruit Tijd"
+msgstr "Tijd Fade Out"
 
-#: views/settings.php:1162
+#: views/settings.php:1146
 msgid "Facebook Comments"
-msgstr "Faceboek Reacties"
+msgstr "Facebook Commentaar"
 
-#: views/settings.php:1189
+#: views/settings.php:1173
 msgid "Social Sharing"
-msgstr "sociale delen"
+msgstr "Delen Social Media "
 
-#: views/settings.php:1214
+#: views/settings.php:1198
 msgid "Image Title"
-msgstr "beeld Titel"
+msgstr "Titel Afbeelding"
 
-#: views/settings.php:1238
+#: views/settings.php:1222
 msgid "Image Description"
-msgstr "afbeelding Omschrijving"
+msgstr "Beschrijving Afbeelding"
 
-#: views/settings.php:1264
+#: views/settings.php:1248
 msgid "Front - End Layout Settings"
-msgstr "Voorkant-einde opmaak de instellingen"
+msgstr "Layout Settings"
 
-#: views/settings.php:1276
+#: views/settings.php:1260
 msgid "Text for Back Button"
-msgstr "Tekst vanwege Terug knop"
+msgstr "Tekst voor Terugknop"
 
-#: views/settings.php:1286
+#: views/settings.php:1270
 msgid "Button Color"
-msgstr "knop-Kleur"
+msgstr "Kleur Knop"
 
-#: views/settings.php:1299
+#: views/settings.php:1283
 msgid "Button Text Color"
-msgstr "knop Tekstkleur"
+msgstr "Tekstkleur Knop"
 
-#: views/settings.php:1353
+#: views/settings.php:1337
 msgid "Album Seperator"
-msgstr "album zijn Seperator"
+msgstr "Album Afscheider"
 
-#: views/settings.php:1380
+#: views/settings.php:1364
 msgid "Pagination Settings for Images"
-msgstr "paginering-instellingen voor het Afbeeldingen"
+msgstr "Pagina-instellingen voor Afbeeldingen"
 
-#: views/settings.php:1392
+#: views/settings.php:1376
 msgid "Paging"
-msgstr "pagineren-"
+msgstr "Paging"
 
-#: views/settings.php:1419
+#: views/settings.php:1403
 msgid "No. of Images Per Page "
-msgstr "Aantal beelden per pagina"
+msgstr "Aantal Afbeeldingen per Pagina"
 
-#: views/settings.php:1431
+#: views/settings.php:1415
 msgid "Slide Show Settings"
-msgstr "Schuif BEKIJK Berichten Instellingen"
+msgstr "Slide Show Instellingen"
 
-#: views/settings.php:1443
+#: views/settings.php:1427
 msgid "Auto Play"
 msgstr "Automatisch afspelen"
 
-#: views/settings.php:1470
+#: views/settings.php:1454
 msgid "Interval"
-msgstr "tussenpoos"
+msgstr "Interval"
 
-#: views/settings.php:1483
+#: views/settings.php:1467
 msgid "Language Direction Settings"
 msgstr "Taal Richtinginstellingen"
 
-#: views/settings.php:1495
+#: views/settings.php:1479
 msgid "Language Direction"
-msgstr "taal Richting"
+msgstr "Taalrichting"
 
-#: views/settings.php:1511
-msgid "Video Thumbnails"
-msgstr "de video Miniaturen"
-
-#: views/settings.php:1526
-msgid "Video Thumbnail Path"
-msgstr "Videominiatuur Weg van"
-
-#: views/settings.php:1532
-msgid "Enter your Video Thumbnail Url"
-msgstr "Invoeren uw Videominiatuur Url"
-
-#: views/settings.php:1538
-msgid "Upload Video Thumbnail "
-msgstr "Uploaden VIDEO Miniatuurafbeelding"
-
-#: views/settings.php:1694
+#: views/settings.php:1636
 msgid "This Feature is only available in Paid Premium Version!"
-msgstr "Deze functie ligt alleen beschikbaar - in Betaalde Premie Versie!"
+msgstr "Deze functie is alleen beschikbaar in de betaalde Premium versie!"
 
-#: views/shortcode.php:9
+#: views/shortcode.php:8
 msgid "Gallery Bank Short-Codes"
-msgstr "Gallery Bank Korte-codes"
-
-#: views/shortcode.php:16
-msgid ""
-"How to setup Short-Codes for Gallery Bank into your WordPress Page/Post?"
-msgstr ""
-"Het instellen van korte codes voor Gallery Bank in uw WordPress Pagina / "
-"Post?"
-
-#~ msgid "Date of Creation"
-#~ msgstr "Datum van de Schepping"
-
-#~ msgid " (Avialable in Premium Versions)"
-#~ msgstr "(Verkrijgbaar in Premie Versies)"
+msgstr "Gallery Bank Short-Codes"
 
 #~ msgid "VIEW ALL"
-#~ msgstr "BEKIJK ALLE"
-
-#~ msgid "Documentation"
-#~ msgstr "documentatie"
+#~ msgstr "Bekijk Alles"
 
 #~ msgid "Licensing"
-#~ msgstr "vergunningverlenende"
+#~ msgstr "Licentie"
+
+#~ msgid " Rotate Image"
+#~ msgstr "Afbeelding draaien"
 
 #~ msgid "Select Gallery"
-#~ msgstr "selecteer Galerij"
+#~ msgstr "Selecteer Galerij"
 
 #~ msgid "Select Gallery Format"
-#~ msgstr "Selecteer Gallery Formaat"
+#~ msgstr "Selecteer Galerij Formaat"
 
 #~ msgid "Images In Row"
-#~ msgstr "Beelden In Rij"
+#~ msgstr "Aantal Afbeeldingen in een Rij"
 
 #~ msgid "Select Text Format"
-#~ msgstr "SelecteerTekst- Formaat"
+#~ msgstr "Selecteer een Tekst Formaat"
 
 #~ msgid "Special Effect"
-#~ msgstr "het Speciale Effect"
+#~ msgstr "Speciaal Effect"
 
 #~ msgid "Select Special Effect"
-#~ msgstr "Selecteren -het Speciale Effect"
+#~ msgstr "Selecteer Speciaal Effect"
 
 #~ msgid "Animation Effect"
-#~ msgstr "Effect van de Animatie"
+#~ msgstr "Animatie Effect"
 
 #~ msgid "Responsive Gallery"
-#~ msgstr "Reagerende- Gallery"
+#~ msgstr "Responsive Galerij"
+
+#~ msgid "Upload Images "
+#~ msgstr "uploaden beelden"
+
+#~ msgid "Your Wordpress Version doesn\"t support Wp-media."
+#~ msgstr "Uw Wordpress versie ondersteunt geen Wp-media."
 
 #~ msgid "Are you sure you want to delete these Images?"
-#~ msgstr "Weet u zeker dat u deze afbeeldingen verwijderen?"
+#~ msgstr "Bent u er zeker van dat u de afbeeldingen wilt verwijderen?"
 
-#, fuzzy
+#~ msgid "Attention! A new vesion of Gallery Bank is available for download."
+#~ msgstr "Let op! Er is een nieuwe versie van Gallery Bank beschikbaar."
+
+#~ msgid "Click"
+#~ msgstr "Klik"
+
+#~ msgid "here"
+#~ msgstr "hier"
+
 #~ msgid "to upgrade your version of Gallery Bank."
-#~ msgstr "Galerie toevoegen gebruikend Gallery Bank"
+#~ msgstr "om uw versie van Gallery Bank te upgraden"
+
+#~ msgid "Dashboard - Gallery Bank"
+#~ msgstr "Dashboard - Gallery Bank"
+
+#~ msgid "Date of Creation"
+#~ msgstr "Datum Aanmaak"
 
 #~ msgid "Are you sure you want to delete all Albums?"
-#~ msgstr "Weet u zeker dat u wilt alle Albums- verwijderen?"
+#~ msgstr "Bent u er zeker van dat u alle Albums wilt verwijderen?"
 
 #~ msgid "Are you sure you want to Restore Factory Settings?"
-#~ msgstr "Weet u zeker dat u wilt terugzetten fabrieksinstellingen?"
+#~ msgstr "Bent u er zeker van dat u terug wilt naar Fabrieksinstellingen?"
 
 #~ msgid "Are you sure you want to Purge all Images & Albums?"
-#~ msgstr "Weet u zeker dat u wilt  Purge alle Afbeeldingen & Albums Er?"
+#~ msgstr ""
+#~ "Bent u er zeker van dat u alle Afbeeldingen en Albums wilt Opruimen?"
+
+#~ msgid "Upload Thumbnails "
+#~ msgstr "uploaden Miniaturen"
 
 #~ msgid "Gallery Bank Documentation"
 #~ msgstr "Gallery Bank Documentatie"
 
 #~ msgid "Gallery Bank Licensing Module"
-#~ msgstr "Galerij Bank Licentiëring Module"
-
-#~ msgid "Success! Settings have been updated."
-#~ msgstr "Welslagen! Instellingen zijn geactualiseerd."
+#~ msgstr "Gallery Bank Licentiemodule"
 
 #~ msgid "Update"
-#~ msgstr "bijwerken"
+#~ msgstr "Update"
+
+#~ msgid "Success! Settings have been updated."
+#~ msgstr "Gelukt! De instellingen zijn geüpdate."
 
 #~ msgid "Restore Settings"
-#~ msgstr "Instellingen herstellen"
+#~ msgstr "Herstel Instellingen"
 
 #~ msgid "Settings has been updated."
-#~ msgstr "Berichten Instellingen is geupdated."
+#~ msgstr "De instellingen zijn geüpdate."
 
 #~ msgid "Success! Settings have been restored."
-#~ msgstr "Succes van! Berichten Instellingenhebben geweest hersteld."
+#~ msgstr "Gelukt!  De instellingen zijn hersteld."
+
+#~ msgid "Show Albums"
+#~ msgstr "Toon Albums"
+
+#~ msgid "Responsive"
+#~ msgstr "responsief"
+
+#~ msgid "With Albums in Row"
+#~ msgstr "Met Albums in rij"
+
+#~ msgid "Image Uploader Settings"
+#~ msgstr "Afbeelding Uploader Instellingen"
+
+#~ msgid "Uploader for Images"
+#~ msgstr "afbeelding Uploader"
+
+#~ msgid "WP Media"
+#~ msgstr "WP Media"
+
+#~ msgid "Change Uploading Image Name"
+#~ msgstr "Verandering uploaden Naam afbeelding"
+
+#~ msgid "Image url location"
+#~ msgstr "Afbeelding url locatie"
+
+#~ msgid "Open in New Window"
+#~ msgstr "Openen in nieuw venster"
+
+#~ msgid "Same Window"
+#~ msgstr "zelfde venster"
 
 #~ msgid "Are you sure you want to restore settings?"
-#~ msgstr "Weet u zeker dat u wilt wilt herstellen instellingen?"
+#~ msgstr "Weet u zeker dat u alle instellingen wilt herstellen?"
+
+#~ msgid "Self"
+#~ msgstr "dezelfde pagina"
+
+#~ msgid "Documentation"
+#~ msgstr "Documentatie"
+
+#~ msgid "Video Thumbnails"
+#~ msgstr "Video Miniaturen"
+
+#~ msgid "Video Thumbnail Path"
+#~ msgstr "Video Miniatuurpad"
+
+#~ msgid "Enter your Video Thumbnail Url"
+#~ msgstr "Geef uw Videominiatuur URL in"

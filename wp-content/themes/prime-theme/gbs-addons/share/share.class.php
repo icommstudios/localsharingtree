@@ -1,12 +1,12 @@
 <?php
 
 /*
-Plugin Name: Group Buying Advanced Thumbnails
+Plugin Name: Smart eCart Advanced Thumbnails
 Version: 3.0
-Plugin URI: http://groupbuyingsite.com/features
+Plugin URI: http://smartecart.com/features
 Description: Allows users to use TimThumb for thumbnail cropping
-Author: GroupBuyingSite.com
-Author URI: http://groupbuyingsite.com/features
+Author: Smart eCart
+Author URI: http://smartecart.com/features
 Plugin Author: Dan Cameron
 Plugin Author URI: http://sproutventure.com/
 */
@@ -24,20 +24,39 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 
 		public static function init() {
 			self::$sharethisapi = get_option( self::SHARETHISAPI, 'dfb4a8c1-a6bb-4bdc-ac31-445ce0d0208c' );
-			add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
+			
+			if ( is_admin() ) {
+				add_action( 'init', array( get_class(), 'register_options') );
+			}
 			
 			self::register_scripts();
 			add_action( 'wp_print_scripts', array( get_class(), 'enqueue_scripts' ) );
 			add_action( 'wp_footer', array( get_class(), 'wp_footer' ), 10, 0 );
 		}
 
-
-		public static function register_settings_fields() {
-			$page = parent::$theme_settings_page;
-			$section = 'gb_theme_sharethis';
-			add_settings_section( $section, self::__( 'Sharing Settings' ), array( get_class(), 'display_section' ), $page );
-			register_setting( $page, self::SHARETHISAPI );
-			add_settings_field( self::SHARETHISAPI, self::__( 'ShareThis API' ), array( get_class(), 'display_option' ), $page, $section );
+		/**
+		 * Hooked on init add the settings page and options.
+		 *
+		 */
+		public static function register_options() {
+			// Settings
+			$settings = array(
+				'gb_theme_thumbs' => array(
+					'title' => self::__( 'Sharing Settings' ),
+					'weight' => 200,
+					'settings' => array(
+						self::SHARETHISAPI => array(
+							'label' => self::__( 'ShareThis API' ),
+							'option' => array(
+								'type' => 'text',
+								'default' => self::$sharethisapi,
+								'description' => sprintf( self::__( 'This theme uses the <a href="%s" target="_blank">ShareThis WebShare API</a>.' ), 'http://developer.sharethis.com/Web_Share_API' )
+								)
+							)
+						)
+					)
+				);
+			do_action( 'gb_settings', $settings, Group_Buying_Theme_UI::SETTINGS_PAGE );
 		}
 
 		public static function register_scripts() {
@@ -59,11 +78,6 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 				<script type="text/javascript">stLight.options({publisher: "<?php echo self::$sharethisapi ?>"}); </script>
 				<?php
 			}
-		}
-
-
-		public static function display_option() {
-			echo '<input type="text" class="regular-text" name="'.self::SHARETHISAPI.'" value="'.self::$sharethisapi.'" />';
 		}
 
 		private function __construct() {}
@@ -88,4 +102,4 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 
 	}
 }
-add_action( 'init', array( 'Group_Buying_Sharing', 'init' )  );
+add_action( 'init', array( 'Group_Buying_Sharing', 'init' ), 5  );

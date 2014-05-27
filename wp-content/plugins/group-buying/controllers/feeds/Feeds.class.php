@@ -10,7 +10,6 @@
 class Group_Buying_Feeds extends Group_Buying_Controller {
 	const FEED_PATH_OPTION = 'gb_feed_path';
 	const FEED_QUERY_VAR = 'gb_show_feed';
-	const ADD_TO_FEED_QUERY_VAR = 'add_to_feed';
 	const AFFILIATE_XML_QUERY_VAR = 'affiliate_xml';
 	private static $feed_path = 'gb_feed';
 	private static $instance;
@@ -18,12 +17,37 @@ class Group_Buying_Feeds extends Group_Buying_Controller {
 
 	public static function init() {
 		self::$feed_path = get_option( self::FEED_PATH_OPTION, self::$feed_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 50, 1 );
+		self::register_settings();
+
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_registration_callback' ), 10, 1 );
 
 		// Add the deal to the RSS feed
 		add_filter( 'the_excerpt_rss', array( get_class(), 'deal_custom_rss' ) );
 		add_filter( 'the_content_feed', array( get_class(), 'deal_custom_rss' ) );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_feeds' => array(
+				'weight' => 180,
+				'settings' => array(
+					self::FEED_PATH_OPTION => array(
+						'label' => self::__( 'Feed Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$feed_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -39,25 +63,7 @@ class Group_Buying_Feeds extends Group_Buying_Controller {
 			'title' => 'Deals Feed',
 			'page_callback' => array( get_class(), 'on_feed_page' )
 		);
-		$router->add_route( self::ADD_TO_FEED_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_feed_paths';
-		add_settings_section( $section, null, array( get_class(), 'display_feed_paths_section' ), $page );
-
-		// Settings
-		register_setting( $page, self::FEED_PATH_OPTION );
-		add_settings_field( self::FEED_PATH_OPTION, self::__( 'Feed Path' ), array( get_class(), 'display_feed_path' ), $page, $section );
-	}
-
-	public static function display_feed_paths_section() {
-		echo self::__( '<h4>Customize the Feed paths</h4>' );
-	}
-
-	public static function display_feed_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::FEED_PATH_OPTION . '" id="' . self::FEED_PATH_OPTION . '" value="' . esc_attr( self::$feed_path ) . '" size="40"/><br />';
+		$router->add_route( self::FEED_QUERY_VAR, $args );
 	}
 
 	/**
@@ -71,6 +77,22 @@ class Group_Buying_Feeds extends Group_Buying_Controller {
 		// by instantiating, we process any submitted values
 		$feed = self::get_instance();
 		$feed->show_gbs_feed();
+	}
+
+
+	/**
+	 *
+	 *
+	 * @static
+	 * @return string The URL to the feed page
+	 */
+	public static function get_url() {
+		if ( self::using_permalinks() ) {
+			return trailingslashit( home_url() ).trailingslashit( self::$deal_feed_path );
+		} else {
+			$router = GB_Router::get_instance();
+			return $router->get_url( self::DEAL_FEED_QUERY_VAR );
+		}
 	}
 
 	/*
@@ -384,24 +406,21 @@ class Group_Buying_Feeds extends Group_Buying_Controller {
 	 * @param  string $content full content of post
 	 * @return string          content
 	 */
-	public function deal_custom_rss( $content ) {
+	public function deal_custom_rss( $original_content ) {
 		global $post;
-		if ( has_post_thumbnail( $post->ID ) ) {
-			$content = '<p>' . get_the_post_thumbnail( $post->ID, 'gbs_voucher_thumb' ) . '</p>';
-		}
+		$content = ( has_post_thumbnail( get_the_ID() ) ) ? get_the_post_thumbnail( get_the_ID(), 'gbs_voucher_thumb' ) : '';
 		if ( get_post_type( $post->ID ) == Group_Buying_Deal::POST_TYPE ) {
-			$content = ( has_post_thumbnail( get_the_ID() ) ) ? get_the_post_thumbnail( get_the_ID(), 'gbs_voucher_thumb' ) : '';
 			$content .= '<p><strong>'.gb_get_formatted_money( gb_get_deal_worth() ).'</strong></p>';
 			$content .= '<p>'.self::__( 'Expires On:' ).' '.gb_get_deal_end_date().'<br/>'.sprintf( self::__( '<span>%s</span> buyers!' ), gb_get_number_of_purchases() ).'<br/>'.self::__( 'Savings:' ).' '.gb_get_amount_saved().'</p>';
 			if ( gb_get_rss_excerpt() != '' ) {
 				$content .= gb_get_rss_excerpt();
 			} else {
-				$content .= get_the_content();
+				$content .= $original_content;
 			}
-			$content = apply_filters( 'deal_custom_rss_content', $content, $post->ID );
+			$content = apply_filters( 'deal_custom_rss_content', $content, $post->ID, $original_content );
 		} else {
-			$content .= get_the_content();
+			$content .= $original_content;
 		}
-		return apply_filters( 'gb_deal_custom_rss', $content );
+		return apply_filters( 'gb_deal_custom_rss', $content, $original_content );
 	}
 }

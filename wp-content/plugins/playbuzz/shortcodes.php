@@ -51,21 +51,23 @@ function playbuzz_shortcode( $atts ) {
 	// Attributes with default values
 	extract( shortcode_atts(
 		array(
-			'key'       => $options['key'],                                // api key allowing configuration and analytics
-			'tags'      => pb_tags( $options ),                            // filter by tags
-			'game'      => '',                                             // defines the game that will be loaded by the IFrame
-			'info'      => ( '1' == $options['info'] ? 'true' : 'false' ), // show game info (thumbnail, name, description, editor, etc)
-			'social'    => ( '1' == $options['social'] ? 'true' : 'false' ), // show sharing buttons and comments control from the game page.
+			'key'       => $options['key'],                                     // api key allowing configuration and analytics
+			'tags'      => pb_tags( $options ),                                 // filter by tags
+			'game'      => '',                                                  // defines the game that will be loaded by the IFrame
+			'info'      => ( '1' == $options['info'] ? 'true' : 'false' ),      // show game info (thumbnail, name, description, editor, etc)
+			'shares'    => ( '1' == $options['shares'] ? 'true' : 'false' ),    // show sharing buttons 
+			'comments'  => ( '1' == $options['comments'] ? 'true' : 'false' ),  // show comments control from the game page.
+			'margintop'      => $options['margin-top'],                              // margin top for score bar in case there is a floating bar
 			'recommend' => ( '1' == $options['recommend'] ? 'true' : 'false' ), // show recommendations for more games
 		), $atts )
 	);
 
 	// PlayBuzz Embed Code
-	if ( is_single() ) {
+	if ( is_singular() ) {
 
 		return '
 			<script type="text/javascript" src="http://www.playbuzz.com/bundles/feed"></script>
-			<div class="pb_feed" data-key="' . $key . '" data-tags="' . $tags . '" data-game="' . $game . '" data-game-info="' . $info . '" data-social="' . $social . '" data-recommend="' . $recommend . '"></div>
+			<div class="pb_feed" data-key="' . $key . '" data-tags="' . $tags . '" data-game="' . $game . '" data-game-info="' . $info . '" data-comments="' . $comments . '" data-shares="' . $shares . '" data-recommend="' . $recommend . '" data-margin-top="' . $margintop . '"></div>
 		';
 
 	} elseif ( is_archive() ) {
@@ -89,11 +91,13 @@ function playbuzz_hub_shortcode( $atts ) {
 	// Attributes with default values
 	extract( shortcode_atts(
 		array(
-			'key'       => $options['key'],                                // api key allowing configuration and analytics
-			'tags'      => pb_tags( $options ),                            // filter by tags
-			'game'      => '',                                             // defines the game that will be loaded by the IFrame
-			'info'      => ( '1' == $options['info'] ? 'true' : 'false' ), // show game info (thumbnail, name, description, editor, etc)
-			'social'    => ( '1' == $options['social'] ? 'true' : 'false' ), // show sharing buttons and comments control from the game page.
+			'key'       => $options['key'],                                     // api key allowing configuration and analytics
+			'tags'      => pb_tags( $options ),                                 // filter by tags
+			'game'      => '',                                                  // defines the game that will be loaded by the IFrame
+			'info'      => ( '1' == $options['info'] ? 'true' : 'false' ),      // show game info (thumbnail, name, description, editor, etc)
+			'shares'    => ( '1' == $options['shares'] ? 'true' : 'false' ),    // show sharing buttons 
+			'comments'    => ( '1' == $options['comments'] ? 'true' : 'false' ),    // show comments control from the game page.
+			'margintop'      => $options['margin-top'],                              // margin top for score bar in case there is a floating bar
 			'recommend' => ( '1' == $options['recommend'] ? 'true' : 'false' ), // show recommendations for more games
 		), $atts )
 	);
@@ -101,7 +105,7 @@ function playbuzz_hub_shortcode( $atts ) {
 	// PlayBuzz Embed Code
 	return '
 		<script type="text/javascript" src="http://www.playbuzz.com/bundles/feed"></script>
-		<div class="pb_feed" data-key="' . $key . '" data-tags="' . $tags . '" data-game="' . $game . '" data-game-info="' . $info . '" data-social="' . $social . '" data-recommend="' . $recommend . '"></div>
+		<div class="pb_feed" data-key="' . $key . '" data-tags="' . $tags . '" data-game="' . $game . '" data-game-info="' . $info . '" data-comments="' . $comments . '" data-shares="true" data-recommend="' . $recommend . '" data-margin-top="' . $margintop . '"></div>
 	';
 }
 
@@ -123,7 +127,7 @@ function playbuzz_recommendations_shortcode( $atts ) {
 	);
 
 	// PlayBuzz Embed Code
-	if ( is_single() ) {
+	if ( is_singular() ) {
 
 		return '
 			<script type="text/javascript" src="http://www.playbuzz.com/bundles/widgets"></script>

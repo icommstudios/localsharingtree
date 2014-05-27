@@ -1,4 +1,4 @@
-<div class="checkout_block billing_info clearfix">
+<div class="checkout_block left_form billing_info clearfix">
 
 	<div class="paymentform_info">
 		<h2 class="table_heading section_heading background_alt font_medium gb_ff"><?php gb_e('Your Billing Information'); ?></h2>

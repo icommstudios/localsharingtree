@@ -3,7 +3,7 @@
 Plugin Name: Easy Smooth Scroll Links
 Plugin URI: http://www.jeriffcheng.com/wordpress-plugins/easy-smooth-scroll-links
 Description: Create anchors and add up to to 30 scrolling animation effects to links that link to page anchors. You can set scroll speed and offset value. 
-Version: 1.6
+Version: 1.8
 Author: Jeriff Cheng
 Author URI: http://www.jeriffcheng.com/
 */
@@ -26,15 +26,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
 */
 
-//Visual Editor Button
-if ( ! function_exists('enable_anchor_button') ) {
-function enable_anchor_button($buttons) {
-  $buttons[] = 'anchor';
-  return $buttons;
+//Anchor Button to TinyMCE Editor
+global $wp_version;
+if ( $wp_version < 3.9 ) {
+	if ( ! function_exists('enable_anchor_button') ) {
+		function enable_anchor_button($buttons) {
+		  $buttons[] = 'anchor';
+		  return $buttons;
+		}
+	}
+	add_filter("mce_buttons_2", "enable_anchor_button");
+} else {
+	add_action( 'init', 'anchor_button' );
+	function anchor_button() {
+		add_filter( "mce_external_plugins", "anchor_add_button" );
+		add_filter( 'mce_buttons_2', 'anchor_register_button' );
+	}
+	function anchor_add_button( $plugin_array ) {
+		$plugin_array['anchor'] = $dir = plugins_url( '/anchor/plugin.min.js', __FILE__ );
+		return $plugin_array;
+	}
+	function anchor_register_button( $buttons ) {
+		array_push( $buttons, 'anchor' );
+		return $buttons;
+	}
 }
-add_filter("mce_buttons_2", "enable_anchor_button");
-}
-
 
 //Shortcode
 if ( ! function_exists('essl_shortcode') ) {
@@ -89,7 +105,8 @@ define('ESSLPluginOptions_NICK', 'ESSL Settings');
 
 			register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_enabled');
 			register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_speed');
-			register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_easing');					register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_offset');				
+			register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_easing');					
+			register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_offset');				
 		}
 		/** function/method
 		* Usage: hooking (registering) the plugin menu
@@ -174,7 +191,7 @@ define('ESSLPluginOptions_NICK', 'ESSL Settings');
 				(function( $ ) {
 					$(function() {
 						// More code using $ as alias to jQuery
-						$("a[href*=#]:not([href=#]):not([href^='#tab']):not([href^='#quicktab']):not([href^='#pane'])<?php if($essl_exclude_begin) echo $essl_exclude_begin; ?><?php if($essl_exclude_match) echo $essl_exclude_match; ?>").click(function() {
+						$("area[href*=#],a[href*=#]:not([href=#]):not([href^='#tab']):not([href^='#quicktab']):not([href^='#pane'])<?php if($essl_exclude_begin) echo $essl_exclude_begin; ?><?php if($essl_exclude_match) echo $essl_exclude_match; ?>").click(function() {
 							if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
 								var target = $(this.hash);
 								target = target.length ? target : $('[name=' + this.hash.slice(1) +']');

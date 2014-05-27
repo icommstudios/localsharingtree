@@ -11,9 +11,9 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 	const SETTINGS_PAGE_MP = 'gb_addon_marketplace';
 	const ADDONS_SETTING = 'gb_enabled_addons';
 
-	protected static $api_url = 'http://groupbuyingsite.com/api/json/addon/';
+	protected static $api_url = 'http://smartecart.com/api/json/addon/';
 	// protected static $api_url = 'http://staging.groupbuyingsite.com/api/json/addon/';
-	protected static $cart_url = 'http://groupbuyingsite.com/marketplace/checkout/';
+	protected static $cart_url = 'http://smartecart.com/marketplace/checkout/';
 	// protected static $cart_url = 'http://staging.groupbuyingsite.com/checkout/';
 	private static $addons = array();
 	private static $addon_data = array();
@@ -40,7 +40,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Deal Attributes' ),
 			'description' => self::__( 'Add attributes (e.g. color, size) that customers can choose when buying deals. Categories are used to filter the selection and additional categories can be added via a basic filter (see forum for details).' ),
 			'url' => 'http://groupbuyingsite.com/features-item/deal-product-attributes/',
-			'support_url' => 'http://groupbuyingsite.com/forum/showthread.php?1899-Using-Attributes-in-3.1',
+			'support_url' => 'http://smartecart.com/forum/showthread.php?1899-Using-Attributes-in-3.1',
 			'files' => array(
 				GB_PATH.'/add-ons/attributes/Attribute.model.class.php',
 				GB_PATH.'/add-ons/attributes/Attributes.controller.class.php',
@@ -55,7 +55,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'GBS API' ),
 			'description' => self::__( 'JSON API for GBS. Temp API Doc. found <a href="http://dl.dropbox.com/u/403305/api-doc.html">here</a>.' ),
 			'url' => 'http://groupbuyingsite.com/inventory-management-order-fulfillment-json-api-scaling-v4-1/',
-			'support_url' => 'http://groupbuyingsite.com/forum/showthread.php?6311-GBS-API-Discussion',
+			'support_url' => 'http://smartecart.com/forum/showthread.php?6311-GBS-API-Discussion',
 			'files' => array(
 				GB_PATH.'/add-ons/api/API.class.php'
 			),
@@ -67,7 +67,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Order Fulfillment and Inventory Mngt.' ),
 			'description' => self::__( 'Basic method to manage order status and low inventory notifications.' ),
 			'url' => 'http://groupbuyingsite.com/inventory-management-order-fulfillment-json-api-scaling-v4-1/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/fulfillment/Fulfillment.class.php',
 				GB_PATH.'/template-tags/add-ons/fulfillment.php',
@@ -80,7 +80,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Gifting' ),
 			'description' => self::__( 'Allows a user to gift an entire purchase to someone else.' ),
 			'url' => 'http://groupbuyingsite.com/features-item/gift-purchasing/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/gifts/Gift.model.class.php',
 				GB_PATH.'/add-ons/gifts/Gifts.controller.class.php',
@@ -95,7 +95,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Advanced: Query Optimization' ),
 			'description' => self::__( 'This optimization should be used with caution and should only be used if advised. It will make database queries more efficient by adding additional tables.' ),
 			'url' => 'http://groupbuyingsite.com/inventory-management-order-fulfillment-json-api-scaling-v4-1/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/query-optimization/Query_Optimization.class.php',
 			),
@@ -107,7 +107,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => self::__( 'Dynamic Attribute Selection' ),
 			'description' => self::__( 'Instead of sifting through a long list of "labels" (e.g.  "Medium – Orange", "Small – Orange", "Large – Orange", "XL – Orange"...etc.) the customer can select from separate category dropdowns (e.g.  "size" and "color") and a dynamically generated add-to-cart button will show. ' ),
 			'url' => 'http://groupbuyingsite.com/features-item/deal-product-attributes/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(),
 			'callbacks' => array(
 				array( 'Group_Buying_Attributes', 'activate_dynamic_category_selection' ),
@@ -117,7 +117,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => __( 'Group Buying Network Syndication' ),
 			'description' => __( 'The Group Buying Syndication service allows for site owners to syndicate deals to the GBS network of sites that wish to aggregate deals.' ),
 			'url' => 'http://groupbuyingsite.com/v3-5-5-gbs-syndication-aggregation-beta-available/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?69-Group-Buying-Syndication-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?69-Group-Buying-Syndication-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/syndication-service/group-buying-aggregator.php'
 			),
@@ -129,7 +129,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 			'label' => __( 'API Import Framework' ),
 			'description' => __( 'A framework for importing deals from other sites. Used in conjunction with add-on importers (i.e. LivingSocial Importer).' ),
 			'url' => 'http://groupbuyingsite.com/4-5-external-deal-aggregation-adaptive-payments-reports-ip-logging/',
-			'support_url' => 'http://groupbuyingsite.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
+			'support_url' => 'http://smartecart.com/forum/forumdisplay.php?18-Group-Buying-Setup-Questions-Problems-and-Troubleshooting',
 			'files' => array(
 				GB_PATH.'/add-ons/importer/GBS_Importer_Framework.php',
 				GB_PATH.'/add-ons/importer/GBS_Importer_Deal.php',
@@ -328,7 +328,7 @@ class Group_Buying_Addons extends Group_Buying_Controller {
 
 				// If there's no download url and we're trying to download the addon than something is wrong. Probably it wasn't purchased yet.
 				if ( isset( $_GET['action'] ) && $_GET['action'] == 'install-plugin' && $response->download_link == '' ) {
-					$response = new WP_Error('plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with GroupBuyingSite.com, this server&#8217;s configuration or your purchase has not been recorded yet. If you continue to have problems, please try the <a href="http://groupbuyingsite.com/forum/">support forums</a> or download your add-on from your <a href="http://groupbuyingsite.com/account/">account page</a>.' ), 4200 );
+					$response = new WP_Error('plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with GroupBuyingSite.com, this server&#8217;s configuration or your purchase has not been recorded yet. If you continue to have problems, please try the <a href="http://smartecart.com/forum/">support forums</a> or download your add-on from your <a href="http://groupbuyingsite.com/account/">account page</a>.' ), 4200 );
 				}
 			}
 		}

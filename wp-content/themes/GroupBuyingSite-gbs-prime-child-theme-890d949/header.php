@@ -52,6 +52,10 @@
 	<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/offsite_event.php?id=6009510641503&amp;value=0.01&amp;currency=USD" /></noscript>
 
 	<?php wp_head(); ?>
+    
+    <!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/customassets/fancybox/jquery.fancybox.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_directory_uri(); ?>/customassets/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
 	
 </head>
 

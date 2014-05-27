@@ -29,6 +29,8 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 	private static $field_id = '';
 	protected static $signup_doubleopt;
 	protected static $signup_sendwelcome;
+	protected static $listing_options = array();
+	protected static $grouping_options = array();
 
 
 	protected static function get_instance() {
@@ -51,8 +53,10 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 		self::$field_id = get_option( self::FIELD_ID, '' );
 		self::$signup_doubleopt = get_option( self::SIGNUP_DOUBLEOPT_OPTION, 'true' );
 		self::$signup_sendwelcome = get_option( self::SIGNUP_SENDWELCOME_OPTION, 'true' );
-
-		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
+		
+		if ( is_admin() ) {
+			add_action( 'init', array( get_class(), 'register_options') );
+		}
 
 		add_filter( 'gb_account_registration_panes', array( $this, 'get_registration_panes' ), 100 );
 		if ( !version_compare( Group_Buying::GB_VERSION, '4.2', '>=' ) ) { // TODO remove deprecated method and functions
@@ -71,11 +75,115 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 
 	}
 
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_options() {
+		// Settings
+		$settings = array(
+			'mailchimp' => array(
+				'title' => self::__( 'MailChimp API Configuration' ),
+				'weight' => 500,
+				'settings' => array(
+					self::API_KEY => array(
+						'label' => self::__( 'API Key' ),
+						'option' => array(
+							'type' => 'text',
+							'default' => self::$api_key
+							)
+						),
+					self::LIST_ID => array(
+						'label' => self::__( 'Mailing List' ),
+						'option' => array(
+							'type' => 'select',
+							'options' => self::list_options(),
+							'default' => self::$list_id,
+							'description' => ( empty( self::$listing_options ) ) ? self::__('No lists were found using that API key.') : ''
+							)
+						),
+					self::GROUP_ID => array(
+						'label' => self::__( 'Location Group' ),
+						'option' => array(
+							'type' => 'select',
+							'options' => self::group_options(),
+							'default' => self::$group_id,
+							'description' => ( empty( self::$grouping_options ) ) ? self::__('No groups were found under the list selected above.') : ''
+							)
+						),
+					self::SIGNUP_DOUBLEOPT_OPTION => array(
+						'label' => self::__( 'Double Opt-in' ),
+						'option' => array(
+							'label' => self::__( 'Explicit double opt-in.' ),
+							'type' => 'checkbox',
+							'value' => 'true',
+							'default' => self::$signup_doubleopt
+							)
+						),
+					self::SIGNUP_SENDWELCOME_OPTION => array(
+						'label' => self::__( 'Welcome Message' ),
+						'option' => array(
+							'label' => self::__( 'Send welcome message after subscribing.' ),
+							'type' => 'checkbox',
+							'value' => 'true',
+							'default' => self::$signup_sendwelcome
+							)
+						),
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_List_Services::SETTINGS_PAGE );
+	}
+
+	public static function list_options() {
+		// See if already set.
+		if ( self::$listing_options ) {
+			return self::$listing_options;
+		}
+		$api = self::init_mc( self::$api_key );
+		$listings = $api->lists();
+
+		// Build options
+		$options = array();
+		if ( !empty( $listings ) ) {
+			if ( !empty( $listings ) || self::$listings['total'] == '0' ) {
+				foreach ( $listings['data'] as $key ) {
+					$options[$key['id']] = $key['name'];
+				}
+			}
+		}
+		self::$listing_options = $options;
+		return $options;
+	}
+
+	public static function group_options() {
+		// Must have a list_id
+		if ( !self::$list_id ) {
+			return array();
+		}
+		// See if already set.
+		if ( self::$grouping_options ) {
+			return self::$grouping_options;
+		}
+
+		$api = self::init_mc( self::$api_key );
+		$groupings = $api->listInterestGroupings( self::$list_id);
+
+		// Build options
+		$options = array();
+		if ( !empty( $groupings ) ) {			
+			foreach ( $groupings as $key ) {
+				$options[$key['id']] = $key['name'];
+			}
+		}
+		self::$grouping_options = $options;
+		return $options;
+	}
+
 	public static function head() {
 		if ( !isset( $_GET['page'] ) || $_GET['page'] != 'group-buying/subscription' ) {
 			return;
-		}
-?>
+		} ?>
 		<script type="text/javascript" charset="utf-8">
 			jQuery(document).ready(function($){
 
@@ -166,7 +274,7 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 			parent::success( $_POST['deal_location'], $_POST['email_address'] );
 		}
 		if ( self::$api->errorMessage ) {
-			Group_Buying_Controller::set_message( apply_filters( 'subscribe_mc_error', self::$api->errorMessage ), 'error' );
+			SEC_Controller::set_message( apply_filters( 'subscribe_mc_error', self::$api->errorMessage ), 'error' );
 		}
 		// if it's a success, set a cookie and redirect
 		if ( !self::$api->errorCode || self::$api->errorCode == '214' ) {
@@ -204,7 +312,9 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 		}
 		if ( null == $account || !is_a( $account, 'Group_Buying_Account' ) ) {
 			$user = get_user_by( 'email', $email );
-			$account = Group_Buying_Account::get_instance( $user->ID );
+			if ( is_a( $user, 'WP_User' ) ) {
+				$account = Group_Buying_Account::get_instance( $user->ID );
+			}
 		}
 
 		self::init_mc();
@@ -224,29 +334,32 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 
 		// default merge variables
 		$merge_vars = array(
-			'FNAME' => $account->get_name( 'first' ),
-			'LNAME' => $account->get_name( 'last' ),
 			'GROUPINGS' => array(
 				array( 'id' => self::$group_id, 'groups' => $groups ),
 
 			),
 			//'MC_LOCATION'=>array('LATITUDE'=>34.0413, 'LONGITUDE'=>-84.3473),
-
 		);
+		if ( $account ) {
+			$merge_vars['FNAME'] = $account->get_name( 'first' );
+			$merge_vars['LNAME'] = $account->get_name( 'last' );
+		}
 		$merge_vars = apply_filters( 'subscribe_mc_groupins', $merge_vars, self::$group_id );
 		//logs
 		do_action( 'gb_log', 'subscribe - merge_vars', $merge_vars );
 
+		$welcome = ( self::$signup_sendwelcome ) ? 'true' : 'false' ;
+		$doubleopt = ( self::$signup_doubleopt ) ? 'true' : 'false' ;
 		// subscribe the email already.
 		$retval = self::$api->listSubscribe(
 			self::$list_id,
 			$email,
 			$merge_vars,
 			$email_type = 'html',
-			self::$signup_doubleopt,
+			$doubleopt,
 			$update_existing = TRUE,
 			$replace_interests = FALSE,
-			self::$signup_sendwelcome  // If double_optin is true, this has no effect.
+			$welcome  // If double_optin is true, this has no effect.
 		);
 
 		//logs
@@ -256,30 +369,6 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 		return $response;
 	}
 
-	public function register_settings() {
-		self::init_mc();
-		$page = Group_Buying_List_Services::get_settings_page();
-		$section = 'gb_mailchimp_sub';
-		add_settings_section( $section, self::__( 'MailChimp Subscription Settings' ), array( $this, 'display_settings_section' ), $page );
-		register_setting( $page, self::API_KEY );
-		register_setting( $page, self::LIST_ID );
-		register_setting( $page, self::GROUP_ID );
-		register_setting( $page, self::FIELD_ID );
-		register_setting( $page, self::SIGNUP_DOUBLEOPT_OPTION );
-		register_setting( $page, self::SIGNUP_SENDWELCOME_OPTION );
-
-		add_settings_field( self::API_KEY, self::__( 'API Key' ), array( $this, 'display_api_key_field' ), $page, $section );
-		add_settings_field( self::LIST_ID, self::__( 'Mailing List' ), array( $this, 'display_list_id_field' ), $page, $section );
-		add_settings_field( self::GROUP_ID, self::__( 'Location Group' ), array( $this, 'display_group_id_field' ), $page, $section );
-		add_settings_field( self::SIGNUP_DOUBLEOPT_OPTION, self::__( 'Double Opt-in' ), array( get_class(), 'display_service_doubleopt_option' ), $page, $section );
-		add_settings_field( self::SIGNUP_SENDWELCOME_OPTION , self::__( 'Send Welcome Message' ), array( get_class(), 'display_service_sendwelcome_option' ), $page, $section );
-
-		//add_settings_field(self::FIELD_ID, self::__('Location Field ID'), array($this, 'display_field_id_field'), $page, $section);
-
-		if ( isset( $_POST['mc_sync_locations'] ) ) {
-			self::sync_mailchimp_locations();
-		}
-	}
 
 	/**
 	 * Add the default pane to the account edit form
@@ -388,78 +477,9 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 	private static function load_view_string( $path, $args ) {
 		ob_start();
 		if ( !empty( $args ) ) extract( $args );
-		$template = locate_template( 'gbs-addons/subscription/list-services/mc-views/'.$path.'.php', FALSE );
+		$template = locate_template( SEC_ADDONS_DIR . '/subscription/list-services/mc-views/'.$path.'.php', FALSE );
 		include $template;
 		return ob_get_clean();
-	}
-
-	public static function display_api_key_field() {
-		echo '<input type="text" name="'.self::API_KEY.'" value="'.self::$api_key.'" id="'.self::API_KEY.'"/>';
-	}
-
-	public static function display_list_id_field( $null = NULL, $api_key = NULL ) {
-		$api = self::init_mc( $api_key );
-		$lists = $api->lists();
-		if ( !empty( $lists ) ) {
-?>
-				<select name="<?php echo self::LIST_ID ?>" id="<?php echo self::LIST_ID ?>">
-					<?php
-			if ( !empty( $lists ) || $lists['total'] == '0' ) {
-				foreach ( $lists['data'] as $key ) {
-					echo '<option value="'.$key['id'].'" '.selected( self::$list_id, $key['id'] ).'>'.$key['name'].'</option>';
-				}
-			}
-?>
-				</select>
-			<?php
-		} else {
-			echo '<span id="'.self::LIST_ID.'">'.gb__( 'No lists were found using that API key.' ).'</span>';
-		}
-	}
-
-	public static function display_group_id_field( $null = NULL, $list_id = NULL, $api_key = NULL ) {
-		if ( NULL === $list_id ) {
-			$list_id = self::$list_id;
-		}
-		$api = self::init_mc( $api_key );
-		$grouping = $api->listInterestGroupings( $list_id );
-		if ( !empty( $grouping ) ) {
-?>
-				<select name="<?php echo self::GROUP_ID ?>" id="<?php echo self::GROUP_ID ?>">
-					<?php
-			foreach ( $grouping as $key ) {
-				echo '<option value="'.$key['id'].'" '.selected( self::$group_id, $key['id'] ).'>'.$key['name'].'</option>';
-			}
-?>
-				</select>
-			<?php
-		} else {
-			echo '<span id="'.self::GROUP_ID.'">'.gb__( 'No groups were found under the list selected above.' ).'</span>';
-		}
-	}
-
-	public static function display_field_id_field() {
-		$grouping = self::$api->listInterestGroupings( self::$list_id );
-		if ( self::$api_key != '' && !empty( $grouping ) ) {
-			echo "<ul>";
-			foreach ( $grouping as $key ) {
-				if ( $key['id'] == self::$group_id ) {
-					foreach ( $key['groups'] as $key => $value ) {
-						echo '<li>' . $value['name'] . '</li>';
-					}
-				}
-			}
-			echo "</ul>";
-		}
-	}
-
-	public static function display_service_doubleopt_option() {
-		echo '<label><input type="radio" name="'.self::SIGNUP_DOUBLEOPT_OPTION.'" value="false" '.checked( 'false', self::$signup_doubleopt, FALSE ).'/> '.self::__( 'No' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::SIGNUP_DOUBLEOPT_OPTION.'" value="true" '.checked( 'true', self::$signup_doubleopt, FALSE ).'/> '.self::__( 'Yes' ).'</label>';
-	}
-	public static function display_service_sendwelcome_option() {
-		echo '<label><input type="radio" name="'.self::SIGNUP_SENDWELCOME_OPTION.'" value="false" '.checked( 'false', self::$signup_sendwelcome, FALSE ).'/> '.self::__( 'No' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::SIGNUP_SENDWELCOME_OPTION.'" value="true" '.checked( 'true', self::$signup_sendwelcome, FALSE ).'/> '.self::__( 'Yes' ).'</label>';
 	}
 
 	public static function sync_mailchimp_locations() {

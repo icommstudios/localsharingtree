@@ -274,7 +274,7 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 			parent::success( $_POST['deal_location'], $_POST['email_address'] );
 		}
 		if ( self::$api->errorMessage ) {
-			Group_Buying_Controller::set_message( apply_filters( 'subscribe_mc_error', self::$api->errorMessage ), 'error' );
+			SEC_Controller::set_message( apply_filters( 'subscribe_mc_error', self::$api->errorMessage ), 'error' );
 		}
 		// if it's a success, set a cookie and redirect
 		if ( !self::$api->errorCode || self::$api->errorCode == '214' ) {
@@ -477,7 +477,7 @@ class Group_Buying_MailChimp extends Group_Buying_List_Services {
 	private static function load_view_string( $path, $args ) {
 		ob_start();
 		if ( !empty( $args ) ) extract( $args );
-		$template = locate_template( 'gbs-addons/subscription/list-services/mc-views/'.$path.'.php', FALSE );
+		$template = locate_template( SEC_ADDONS_DIR . '/subscription/list-services/mc-views/'.$path.'.php', FALSE );
 		include $template;
 		return ob_get_clean();
 	}

@@ -126,9 +126,9 @@ class Group_Buying_Affiliates extends Group_Buying_Controller {
 
 	public function display_settings_section() {
 		if ( function_exists( 'wp_aff_record_remote_click' ) ) {
-			printf( self::__( '<a href="%s" target="_blank">WP Affiliate Platform</a> Has Been Automatically Integrated' ), 'http://groupbuyingsite.com/goto/WPAffiliatePlatform' );
+			printf( self::__( '<a href="%s" target="_blank">WP Affiliate Platform</a> Has Been Automatically Integrated' ), 'http://smartecart.com/goto/WPAffiliatePlatform' );
 		} else {
-			printf( self::__( 'GBS supports basic integration with <a href="%s" target="_blank">WordPress Affiliate Platform</a> an easy to use WordPress plugin for affiliate recruitment, management and tracking that can be used on any WordPress blog/site.' ), 'http://groupbuyingsite.com/goto/WPAffiliatePlatform' );
+			printf( self::__( 'GBS supports basic integration with <a href="%s" target="_blank">WordPress Affiliate Platform</a> an easy to use WordPress plugin for affiliate recruitment, management and tracking that can be used on any WordPress blog/site.' ), 'http://smartecart.com/goto/WPAffiliatePlatform' );
 		}
 	}
 

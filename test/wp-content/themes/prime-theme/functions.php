@@ -3,13 +3,67 @@
 /**
  * Theme Constants
  */
-define( 'GBS_THEME_NAME', 'Prime' );
-define( 'GBS_THEME_SLUG', 'prime_theme' ); // theme slug for updater
-define( 'GBS_THEME_VERSION', '2.7.0.1' );
-define( 'GB_THEME_COMPAT_VERSION', '4.7' );
-define( 'GB_THEME_CHILD_THEME', 'https://github.com/GroupBuyingSite/gbs-prime-child-theme/zipball/master' );
+define( 'SEC_THEME_NAME', 'Prime' );
+define( 'SEC_THEME_SLUG', 'prime_theme' ); // theme slug for updater
+define( 'SEC_THEME_VERSION', '5.1' );
+define( 'SEC_THEME_COMPAT_VERSION', '4.7' );
+define( 'SEC_THEME_CHILD_THEME', 'https://github.com/GroupBuyingSite/gbs-prime-child-theme/zipball/master' );
 
 define( 'SS_BASE_URL', get_template_directory_uri() . '/' );
+
+
+/////////////////////////
+// compatibility check //
+/////////////////////////
+
+// confirm GBS is installed and activated
+if ( !function_exists( 'group_buying_load' ) ) {
+	if ( !is_admin() && $_SERVER['PHP_SELF'] != '/wp-login.php'  ) {
+		wp_die( 'Please <a href="'.get_admin_url().'plugins.php">Activate</a> and <a href="'.get_admin_url().'admin.php?page=group-buying/gb_settings">Authorize</a> Smart eCart' );
+	}
+	return;
+}
+
+// check version requirements
+if ( !version_compare( Group_Buying::GB_VERSION, SEC_THEME_COMPAT_VERSION, '>=' ) ) {
+	if ( !is_admin() && $_SERVER['PHP_SELF'] != '/wp-login.php'  ) {
+		wp_die( 'This theme requires GBS to be upgraded to at least version '. SEC_THEME_COMPAT_VERSION );
+	}
+	return;
+}
+
+///////////////////
+// Theme options //
+///////////////////
+
+
+/**
+ * SEC Offer Types this theme is compatible with.
+ * Default Types:
+ * 	deal
+ * 	product
+ * 	project
+ * 	download
+ */
+if ( ! function_exists( 'compatible_offer_types' ) ) {
+	function compatible_offer_types() {
+		return array( 'deal' );
+	}
+}
+
+
+/**
+ * Overload the sec_template_path option in case SEC sets it's default
+ * and this user wants to use an old theme.
+ */
+add_filter( 'sec_template_path', 'overload_sec_template_path' );
+function overload_sec_template_path() {
+	return 'gbs';
+}
+
+///////////////////////////
+// Activation procedures //
+///////////////////////////
 
 /**
  * Update options upon theme activation.
@@ -19,23 +73,11 @@ if ( is_admin() && isset( $_GET['activated'] ) && $pagenow == 'themes.php' ) {
 	update_option( 'gb_adv_thumbs_sc', '1' );
 }
 
-// confirm GBS is installed and activated
-if ( !function_exists( 'group_buying_load' ) ) {
-	if ( !is_admin() && $_SERVER['PHP_SELF'] != '/wp-login.php'  ) {
-		wp_die( 'Please <a href="'.get_admin_url().'plugins.php">Activate</a> and <a href="'.get_admin_url().'admin.php?page=group-buying/gb_settings">Authorize</a> Group Buying' );
-	}
-	return;
-}
+///////////
+// Misc. //
+///////////
 
-// check version requirements
-if ( !version_compare( Group_Buying::GB_VERSION, GB_THEME_COMPAT_VERSION, '>=' ) ) {
-	if ( !is_admin() && $_SERVER['PHP_SELF'] != '/wp-login.php'  ) {
-		wp_die( 'This theme requires GBS to be upgraded to at least version '. GB_THEME_COMPAT_VERSION );
-	}
-	return;
-}
-
-function gb_ptheme_current_version() { return GBS_THEME_VERSION; }
+function gb_ptheme_current_version() { return SEC_THEME_VERSION; }
 
 // Remove that pesky admin bar for users
 if ( !is_admin() && !current_user_can( 'edit_posts' ) ) {
@@ -158,9 +200,6 @@ register_nav_menus( array(
 		'header' => gb__( 'Header Menu' )
 	) );
 
-if ( !function_exists( 'custom-background' ) ) {
-	add_theme_support( 'custom-background' );
-}
 
 // This theme allows users to set a custom background
 add_theme_support( 'custom-background' );
@@ -184,6 +223,7 @@ if ( is_readable( $child_locale_file ) ) {
 
 // Simple array of files to require
 $required_files = array(
+	'/gbs-addons/theme-setup/SEC_Theme_Setup.class.php',
 	// Load translator before anything else
 	'/gbs-addons/translate/translator.php',
 	// Template sidebars
@@ -201,6 +241,7 @@ $required_files = array(
 	'/gbs-addons/subscription/subscriptions.php',
 	'/gbs-addons/custom-deal-meta/custom-deal-meta.php',
 	'/gbs-addons/updater/updater.php',
+	'/gbs-addons/theme-setup/SEC_Theme_Setup.class.php',
 );
 // Loop through the files checking if they exist in the child theme first.
 foreach ( $required_files as $file ) {

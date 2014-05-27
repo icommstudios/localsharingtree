@@ -15,7 +15,8 @@ class Group_Buying_Merchants extends Group_Buying_Controller {
 	public static function init() {
 		// Default Account Merchant Template
 		self::$merchant_path = get_option( self::MERCHANT_PATH_OPTION, self::$merchant_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 50, 0 );
+		self::register_settings();
+
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_path_callback' ), 10, 1 );
 
 		// Template overrides
@@ -33,6 +34,30 @@ class Group_Buying_Merchants extends Group_Buying_Controller {
 
 		// Allow merchants to upload files
 		add_filter( 'user_has_cap', array( get_class(), 'allow_file_uploads' ), 10, 3 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_merchant' => array(
+				'weight' => 130,
+				'settings' => array(
+					self::MERCHANT_PATH_OPTION => array(
+						'label' => self::__( 'Merchant Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$merchant_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -56,24 +81,6 @@ class Group_Buying_Merchants extends Group_Buying_Controller {
 			),
 		);
 		$router->add_route( self::MERCHANT_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_merchant_paths';
-		add_settings_section( $section, null, array( get_class(), 'display_merchant_paths_section' ), $page );
-
-		// Settings
-		register_setting( $page, self::MERCHANT_PATH_OPTION );
-		add_settings_field( self::MERCHANT_PATH_OPTION, self::__( 'Merchant Path' ), array( get_class(), 'display_merchant_path' ), $page, $section );
-	}
-
-	public static function display_merchant_paths_section() {
-		echo self::__( '<h4>Customize the Merchant paths.</h4>' );
-	}
-
-	public static function display_merchant_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="'.self::MERCHANT_PATH_OPTION.'" id="'.self::MERCHANT_PATH_OPTION.'" value="' . esc_attr( self::$merchant_path ) . '"  size="40"/><br />';
 	}
 
 	public static function on_account_merchant_page() {
@@ -244,7 +251,7 @@ class Group_Buying_Merchants extends Group_Buying_Controller {
 	}
 
 	public static function save_meta_boxes( $post_id, $post ) {
-		// only continue if it's a deal post
+		// only continue if it's a merchant post
 		if ( $post->post_type != Group_Buying_Merchant::POST_TYPE ) {
 			return;
 		}

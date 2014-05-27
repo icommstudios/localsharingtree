@@ -88,24 +88,22 @@ if (isset($_REQUEST["order_id"])) {
 }
 
 $album = $wpdb->get_row
-    (
-        $wpdb->prepare
-            (
-                "SELECT * FROM " . gallery_bank_albums() . " where album_id = %d",
-                $album_id
-            )
-    );
+(
+    $wpdb->prepare
+        (
+            "SELECT * FROM " . gallery_bank_albums() . " where album_id = %d",
+            $album_id
+        )
+);
 $album_css = $wpdb->get_results
-    (
-        $wpdb->prepare
-            (
-                "SELECT * FROM " . gallery_bank_settings(), ""
-
-            )
-    );
-if (count($album_css) != 0) {
+(
+	"SELECT * FROM " . gallery_bank_settings()
+);
+if (count($album_css) != 0) 
+{
     $setting_keys = array();
-    for ($flag = 0; $flag < count($album_css); $flag++) {
+    for ($flag = 0; $flag < count($album_css); $flag++) 
+    {
         array_push($setting_keys, $album_css[$flag]->setting_key);
     }
     $index = array_search("thumbnails_width", $setting_keys);
@@ -130,8 +128,7 @@ if (count($album_css) != 0) {
     $index = array_search("margin_btw_thumbnails", $setting_keys);
     $margin_btw_thumbnails = $album_css[$index]->setting_value;
 
-    $index = array_search("video_thumb_url", $setting_keys);
-    $video_thumb_url = $album_css[$index]->setting_value;
+    $video_thumb_url = GALLERY_BK_PLUGIN_URL . "/assets/images/video.jpg";
     ?>
     <!--suppress ALL -->
     <style type="text/css">
@@ -172,112 +169,106 @@ if (count($album_css) != 0) {
 }
 ?>
 <form id="reodering_images" class="layout-form" method="post">
-    <div class="fluid-layout">
-        <div class="layout-span12">
-            <ul class="breadcrumb">
-                <li>
-                    <i class="icon-home"></i>
-                    <a href="admin.php?page=gallery_bank"><?php _e("Gallery Bank", gallery_bank); ?></a>
-                    <span class="divider">/</span>
-                    <a href="#"><?php _e("Re-Order Images", gallery_bank); ?></a>
-                </li>
-            </ul>
-            <div class="widget-layout">
-                <div class="widget-layout-title">
-                    <h4>
-                        <i class="icon-plus"></i>
-                        <?php _e("Re-Order Images", gallery_bank); ?>
-                    </h4>
-                </div>
-                <div class="widget-layout-body">
-                    <a class="btn btn-inverse"
-                       href="admin.php?page=gallery_bank"><?php _e("Back to Albums", gallery_bank); ?></a>
-                    <a href="#" class="btn btn-info" onclick="show_premium_message();"
-                            style="float:right"><?php _e("Update Order", gallery_bank); ?></a>
-                    <div id="sort_order_message" class="message green" style="display: none;">
-						<span>
-							<strong><?php _e("Sorting Order has been updated.", gallery_bank); ?></strong>
-						</span>
-                    </div>
-                    <div class="separator-doubled"></div>
-                    <div class="fluid-layout">
-                        <div class="layout-span12">
-                            <div class="widget-layout">
-                                <div class="widget-layout-title">
-                                    <h4><?php echo stripcslashes(htmlspecialchars_decode($album->album_name)); ?></h4>
-                                </div>
-                                <div class="widget-layout-body">
-                                    <div class="layout-control-group">
-                                        <ul class="breadcrumb">
-                                            <li>
-                                                <label class="layout-control-label"><strong>Presort :</strong></label>
-                                                <div class="layout-controls" style="margin-top: 8px;">
-                                                    <a id="unsort" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=unsort">Unsorted</a>
-                                                    |
-                                                    <a id="picId" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=picId">Image ID</a>
-                                                    |
-                                                    <a id="name" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=name">File Name</a>
-                                                    |
-                                                    <a id="title" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=title">Title Text</a>
-                                                    |
-                                                    <a id="date" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=date">Date</a>
-                                                    |
-                                                    <a id="asc" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=asc">Ascending</a>
-                                                    |
-                                                    <a id="desc" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=desc">Descending</a>
-                                                </div>
-                                                <br>
-                                                <label class="layout-control-label">
-                                                    <strong>
-                                                        <?php _e("Images in Row", gallery_bank); ?> :
-                                                    </strong>
-                                                </label>
-                                                <select id="ux_ddl_img_in_Row" name="ux_ddl_img_in_Row" class="layout-span2" style="margin-left: 16px;" onchange="img_in_row();">
-                                                    <option id="" value=""><?php _e("Please Choose", gallery_bank); ?></option>
-                                                    <?php
-                                                    for ($i = 1; $i <= 10; $i++):
-                                                        ?>
-                                                        <option <?php if ($i == $img_in_row) echo "selected=\"selected\"" ?>
-                                                            value="<?php echo $i ?>"><?php echo $i; ?></option>
-                                                    <?php
-                                                    endfor;
-                                                    ?>
-                                                </select>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div id="images_sort" class="sort">
-                                        <?php
-                                        for ($flag = 0; $flag < count($pics_order); $flag++) {
-                                            ?>
-                                            <div id="sortOrder_<?php echo $pics_order[$flag]->pic_id; ?>"
-                                                 class="imgLiquidFill dynamic_css">
-                                                <?php
-                                                if ($pics_order[$flag]->video == 1) {
-                                                    ?>
-                                                    <img id="imgOrder_<?php echo $pics_order[$flag]->pic_id; ?>"
-                                                         src="<?php echo $video_thumb_url; ?>"/>
-                                                <?php
-                                                } else {
-                                                    ?>
-                                                    <img id="imgOrder_<?php echo $pics_order[$flag]->pic_id; ?>"
-                                                         src="<?php echo GALLERY_BK_THUMB_SMALL_URL . $pics_order[$flag]->thumbnail_url; ?>"/>
-                                                <?php
-                                                }
-                                                ?>
-                                            </div>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div id="poststuff" style="width: 99% !important;">
+		<div id="post-body" class="metabox-holder">
+			<div id="postbox-container-2" class="postbox-container">
+				<div id="advanced" class="meta-box-sortables">
+					<div id="gallery_bank_get_started" class="postbox" >
+						<div class="handlediv" data-target="#ux_image_sorting" title="Click to toggle" data-toggle="collapse"><br></div>
+						<h3 class="hndle"><span><?php _e("Re-Order Images", gallery_bank); ?></span></h3>
+						<div class="inside">
+							<div id="ux_image_sorting" class="gallery_bank_layout">
+								<a class="btn btn-inverse"
+			                       href="admin.php?page=gallery_bank"><?php _e("Back to Albums", gallery_bank); ?></a>
+			                    <a href="#" class="btn btn-info" onclick="show_premium_message();"
+			                            style="float:right"><?php _e("Update Order", gallery_bank); ?></a>
+			                    <div id="sort_order_message" class="message green" style="display: none;">
+									<span>
+										<strong><?php _e("Sorting Order has been updated.", gallery_bank); ?></strong>
+									</span>
+			                    </div>
+			                    <div class="separator-doubled"></div>
+			                    <div class="fluid-layout">
+			                        <div class="layout-span12">
+			                            <div class="widget-layout">
+			                                <div class="widget-layout-title">
+			                                    <h4><?php echo stripcslashes(htmlspecialchars_decode($album->album_name)); ?></h4>
+			                                </div>
+			                                <div class="widget-layout-body">
+			                                    <div class="layout-control-group">
+			                                        <ul class="breadcrumb">
+			                                            <li>
+			                                                <label class="layout-control-label"><strong>Presort :</strong></label>
+			                                                <div class="layout-controls" style="margin-top: 8px;">
+			                                                    <a id="unsort" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=unsort">Unsorted</a>
+			                                                    |
+			                                                    <a id="picId" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=picId">Image ID</a>
+			                                                    |
+			                                                    <a id="name" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=name">File Name</a>
+			                                                    |
+			                                                    <a id="title" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=title">Title Text</a>
+			                                                    |
+			                                                    <a id="date" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=date">Date</a>
+			                                                    |
+			                                                    <a id="asc" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=asc">Ascending</a>
+			                                                    |
+			                                                    <a id="desc" href="admin.php?page=images_sorting&album_id=<?php echo $album_id ?>&row=<?php echo $img_in_row ?>&order_id=desc">Descending</a>
+			                                                </div>
+			                                                <br>
+			                                                <label class="layout-control-label">
+			                                                    <strong>
+			                                                        <?php _e("Images in Row", gallery_bank); ?> :
+			                                                    </strong>
+			                                                </label>
+			                                                <select id="ux_ddl_img_in_Row" name="ux_ddl_img_in_Row" class="layout-span2" style="margin-left: 16px;" onchange="img_in_row();">
+			                                                    <option id="" value=""><?php _e("Please Choose", gallery_bank); ?></option>
+			                                                    <?php
+			                                                    for ($i = 1; $i <= 10; $i++):
+			                                                        ?>
+			                                                        <option <?php if ($i == $img_in_row) echo "selected=\"selected\"" ?>
+			                                                            value="<?php echo $i ?>"><?php echo $i; ?></option>
+			                                                    <?php
+			                                                    endfor;
+			                                                    ?>
+			                                                </select>
+			                                            </li>
+			                                        </ul>
+			                                    </div>
+			                                    <div id="images_sort" class="sort">
+			                                        <?php
+			                                        for ($flag = 0; $flag < count($pics_order); $flag++) {
+			                                            ?>
+			                                            <div id="sortOrder_<?php echo $pics_order[$flag]->pic_id; ?>"
+			                                                 class="imgLiquidFill dynamic_css">
+			                                                <?php
+			                                                if ($pics_order[$flag]->video == 1) {
+			                                                    ?>
+			                                                    <img id="imgOrder_<?php echo $pics_order[$flag]->pic_id; ?>"
+			                                                         src="<?php echo $video_thumb_url; ?>"/>
+			                                                <?php
+			                                                } else {
+			                                                    ?>
+			                                                    <img id="imgOrder_<?php echo $pics_order[$flag]->pic_id; ?>"
+			                                                         src="<?php echo GALLERY_BK_THUMB_SMALL_URL . $pics_order[$flag]->thumbnail_url; ?>"/>
+			                                                <?php
+			                                                }
+			                                                ?>
+			                                            </div>
+			                                        <?php
+			                                        }
+			                                        ?>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+			                    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </form>
 <script type="text/javascript">
     jQuery(document).ready(function () {

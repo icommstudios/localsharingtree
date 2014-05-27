@@ -9,7 +9,8 @@ class Group_Buying_Deals_Submit extends Group_Buying_Controller {
 
 	public static function init() {
 		self::$submit_path = get_option( self::SUBMIT_PATH_OPTION, self::$submit_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 1 );
+		self::register_settings();
+
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_submit_callback' ), 10, 1 );
 		add_action( 'parse_request', array( get_class(), 'maybe_process_form' ) );
 
@@ -17,6 +18,30 @@ class Group_Buying_Deals_Submit extends Group_Buying_Controller {
 		add_action( 'wp_ajax_gb_location_add', array( get_class(), 'add_location' ) );
 		add_action( 'wp_ajax_gb_deal_publish', array( get_class(), 'ajax_publish' ) );
 		add_action( 'wp_ajax_gb_deal_draft', array( get_class(), 'ajax_draft' ) );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_merchant_submit' => array(
+				'weight' => 135,
+				'settings' => array(
+					self::SUBMIT_PATH_OPTION => array(
+						'label' => self::__( 'Merchant Submit Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$submit_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	/**
@@ -40,19 +65,6 @@ class Group_Buying_Deals_Submit extends Group_Buying_Controller {
 			),
 		);
 		$router->add_route( self::SUBMIT_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_merchant_paths';
-
-		// Settings
-		register_setting( $page, self::SUBMIT_PATH_OPTION );
-		add_settings_field( self::SUBMIT_PATH_OPTION, self::__( 'Merchant Submit Path' ), array( get_class(), 'display_path' ), $page, $section );
-	}
-
-	public static function display_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::SUBMIT_PATH_OPTION . '" id="' . self::SUBMIT_PATH_OPTION . '" value="' . esc_attr( self::$submit_path ) . '" size="40"/><br />';
 	}
 
 	public static function on_submit_page() {
@@ -426,7 +438,7 @@ class Group_Buying_Deals_Submit extends Group_Buying_Controller {
 			return FALSE;
 		} else {
 			// Add all selected images to the description.
-			if ( !empty( $_POST['submission_images'] ) ) {
+			if ( !empty( $_POST['submission_images'] ) && apply_filters( 'gb_auto_add_multiple_images_to_description', '__return_true' ) ) {
 				foreach ( $_POST['submission_images'] as $image_id ) {
 					$description .= '<p>'.wp_get_attachment_image( $image_id, 'full' ).'</p>';
 				}

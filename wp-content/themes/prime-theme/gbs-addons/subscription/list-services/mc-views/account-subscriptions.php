@@ -7,7 +7,7 @@ foreach ( $options as $term ) {
 $option = implode( ", ", $categories ); ?>
 <div id="mc_subscriptions" class="user_info clearfix">
 	<p>
-		<p><span class="contact_title"><?php gb_e( 'Daily E-Mails: ' ); ?></span>
+		<p><span class="contact_title"><?php sec_e( 'Daily E-Mails: ' ); ?></span>
 		<?php echo $option; ?>
 	</p>
 </div>

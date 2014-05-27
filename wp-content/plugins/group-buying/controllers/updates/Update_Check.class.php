@@ -9,43 +9,52 @@
 class Group_Buying_Update_Check extends Group_Buying_Controller {
 
 	const PLUGIN_NAME = 'group_buying_site';
-	const API_URL = 'http://groupbuyingsite.com/check-key/';
-	//const API_URL = 'http://staging.groupbuyingsite.com/check-key/';
+	const API_URL = 'http://smartecart.com/check-key/';
+	//const API_URL = 'http://staging.smartecart.com/check-key/';
 	const API_KEY_OPTION = 'api_key';
 
 	public static $page_slug = 'group-buying/gb_settings';
 	public static $error;
 
 	static function init() {
+		add_action( 'init', array( get_class(), 'register_settings' ), 10 );
+
 		add_action( 'admin_init', array( get_class(), 'check_key' ), 5 );
 		add_action( 'init', array( get_class(), 'multipass' ), 200, 0 );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
+
+
 		// Updates
 		add_filter( 'pre_set_site_transient_update_plugins', array( get_class(), 'check_for_updates' ) );
 		// Plugin API for purchase
 		add_filter( 'plugins_api_result', array( get_class(), 'plugins_api_result' ), 10, 3 );
 		add_action( 'install_plugins_pre_plugin-information', array( get_class(), 'upgrade_popup' ) ); // thickbox info
-
 	}
 
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_api_key';
-		add_settings_section( $section, self::__( 'Group Buying Site API Key' ), array( get_class(), 'display_api_key_section' ), $page );
-
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
 		// Settings
-		register_setting( $page, self::get_api_key_option_name() );
-		add_settings_field( self::get_api_key_option_name(), self::__( 'API Key' ), array( get_class(), 'display_api_key' ), $page, $section );
-	}
-
-	public static function display_api_key_section() {
-		echo self::__( 'Enter your API key to activate Group Buying Site' );
+		$settings = array(
+			'gb_api_key' => array(
+				'weight' => 0,
+				'settings' => array(
+					self::get_api_key_option_name() => array(
+						'label' => self::__( 'API Key' ),
+						'option' => array( get_class(), 'display_api_key' )
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	public static function display_api_key() {
 		$style = ( self::has_stored_api_key() ) ? 'background:#ceffbb;border-color:#8ae22d;' : 'background:#ffebe8;border-color:#c00;' ; // OMFG inline styles, I know right?
-		echo '<input type="text" name="'.self::get_api_key_option_name().'" id="'.self::get_api_key_option_name().'" style="'.$style.'" value="' . self::get_api_key() . '"  size="40" /><br />';
+		echo '<input type="text" name="'.self::get_api_key_option_name().'" id="'.self::get_api_key_option_name().'" style="'.$style.'" value="' . self::get_api_key() . '"  size="40" /><br /><p class="description">'.self::__( 'Enter your API key to activate GBS and enable auto updates.' ).'</p>';
 	}
+
 
 	static function has_stored_api_key() {
 		if ( defined( 'GBS_NO_UPGRADES' ) ) {
@@ -181,9 +190,7 @@ class Group_Buying_Update_Check extends Group_Buying_Controller {
 
 	static function multipass() {
 		if ( is_multisite() && GB_IS_AUTHORIZED_WPMU_SITE && defined( 'GBS_API_KEY' )  ) {
-			remove_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
 			remove_action( 'admin_notices', array( get_class(), 'invalid_api_key' ), 10, 0 );
-			// remove_action( 'admin_notices', array( get_class(), 'error_api_key' ), 10, 0  );
 		}
 		elseif ( is_multisite() ) {
 			add_action( 'admin_notices', array( get_class(), 'error_mu_install' ) );

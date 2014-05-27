@@ -9,8 +9,8 @@
 class Group_Buying_Update_Check extends Group_Buying_Controller {
 
 	const PLUGIN_NAME = 'group_buying_site';
-	const API_URL = 'http://groupbuyingsite.com/check-key/';
-	//const API_URL = 'http://staging.groupbuyingsite.com/check-key/';
+	const API_URL = 'http://smartecart.com/check-key/';
+	//const API_URL = 'http://staging.smartecart.com/check-key/';
 	const API_KEY_OPTION = 'api_key';
 
 	public static $page_slug = 'group-buying/gb_settings';

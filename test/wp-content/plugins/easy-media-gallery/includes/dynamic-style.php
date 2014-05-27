@@ -63,36 +63,38 @@ echo '#mbOverlay {background: url(../css/images/patterns/'.$pattover.'); backgro
 // IE <8 Handle
 
 		preg_match( '/MSIE (.*?);/', $_SERVER['HTTP_USER_AGENT'], $matches );
-		if ( count( $matches )>1 && $disenbor == 1 ){
-			$version = explode(".", $matches[1]);
-			switch(true){
-				case ( $version[0] <= '8' ):
-				echo '.view {border: 1px solid '.$shdcol.';}';
-				echo '.iehand {border: '.$imgborder.'px solid '.$frmcol.';}';
-				echo '.da-thumbs article{position: absolute; background-image:url('.$thumbhov.'); background-repeat:repeat; width: 100%; height: 100%;}';
-			break; 
+		if ( isset($matches) ) {
+			if ( count( $matches )>1 && $disenbor == 1 ){
+				$version = explode(".", $matches[1]);
+				switch(true){
+					case ( $version[0] <= '8' ):
+					echo '.view {border: 1px solid '.$shdcol.';}';
+					echo '.iehand {border: '.$imgborder.'px solid '.$frmcol.';}';
+					echo '.da-thumbs article{position: absolute; background-image:url('.$thumbhov.'); background-repeat:repeat; width: 100%; height: 100%;}';
+					break; 
 			  
-				case ( $version[0] > '8' ):
-
-( $disenbor == 1 ) ? $addborder = '.view {border: '.$imgborder.'px solid rgba('.$borderrgba.','.$borderrgbaopcty.');}' : $addborder = '';
+					case ( $version[0] > '8' ):
+						( $disenbor == 1 ) ? $addborder = '.view {border: '.$imgborder.'px solid rgba('.$borderrgba.','.$borderrgbaopcty.');}' : $addborder = '';
 echo $addborder; 			  
 echo '.da-thumbs article{position: absolute; background: rgba('.$thumbhovcol.','.$thumbhovcolopcty.'); background-repeat:repeat; width: 100%; height: 100%;}';			  
 			  
-			break; 			  
+					break; 			  
 			  
 			  
-			  default:
+			 	  	default:
+			  		break;
+				}
 			}
-		}
 		
-		else if ( count( $matches )>1 && $disenbor != '1' ) {
-			echo '.da-thumbs article{position: absolute; background-image:url('.$thumbhov.'); background-repeat:repeat; width: 100%; height: 100%;}';
-			}
+				else if ( count( $matches )>1 && $disenbor != '1' ) {
+					echo '.da-thumbs article{position: absolute; background-image:url('.$thumbhov.'); background-repeat:repeat; width: 100%; height: 100%;}';
+					}
 		  
-		else {
-				echo '.da-thumbs article{position: absolute; background: rgba('.$thumbhovcol.','.$thumbhovcolopcty.'); background-repeat:repeat; width: 100%; height: 100%;}';
-			} 
-			
+				else {
+					echo '.da-thumbs article{position: absolute; background: rgba('.$thumbhovcol.','.$thumbhovcolopcty.'); background-repeat:repeat; width: 100%; height: 100%;}';
+					} 
+				}
+				
 // Magnify Icon
 if ( easy_get_option( 'easymedia_mag_icon' ) != '' ) {	
 echo '	

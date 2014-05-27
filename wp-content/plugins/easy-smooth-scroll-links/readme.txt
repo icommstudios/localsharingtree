@@ -2,7 +2,7 @@
 Contributors: Jeriff Cheng
 Tags: smooth scroll,jquery smooth scroll div,smooth scroll jquery,smooth scroll chrome,smooth scroll firefox,smooth scroll javascript,smooth scroll to anchor,smooth scroll plugin,smooth scroll tutorial,anchor,anchor text
 Requires at least: 2.6.5
-Tested up to: 3.8
+Tested up to: 3.9
 Stable tag: trunk
 
 == Description ==
@@ -37,10 +37,21 @@ For FAQs and bug report,refer to <a target="_blank" rel="follow" href="http://ww
 
 1. Plugin Options Page
 2. Animation Effects
-3. Visual Editor Anchor Button
-4. Go To Top Button
+3. TinyMCE Editor Anchor Button
+4. Enter Anchor Name
+5. Go To Top Button
 
 == Changelog ==
+
+= 1.8 =
+
+* Visual Editor Anchor Button now using id attribute instead of name. read more: http://www.jeriffcheng.com/html-5-using-attribute-id-instead-of-attribute-name-for-anchors.html
+
+= 1.7 =
+
+* WordPress 3.9 Compatible
+
+* Links in Image Map are now supported
 
 = 1.6 =
 
@@ -89,6 +100,6 @@ Changed : Use wp_enqueue_script function to load the script instead of the defau
 
 == Upgrade Notice ==
 
-= 1.6 =
+= 1.8 =
 
-*New:  Option to set offset for GoToTop Button.
+* Visual Editor Anchor Button now using id attribute instead of name. read more: http://www.jeriffcheng.com/html-5-using-attribute-id-instead-of-attribute-name-for-anchors.html

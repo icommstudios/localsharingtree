@@ -236,6 +236,11 @@ class Group_Buying_Accounts_Registration extends Group_Buying_Controller {
 					exit();
 				} else {
 					wp_set_current_user( $user->ID );
+					// HACK!!!!
+					if ( isset( $_POST['gb_checkout_action'] ) ) {
+						wp_redirect( add_query_arg(array('checkoutreg'=>1)) );
+						exit();
+					}
 					// Possible AJAX signon
 				}
 			}

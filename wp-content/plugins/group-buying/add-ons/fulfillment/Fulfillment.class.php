@@ -197,7 +197,12 @@ class Group_Buying_Fulfillment extends Group_Buying_Controller {
 
 	public static function order_status_shortcode( $atts, $content, $code, $data ) {
 		$purchase = $data['purchase'];
-		return self::get_status( $purchase->get_id() );
+		$status = self::get_status( $purchase->get_id() );
+		$all_statuses = self::fulfillment_statuses();
+		if ( isset( $all_statuses[$status] ) ) { // get the title of the status
+			$status = $all_statuses[$status];
+		}
+		return $status;
 	}
 
 	/**

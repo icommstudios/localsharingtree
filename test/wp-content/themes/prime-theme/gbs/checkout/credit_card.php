@@ -20,28 +20,28 @@
 					</tr>
 					<?php endif; ?>
 				<?php endforeach; ?>
-				<?php if ( $fields['cc_name'] ): ?>
+				<?php if ( isset( $fields['cc_name'] ) && $fields['cc_name'] ): ?>
 					<tr class="gb_credit_card_field_wrap">
-						<td><?php gb_form_label('cc_name', $fields['cc_name'], 'credit'); ?></td>
-						<td><?php gb_form_field('cc_name', $fields['cc_name'], 'credit'); ?></td>
+						<td><?php gb_form_label( 'cc_name', $fields['cc_name'], 'credit' ); ?></td>
+						<td><?php gb_form_field( 'cc_name', $fields['cc_name'], 'credit' ); ?></td>
 					</tr>
 				<?php endif; ?>
-				<?php if ( $fields['cc_number'] ): ?>
+				<?php if ( isset( $fields['cc_number'] ) && $fields['cc_number'] ): ?>
 					<tr class="gb_credit_card_field_wrap">
-						<td><?php gb_form_label('cc_number', $fields['cc_number'], 'credit'); ?></td>
-						<td><?php gb_form_field('cc_number', $fields['cc_number'], 'credit'); ?></td>
+						<td><?php gb_form_label( 'cc_number', $fields['cc_number'], 'credit' ); ?></td>
+						<td><?php gb_form_field( 'cc_number', $fields['cc_number'], 'credit' ); ?></td>
 					</tr>
 				<?php endif; ?>
-				<?php if ( $fields['cc_expiration_month'] && $fields['cc_expiration_year'] ): ?>
+				<?php if ( isset( $fields['cc_expiration_month'] ) && isset( $fields['cc_expiration_year'] ) && $fields['cc_expiration_month'] && $fields['cc_expiration_year'] ): ?>
 					<tr class="gb_credit_card_field_wrap">
-						<td><?php gb_form_label('cc_expiration_year', $fields['cc_expiration_year'], 'credit'); ?></td>
-						<td><?php gb_form_field('cc_expiration_month', $fields['cc_expiration_month'], 'credit'); ?> <?php gb_form_field('cc_expiration_year', $fields['cc_expiration_year'], 'credit'); ?></td>
+						<td><?php gb_form_label( 'cc_expiration_year', $fields['cc_expiration_year'], 'credit' ); ?></td>
+						<td><?php gb_form_field( 'cc_expiration_month', $fields['cc_expiration_month'], 'credit' ); ?> <?php gb_form_field( 'cc_expiration_year', $fields['cc_expiration_year'], 'credit' ); ?></td>
 					</tr>
 				<?php endif; ?>
-				<?php if ( $fields['cc_cvv'] ): ?>
+				<?php if ( isset( $fields['cc_cvv'] ) && $fields['cc_cvv'] ): ?>
 					<tr class="gb_credit_card_field_wrap">
-						<td><?php gb_form_label('cc_cvv', $fields['cc_cvv'], 'credit'); ?></td>
-						<td><?php gb_form_field('cc_cvv', $fields['cc_cvv'], 'credit'); ?></td>
+						<td><?php gb_form_label( 'cc_cvv', $fields['cc_cvv'], 'credit' ); ?></td>
+						<td><?php gb_form_field( 'cc_cvv', $fields['cc_cvv'], 'credit' ); ?></td>
 					</tr>
 				<?php endif; ?>
 				<?php foreach ( $fields as $key => $data ): ?>

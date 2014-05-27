@@ -3,8 +3,8 @@ Contributors: Jules Colle
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=j_colle%40hotmail%2ecom&lc=US&item_name=Jules%20Colle%20%2d%20WP%20plugins%20%2d%20Responsive%20Gallery%20Grid&item_number=rgg&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: HTML5, gallery, Google+, responsive, pop-out
 Requires at least: 3.0
-Tested up to: 3.6
-Stable tag: 1.3.2
+Tested up to: 3.9
+Stable tag: 1.3.3
 License: GPLv2 or later
 
 
@@ -74,6 +74,9 @@ Sure. Please start a support thread for any of your requests.
 3. From the WYSIWYG view the gallery looks like an ordinary Wordpress gallery, so you can easily add and remove pictures the way you are used to.
 
 == Changelog ==
+
+= 1.3.3 (April 18, 2014) =
+* Got rid of a bug caused by WP 3.9
 
 = 1.3.2 (August 17, 2013) =
 * Got rid of most bugs in version 1.3.1 (hopefully)

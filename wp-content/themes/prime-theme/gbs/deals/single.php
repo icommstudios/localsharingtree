@@ -137,7 +137,7 @@
 						</div>
 					</div>
 
-					<?php if ( gb_has_merchant() ): ?>
+					<?php if ( gb_has_active_merchant() ): ?>
 						<div class="business section clearfix">
 							<div class="section_title clearfix">
 								<h4 class="font_large gb_ff"><?php gb_e('Business:') ?> <a href="<?php gb_merchant_url(gb_get_merchant_id()) ?>" title="<?php gb_merchant_name(gb_get_merchant_id()) ?>"><?php gb_merchant_name(gb_get_merchant_id()); ?></a><span class="expand font_x_small background_alt"><?php gb_e('Toggle') ?></span></h4>

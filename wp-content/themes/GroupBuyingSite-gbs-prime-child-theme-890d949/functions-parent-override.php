@@ -5,6 +5,10 @@
  *
  *
  */
+ 
+if ( $_GET['admintesting'] ) {
+	return;
+}
 
 // Include Custom functions
 
@@ -707,10 +711,15 @@ function custom_show_filter_letters() {
 	$letters = array('A','B','C','D','E','F','G','H','I','J','K','L','M',
 					 'N', 'O','P','Q','R','S','T','U','V','W','X','Y','Z');
 	
-	echo '<div class="pagination filter_by_letter"><ul>';
+	echo '<div class="pagination filter_by_letter" style="margin-top: 0;"><ul style="padding-left: 0;">';
 	echo '<li><span>Starts with: </span></li>';
 	foreach ( $letters as $l) {
 		$letter_url = add_query_arg(array('sf_filter_l' => $l), home_url($_SERVER['REQUEST_URI']));
+		//replace page number back to 0
+		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+		if ( $paged > 1 ) {
+			$letter_url = str_replace('/page/'.$paged, '', $letter_url); //replace paged # in url with 1 ( return to beginning )
+		}
 		
 		if ( $_GET['sf_filter_l'] == $l ) {
 			echo '<li class="current_letter"><span class="current">'.$l.'</span></li>';
@@ -726,7 +735,14 @@ function custom_show_filter_letters() {
 		
 		jQuery('.filter_by_location input').click(function(e){
 			
-			var filter_url = '<?php echo remove_query_arg(array('sf_filter_loc', 'sf_filter_l'), site_url($_SERVER['REQUEST_URI'])); echo '?sf_filter_l='.$_GET['sf_filter_l']; ?>';
+			<?php
+				$filter_url = site_url($_SERVER['REQUEST_URI']);
+				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+				if ( $paged > 1 ) {
+					$filter_url = str_replace('/page/'.$paged, '', $filter_url); //replace paged # in url with 1 ( return to beginning )
+				}
+			?>
+			var filter_url = '<?php echo remove_query_arg(array('sf_filter_loc', 'sf_filter_l'), $filter_url); echo '?sf_filter_l='.$_GET['sf_filter_l']; ?>';
 			
 			//var locations = $(".filter_by_location_checkbox").serialize();
 			var checkedValues = $('.filter_by_location input:checked').map(function() {
@@ -774,7 +790,7 @@ function sf_filter_archive_by_letter ( $where ) {
 	return $where;
 }
 //Filters - add location taxonomy
-add_filter('parse_query', 'sf_filter_archive_by_location_parse_query', 999 );
+add_filter('parse_query', 'sf_filter_archive_by_location_parse_query', 11 );
 function sf_filter_archive_by_location_parse_query ( $query ) {
 	
    if ( !is_admin() && $query->is_main_query() && isset( $_GET['sf_filter_loc'] ) && !empty( $_GET['sf_filter_loc'] ) ) {
@@ -782,7 +798,7 @@ function sf_filter_archive_by_location_parse_query ( $query ) {
 		$q_vars = &$query->query_vars;
 		$taxonomy = 'gb_location';
 		$terms = explode(',', $_GET['sf_filter_loc']);
-	
+		
 		if ( !isset($q_vars['suppress_filters']) ) {
 			
 			if ( is_post_type_archive( 'gb_charities' ) 
@@ -790,32 +806,14 @@ function sf_filter_archive_by_location_parse_query ( $query ) {
 				|| is_tax( 'gb_charity_type' )
 				|| is_tax( 'gb_merchant_type')  ) {
 					
-				if ( is_post_type_archive( 'gb_merchant' ) || is_tax( 'gb_merchant_type' ) ) {
+				if ( is_post_type_archive( 'gb_merchant' ) || is_post_type_archive( 'gb_merchant_type' ) ) {
 					$query->set( 'post_type', 'gb_merchant' );
-				} elseif (  is_post_type_archive( 'gb_charities' ) || is_tax( 'gb_charity_type' ) ) {
+				} elseif (  is_post_type_archive( 'gb_charities' ) || is_post_type_archive( 'gb_charity_type' ) ) {
 					$query->set( 'post_type', 'gb_charities' );
 				}
-				
-				//Get tax 
-				if ( is_tax('gb_merchant_type') ) {
-					$type_slug = $query->get("gb_merchant_type");
-					unset($q_vars['gb_merchant_type']);
-					$query->set("gb_merchant_type", $type_slug); //reset
-				}
-				if ( is_tax('gb_charity_type') ) {
-					$type_slug = $query->get("gb_charity_type");
-					unset($q_vars['gb_charity_type']);
-					$query->set("gb_charity_type", $type_slug);	 //reset
-				}
-				
-				//Bugfix - Delete query variables
-				unset($query->query);
-				unset($query->tax_query);
-				//unset($query->queried_object);
-				
+			
 				//Build tax query
 				$tax_query = array(
-						'relation' => 'AND',
 						array(
 							'taxonomy' => $taxonomy,
 							'field' => 'id',
@@ -824,15 +822,19 @@ function sf_filter_archive_by_location_parse_query ( $query ) {
 							)
 						);
 						
-						
 				if ( isset($q_vars['tax_query']) && !empty($q_vars['tax_query']) ) {
-					$tax_query = array_merge ($q_vars['tax_query'], $tax_query);
+					$tax_query = array_merge ($tax_query, $q_vars['tax_query']);
 				}
 				
-				//$tax_query = array_merge ($q_vars['tax_query'], $tax_query);
-				//$tax_query = new WP_Tax_Query($tax_query);
-       			$query->set("tax_query", $tax_query);
-	
+				$query->set( 'tax_query', $tax_query );
+				
+				/*
+				echo '<br><br>tax_query ';
+				var_dump($tax_query );
+				
+				echo '<br><br>query ';
+				var_dump($query );
+				*/
 			} //end if these archives
 				
 		}  // end if suppress filters
@@ -841,3 +843,7 @@ function sf_filter_archive_by_location_parse_query ( $query ) {
 
    return $query;
 }
+		
+
+
+

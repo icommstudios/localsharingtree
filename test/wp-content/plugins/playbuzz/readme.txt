@@ -1,21 +1,21 @@
 ﻿=== PlayBuzz Playful Content ===
 Contributors: playBuzz
-Tags: PlayBuzz, playful content, feed, feeds, content, related, syndication, related content, quiz, test yourself, list, poll, nrelate, outbrain, post,Entertainment, celebs, celebrities, animals
+Tags: PlayBuzz, playful content, feed, feeds, content, related, syndication, related content, quiz, test yourself, list, poll, nrelate, buzzfeed, post,Entertainment, celebs, celebrities, animals
 Requires at least: 3.0
-Tested up to: 3.8.1
-Stable tag: 0.1.4
+Tested up to: 3.8.2
+Stable tag: 0.2.0
 
 PlayBuzz lets you embed syndicated Playful Content such as Quizzes, Test Yourself Quizzes, Lists and more. Customizable & ads free!
 
 == Description ==
 The PlayBuzz plugin enables site owners to easily embed playful content items such as quizzes, lists, polls and more, and offer them as a native part of the site’s offering. You’ve seen the highly engaging content on sites such as Buzzfeed, Upworthy, 9Gag, and others. PlayBuzz enables you to have similar content packages on your site as well.
+
 = Features =
 *	Access to hundreds of Quizzes, Test yourself Quizzes, Lists, etc.
 *	Content is available in multiple verticals: Entertainment, Funz, Sportz, Celebrities, Music, Animals, and more.
 *	Filter system enables you to select the content relevant to your site 
 *	Create your own Playful Content items and embed them
 *	Everything is free, no subscription or ads
-
 
 = Embedding options =
 PlayBuzz plugin has 3 embedding options:
@@ -44,9 +44,8 @@ Embedding PlayBuzz related Playful Content links and recommendations on your sit
 1. PlayBuzz features playful content items such as quizzes, lists, polls (coming soon), etc.
 2. You get free content that is embedded on your site! rather than redirecting users out of the site.
 
-
 = More Information =
-For any questions or more information please contact publishers@playbuzz.com
+For any questions or more information please [contact us](http://www.playbuzz.com/contact)
 
 == Installation ==
 1. Upload the plugin to the "/wp-content/plugins/" directory.
@@ -76,8 +75,7 @@ In the future, PlayBuzz plans to offer its valued partners several rev-share bas
 No. Test and see for yourself. PlayBuzz is using a large content delivery network to ensure prompt delivery.
 
 = I got more Questions! =
-For more information contact us at (http://www.playbuzz.com/contact) or [contact us](mailto:publishers@playbuzz.com).
-
+For more information contact us at (http://www.playbuzz.com/contact)
 
 == Screenshots ==
 1. A "funz"/"animals" Quiz, That can be implemented in any post/page
@@ -87,8 +85,18 @@ For more information contact us at (http://www.playbuzz.com/contact) or [contact
 5. Settings section for the related links.
 6. Customize the related content widget.
 
-
 == Changelog ==
+= 0.2.0 =
+* Added new categories!
+* Separate control for Comments and Share Buttons (Previous Social settings is obsolete)
+* Websites with top floating bars can now set margin for playbuzz score bar
+* Verified compatibility with WordPress 3.8.2
+
+= 0.1.5 =
+* Bug fix - allow to embed code in post and pages (not only posts).
+* Better Internationalization (I18n) support.
+* Update hebrew (he_IL) translation.
+
 = 0.1.4 =
 * Enabled the embedding of Playful hub in pages rather than posts only
 * Fixed an issue with EditorsPick tags

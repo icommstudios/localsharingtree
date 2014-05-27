@@ -1,5 +1,6 @@
 <script type="text/javascript" charset="utf-8">
 	jQuery(document).ready(function($){
+		jQuery('#submit').remove();
 		jQuery("#save_api_key").on('click', function(event) {
 			event.preventDefault();
 			var $save_button = $( this ),
@@ -9,16 +10,20 @@
 						$('#api-key-save-container').empty().html('<?php self::_e("API Key Saved") ?>: ' + api_key_value);
 					}
 				);
-		});
-		jQuery('#submit').remove();
-	});
+		});	});
 </script>
 <div id="welcome-panel" class="welcome-panel">
 	<div class="welcome-panel-content">
 		
-		<h3>Welcome to Group Buying Site!</h3>
+		<h3>Group Buying Site Announcement!</h3>
 
-		<div class="welcome_columns clearfix">
+		<div class="welcome_columns clearfix"><br />
+			<p class="about-description clearfix"><strong>The New Group Buying Site is here -- and it's called Smart eCart!</strong><br />
+			Version 5.0 brings a new name for the plugin, a whole new set of features, and a new flagship theme.<br />
+			You will need to <a href="http://smartecart.com/account/">download the new version manually</a>, rather than performing an automatic upgrade. Documentation on how to upgrade is available <a href="http://smartecart.com/forum/showthread.php?9355-Upgrading-from-Group-Buying-Site-(before-version-5-0)&p=42340#post42340">here</a>.<br />
+			You will also need to upgrade your parent theme. Finally, we highly recommend testing the upgrade before pushing it to your live site.</p>
+			<p>&nbsp;</p>
+			<hr />
 			<div id="api_key_column">
 				<h4><?php gb_e("Let's start by entering your API Key") ?></h4>
 				<div id="api-key-save-container">
@@ -27,10 +32,6 @@
 				<p class="about-description clearfix"><?php gb_e('Now, here are some quick links to get you going.') ?><br />
 				<?php gb_e('You should also check out the <a href="http://groupbuyingsite.com/docs/">complete documentation</a>') ?></p>
 			</div>
-
-			<div id="welcome_video_column">
-				<iframe src="//player.vimeo.com/video/25015409?byline=0" width="300" height="200" frameborder="0" class="welcome-video" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-			</div>
 		</div>
 
 
@@ -38,31 +39,31 @@
 			<div class="welcome-panel-column">
 				<h4><?php gb_e('Get Started') ?></h4>
 				<ul>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?190-Group-Buying-Plugin-Installation-amp-Setup"><?php gb_e('GBS Installation &amp; Setup') ?></a></li>
-					<li><?php gb_e( sprintf( 'Settings: <a href="%s">General</a>, <a href="%s">Payment</a>, <a href="%s">Tax</a>, <a href="%s">Shipping</a>', 'http://groupbuyingsite.com/forum/showthread.php?744-Overview-of-Settings', 'http://groupbuyingsite.com/forum/showthread.php?813-Payment-Settings', 'http://groupbuyingsite.com/forum/showthread.php?3456-Tax-Settings', 'http://groupbuyingsite.com/forum/showthread.php?3457-Shipping-Settings' ) ) ?></li>
-					<li><?php gb_e( sprintf( 'Adding: <a href="%s">Deals</a>, <a href="%s">Vendors</a>, <a href="%s">Sample Deals &amp; Site Data</a>', 'http://groupbuyingsite.com/forum/showthread.php?745-Adding-a-Deal', 'http://groupbuyingsite.com/forum/showthread.php?808-Adding-a-Merchant', 'http://groupbuyingsite.com/forum/showthread.php?8219-Sample-Deal-and-Site-Data-(XML-Imports)' ) ) ?></li>
-					<li><?php gb_e( sprintf( 'Subscriptions: <a href="%s">MailChimp</a>, <a href="%s">Constant Contact</a>', 'http://groupbuyingsite.com/forum/showthread.php?711-MailChimp-Setup', 'http://groupbuyingsite.com/forum/showthread.php?713-Constant-Contact-Setup' ) ) ?></li>
-					<li><a href="http://groupbuyingsite.com/forum/forumdisplay.php?130-CrowdFunding-Documentation"><?php gb_e('CrowdFunding Specific Tutorials') ?></a></li>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?731-Redirects-What-is-the-logic-behind-theme"><?php gb_e('Prime and Response Theme Homepage Logic') ?></a></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?190-Group-Buying-Plugin-Installation-amp-Setup"><?php gb_e('GBS Installation &amp; Setup') ?></a></li>
+					<li><?php gb_e( sprintf( 'Settings: <a href="%s">General</a>, <a href="%s">Payment</a>, <a href="%s">Tax</a>, <a href="%s">Shipping</a>', 'http://smartecart.com/forum/showthread.php?744-Overview-of-Settings', 'http://smartecart.com/forum/showthread.php?813-Payment-Settings', 'http://smartecart.com/forum/showthread.php?3456-Tax-Settings', 'http://smartecart.com/forum/showthread.php?3457-Shipping-Settings' ) ) ?></li>
+					<li><?php gb_e( sprintf( 'Adding: <a href="%s">Deals</a>, <a href="%s">Vendors</a>, <a href="%s">Sample Deals &amp; Site Data</a>', 'http://smartecart.com/forum/showthread.php?745-Adding-a-Deal', 'http://smartecart.com/forum/showthread.php?808-Adding-a-Merchant', 'http://smartecart.com/forum/showthread.php?8219-Sample-Deal-and-Site-Data-(XML-Imports)' ) ) ?></li>
+					<li><?php gb_e( sprintf( 'Subscriptions: <a href="%s">MailChimp</a>, <a href="%s">Constant Contact</a>', 'http://smartecart.com/forum/showthread.php?711-MailChimp-Setup', 'http://smartecart.com/forum/showthread.php?713-Constant-Contact-Setup' ) ) ?></li>
+					<li><a href="http://smartecart.com/forum/forumdisplay.php?130-CrowdFunding-Documentation"><?php gb_e('CrowdFunding Specific Tutorials') ?></a></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?731-Redirects-What-is-the-logic-behind-theme"><?php gb_e('Prime and Response Theme Homepage Logic') ?></a></li>
 				</ul>
 			</div>
 			<div class="welcome-panel-column">
 				<h4><?php gb_e('Next Steps') ?></h4>
 				<ul>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?810-SSL-Integration"><?php gb_e('SSL Integration') ?></a></li>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?573-Allow-Users-to-Login-with-their-Facebook-Account"><?php gb_e('Facebook Login') ?></a></li>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?3203-Setting-Up-and-Using-a-Child-Theme"><?php gb_e('Child Theme Customizations Overview') ?></a></li>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?1714-Translating-GBS"><?php gb_e('Customize Text &amp; Translating') ?></a></li>
-					<li><?php gb_e( sprintf( '<a href="%s">Filtering</a>: <a href="%s">Countries</a> and <a href="%s">States</a>', 'http://groupbuyingsite.com/forum/showthread.php?370-How-to-Use-Filters', 'http://groupbuyingsite.com/forum/showthread.php?289-Filter-the-Countries', 'http://groupbuyingsite.com/forum/showthread.php?288-Filter-the-States' ) ) ?></li>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?201-Custom-Front-Page"><?php gb_e('Creating a Custom Front Page') ?></a></li>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?708-Blog-Section"><?php gb_e('Creating a Blog Section') ?></a></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?810-SSL-Integration"><?php gb_e('SSL Integration') ?></a></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?573-Allow-Users-to-Login-with-their-Facebook-Account"><?php gb_e('Facebook Login') ?></a></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?3203-Setting-Up-and-Using-a-Child-Theme"><?php gb_e('Child Theme Customizations Overview') ?></a></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?1714-Translating-GBS"><?php gb_e('Customize Text &amp; Translating') ?></a></li>
+					<li><?php gb_e( sprintf( '<a href="%s">Filtering</a>: <a href="%s">Countries</a> and <a href="%s">States</a>', 'http://smartecart.com/forum/showthread.php?370-How-to-Use-Filters', 'http://smartecart.com/forum/showthread.php?289-Filter-the-Countries', 'http://smartecart.com/forum/showthread.php?288-Filter-the-States' ) ) ?></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?201-Custom-Front-Page"><?php gb_e('Creating a Custom Front Page') ?></a></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?708-Blog-Section"><?php gb_e('Creating a Blog Section') ?></a></li>
 				</ul>
 			</div>
 			<div class="welcome-panel-column welcome-panel-last">
 				<h4><?php gb_e('Need Help?') ?></h4>
 				<ul>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?5774-Troubleshooting-First-Steps"><?php gb_e('First Steps for Troubleshooting') ?></a></li>
-					<li><a href="http://groupbuyingsite.com/forum/showthread.php?2404-How-To-Update-GBS-3.X"><?php gb_e('Automatic Update Issues') ?></a></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?5774-Troubleshooting-First-Steps"><?php gb_e('First Steps for Troubleshooting') ?></a></li>
+					<li><a href="http://smartecart.com/forum/showthread.php?2404-How-To-Update-GBS-3.X"><?php gb_e('Automatic Update Issues') ?></a></li>
 					<li><a href="http://groupbuyingsite.com/forum"><?php gb_e('Search the Support Forums') ?></a></li>
 				</ul>
 			</div>

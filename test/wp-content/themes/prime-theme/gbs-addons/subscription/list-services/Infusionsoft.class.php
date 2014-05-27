@@ -145,7 +145,7 @@ class Group_Buying_Infusionsoft extends Group_Buying_List_Services {
 			parent::success( $_POST['deal_location'], $_POST['email_address'] );
 
 		} else {
-			Group_Buying_Controller::set_message( $result->faultString() );
+			SEC_Controller::set_message( $result->faultString() );
 		}
 
 		return;

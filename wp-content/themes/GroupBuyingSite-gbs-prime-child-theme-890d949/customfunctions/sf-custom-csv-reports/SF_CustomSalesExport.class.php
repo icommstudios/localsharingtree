@@ -6,11 +6,7 @@ class SF_CustomSalesExport extends Group_Buying_Controller {
 	public static function init() {
 		
 		//Add CSS & JS for Datepicker
-		if (is_admin()) {
-			wp_enqueue_script( 'gb-timepicker', GB_URL . '/resources/plugins/public/timepicker/timepicker.jquery.js', array( 'jquery', 'jquery-ui-datepicker', 'jquery-ui-slider' ), Group_Buying::GB_VERSION );
-			wp_enqueue_script( 'group-buying-admin-deal', GB_URL . '/resources/js/deal.admin.gbs.js', array( 'jquery', 'jquery-ui-draggable' ), Group_Buying::GB_VERSION );
-			wp_enqueue_style( 'group-buying-admin-deal', GB_URL . '/resources/css/deal.admin.gbs.css' );
-		}
+		add_action( 'admin_enqueue_scripts', array( get_class(), 'queue_admin_resources' ) );
 		
 		//Add Menu
 		add_action('admin_menu', array( get_class(), 'gbs_sfsalesexport_admin_actions' ) );  
@@ -25,6 +21,12 @@ class SF_CustomSalesExport extends Group_Buying_Controller {
 			self::$instance = new self();
 		}
 		return self::$instance;
+	}
+	
+	public static function queue_admin_resources() {
+		wp_enqueue_script( 'gb_timepicker' );
+		wp_enqueue_script( 'gb_admin_deal' );
+		wp_enqueue_style( 'gb_admin_deal' );
 	}
 	
 	/**

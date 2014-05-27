@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Group Buying Plugin
-Version: 4.6.4
+Version: 4.7.2.1
 Plugin URI: http://groupbuyingsite.com/feature-tour/
 Description: Allows for groupon like functionality. By installing this plugin you agree to the <a href="http://groupbuyingsite.com/tos/" title="I agree">terms and conditions</a> of GroupBuyingSite.
 Author: GroupBuyingSite.com
@@ -117,6 +117,7 @@ function group_buying_load() {
 	require_once GB_PATH.'/controllers/accounts/Accounts_Upgrade.class.php';
 
 	// admin
+	require_once GB_PATH.'/controllers/admin/Admin_Settings.class.php'; // v. 3.7
 	require_once GB_PATH.'/controllers/admin/Admin_Purchases.class.php';
 	require_once GB_PATH.'/controllers/admin/Destroyer.class.php'; // v. 3.9
 	require_once GB_PATH.'/controllers/admin/Help.class.php'; // v. 3.4
@@ -258,7 +259,7 @@ function group_buying_load() {
 	Group_Buying_Record::init();
 	Group_Buying_Records::init();
 	Group_Buying_Dev_Logs::init();
-
+	
 	// models
 	Group_Buying_Post_Type::init(); // initialize query caching
 	Group_Buying_Deal::init();
@@ -276,6 +277,7 @@ function group_buying_load() {
 	// controllers
 	Group_Buying_Update_Check::init();
 	Group_Buying_Controller::init();
+	GB_Admin_Settings::init();
 	Group_Buying_Deals::init();
 		Group_Buying_Deals_Submit::init();
 		Group_Buying_Deals_Preview::init();

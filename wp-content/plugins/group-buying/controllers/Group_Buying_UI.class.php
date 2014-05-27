@@ -7,6 +7,7 @@
  * @subpackage Theme
  */
 class Group_Buying_UI extends Group_Buying_Controller {
+	const SETTINGS_PAGE = 'gb_settings';
 	const TODAYSDEAL_PATH_OPTION = 'gb_todaysdeal_path';
 	const TODAYSDEAL_QUERY_VAR = 'gb_todaysdeal_path';
 	const REMOVE_EXPIRED_DEALS = 'gb_remove_expired';
@@ -20,16 +21,36 @@ class Group_Buying_UI extends Group_Buying_Controller {
 	protected static $states;
 	private static $instance;
 
+	/**
+	 *
+	 *
+	 * @static
+	 * @return Group_Buying_UI
+	 */
+	public static function get_instance() {
+		if ( !( self::$instance && is_a( self::$instance, __CLASS__ ) ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 *
+	 *
+	 * @static
+	 * @return string The ID of the payment settings page
+	 */
+	public static function get_settings_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
+
 	final public static function init() {
 		self::get_instance();
-		self::$settings_page = self::register_settings_page( 'gb_settings', self::__( 'Welcome to Group Buying' ), self::__( 'General Settings' ), 10, FALSE, 'general' );
 		self::$todays_deal_path = trailingslashit( get_option( self::TODAYSDEAL_PATH_OPTION, 'todays-deal' ) );
 		self::$remove_expired = get_option( self::REMOVE_EXPIRED_DEALS, FALSE );
 		self::$countries = get_option( self::COUNTRIES_OPTION, FALSE );
 		self::$states = get_option( self::STATES_OPTION, FALSE );
-
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
-		add_action( 'admin_init', array( get_class(), 'register_int_settings_fields' ), 100, 0 );
+		self::register_settings();
 
 		// Callback
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_todays_deal_callback' ), 10, 1 );
@@ -39,6 +60,16 @@ class Group_Buying_UI extends Group_Buying_Controller {
 		add_action( 'admin_enqueue_scripts', array( get_class(), 'admin_enqueue' ) );
 
 		add_action( 'admin_head', array( get_class(), 'admin_footer' ) );
+
+		if ( 'FALSE' != self::$remove_expired ) {
+			add_filter( 'pre_get_posts', array( get_class(), 'remove_expired_deals' ), 10, 1 );
+		}
+		if ( !empty( self::$countries ) ) {
+			add_filter( 'gb_country_options', array( 'Group_Buying_UI', 'get_countries_option' ), 10, 2 );
+		}
+		if ( !empty( self::$states ) ) {
+			add_filter( 'gb_state_options', array( get_class(), 'get_states_option' ), 10, 2 );
+		}
 	}
 
 	public static function admin_footer() {
@@ -100,16 +131,6 @@ class Group_Buying_UI extends Group_Buying_Controller {
 		wp_enqueue_style( 'select2_css' );
 	}
 
-	/**
-	 *
-	 *
-	 * @static
-	 * @return string The ID of the payment settings page
-	 */
-	public static function get_settings_page() {
-		return self::$settings_page;
-	}
-
 	/*
 	 * Singleton Design Pattern
 	 * ------------------------------------------------------------- */
@@ -122,31 +143,9 @@ class Group_Buying_UI extends Group_Buying_Controller {
 		// cannot be serialized
 		trigger_error( __CLASS__.' may not be serialized', E_USER_ERROR );
 	}
-	/**
-	 *
-	 *
-	 * @static
-	 * @return Group_Buying_UI
-	 */
-	public static function get_instance() {
-		if ( !( self::$instance && is_a( self::$instance, __CLASS__ ) ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
 
 
-	protected function __construct() {
-		if ( 'FALSE' != self::$remove_expired ) {
-			add_filter( 'pre_get_posts', array( get_class(), 'remove_expired_deals' ), 10, 1 );
-		}
-		if ( 'false' != self::$countries && !empty( self::$countries ) ) {
-			add_filter( 'gb_country_options', array( get_class(), 'get_countries_option' ), 10, 2 );
-		}
-		if ( 'false' != self::$states && !empty( self::$states ) ) {
-			add_filter( 'gb_state_options', array( get_class(), 'get_states_option' ), 10, 2 );
-		}
-	}
+	protected function __construct() {}
 
 	/**
 	 * Remove expired deals from loop
@@ -206,45 +205,78 @@ class Group_Buying_UI extends Group_Buying_Controller {
 		
 	}
 
-	public static function register_settings_fields() {
-		$page = self::$settings_page;
-		$section = 'gb_general_settings';
-		add_settings_section( $section, self::__( 'General Options' ), array( get_class(), 'display_settings_section' ), $page );
-		register_setting( self::$settings_page, self::TODAYSDEAL_PATH_OPTION );
-		register_setting( self::$settings_page, self::REMOVE_EXPIRED_DEALS );
-		add_settings_field( self::REMOVE_EXPIRED_DEALS, self::__( 'Expired Deals' ), array( get_class(), 'display_option_remove_expired' ), $page, $section );
-		add_settings_field( self::TODAYSDEAL_PATH_OPTION, self::__( 'Latest Deal URL' ), array( get_class(), 'display_option_todays_deal' ), $page, $section );
-	}
+	//////////////
+	// Options //
+	//////////////
 
-	public static function register_int_settings_fields() {
-		$page = self::$settings_page;
-		$int_section = 'gb_internationalization_settings';
-		add_settings_section( $int_section, self::__( 'Form Options' ), array( get_class(), 'display_internationalization_section' ), $page );
-		register_setting( self::$settings_page, self::STATES_OPTION, array( get_class(), 'save_states') );
-		register_setting( self::$settings_page, self::COUNTRIES_OPTION, array( get_class(), 'save_countries') );
-		add_settings_field( self::STATES_OPTION, self::display_option_states_title(), array( get_class(), 'display_option_states' ), $page, $int_section );
-		add_settings_field( self::COUNTRIES_OPTION, self::display_option_countries_title(), array( get_class(), 'display_option_countries' ), $page, $int_section );
-	}
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => 'Welcome to Group Buying',
+			'menu_title' => 'General Settings',
+			'weight' => 1,
+			'reset' => FALSE, 
+			'section' => 'general'
+			);
+		do_action( 'gb_settings_page', $args );
 
-	public static function display_option_todays_deal() {
-		echo home_url().'/<input type="text" name="'.self::TODAYSDEAL_PATH_OPTION.'" value="'.self::$todays_deal_path.'">';
-	}
-
-	public static function display_option_remove_expired() {
-		echo '<label><input type="radio" name="'.self::REMOVE_EXPIRED_DEALS.'" value="TRUE" '.checked( 'TRUE', self::$remove_expired, FALSE ).'/> '.self::__( 'Remove the expired deals from the main deals loop.' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::REMOVE_EXPIRED_DEALS.'" value="ALL" '.checked( 'ALL', self::$remove_expired, FALSE ).'/> '.self::__( 'Remove the expired deals from location, tags and category loops.' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::REMOVE_EXPIRED_DEALS.'" value="FALSE" '.checked( 'FALSE', self::$remove_expired, FALSE ).'/> '.self::__( 'Show expired deals. ' ).'</label><br />';
+		// Settings
+		$settings = array(
+			'gb_general_settings' => array(
+				'weight' => 1,
+				'title' => 'General Options',
+				'settings' => array(
+					self::TODAYSDEAL_PATH_OPTION => array(
+						'label' => self::__( 'Latest Deal URL.' ),
+						'option' => array(
+							'type' => 'text',
+							'label' => home_url().'/',
+							'default' => self::$todays_deal_path
+						)
+					),
+					self::REMOVE_EXPIRED_DEALS => array(
+						'label' => self::__( 'Expired Deals' ),
+						'option' => array(
+							'type' => 'radios',
+							'options' => array(
+								'TRUE' => self::__( 'Remove the expired deals from the main deals loop.' ),
+								'ALL' => self::__( 'Remove the expired deals from location, tags and category loops.' ),
+								'FALSE' => self::__( 'Show expired deals.' )
+							),
+							'default' => self::$remove_expired
+						)
+					)
+				)
+			),
+			'gb_internationalization_settings' => array(
+				'title' => 'Form Options',
+				'weight' => 500,
+				'callback' => array( get_class(), 'display_internationalization_section' ),
+				'settings' => array(
+					self::STATES_OPTION => array(
+						'label' => '<strong>'.self::__( 'States' ).'</strong><p>'.self::__( 'Additional states can be added by hooking into the <code>gb_state_options</code> filter.' ).'</p>',
+						'option' => array( get_class(), 'display_option_states' ),
+						'sanitize_callback' => array( get_class(), 'save_states' )
+					),
+					self::COUNTRIES_OPTION => array(
+						'label' => '<strong>'.self::__( 'Countries' ).'</strong><p>'.self::__( 'Additional countries can be added by hooking into the <code>gb_country_options</code> filter.' ).'</p><p>'.self::__( 'Note: Some payment processors country support is limited. For example, Paypal Pro only accepts <a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_api_nvp_country_codes">these countries</a>.' ).'</p>',
+						'option' => array( get_class(), 'display_option_countries' ),
+						'sanitize_callback' => array( get_class(), 'save_countries' )
+					)
+				)
+			)
+		);
+		do_action( 'gb_settings', $settings, self::SETTINGS_PAGE );
 	}
 
 	public static function display_internationalization_section() {
-		echo '<p>'.self::_e( 'Select the states and countries/proviences you would like in your forms.' ).'</p>';
+		echo '<p>'.self::_e( 'Select the states and countries/provinces you would like in your forms.' ).'</p>';
 
-	}
-
-	public static function display_option_states_title() {
-		$title = '<strong>'.self::__( 'States' ).'</strong>';
-		$title .= '<p>'.self::__( 'Additional states can be added by hooking into the <code>gb_state_options</code> filter.' ).'</p>';
-		return $title;
 	}
 
 	public static function display_option_states() {
@@ -260,13 +292,6 @@ class Group_Buying_UI extends Group_Buying_Controller {
 		}
 		echo '</select>';
 		echo '</div>';
-	}
-
-	public static function display_option_countries_title() {
-		$title = '<strong>'.self::__( 'Countries' ).'</strong>';
-		$title .= '<p>'.self::__( 'Additional countries can be added by hooking into the <code>gb_country_options</code> filter.' ).'</p>';
-		$title .= '<p>'.self::__( 'Note: Some payment processors country support is limited. For example, Paypal Pro only accepts <a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_api_nvp_country_codes">these countries</a>.' ).'</p>';
-		return $title;
 	}
 
 	public static function display_option_countries() {
@@ -306,6 +331,10 @@ class Group_Buying_UI extends Group_Buying_Controller {
 		}
 		return $sanitized_options;
 	}
+
+	//////////////
+	// Utility //
+	//////////////
 
 	public static function get_states_option( $states = array(), $args = array() ) {
 		if ( isset( $args['include_option_none'] ) && $args['include_option_none'] ) {

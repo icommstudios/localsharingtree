@@ -732,8 +732,9 @@ function gb_dynamic_prices( $post_id = 0, $show_all = false ) {
 	$out = '<ul class="milestone_pricing gb_fx">';
 	$i = 1;
 	foreach ( $dynamic_prices as $limit => $price ) {
+		$i_class = ( $current_price > $price ) ? 'prior' : $i++;
 		$next = $limit - gb_get_number_of_purchases( $post_id );
-		$out .= '<li class="ms instance_' . $i . '" style="width:' . $width . '%">';
+		$out .= '<li class="ms instance_' . $i_class . '" style="width:' . $width . '%">';
 		$out .= '<div>';
 		$out .= '<span class="gb_fx">' . str_replace( '.00', '', gb_get_formatted_money( $price ) ) . '</span> ' . sprintf( gb__( ' after %s' ), $limit );
 		$out .= '</div>';
@@ -835,7 +836,7 @@ function gb_get_deal_savings( $post_id = 0 ) {
 	}
 	$deal = Group_Buying_Deal::get_instance( $post_id );
 	$savings = $deal->get_amount_saved();
-	if ( empty( $savings ) || $savings = '' ) {
+	if ( empty( $savings ) || $savings == '' ) {
 		$original_price = str_replace( '$', '', gb_get_deal_worth( $post_id ) );
 		if ( empty( $original_price ) ) {
 			return apply_filters( 'gb_get_deal_savings', '' );

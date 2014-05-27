@@ -404,7 +404,7 @@
 				$parsedReturn = simplexml_load_string($return);	
 
 				if ($return) {
-					$this->lastError = sprintf(gb__('Contact %s Added.'), htmlspecialchars($_POST["email_address"], ENT_QUOTES, 'UTF-8'));
+					$this->lastError = sprintf(sec__('Contact %s Added.'), htmlspecialchars($_POST["email_address"], ENT_QUOTES, 'UTF-8'));
 					setcookie( 'gb_location_preference', $_POST['deal_location'], time( ) + 24 * 60 * 60 * 30, '/' );
 					return true;
 				} else {
@@ -412,10 +412,10 @@
 					$emailAddress = $xml->content->Contact->EmailAddress;
 					if ($this->subscriberExists($emailAddress)){
 						setcookie( 'gb_location_preference', $_POST['deal_location'], time( ) + 24 * 60 * 60 * 30, '/' );
-						$this->lastError = gb__('Welcome back!');
+						$this->lastError = sec__('Welcome back!');
 						return true;
 					} else { 
-						$this->lastError = gb__('Invalid Email Address.'); 
+						$this->lastError = sec__('Invalid Email Address.'); 
 					}
 					return false;
 				}
@@ -461,7 +461,7 @@
 				$title_node = $xml_object->addChild("title", htmlspecialchars(("TitleNode"), ENT_QUOTES, 'UTF-8'));
 				$updated_node = $xml_object->addChild("updated", htmlspecialchars(($update_date), ENT_QUOTES, 'UTF-8'));
 				$author_node = $xml_object->addChild("author");
-				$author_name = $author_node->addChild("name", ("GBS Plugin"));
+				$author_name = $author_node->addChild("name", ("SeC Plugin"));
 				$id_node = $xml_object->addChild("id", htmlspecialchars(($id),ENT_QUOTES, 'UTF-8'));
 				$summary_node = $xml_object->addChild("summary", htmlspecialchars(("Customer document"),ENT_QUOTES, 'UTF-8'));
 				$summary_node->addAttribute("type", "text");

@@ -116,7 +116,7 @@ class Group_Buying_ConstantContact extends Group_Buying_List_Services {
 		do_action( 'gb_log', 'process_subscription - contactXML', $contactXML );
 		if ( !self::$ccContactOBJ->addSubscriber( $contactXML ) ) {
 			$message = self::$ccContactOBJ->lastError;
-			Group_Buying_Controller::set_message( $message, 'error' );
+			SEC_Controller::set_message( $message, 'error' );
 		} else {
 			$class = "success";
 			parent::success( $postFields["city_name"], $postFields["email_address"] );

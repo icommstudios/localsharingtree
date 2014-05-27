@@ -7,7 +7,7 @@
  * @subpackage Checkout
  */
 class Group_Buying_Core_Tax extends Group_Buying_Controller {
-
+	const SETTINGS_PAGE = 'gb_tax_settings';
 	const TAX_OPTION = 'gb_enable_taxes';
 	const TAX_OPTION_LOCAL = 'gb_enable_taxes_local';
 	const TAX_RATES = 'gb_tax_rate_table';
@@ -18,7 +18,17 @@ class Group_Buying_Core_Tax extends Group_Buying_Controller {
 	private static $rates;
 	protected static $mode;
 
+	public static function get_settings_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
+
 	final public static function init() {
+		// Options
+		self::$enable = get_option( self::TAX_OPTION, 'TRUE' );
+		self::$enable_local_based = get_option( self::TAX_OPTION_LOCAL, 'FALSE' );
+		self::$rates = get_option( self::TAX_RATES );
+		self::$mode = get_option( self::TAX_MODES, "Standard Rate\nReduced Rate\nNon Taxable" );
+		self::register_settings();
 
 		// Deal
 		// TODO bring over some of the deal class functions
@@ -31,18 +41,70 @@ class Group_Buying_Core_Tax extends Group_Buying_Controller {
 		// Checkout
 		add_filter( 'gb_valid_process_payment_page', array( get_class(), 'valid_process_payment_page' ), 10, 2 );
 
-		// Options
-		self::$settings_page = self::register_settings_page( 'gb_tax_settings', self::__( 'Group Buying Tax Settings' ), self::__( 'Tax Settings' ), 16, FALSE, 'general' );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 40, 0 );
-		self::$enable = get_option( self::TAX_OPTION, 'TRUE' );
-		self::$enable_local_based = get_option( self::TAX_OPTION_LOCAL, 'FALSE' );
-		self::$rates = get_option( self::TAX_RATES );
-		self::$mode = get_option( self::TAX_MODES, "Standard Rate\nReduced Rate\nNon Taxable" );
+
 		add_action( 'admin_init', array( get_class(), 'queue_resources' ) );
 
 		if ( self::tax_enabled() ) {
 			add_action( 'gb_meta_box_deal_price_left', array( get_class(), 'display_tax_meta' ), 10, 9 );
 		}
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'GB Tax Settings' ),
+			'menu_title' => self::__( 'Tax Settings' ),
+			'weight' => 5,
+			'reset' => FALSE, 
+			'section' => 'general'
+			);
+		do_action( 'gb_settings_page', $args );
+
+		// Settings
+		$settings = array(
+			'gb_tax' => array(
+				'settings' => array(
+					self::TAX_OPTION => array(
+						'label' => self::__( 'Calculate Tax' ),
+						'option' => array(
+							'label' => self::__( 'Enable tax.' ),
+							'type' => 'checkbox',
+							'value' => 'TRUE',
+							'default' => self::$enable
+							)
+						),
+					self::TAX_OPTION_LOCAL => array(
+						'label' => self::__( 'Location Based' ),
+						'option' => array(
+							'label' => self::__( 'Enable tax based on location.' ),
+							'type' => 'checkbox',
+							'value' => 'TRUE',
+							'default' => self::$enable_local_based
+							),
+						'sanitize_callback' => array( get_class(), 'save_local_option' )
+						),
+					self::TAX_MODES => array(
+						'label' => self::__( 'Tax Modes' ),
+						'option' => array(
+							'type' => 'textarea',
+							'default' => self::$mode,
+							'description' => self::__( 'List 1 per line.' )
+							)
+						),
+					self::TAX_RATES => array(
+						'label' => self::__( 'Tax Rates' ),
+						'option' => array( get_class(), 'display_rates' ),
+						'sanitize_callback' => array( get_class(), 'save_rates' )
+						),
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, self::SETTINGS_PAGE );
 	}
 
 	public static function queue_resources() {
@@ -414,38 +476,6 @@ class Group_Buying_Core_Tax extends Group_Buying_Controller {
 
 	protected function __construct() {}
 
-
-	public static function register_settings_fields() {
-		$page = self::$settings_page;
-		$section = 'gb_tax';
-		add_settings_section( $section, '', array( get_class(), 'display_settings_section' ), $page );
-		// Settings
-		register_setting( $page, self::TAX_OPTION );
-		register_setting( $page, self::TAX_OPTION_LOCAL, array( get_class(), 'save_local_option' ) );
-		register_setting( $page, self::TAX_MODES );
-		register_setting( $page, self::TAX_RATES, array( get_class(), 'save_rates' ) );
-		// Fields
-		add_settings_field( self::TAX_OPTION, self::__( 'Calculate Tax' ), array( get_class(), 'display_enable' ), $page, $section );
-		add_settings_field( self::TAX_OPTION_LOCAL, self::__( 'Location Based' ), array( get_class(), 'display_enable_local' ), $page, $section );
-		add_settings_field( self::TAX_RATES, self::__( 'Tax Modes' ), array( get_class(), 'display_modes' ), $page, $section );
-		add_settings_field( self::TAX_MODES, self::__( 'Tax Rates' ), array( get_class(), 'display_rates' ), $page, $section );
-	}
-
-	public function display_settings_section() {
-		// printf(self::__('Group Buying Site tax options.'));
-	}
-	public static function display_enable() {
-		echo '<input type="checkbox" name="'.self::TAX_OPTION.'" value="TRUE" '.checked( 'TRUE', self::$enable, FALSE ).'>&nbsp;'.self::__( 'Enable tax.' );
-	}
-	public static function display_enable_local() {
-		echo '<input type="checkbox" name="'.self::TAX_OPTION_LOCAL.'" value="TRUE" '.checked( 'TRUE', self::$enable_local_based, FALSE ).'>&nbsp;'.self::__( 'Enable tax based on location.' );
-	}
-
-	public static function display_modes() {
-		echo '<textarea name="'.self::TAX_MODES.'" rows="5" cols="20">'.self::$mode.'</textarea>';
-		echo '<br/><span class="description">'.self::__( 'List 1 per line.' ).'</span>';
-	}
-
 	public static function save_local_option( $tax_local ) {
 		if ( !isset( $_POST[self::TAX_OPTION_LOCAL] ) )
 			return $tax_local;
@@ -473,8 +503,7 @@ class Group_Buying_Core_Tax extends Group_Buying_Controller {
 		return $values;
 	}
 
-	public static function display_rates() {
-?>
+	public static function display_rates() { ?>
 			<script type="text/javascript">
 
 			jQuery(document).ready( function($) {
@@ -575,7 +604,10 @@ class Group_Buying_Core_Tax extends Group_Buying_Controller {
 			</div>
 			<h4><a class="button" href="#" id="gb_add_tax_rate"><?php _e( 'Add New Rate' ); ?></a></h4>
 		<?php
-		echo '<br/><span class="description">'.self::__( 'Rate priority is set by list order above (top to bottom) and matching criteria in this order <big>Country+State</big> > State <small>> Country</small>.' ).'</span>';
+		if ( self::tax_local_enabled() ) {
+			echo '<br/><span class="description">'.self::__( 'Rate priority is set by list order above (top to bottom) and matching criteria in this order <big>Country+State</big> > State <small>> Country</small>.' ).'</span>';
+		}
+		
 	}
 
 	public static function display_tax_meta( $price, $dynamic_price, $shipping, $shippable, $shipping_dyn, $shipping_mode, $tax, $taxable, $taxrate ) {

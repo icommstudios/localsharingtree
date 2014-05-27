@@ -1,9 +1,9 @@
 === Gallery Bank ===
 Contributors: Gallery-Bank,contact-banker
-Tags: admin, album, best gallery plugin, best portfolio plugin, comments, easy media gallery, filterable gallery, filterable portfolio, gallery, gallery album, gallery bank, gallery wordpress plugin, google, grid gallery, html5 mp3 player, html5, mp4 player, image, image album, image slider, images, links, media, nextgen, page, pagination gallery, pagination portfolio, photo album, photo albums, photo gallery, photo slider, photos, pictures, plugin, portfolio, portfolio gallery, portfolio wordpress plugin, post, posts, responsive gallery, seo image,sidebar, slideshow, thumbnails, twitter, videos, widget, wordpress gallery plugin, wordpress portfolio plugin, wp gallery, wp gallery plugin
+Tags: admin, AJAX, album, albums, best gallery plugin, best portfolio plugin, comments, easy media gallery, filterable gallery, filterable portfolio, flash, foto, fotoalbum, gallery, gallery album, gallery bank, gallery image, gallery wordpress plugin, grid gallery, image, image album, image slider, images, lightbox, links, media, modal, multiple pictures, nextgen, page, pagination gallery, pagination portfolio, photo, photo album, photo albums, photo gallery, Photo Slider, photoalbum, photogallery, photos, picture, pictures, plugin, portfolio, portfolio gallery, portfolio wordpress plugin, Post, posts, responsive gallery, seo image, sidebar, slideshow, thumbnails, videos, website gallery, widget, wordpress gallery plugin, wordpress portfolio plugin, wp gallery, wp gallery plugin
 Requires at least: 3.3
-Tested up to: 3.8.1
-Stable tag: 3.0.5
+Tested up to: 3.9.1
+Stable tag: 3.0.31
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -20,6 +20,7 @@ Gallery Bank has become the **Best Plugin** in the world for WordPress sites to 
 > * [Gallery Bank](http://tech-banker.com/gallery-bank/)
 > * [Gallery Bank Demos](http://tech-banker.com/gallery-bank/demo/)
 > * [Demo Using Masonry Layout in Individual Images](http://tech-banker.com/gallery-bank/demo/individual-images-with-title-and-description-masonry-layout/)
+> * [Demo Using Masonry Layout with Animation Effects](http://tech-banker.com/gallery-bank/demo/individual-images-with-title-using-pulse-effect-masonry-layout/)
 > * [Demo Using Masonry Layout in Individual Album](http://tech-banker.com/gallery-bank/demo/individual-album-with-title-and-description-masonry-layout/)
 > * [Demo Using Masonry Layout in Grid Format](http://tech-banker.com/gallery-bank/demo/albums-in-grid-format-with-title-and-description-masonry-layout/)
 > * [Demo Using Masonry Layout in List Format](http://tech-banker.com/gallery-bank/demo/albums-in-list-format-with-title-and-description-masonry-layout/)
@@ -39,13 +40,15 @@ Gallery Bank has become the **Best Plugin** in the world for WordPress sites to 
 > * [Demo Using Blog Style Layout in Grid Format](http://tech-banker.com/gallery-bank/demo/albums-in-grid-format-with-title-and-description-blog-style-layout/)
 > * [Demo Using Blog Style Layout in List Format](http://tech-banker.com/gallery-bank/demo/albums-in-list-format-with-title-and-description-blog-style-layout/)
 
+[vimeo https://vimeo.com/92378296]
+
 It provides a powerful engine for uploading and managing galleries of images & videos, with the ability to batch upload, add/delete/rearrange/sort images, edit thumbnails, 100+ settings, and even much more. It also provides different front-end display styles (filmstrips, slideshows, masonry, blog styles and thumbnail galleries), all of them comes with a wide array of options for controlling size, style, timing, transitions, controls, lightbox effects, and more.
 
 ***The Gallery Bank WordPress Gallery Plugin is now proudly maintained by <a href="http://www.tech-banker.com">Tech Banker Pte Ltd.</a> since March 2014.***
 
 Gallery Bank is designed to adapt each portfolio to any situation and can be easily used on mobiles as it is a Responsive Plugin.
 
-***March 19, 2014: We're happy to announce that Gallery Bank reached 92,200+ plugin downloads in only 10 months. We frequently receive positive feedback from people using our Gallery Bank Plugin for WordPress. Thanks so much for your support!***
+***May 23, 2014: We're happy to announce that Gallery Bank reached 128,300+ plugin downloads in only 11 months. We frequently receive positive feedback from people using our Gallery Bank Plugin for WordPress. Thanks so much for your support!***
 
 <a href="http://tech-banker.com/forum/gallery-bank-support/" target="_blank">Support Desk - feel free to ask your Queries</a>
 
@@ -62,7 +65,7 @@ Gallery Bank is designed to adapt each portfolio to any situation and can be eas
 
 = Key Features =
 
-* Multi-Lingual. Available now in 30 Languages.
+* Multi-Lingual. Available now in 31 Languages.
 * Responsive Gallery
 * Shortcode Wizard in your Page/Post.
 * Unlimited Albums Creation(**Premium Versions**). With Free Standard Version, you can only create upto 2 albums.
@@ -167,6 +170,7 @@ With Global Settings, you can define different settings for Thumbnails, Albums, 
 
 * Albanian (sq_AL)
 * Arabic (ar)
+* Belarusian(be_BY)
 * Brazilian Portuguese (pt_BR)
 * Bulgarian (bg_BG)
 * Chinese (zh_CN)
@@ -174,6 +178,7 @@ With Global Settings, you can define different settings for Thumbnails, Albums, 
 * Danish (da_DK)
 * Dutch (nl_NL)
 * English (en_GB)
+* Estonian (et)
 * Finnish (fi_FI)
 * French (fr_FR)
 * German (de_DE)
@@ -196,6 +201,7 @@ With Global Settings, you can define different settings for Thumbnails, Albums, 
 * Swedish (sv_SE)
 * Turkish (tr)
 * Thai (th)
+* Ukrainian (uk)
 
 = Technical support =
 
@@ -204,21 +210,401 @@ With Global Settings, you can define different settings for Thumbnails, Albums, 
 
 == Installation ==
 
-1. Upload the `gallery-bank` folder to the directory `/wp-content/plugins/`.
-2. Activate the plugin using the 'Plugins' menu in WordPress.
+1. Login to your website and go to the Plugins section of your admin panel.
+2. Click the Add New button.
+3. Under Install Plugins, click the Upload link.
+4. Select the plugin zip file (gallery-bank.zip) from your computer then click the Install Now button.
+5. You should see a message stating that the plugin was installed successfully.
+6. Click the Activate Plugin link.
 
 == Frequently Asked Questions ==
+
+= How to add New Album in Gallery Bank? =
+
+In order to Add New Album in your Gallery Bank, locate Gallery Bank Menu on the left side of
+WordPress Dashboard Menus and then click on Add New Album link.
+
+Alternatively, you can also Add New Album from your Gallery Bank Dashboard Page.
+
+There is a button at the top of the Gallery Bank Dashboard Page which says Add New Album.
+
+First Method:
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/gallery-bank-left-menu.png)
+
+Alternate Method:
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/gallery-bank-left-menu2.png)
+
+Once you click on the button from any of the above mentioned methods, this page would open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/add-new-album-explanation.png)
+
+
+= How to Edit an Album? =
+
+In order to Edit an Album, you need to go to your Gallery Bank Dashboard Page and then
+click on Edit Album Button located at the right side of each album which you wish to edit.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/Edit.png)
+
+Once you Click on the button, this page will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/Edit_img-938x1024.png)
+
+
+= How to Preview an Album? =
+
+In order to Preview your Album, you need to go to your Gallery Bank Dashboard Page
+and then click on Preview Album button at the right side of each album.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/preview11-1024x408.png)
+
+Once you click on the button, this page will open
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/preview21-1024x487.png)
+
+
+= How to Delete an Album? =
+
+You can Delete an Album if you wish to. In order to perform this action, you need to go to
+your Gallery Bank Dashboard Page and then click on Delete Album button at the right
+side of each album.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/delete11-1024x409.png)
+
+Once you click on the button, a confirmation message will appear stating
+"Are you sure you want to delete this Album?"
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/delete2-1024x406.png)
+
+Click on "OK" to proceed and your Album would be deleted.
+
+
+= How to set Short code for Masonry Gallery? =
+
+In order to set Shortcode for Masonry Gallery, you need to follow these steps :
+1)  Locate Pages Menu on the left side of WordPress Dashboard Menus and then click on Pages.
+
+Once you click on the  Pages, there will be two options. Click on Add New button to add a new page.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/add_new_page.png)
+
+2) When you click on Add New button, this page will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry2-1024x511.png)
+
+3) After clicking on Gallery Bank button, this Popup will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry3-1024x451.png)
+
+NOTE: You can set Images in Row for Masonry Gallery only if Show Responsive Gallery
+option is False in shortcode.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry4-1024x657.png)
+
+
+= How to set Short code for Thumbnail Gallery? =
+
+In order to set Shortcode for Thumbnail Gallery, you need to follow these steps :
+1)  Locate Pages Menu on the left side of WordPress Dashboard Menus and then click on Pages.
+
+Once you click on the Pages, there will be two options. Click on Add New button to add a new page.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/add_new_page.png)
+
+2)  When you click on Add New button, this page will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry2-1024x511.png)
+
+3) After clicking on Gallery Bank button, this Popup will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/thumbnail1-1024x493.png)
+
+NOTE: You can set Images in Row for Thumbnail Gallery only if Show Responsive Gallery option
+is False in shortcode.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/thmbnail2-1024x450.png)
+
+
+= How to set Short code for Grid Album using Masonry Gallery? =
+
+In order to set Shortcode for Grid Album with Masonry Gallery, you need to follow these steps :
+1) Locate Pages Menu on the left side of WordPress Dashboard Menus and then click on Pages.
+
+Once you click on the Pages, there will be two options. Click on Add New button to add a new page.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/add_new_page.png)
+
+2)  When you click on Add New button, this page will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry2-1024x511.png)
+
+3) After clicking on Gallery Bank button, this Popup will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/grid_masonry1-1024x541.png)
+
+Note: You can set Images in Row for Masonry Gallery only if Show Responsive Gallery option
+is False in shortcode.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/grid_masonry2-1024x573.png)
+
+
+= How to set Short code for Grid Album using Thumbnail Gallery? =
+
+In order to set Shortcode for Grid Album with Thumbnail Gallery, you need to follow these steps :
+1)  Locate Pages Menu on the left side of WordPress Dashboard Menus and then click on Pages.
+
+Once you click on the Pages, this page would open. Click on Add New button to add a new page.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/add_new_page.png)
+
+2)  When you click on Add New button, this page will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry2-1024x511.png)
+
+3) When you click on Gallery Bank button, this Popup will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/grid_thumbnail2-1024x574.png)
+
+NOTE: You can set Images in Row for Thumbnail Gallery only if Show Responsive Gallery
+option is False in shortcode.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/grid_thumbnail2-1024x574.png)
+
+
+= How to set Short code for List Album using Masonry Gallery? =
+
+In order to set Shortcode for List Album with Masonry Gallery, you need to follow these steps :
+1)  Locate Pages Menu on the left side of WordPress Dashboard Menus and then click on Pages.
+
+Once you click on the Pages, there will be two options. Click on Add New button to add a new page.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/add_new_page.png)
+
+2)  When you click on Add New button, this page will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry2-1024x511.png)
+
+3) After clicking on Gallery Bank button, this Popup will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry_list_1.png)
+
+
+= How to set Short code for List Album using Thumbnail Gallery? =
+
+In order to set Shortcode for List Album with Thumbnail Gallery, you need to follow these steps :
+1)  Locate Pages Menu on the left side of WordPress Dashboard Menus and then click on Pages.
+
+Once you click on the Pages, there will be two options. Click on Add New button to add a new page.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/add_new_page.png)
+
+2)  When you click on Add New button, this page will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry2-1024x511.png)
+
+3) After clicking on Gallery Bank button, this Popup will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/thumbnail_list_1-1024x467.png)
+
+NOTE: You can set Images in Row for Thumbnail Gallery only if Show Responsive Gallery option
+is False in shortcode.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/thumbnail_list_2-1024x462.png)
+
+
+= How to set Short code for Individual Album using Masonry Gallery? =
+
+In order to set Shortcode for Individual Album with Masonry Gallery, you need to follow these steps :
+1)  Locate Pages Menu on the left side of WordPress Dashboard Menus and then click on Pages.
+
+Once you click on the Pages, there will be two options. Click on Add New button to add a new page.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/add_new_page.png)
+
+2)  When you click on Add New button, this page will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/masonry2-1024x511.png)
+
+3) After clicking on Gallery Bank button, this Popup will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/individual_masonry1-1024x495.png)
+
+NOTE: You can set Images in Row for Masonry Gallery only if Show Responsive Gallery option
+is False in shortcode.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/individual_masonry_2-1024x559.png)
+
+
+= How to set Short code for Individual Album using Thumbnail Gallery? =
+
+In order to set Shortcode for Individual Album with Thumbnail Gallery, you need to follow these steps :
+1)  Locate Pages Menu on the left side of WordPress Dashboard Menus and then click on Pages.
+
+Once you click on the Pages, there will be two options. Click on Add New button to add a new page.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/422x105xadd_new_page1.png.pagespeed.ic.0XLpT7oDfn.png)
+
+2)  When you click on Add New button, this page will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/800xNxmasonry2-1024x511.png.pagespeed.ic.cYyWvoC3qL.jpg)
+
+3) After clicking on Gallery Bank button, this Popup will open.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/individual-_thumbnail1-1024x512.png)
+
+NOTE: You can set Images in Row for Thumbnail Gallery only if Show Responsive Gallery option
+is False in shortcode.
+
+[Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/individual-_thumbnail2-1024x574.png)
+
 
 == Screenshots ==
 
 1. Gallery Bank Dashboard Page
 2. Add New Album
 3. How to create Shortcode using Shortcode Editor.
-4. Displaying Images using Masonry Layout
-5. Displaying Images using Thumbnails Layout
-6. Opening Image of the Album in Lightbox.
+4. ShortCode Implementation for Images using Masonry Layout.
+5. ShortCode Implementation for Images using Thumbnails Layout.
+6. ShortCode Implementation for Grid Albums using Masonry Layout.
+7. ShortCode Implementation for Grid Albums using Thumbnail Layout.
+8. ShortCode Implementation for List Albums using Masonry Layout.
+9. ShortCode Implementation for List Albums using Thumbnail Layout.
+10. ShortCode Implementation for Individual Albums using Masonry Layout.
+11. ShortCode Implementation for Individual Albums using Thumbnail Layout.
+12. System Status
+13. Displaying Images using Masonry Layout.
+14. Displaying Images using Thumbnail Layout.
+15. Displaying Grid Album with Images. 
+16. Displaying List Album with Images.
+17. Displaying Individual Album with Images.
+
 
 == Changelog ==
+
+= 3.0.31 =
+
+* Few Bugs Fixed
+* Unwanted Banners Removed
+
+= 3.0.30 =
+
+* Turkish Language Updated
+* Delete Images Bug Fixed
+
+= 3.0.29 =
+
+* Few Bugs Fixed
+* Added Functionality to support Bulk Images Upload
+
+= 3.0.28 =
+
+* Few Bugs Fixed
+* CK Editor Compatibility Added
+
+= 3.0.27 =
+
+* Few Bugs Fixed
+* Unwanted Banners Removed
+
+= 3.0.26 =
+
+* New Language ADDED - Belarusian 
+* Language Updated - Russian
+
+= 3.0.25 =
+
+* Languages Updated
+
+= 3.0.24 =
+
+* Banner Updated
+
+= 3.0.23 =
+
+* Licenses Updated
+
+= 3.0.22 =
+
+* Png Image Bug Fixed
+* Language Updated - Hebrew
+
+= 3.0.21 =
+
+* New Layout Introduced
+* Help Video Added
+* Bugs Fixed with Title & Description
+* Compatibility with 3.9
+* Language Updated - Finnish
+
+= 3.0.20 =
+
+* Bugs Fixed
+* Compatibility with 3.9
+
+= 3.0.19 =
+
+* Language Updated - Finnish
+
+= 3.0.18 =
+
+* New Help Popup Introduced
+* Compatiblity with 3.8.3
+
+= 3.0.17 =
+
+* Language Updated - German
+
+= 3.0.16 =
+
+* Language Updated - Italian
+
+= 3.0.15 =
+
+* New Language Added - Estonian
+
+= 3.0.14 =
+
+* Language Updated - Portuguese
+
+= 3.0.13 =
+
+* Language Updated - French
+
+= 3.0.12 =
+
+* Language Updated - Swedish
+
+= 3.0.11 =
+
+* Few Bugs Fixed
+* Removed Unwated Banners
+
+= 3.0.10 =
+
+* Few Bugs Fixed
+* New Language Added - Ukrainian
+
+= 3.0.9 =
+
+* Few Bugs Fixed
+
+= 3.0.8 =
+
+* Dutch Language Updated
+* Uninstall Hook Removed
+
+= 3.0.7 =
+
+* Updated Languages
+* Bug Fixed Related to Pl Uploader which stops WP Media
+
+= 3.0.6 =
+
+* Updated Languages
+* Fixed Few Bugs Related to Lightbox
+* Request for Translation of New Languages
 
 = 3.0.5 =
 

@@ -1,12 +1,12 @@
 <?php
 
 /*
-Plugin Name: Group Buying Facebook Login Module
+Plugin Name: Smart eCart Facebook Login Module
 Version: 3.0
-Plugin URI: http://groupbuyingsite.com/features
+Plugin URI: http://smartecart.com/features
 Description: Allows users to login using their Facebook credentials and creates a Wordpress account for them.
-Author: GroupBuyingSite.com
-Author URI: http://groupbuyingsite.com/features
+Author: Smart eCart
+Author URI: http://smartecart.com/features
 Plugin Author: Nathan Stryker & Dan Cameron
 Plugin Author URI: http://sproutventure.com/
 */
@@ -106,6 +106,9 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 		}
 
 		public static function fb_avatar( $gravatar, $user_id = 0, $size = 18, $default = null ) {
+			if ( !is_int( $user_id ) )
+				return $gravatar;
+				
 			if ( $user_id == get_current_user_id() && self::is_facebook_logged_in() ) {
 				return '<img src="https://graph.facebook.com/'.self::get_facebook_uid().'/picture?return_ssl_resources=1" width="'.$size.'" height="'.$size.'" />';
 			}
@@ -154,7 +157,7 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 
 		public static function log_out_url( $link ) {
 			if ( self::is_facebook_logged_in() != false ) {
-				$fb_link = '<a onclick="logoutFacebookUser()" href="javascript:void()" title="'.gb__( 'Logout' ).'" class="logout">'.gb__( 'Logout' ).'</a>';
+				$fb_link = '<a onclick="logoutFacebookUser()" href="javascript:void()" title="'.sec__( 'Logout' ).'" class="logout">'.sec__( 'Logout' ).'</a>';
 				$link = apply_filters( 'gb_facebook_log_out_url', $fb_link );
 			}
 			echo $link;
@@ -337,7 +340,7 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 				}
 				else {
 					$errors = json_decode( $access_token_response );
-					if ( self::DEBUG ) gb_set_message( gb__('<strong>Facebook Connect Error:</strong> ') . $errors->error->message, Group_Buying_Controller::MESSAGE_STATUS_ERROR );
+					if ( self::DEBUG ) gb_set_message( sec__('<strong>Facebook Connect Error:</strong> ') . $errors->error->message, SEC_Controller::MESSAGE_STATUS_ERROR );
 				}
 
 			}
@@ -504,7 +507,7 @@ if ( class_exists( 'Group_Buying_Theme_UI' ) ) {
 
 		public static function show_registration_option() {
 			echo '<fb:login-button id="facebook_registration_button" class="facebook_button clearfix">';
-			echo self::button( 'Register with Facebook' );
+			echo self::button( gb__('Register with Facebook') );
 			echo '</fb:login-button><!-- #facebook_registration_button.facebook_button-->';
 
 		}

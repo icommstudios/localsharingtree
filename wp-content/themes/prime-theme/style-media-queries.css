@@ -93,7 +93,9 @@
 	background-image: none;
 	margin-right: 10px;
 }
-
+.account_sidebar .merchant {
+	display: none;
+}
 .page_title h1 {
 	margin: 0 15px 15px;
 }
@@ -178,6 +180,16 @@ body {
 	margin: 0;
 	padding: 20px 10px;
 	float: none;
+}
+#subscription_form_wrap #email_address {
+	float: none;
+}
+#gb_subscription_form span.submit {
+	clear: both;
+}
+#subscription_form_wrap #gb_subscription {
+	top: auto;
+	width: 96%;
 }
 #deals_loop .loop_thumb {
 	display: none;

@@ -11,10 +11,35 @@ class Group_Buying_Merchants_Voucher_Claim extends Group_Buying_Controller {
 
 	public static function init() {
 		self::$voucher_path = get_option( self::BIZ_VOUCHER_PATH_OPTION, self::$voucher_path );
-		add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 1 );
+		self::register_settings();
+		
 		add_action( 'gb_router_generate_routes', array( get_class(), 'register_path_callback' ), 10, 1 );
 		add_filter( 'set_merchant_voucher_report_data_column', array( get_class(), 'add_columns_merch_report' ), 10, 1 );
 		add_filter( 'gb_merch_deal_voucher_record_item', array( get_class(), 'add_item_merch_report' ), 10, 4 );
+	}
+
+	/**
+	 * Hooked on init add the settings page and options.
+	 *
+	 */
+	public static function register_settings() {
+		// Settings
+		$settings = array(
+			'gb_url_path_merchant_voucher_mngt' => array(
+				'weight' => 135,
+				'settings' => array(
+					self::BIZ_VOUCHER_PATH_OPTION => array(
+						'label' => self::__( 'Merchant Voucher Management Path' ),
+						'option' => array(
+							'label' => trailingslashit( get_home_url() ),
+							'type' => 'text',
+							'default' => self::$voucher_path
+							)
+						)
+					)
+				)
+			);
+		do_action( 'gb_settings', $settings, Group_Buying_UI::SETTINGS_PAGE );
 	}
 
 	public static function add_columns_merch_report( $array ) {
@@ -29,13 +54,20 @@ class Group_Buying_Merchants_Voucher_Claim extends Group_Buying_Controller {
 
 	public static function add_item_merch_report( $array, $voucher, $purchase, $account ) {
 		$redemption_data = $voucher->get_redemption_data();
-		$redemption_data = array(
-			'redeem_name' => $redemption_data['name'],
-			'redeem_date' => $redemption_data['date'],
-			'redeem_total' => $redemption_data['total'],
-			'redeem_notes' => $redemption_data['notes']
-		);
-		return array_merge( $array, $redemption_data );
+		$filtered_redemption_data = array();
+		if ( isset( $redemption_data['name'] ) ) {
+			$filtered_redemption_data['redeem_name'] = $redemption_data['name'];
+		}
+		if ( isset( $redemption_data['date'] ) ) {
+			$filtered_redemption_data['redeem_date'] = $redemption_data['date'];
+		}
+		if ( isset( $redemption_data['total'] ) ) {
+			$filtered_redemption_data['redeem_total'] = $redemption_data['total'];
+		}
+		if ( isset( $redemption_data['notes'] ) ) {
+			$filtered_redemption_data['redeem_notes'] = $redemption_data['notes'];
+		}
+		return array_merge( $array, $filtered_redemption_data );
 	}
 
 	/**
@@ -60,19 +92,6 @@ class Group_Buying_Merchants_Voucher_Claim extends Group_Buying_Controller {
 			),
 		);
 		$router->add_route( self::BIZ_VOUCHER_QUERY_VAR, $args );
-	}
-
-	public static function register_settings_fields() {
-		$page = Group_Buying_UI::get_settings_page();
-		$section = 'gb_merchant_paths';
-
-		// Settings
-		register_setting( $page, self::BIZ_VOUCHER_PATH_OPTION );
-		add_settings_field( self::BIZ_VOUCHER_PATH_OPTION, self::__( 'Merchant Voucher Management Path' ), array( get_class(), 'display_merchant_voucher_path' ), $page, $section );
-	}
-
-	public static function display_merchant_voucher_path() {
-		echo trailingslashit( get_home_url() ) . ' <input type="text" name="' . self::BIZ_VOUCHER_PATH_OPTION . '" id="' . self::BIZ_VOUCHER_PATH_OPTION . '" value="' . esc_attr( self::$voucher_path ) . '" size="40"/><br />';
 	}
 
 	public static function on_biz_voucher_page() {

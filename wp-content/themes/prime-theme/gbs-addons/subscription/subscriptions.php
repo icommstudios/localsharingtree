@@ -1,10 +1,11 @@
 <?php
 
-if ( class_exists( 'Group_Buying_Controller' ) ) {
+if ( class_exists( 'SEC_Controller' ) ) {
 
 	include 'template-tags.php';
 
-	abstract class Group_Buying_List_Services extends Group_Buying_Controller {
+	abstract class Group_Buying_List_Services extends SEC_Controller {
+		const SETTINGS_PAGE = 'subscription';
 		const LIST_SUBSCRIBE_OPTION = 'gb_list_service';
 		const SIGNUP_REDIRECT_OPTION = 'gb_signup_redirect';
 		const SIGNUP_CITYNAME_OPTION = 'gb_signup_city_name';
@@ -15,7 +16,6 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		const SUBSCRIPTION_FORM_CUSTOM = 'gb_subscription_custom_html';
 		private static $list_service;
 		private static $active_list_service_class;
-		protected static $settings_page;
 		private static $potential_processors = array();
 		protected static $signup_redirect;
 		protected static $default_city_name;
@@ -25,10 +25,11 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		protected static $subscription_custom_html;
 		protected static $redirect = '';
 
-		final public static function init() {
-			self::$settings_page = self::register_settings_page( 'subscription', self::__( 'Group Buying Subscription Options' ), self::__( 'Subscription Settings' ), 15000, 'theme' );
-			add_action( 'admin_init', array( get_class(), 'register_settings_fields' ), 10, 0 );
+		public static function get_settings_page( $prefixed = TRUE ) {
+			return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+		}
 
+		final public static function init() {
 			self::get_list_service();
 			self::$signup_redirect = get_option( self::SIGNUP_REDIRECT_OPTION, '0' );
 			self::$default_city_name = get_option( self::SIGNUP_CITYNAME_OPTION, 'I don&#39;t see my city' );
@@ -36,6 +37,10 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			self::$not_found_redirect = get_option( self::SIGNUP_NOT_FOUND_OPTION );
 			self::$footer_scripts = get_option( self::SIGNUP_FOOTER_SCRIPTS_OPTION );
 			self::$subscription_custom_html = get_option( self::SUBSCRIPTION_FORM_CUSTOM );
+
+			if ( is_admin() ) {
+				add_action( 'init', array( get_class(), 'register_options') );
+			}
 
 			if ( self::$registration_option != 'false' ) {
 				add_action( 'gb_account_registration_panes', array( get_class(), 'show_registration_option' ) );
@@ -47,6 +52,102 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			}
 		}
 
+		/**
+		 * Hooked on init add the settings page and options.
+		 *
+		 */
+		public static function register_options() {
+			// Translator page
+			$args = array(
+				'parent' => Group_Buying_Theme_UI::SETTINGS_PAGE,
+				'slug' => self::SETTINGS_PAGE,
+				'title' => self::__( 'SeC Subscription Options' ),
+				'menu_title' => self::__( 'Subscription' ),
+				'weight' => PHP_INT_MAX-90,
+				'reset' => FALSE, 
+				'section' => 'theme',
+				'ajax' => TRUE,
+				'ajax_full_page' => TRUE
+				);
+			do_action( 'gb_settings_page', $args );
+
+			// Settings
+			$settings = array(
+				'subscription_selection' => array(
+					'weight' => 100,
+					'settings' => array(
+						self::LIST_SUBSCRIBE_OPTION => array(
+							'label' => self::__( 'Select Service' ),
+							'option' => array(
+								'type' => 'select',
+								'options' => self::$potential_processors,
+								'default' => self::$active_list_service_class,
+								'description' => self::__( 'Redirect to this page after registration.' )
+								)
+							),
+						self::SIGNUP_REDIRECT_OPTION => array(
+							'label' => self::__( 'Signup Redirect' ),
+							'option' => array(
+								'type' => 'pages',
+								'args' => array( 'show_option_none' => self::__( 'Select Page' ) ),
+								'default' => self::$signup_redirect,
+								'description' => self::__( 'Redirect to this page after registration.' )
+								)
+							),
+						self::SIGNUP_NOT_FOUND_OPTION => array(
+							'label' => self::__( 'City Not Found Redirection' ),
+							'option' => array(
+								'type' => 'pages',
+								'args' => array( 'show_option_none' => self::__( 'Select Page' ) ),
+								'default' => self::$not_found_redirect,
+								'description' => self::__( 'Redirect to this page if their selected city is not found.' )
+								)
+							),
+						self::SIGNUP_CITYNAME_OPTION => array(
+							'label' => self::__( 'Unknown city' ),
+							'option' => array(
+								'type' => 'text',
+								'default' => self::$default_city_name,
+								'description' => self::__( 'Option for the user to select if their city is not available.' )
+								)
+							),
+						self::REGISTRATION_OPTION => array(
+							'label' => self::__( 'Registration' ),
+							'option' => array(
+								'type' => 'radios',
+								'options' => array(
+									'true' => self::__( 'Show subscription option on registration page.' ),
+									'checked' => self::__( 'Show subscription option on registration page (pre-checked).' ),
+									'false' => self::__( 'Remove subscription option on registration page.' )
+									),
+								'default' => self::$registration_option
+								)
+							),
+						self::SIGNUP_FOOTER_SCRIPTS_OPTION => array(
+							'label' => self::__( 'Footer Scripts' ),
+							'option' => array(
+								'type' => 'textarea',
+								'default' => self::$footer_scripts
+								)
+							),
+						self::SUBSCRIPTION_FORM_CUSTOM => array(
+							'label' => self::__( 'Custom HTML' ),
+							'option' => array(
+								'type' => 'textarea',
+								'default' => self::$subscription_custom_html,
+								'description' => self::__( 'Use this for a custom html form.' )
+								)
+							),
+						)
+					)
+				);
+			// Only show the custom form if the Custom Form Service is selected
+			if ( self::$active_list_service_class != 'Group_Buying_Custom' ) {
+				unset( $settings['subscription_selection']['settings'][self::SUBSCRIPTION_FORM_CUSTOM]);
+			}
+			do_action( 'gb_settings', $settings, self::SETTINGS_PAGE );
+		}
+
 		public static function options_help_section() {
 			$screen = get_current_screen();
 			$screen->add_help_tab( array(
@@ -54,8 +155,8 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 					'title'   => self::__( 'Subscription Services' ),
 					'content' =>
 					'<p><strong>' . self::__( 'Subscription Service?' ) . '</strong></p>' .
-					'<p>' . sprintf( self::__( 'Setting up a subscirption service is a key feature of the GBS themes. Subscriber&rsquo;s e-mail address and location preference are sent to the subscription service for the purpose of e-mail marketing. <ul><li>MailChimp setup instructions can be found <a href="%s">here</a>.</li><li>ConstantContact setup instructions can be found <a href="%s">here</a></li></ul>' ), 'http://groupbuyingsite.com/forum/showthread.php?711-MailChimp-Setup', 'http://groupbuyingsite.com/forum/showthread.php?713-Constant-Contact-Setup' ) . '</p>' .
-					'<p>' . self::__( 'Notes: InfusionSoft is stil under development and no setup documentation is provided. The "Custom Form" option simply replaces the GBS generated form with something you enter in a new option.' ) . '</p>'
+					'<p>' . sprintf( self::__( 'Setting up a subscirption service is a key feature of the SeC themes. Subscriber&rsquo;s e-mail address and location preference are sent to the subscription service for the purpose of e-mail marketing. <ul><li>MailChimp setup instructions can be found <a href="%s">here</a>.</li><li>ConstantContact setup instructions can be found <a href="%s">here</a></li></ul>' ), 'http://groupbuyingsite.com/forum/showthread.php?711-MailChimp-Setup', 'http://groupbuyingsite.com/forum/showthread.php?713-Constant-Contact-Setup' ) . '</p>' .
+					'<p>' . self::__( 'Notes: InfusionSoft is stil under development and no setup documentation is provided. The "Custom Form" option simply replaces the SeC generated form with something you enter in a new option.' ) . '</p>'
 				) );
 			$screen->add_help_tab( array(
 					'id'      => 'theme-options-ss', // This should be unique for the screen.
@@ -93,16 +194,6 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			}
 		}
 
-		/**
-		 *
-		 *
-		 * @static
-		 * @return string The ID of the subscription settings page
-		 */
-		public static function get_settings_page() {
-			return self::$settings_page;
-		}
-
 		/*
 		 * Singleton Design Pattern
 		 * ------------------------------------------------------------- */
@@ -123,7 +214,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		 * @abstract
 		 * @return Group_Buying_List_Services|NULL
 		 */
-		protected static abstract function get_instance();
+		// protected static abstract function get_instance();
 
 		protected function __construct() {
 			self::process_subscription_post();
@@ -159,16 +250,16 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 		 * @abstract
 		 * @return void
 		 */
-		public abstract static function register();
+		// public abstract static function register();
 
 		public static function success( $location = 0, $email = '' ) {
 
 			if ( !empty( $email ) ) {
-				$message = sprintf( gb__( 'CONTACT %s ADDED.' ), $email );
-				Group_Buying_Controller::set_message( $message, 'info' );
+				$message = sprintf( sec__( 'CONTACT %s ADDED.' ), $email );
+				SEC_Controller::set_message( $message, 'info' );
 			} else {
-				$message = sprintf( gb__( 'Thank You.' ), $email );
-				Group_Buying_Controller::set_message( $message, 'info' );
+				$message = sprintf( sec__( 'Thank You.' ), $email );
+				SEC_Controller::set_message( $message, 'info' );
 			}
 
 			// Set the redirect url
@@ -181,8 +272,8 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 			if ( self::$redirect == '' ) {
 				self::$redirect = gb_get_latest_deal_link( $location );
 			}
-			if ( function_exists( 'gb_set_location_preference' ) && $location ) {
-				gb_set_location_preference( $location );
+			if ( function_exists( 'sec_set_location_preference' ) && $location ) {
+				sec_set_location_preference( $location );
 			}
 			self::$redirect = add_query_arg( array( 'signup-success' => '1' ), self::$redirect );
 			wp_redirect( apply_filters( 'gb_subscription_success_redirect_url', self::$redirect ) );
@@ -190,68 +281,8 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 
 		}
 
-		public static function register_settings_fields() {
-
-			register_setting( self::$settings_page, self::LIST_SUBSCRIBE_OPTION );
-			register_setting( self::$settings_page, self::SIGNUP_REDIRECT_OPTION );
-			register_setting( self::$settings_page, self::SIGNUP_CITYNAME_OPTION );
-			register_setting( self::$settings_page, self::SIGNUP_NOT_FOUND_OPTION );
-			register_setting( self::$settings_page, self::SIGNUP_FOOTER_SCRIPTS_OPTION );
-			register_setting( self::$settings_page, self::REGISTRATION_OPTION );
-			register_setting( self::$settings_page, self::SUBSCRIPTION_FORM_CUSTOM );
-
-
-			add_settings_field( self::LIST_SUBSCRIBE_OPTION, self::__( 'Select Service' ), array( get_class(), 'display_list_service_selection' ), self::$settings_page );
-			add_settings_field( self::SIGNUP_REDIRECT_OPTION, self::__( 'Signup Redirect' ), array( get_class(), 'display_list_service_redirect' ), self::$settings_page );
-			add_settings_field( self::SIGNUP_CITYNAME_OPTION, self::__( 'Signup Extra City' ), array( get_class(), 'display_list_service_city' ), self::$settings_page );
-			add_settings_field( self::SIGNUP_NOT_FOUND_OPTION, self::__( 'City Not Found Redirection' ), array( get_class(), 'display_list_service_not_found' ), self::$settings_page );
-			add_settings_field( self::REGISTRATION_OPTION, self::__( 'Registration' ), array( get_class(), 'display_registration_subscription_option' ), self::$settings_page );
-			add_settings_field( self::SIGNUP_FOOTER_SCRIPTS_OPTION, self::__( 'Footer Scripts' )."<p><small>".self::__( 'Use this for google Analytics or other tracking.' )."</small></p>", array( get_class(), 'display_list_service_scripts' ), self::$settings_page );
-			if ( self::$active_list_service_class == 'Group_Buying_Custom' ) {
-				add_settings_field( self::SUBSCRIPTION_FORM_CUSTOM, self::__( 'Custom HTML' )."<p><small>".self::__( 'Use this for a custom html form.' )."</small></p>", array( get_class(), 'display_custom_list_service' ), self::$settings_page );
-			}
-			//add_settings_section('services', self::__('Supported Services'), array(get_class(), 'display_list_services'), self::$settings_page);
-		}
-
 		final protected static function add_list_service( $class, $label ) {
 			self::$potential_processors[$class] = $label;
-		}
-
-		public static function display_list_services() {
-			?>
-				<a href="http://eepurl.com/7y3E"><img src="https://us1.admin.mailchimp.com/_ssl/proxy.php?u=http%3A%2F%2Fgallery.mailchimp.com%2F089443193dd93823f3fed78b4%2Fimages%2FMC_MonkeyReward_15.1.png"></a>
-			<?php
-		}
-
-		public static function display_list_service_selection() {
-			echo '<select id="'.self::LIST_SUBSCRIBE_OPTION.'" name="'.self::LIST_SUBSCRIBE_OPTION.'">';
-			foreach ( self::$potential_processors as $class => $label ) {
-				echo '<option value="'.$class.'" '.selected( self::$active_list_service_class, $class ).'>'.$label.'</option>';
-			}
-			echo '</select>';
-		}
-
-		public static function display_list_service_redirect() {
-			wp_dropdown_pages( array( 'name' => self::SIGNUP_REDIRECT_OPTION, 'echo' => 1, 'show_option_none' => self::__( '* Default' ), 'option_none_value' => '0', 'selected' => self::$signup_redirect ) );
-		}
-
-
-		public static function display_registration_subscription_option() {
-			echo '<label><input type="radio" name="'.self::REGISTRATION_OPTION.'" value="true" '.checked( 'true', self::$registration_option, FALSE ).'/> '.self::__( 'Show subscription option on registration page.' ).'</label><br />';
-			echo '<label><input type="radio" name="'.self::REGISTRATION_OPTION.'" value="checked" '.checked( 'checked', self::$registration_option, FALSE ).'/> '.self::__( 'Show subscription option on registration page (pre-checked).' ).'</label><br/>';
-			echo '<label><input type="radio" name="'.self::REGISTRATION_OPTION.'" value="false" '.checked( 'false', self::$registration_option, FALSE ).'/> '.self::__( 'Remove subscription option on registration page.' ).'</label>';
-		}
-
-		public static function display_list_service_city() {
-			echo '<input type="text" class="regular-text" name="'.self::SIGNUP_CITYNAME_OPTION.'" value="'.self::$default_city_name.'" />';
-		}
-
-		public static function display_list_service_not_found() {
-			wp_dropdown_pages( array( 'name' => self::SIGNUP_NOT_FOUND_OPTION, 'echo' => 1, 'show_option_none' => self::__( '* Default' ), 'option_none_value' => '0', 'selected' => self::$not_found_redirect ) );
-		}
-
-		public static function display_list_service_scripts() {
-			echo '<textarea rows="5" cols="40" name="'.self::SIGNUP_FOOTER_SCRIPTS_OPTION.'">'.self::$footer_scripts.'</textarea>';
 		}
 
 		public static function show_registration_option( array $panes ) {
@@ -298,7 +329,7 @@ if ( class_exists( 'Group_Buying_Controller' ) ) {
 
 	}
 	// subscription processors
-	foreach ( glob(  get_template_directory() . '/gbs-addons/subscription/list-services/*.class.php' ) as $file_path ) {
+	foreach ( glob(  SEC_Theme_Setup::addons_folder_directory() . '/subscription/list-services/*.class.php' ) as $file_path ) {
 		require_once $file_path;
 	}
 	Group_Buying_List_Services::init();

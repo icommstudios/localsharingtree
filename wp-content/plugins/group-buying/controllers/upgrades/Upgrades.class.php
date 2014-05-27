@@ -7,9 +7,12 @@
  * @subpackage Base
  */
 class Group_Buying_Upgrades extends Group_Buying_Controller {
-
+	const SETTINGS_PAGE = 'gb_update';
 	const FORM_ACTION = 'perform_upgrade';
-	const MENU_NAME = 'gb_update';
+
+	public static function get_admin_page( $prefixed = TRUE ) {
+		return ( $prefixed ) ? self::TEXT_DOMAIN . '/' . self::SETTINGS_PAGE : self::SETTINGS_PAGE ;
+	}
 
 	static function init() {
 		add_action( 'init', array( get_class(), 'check_for_upgrade' ), 100, 0 );
@@ -27,7 +30,7 @@ class Group_Buying_Upgrades extends Group_Buying_Controller {
 				do_action( 'gb_log', 'upgrade process: old version', $old_version );
 				self::upgrade( $old_version, $new_version );
 			} else {
-				add_action( 'admin_menu', array( get_class(), 'register_upgrade_page' ) );
+				self::add_admin_page();
 			}
 		} else {
 			$current_version = get_option( 'gb_version' );
@@ -90,8 +93,18 @@ class Group_Buying_Upgrades extends Group_Buying_Controller {
 		return Group_Buying::GB_VERSION;
 	}
 
-	static function register_upgrade_page() {
-		add_submenu_page( self::TEXT_DOMAIN, self::__( 'Update Group Buying' ), self::__( 'Update' ), 'manage_options', self::TEXT_DOMAIN . '/' . self::MENU_NAME, array( get_class(), 'display_upgrade_page' ) );
+	static function add_admin_page() {
+		// Option page
+		$args = array(
+			'slug' => self::SETTINGS_PAGE,
+			'title' => self::__( 'Update Group Buying' ),
+			'menu_title' => self::__( 'Update' ),
+			'weight' => 2,
+			'reset' => FALSE, 
+			'section' => '',
+			'callback' => array( get_class(), 'display_upgrade_page' )
+			);
+		do_action( 'gb_settings_page', $args );
 	}
 
 	static function display_upgrade_page() {

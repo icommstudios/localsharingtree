@@ -151,8 +151,8 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 				) );
 			$screen->set_help_sidebar(
 				'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
-				'<p>' . self::__( '<a href="http://groupbuyingsite.com/forum/showthread.php?724-Customize-Notifications" target="_blank">Documentation on Managing Notifications</a>' ) . '</p>' .
-				'<p>' . self::__( '<a href="http://groupbuyingsite.com/forum/" target="_blank">Support Forums</a>' ) . '</p>'
+				'<p>' . self::__( '<a href="http://smartecart.com/forum/showthread.php?724-Customize-Notifications" target="_blank">Documentation on Managing Notifications</a>' ) . '</p>' .
+				'<p>' . self::__( '<a href="http://smartecart.com/forum/" target="_blank">Support Forums</a>' ) . '</p>'
 			);
 		}
 	}
@@ -1386,14 +1386,16 @@ class Group_Buying_Notifications extends Group_Buying_Controller {
 		// Loop through the mapped notification types to post ids
 			// Notification instance to check if disabled
 			$notification = Group_Buying_Notification::get_instance( $id );
-			// The options registered in the notification type array
-			$registered_notification = self::$notification_types[$notification_type];
-			// Only some notifications can be disabled by the user
-			$preference_available = ( isset( $registered_notification['allow_preference'] ) && !$registered_notification['allow_preference']) ? FALSE : TRUE ;
-			// If the preference is allowed, if not disabled and if the notification is still registered (e.g. disabled add-on )
-			if ( $preference_available && !$notification->is_disabled() && !empty( $registered_notification ) ) {
-				// build the view for each option
-				$view .= '<span class="notification_preference_wrap clearfix"><label class="checkbox"><input type="checkbox" name="'.self::NOTIFICATION_SUB_OPTION.'[]" value="'.$notification_type.'" '.checked( self::user_disabled_notification( $notification_type, $account ), FALSE, FALSE ).' class="checkbox">'.$registered_notification['name'].'<br/><small>'.self::__('Subject').': "'.get_the_title( $notification->get_ID() ).'"</small></label></span>';
+			if ( is_a( $notification, 'Group_Buying_Notification' ) ) {
+				// The options registered in the notification type array
+				$registered_notification = self::$notification_types[$notification_type];
+				// Only some notifications can be disabled by the user
+				$preference_available = ( isset( $registered_notification['allow_preference'] ) && !$registered_notification['allow_preference']) ? FALSE : TRUE ;
+				// If the preference is allowed, if not disabled and if the notification is still registered (e.g. disabled add-on )
+				if ( $preference_available && !$notification->is_disabled() && !empty( $registered_notification ) ) {
+					// build the view for each option
+					$view .= '<span class="notification_preference_wrap clearfix"><label class="checkbox"><input type="checkbox" name="'.self::NOTIFICATION_SUB_OPTION.'[]" value="'.$notification_type.'" '.checked( self::user_disabled_notification( $notification_type, $account ), FALSE, FALSE ).' class="checkbox">'.$registered_notification['name'].'<br/><small>'.self::__('Subject').': "'.get_the_title( $notification->get_ID() ).'"</small></label></span>';
+				}
 			}
 		}
 

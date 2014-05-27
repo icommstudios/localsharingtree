@@ -40,8 +40,8 @@ class Group_Buying_Report extends Group_Buying_Controller {
 		if ( current_user_can( 'manage_options' ) ) return TRUE; // admins always have access
 
 		if ( $merchant_access ) {
-			$ID = $_GET['id'];
-			$merchant = Group_Buying_Merchant::get_merchant_object( $ID );
+			$id = ( isset( $_GET['id'] ) && $_GET['id'] ) ? $_GET['id'] : gb_account_merchant_id() ;
+			$merchant = Group_Buying_Merchant::get_merchant_object( $id );
 			if ( !is_object( $merchant ) )
 				return FALSE;
 			$current_user = wp_get_current_user();
@@ -71,6 +71,7 @@ class Group_Buying_Report extends Group_Buying_Controller {
 			'total' => self::__( 'Purchase Total' ),
 			'name' => self::__( 'Name' ),
 			'email' => self::__( 'Email' ),
+			'notes' => self::__( 'Admin Note' ),
 			'source' => self::__( 'Share Source' ) );
 		$this->columns = apply_filters( 'set_deal_purchase_report_data_column', $columns );
 
@@ -108,7 +109,7 @@ class Group_Buying_Report extends Group_Buying_Controller {
 					$get_name = $account->get_name();
 					$name = ( strlen( $get_name ) <= 1  ) ? get_the_title( $account_id ) : $get_name;
 					$email = $user->user_email;
-				} else {
+				} elseif( class_exists('Group_Buying_Gift') ) {
 					$gift_id = Group_Buying_Gift::get_gift_for_purchase( $purchase->get_ID() );
 					$gift = Group_Buying_Gift::get_instance( $gift_id );
 					$name = self::__( 'Unclaimed Gift' );
@@ -123,7 +124,8 @@ class Group_Buying_Report extends Group_Buying_Controller {
 						'price' => gb_get_formatted_money( $purchase->get_product_unit_price( $deal->get_ID() ) ),
 						'name' => $name,
 						'email' => $email,
-						'source' => $source
+						'source' => $source,
+						'notes' => $purchase->get_admin_notes()
 					), $purchase, $account );
 
 				// Unset the purchase
@@ -150,7 +152,8 @@ class Group_Buying_Report extends Group_Buying_Controller {
 			'quantity' => self::__( 'Quantity' ),
 			'price' => self::__( 'Price' ),
 			'name' => self::__( 'Name' ),
-			'postal' => self::__( 'Postal' )
+			'postal' => self::__( 'Postal' ),
+			'notes' => self::__( 'Admin Note' )
 		);
 		$this->columns = apply_filters( 'set_merchant_purchase_report_column', $columns );
 
@@ -195,7 +198,8 @@ class Group_Buying_Report extends Group_Buying_Controller {
 						'quantity' => $purchase->get_product_quantity( $deal->get_ID() ),
 						'price' => gb_get_formatted_money( $purchase->get_product_unit_price( $deal->get_ID() ) ),
 						'name' => $name,
-						'postal' => $address['postal_code']
+						'postal' => $address['postal_code'],
+						'notes' => $purchase->get_admin_notes()
 					), $purchase, $account );
 
 				// Unset the purchase
@@ -258,7 +262,7 @@ class Group_Buying_Report extends Group_Buying_Controller {
 							$name = ( strlen( $get_name ) <= 1  ) ? get_the_title( $account_id ) : $get_name;
 						}
 						$email = $user->user_email;
-					} else {
+					} elseif( class_exists('Group_Buying_Gift') ) {
 						$gift_id = Group_Buying_Gift::get_gift_for_purchase( $purchase->get_ID() );
 						$gift = Group_Buying_Gift::get_instance( $gift_id );
 						$address = null;
@@ -389,11 +393,12 @@ class Group_Buying_Report extends Group_Buying_Controller {
 			'voucher_id' => self::__( 'Voucher ID' ),
 			'total' => self::__( 'Purchase Total' ),
 			'name' => self::__( 'Name' ),
-			'email' => self::__( 'Email' ) );
+			'email' => self::__( 'Email' ),
+			'notes' => self::__( 'Admin Note' ) );
 		$this->columns = apply_filters( 'set_purchases_report_data_column', $columns );
 
 		$filter = ( isset( $_GET['filter'] ) && in_array( $_GET['filter'], array( 'any', 'publish', 'draft', 'private', 'trash' ) ) ) ? $_GET['filter'] : 'publish';
-		$showpage = (int)$_GET['showpage']+1;
+		$showpage = ( isset( $_GET['showpage'] ) ) ? (int)$_GET['showpage']+1 : 1 ;
 		$args=array(
 			'post_type' => Group_Buying_Purchase::POST_TYPE,
 			'post_status' => $filter,
@@ -405,33 +410,34 @@ class Group_Buying_Report extends Group_Buying_Controller {
 
 		$purchase_array = array();
 		while ( $purchases->have_posts() ) : $purchases->the_post();
-		$purchase = Group_Buying_Purchase::get_instance( get_the_ID() );
-		$user_id = $purchase->get_user();
-		if ( $user_id != -1 ) {
-			$user = get_userdata( $user_id );
-			$account_id = $purchase->get_account_id();
-			$account = Group_Buying_Account::get_instance_by_id( $account_id );
-			if ( is_a( $account, 'Group_Buying_Account' ) ) {
-				//$address = $account->get_address();
-				$get_name = $account->get_name();
-				$name = ( strlen( $get_name ) <= 1  ) ? get_the_title( $account_id ) : $get_name;
+			$purchase = Group_Buying_Purchase::get_instance( get_the_ID() );
+			$user_id = $purchase->get_user();
+			if ( $user_id != -1 ) {
+				$user = get_userdata( $user_id );
+				$account_id = $purchase->get_account_id();
+				$account = Group_Buying_Account::get_instance_by_id( $account_id );
+				if ( is_a( $account, 'Group_Buying_Account' ) ) {
+					//$address = $account->get_address();
+					$get_name = $account->get_name();
+					$name = ( strlen( $get_name ) <= 1  ) ? get_the_title( $account_id ) : $get_name;
+				}
+				$email = $user->user_email;
+			} else {
+				$address = null;
+				$name = self::__( 'Unclaimed Gift' );
+				$email = null;
 			}
-			$email = $user->user_email;
-		} else {
-			$address = null;
-			$name = self::__( 'Unclaimed Gift' );
-			$email = null;
-		}
-		$total = $purchase->get_total();
+			$total = $purchase->get_total();
 
-		$purchase_array[] = apply_filters( 'gb_purchases_record_item', array(
-				'date' => get_the_time( apply_filters( 'gb_reports_date_format', get_option( 'date_format' ) ), $purchase->get_ID() ),
-				'id' => $purchase->get_ID(),
-				'total' => gb_get_formatted_money( $total ),
-				'name' => $name,
-				'email' => $email,
-				'credits' => $credits
-			), $purchase, $account );
+			$purchase_array[] = apply_filters( 'gb_purchases_record_item', array(
+					'date' => get_the_time( apply_filters( 'gb_reports_date_format', get_option( 'date_format' ) ), $purchase->get_ID() ),
+					'id' => $purchase->get_ID(),
+					'total' => gb_get_formatted_money( $total ),
+					'name' => $name,
+					'email' => $email,
+					'credits' => $credits,
+					'notes' => $purchase->get_admin_notes()
+				), $purchase, $account );
 
 		endwhile;
 		$this->records = apply_filters( 'set_purchases_report_data_records', $purchase_array );
@@ -448,7 +454,7 @@ class Group_Buying_Report extends Group_Buying_Controller {
 		$columns = array( 'id' => self::__( 'ID' ), 'name' => self::__( 'Name' ), 'username' => self::__( 'WP Username' ), 'state' => self::__( 'State' ), 'city' => self::__( 'City' ), 'credits' => self::__( 'Credits' ), 'reards' => self::__( 'Reward Points' ) );
 		$this->columns = apply_filters( 'set_accounts_report_data_column', $columns );
 
-		$showpage = (int)$_GET['showpage']+1;
+		$showpage = ( isset( $_GET['showpage'] ) ) ? (int)$_GET['showpage']+1 : 1 ;
 		$args=array(
 			'post_type' => Group_Buying_Account::POST_TYPE,
 			'post_status' => 'publish',
@@ -506,7 +512,7 @@ class Group_Buying_Report extends Group_Buying_Controller {
 		$this->columns = apply_filters( 'set_merchant_purchases_report_data_column', $columns );
 
 		$filter = ( isset( $_GET['filter'] ) && in_array( $_GET['filter'], array( 'any', 'publish', 'draft', 'private', 'trash' ) ) ) ? $_GET['filter'] : 'publish';
-		$showpage = (int)$_GET['showpage']+1;
+		$showpage = ( isset( $_GET['showpage'] ) ) ? (int)$_GET['showpage']+1 : 1 ;
 		$args=array(
 			'post_type' => Group_Buying_Purchase::POST_TYPE,
 			'post__in' => gb_get_merchants_purchase_ids( gb_account_merchant_id() ),
@@ -532,7 +538,7 @@ class Group_Buying_Report extends Group_Buying_Controller {
 					$name = ( strlen( $get_name ) <= 1  ) ? get_the_title( $account_id ) : $get_name;
 					$email = $user->user_email;
 				}
-			} else {
+			} elseif( class_exists('Group_Buying_Gift') ) {
 				$gift_id = Group_Buying_Gift::get_gift_for_purchase( $purchase->get_ID() );
 				$gift = Group_Buying_Gift::get_instance( $gift_id );
 				$address = null;
