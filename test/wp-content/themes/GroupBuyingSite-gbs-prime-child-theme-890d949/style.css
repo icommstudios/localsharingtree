@@ -1,4 +1,5 @@
- * Theme Name: Local Sharing Tree Child Theme
+ 
+ /* Theme Name: Local Sharing Tree Child Theme
  * Theme URI: http://groupbuyingsite.com
  * Description: Custom modifications for Local Sharing Tree.
  * Author: Group Buying Site / iComm Studios
@@ -144,7 +145,6 @@ background: #8e2a2a !important;
     background: #333;
     -moz-opacity: 0.90;
     opacity: 0.90;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha"(Opacity=90);
 }
 #message_banner .gb-message {
     float: left;
@@ -594,69 +594,70 @@ padding: 4px 8px;
    ================================================== */
 @media only screen and (max-width: 680px) {
 
-body {
-    padding-top: 0px;
-}
+    body {
+        padding-top: 0px;
+    }
 
-img {
-        width: auto;
-        height: auto;
-        max-width: 100%;
-}
-    
-.fancybox_message_banner {
-        min-width: 100px
-}
+    img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+    }
+        
+    .fancybox_message_banner {
+            min-width: 100px
+    }
 
-.topnav-wrap {
-position: relative;
-}
+    .topnav-wrap {
+    position: relative;
+    }
 
 
-#navigation ul.sub-menu {
-    z-index: 200
-}
-.mini_header {
-    padding: 0px;
-    margin-bottom: 10px;
-    width: 100%;
-    float: none;
-}
-.home #subscription_form {
-    background: none;
-    width: 96%;
-    float: none;
-    min-height: 0px;
-    padding: 60px 2% 20px;
-}
-.home #email_address {
-    margin: 10px auto 0 auto
-}
-.button,
-input.form-submit,
-input.button-primary,
-.cart-claimed a {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-#gb_subscription_form span.submit {
-    float: none;
-    margin-right: 0px;
-}
-.merchant-title a {
-    color: white
-}
-.form-submit {
-    background-size: cover
-}
-a.mainImg {
-    margin: 0 2%
-}
-div.row {
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
+    #navigation ul.sub-menu {
+        z-index: 200
+    }
+    .mini_header {
+        padding: 0px;
+        margin-bottom: 10px;
+        width: 100%;
+        float: none;
+    }
+    .home #subscription_form {
+        background: none;
+        width: 96%;
+        float: none;
+        min-height: 0px;
+        padding: 60px 2% 20px;
+    }
+    .home #email_address {
+        margin: 10px auto 0 auto
+    }
+    .button,
+    input.form-submit,
+    input.button-primary,
+    .cart-claimed a {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    #gb_subscription_form span.submit {
+        float: none;
+        margin-right: 0px;
+    }
+    .merchant-title a {
+        color: white
+    }
+    .form-submit {
+        background-size: cover
+    }
+    a.mainImg {
+        margin: 0 2%
+    }
+    div.row {
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
 }
 @media (min-width: 768px) and (max-width: 979px) { 
     
