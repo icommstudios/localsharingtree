@@ -14,10 +14,6 @@ body {
     padding-top: 40px;
 }
 
-body.logged-in  {
-    padding-top: 0px;
-}
-
 .button-light {
     border-radius: 0.4em;
     background-color: rgba(0,0,0,.4) !important;
@@ -172,6 +168,10 @@ background: #8e2a2a !important;
     font-weight: bold;
     padding: 5px 10px;
     margin-bottom: 0;
+}
+
+.fancybox-inner {
+    overflow: hidden !important;
 }
 
 span.csv_download_link {
@@ -631,22 +631,10 @@ padding: 4px 8px;
         text-align: center;
     }
 
-body.logged-in {
-    padding-top: 32px;
-    }
-
-    .logged-in .topnav-wrap {
-    top:32px;
-    }
-
 
 /* ===[ Phone-sized devices and the like ]===
    ================================================== */
 @media only screen and (max-width: 680px) {
-
-    body {
-        padding-top: 0px;
-    }
 
     img {
             width: auto;
@@ -657,18 +645,24 @@ body.logged-in {
     .fancybox_message_banner {
             min-width: 100px
     }
+}
+@media only screen and (max-width: 780px) {
 
-    .topnav-wrap {
-    position: relative;
+body {
+    padding-top: 0px;
     }
-
-    body.logged-in {
+ 
+ body.logged-in {
+    padding-top: 0px;
     }
 
     .logged-in .topnav-wrap {
     top:0px;
     }
 
+    .topnav-wrap {
+    position: relative;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 979px) { 
