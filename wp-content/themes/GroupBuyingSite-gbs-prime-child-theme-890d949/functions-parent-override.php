@@ -843,7 +843,42 @@ function sf_filter_archive_by_location_parse_query ( $query ) {
 
    return $query;
 }
-		
+
+//Order confirmation success
+add_filter( 'wp_footer', 'custom_lst_order_confirmation_footer' );
+function custom_lst_order_confirmation_footer() {
+	//If on successful order page
+	if ( gb_on_checkout_page() && gb_get_current_checkout_page() == 'confirmation' ) {
+		// Get the Transaction
+		global $gb_purchase_confirmation_id;
+		//$purchase = Group_Buying_Purchase::get_instance($gb_purchase_confirmation_id);
+		//$total = $purchase->get_total();
+		//$products = $purchase->get_products();
+		//$user_id = $purchase->get_user();
+		//$account = Group_Buying_Account::get_instance($user_id);
+		?>
+<!-- Google Code for Deal Signup Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 971443539;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "Om0nCJ2IoAoQ05qczwM";
+var google_conversion_value = 1.000000;
+var google_remarketing_only = false;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">;
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/971443539/?value=1.000000&am…;
+</div>
+</noscript>
+        <?php
+	}
+}
 
 
 
