@@ -312,7 +312,8 @@ function custom_footer_scripts() {
 			$share_url = urlencode( add_query_arg(array('ref' => $order_number), site_url()));
 		} else {
 			$charity_title = get_the_title ( $charity_id );
-			$share_text_original = 'I just shopped, saved and supported '.$charity_title .' at LocalSharingTree.com';
+			$charity_name_link = '<a href="'.get_permalink($charity_id).'" target="_blank">'.get_the_title( $charity_id ).'</a>';
+			$share_text_original = 'I just shopped, saved and supported '.$charity_name_link .' at LocalSharingTree.com';
 			$share_text = urlencode($share_text_original);
 			$share_url = urlencode( add_query_arg(array('ref' => $order_number), site_url()));
 		}
