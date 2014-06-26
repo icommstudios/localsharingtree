@@ -5,6 +5,7 @@
  *
  *
  */
+ 
 
 // Include Custom functions
 
@@ -311,7 +312,8 @@ function custom_footer_scripts() {
 			$share_url = urlencode( add_query_arg(array('ref' => $order_number), site_url()));
 		} else {
 			$charity_title = get_the_title ( $charity_id );
-			$share_text_original = 'I just shopped, saved and supported '.$charity_title .' at LocalSharingTree.com';
+			$charity_name_link = '<a href="'.get_permalink($charity_id).'" target="_blank">'.get_the_title( $charity_id ).'</a>';
+			$share_text_original = 'I just shopped, saved and supported '.$charity_name_link .' at LocalSharingTree.com';
 			$share_text = urlencode($share_text_original);
 			$share_url = urlencode( add_query_arg(array('ref' => $order_number), site_url()));
 		}
@@ -839,7 +841,263 @@ function sf_filter_archive_by_location_parse_query ( $query ) {
 
    return $query;
 }
+
+//Order confirmation success
+add_filter( 'wp_footer', 'custom_lst_order_confirmation_footer' );
+function custom_lst_order_confirmation_footer() {
+	//If on successful order page
+	if ( gb_on_checkout_page() && gb_get_current_checkout_page() == 'confirmation' ) {
+		// Get the Transaction
+		global $gb_purchase_confirmation_id;
+		//$purchase = Group_Buying_Purchase::get_instance($gb_purchase_confirmation_id);
+		//$total = $purchase->get_total();
+		//$products = $purchase->get_products();
+		//$user_id = $purchase->get_user();
+		//$account = Group_Buying_Account::get_instance($user_id);
+		?>
+<!-- Google Code for Deal Signup Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 971443539;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "Om0nCJ2IoAoQ05qczwM";
+var google_conversion_value = 1.000000;
+var google_remarketing_only = false;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">;
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/971443539/?value=1.000000&amp;label=Om0nCJ2IoAoQ05qczwM&amp;guid=ON&amp;script=0">
+</div>
+</noscript>
+        <?php
+	}
+}
+
+//New Recent Deals widget with Location filters
+add_action( 'widgets_init', create_function( '', 'return register_widget("Custom_GroupBuying_RecentDeals");' ) );
+class Custom_GroupBuying_RecentDeals extends WP_Widget {
+	/**
+	 * Constructor
+	 *
+	 * @return void
+	 * @author Dan Cameron
+	 */
+	function Custom_GroupBuying_RecentDeals() {
+		$widget_ops = array( 'description' => gb__( 'With filters by User location. Deals returned are randomized.' ) );
+		parent::WP_Widget( false, $name = gb__( 'Group Buying :: Custom Recent Deals (with Locations)' ), $widget_ops );
+	}
+
+	function widget( $args, $instance ) {
+		do_action( 'pre_custom_recent_deals', $args, $instance );
+		global $gb, $wp_query;
+		$temp = null;
+		extract( $args );
+
+		$title = apply_filters( 'widget_title', $instance['title'] );
+		$buynow = empty( $instance['buynow'] ) ? 'Buy Now' : $instance['buynow'];
+		$deals = apply_filters( 'custom_gb_recent_deals_widget_show', $instance['deals'] );
+		if ( is_single() ) {
+			$post_not_in = $wp_query->post->ID;
+		}
 		
+		$location = '';
+
+		if ( isset( $_COOKIE[ 'gb_location_preference' ] ) && $_COOKIE[ 'gb_location_preference' ] != '' ) {
+			$location = $_COOKIE[ 'gb_location_preference' ];
+		}
+		if ( $location == '' ) {
+			$locations = array();
+			$terms = get_the_terms( $post->ID, gb_get_deal_location_tax() );
+			if ( is_array( $terms ) ) {
+				foreach ( $terms as $term ) {
+					$locations[] = $term->slug;
+				}
+			}
+			if ( isset( $locations[0] ) ) {
+				$location = $locations[0];
+			}
+		}
+		
+		$count = 1;
+		$deal_query= null;
+		$args=array(
+			'post_type' => gb_get_deal_post_type(),
+			'post_status' => 'publish',
+			'orderby' => 'rand',
+			'meta_query' => array(
+				array(
+					'key' => '_expiration_date',
+					'value' => array( 0, current_time( 'timestamp' ) ),
+					'compare' => 'NOT BETWEEN'
+				) ),
+			'posts_per_page' => $deals,
+			'post__not_in' => array( $post_not_in )
+		);
+		
+		if ( $location ) {
+			$args[gb_get_deal_location_tax()] = apply_filters( 'gb_related_deals_widget_location', $location, $locations );	
+		}
+
+		$deal_query = new WP_Query( $args );
+		if ( $deal_query->have_posts() ) {
+			echo $before_widget;
+			echo $before_title . $title . $after_title;
+			while ( $deal_query->have_posts() ) : $deal_query->the_post();
+
+			Group_Buying_Controller::load_view( 'widgets/recent-deals.php', array( 'buynow'=>$buynow ) );
+
+			endwhile;
+			echo $after_widget;
+		}
+		$deal_query = null; $deal_query = $temp;
+		wp_reset_query();
+		do_action( 'post_custom_recent_deals', $args, $instance );
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['buynow'] = strip_tags( $new_instance['buynow'] );
+		$instance['deals'] = strip_tags( $new_instance['deals'] );
+		$instance['show_expired'] = strip_tags( $new_instance['show_expired'] );
+		return $instance;
+	}
+
+	function form( $instance ) {
+		$title = esc_attr( $instance['title'] );
+		$buynow = esc_attr( $instance['buynow'] );
+		$deals = esc_attr( $instance['deals'] );
+		$show_expired = esc_attr( $instance['show_expired'] );
+?>
+            <p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php gb_e( 'Title:' ); ?> <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
+            <p><label for="<?php echo $this->get_field_id( 'buynow' ); ?>"><?php gb_e( 'Buy now link text:' ); ?> <input class="widefat" id="<?php echo $this->get_field_id( 'buynow' ); ?>" name="<?php echo $this->get_field_name( 'buynow' ); ?>" type="text" value="<?php echo $buynow; ?>" /></label></p>
+            <p><label for="<?php echo $this->get_field_id( 'deals' ); ?>"><?php gb_e( 'Number of deals to display:' ); ?>
+            	<select id="<?php echo $this->get_field_id( 'deals' ); ?>" name="<?php echo $this->get_field_name( 'deals' ); ?>">
+					<option value="1">1</option>
+					<option value="2"<?php if ( $deals=="2" ) {echo ' selected="selected"';} ?>>2</option>
+					<option value="3"<?php if ( $deals=="3" ) {echo ' selected="selected"';} ?>>3</option>
+					<option value="4"<?php if ( $deals=="4" ) {echo ' selected="selected"';} ?>>4</option>
+					<option value="5"<?php if ( $deals=="5" ) {echo ' selected="selected"';} ?>>5</option>
+					<option value="10"<?php if ( $deals=="10" ) {echo ' selected="selected"';} ?>>10</option>
+					<option value="15"<?php if ( $deals=="15" ) {echo ' selected="selected"';} ?>>15</option>
+					<option value="-1"<?php if ( $deals=="-1" ) {echo ' selected="selected"';} ?>>All</option>
+				 </select>
+            </label></p>
+        <?php
+	}
+}
+
+//New More Deals widget with for a Merchant
+add_action( 'widgets_init', create_function( '', 'return register_widget("Custom_Merchant_RecentDeals");' ) );
+class Custom_Merchant_RecentDeals extends WP_Widget {
+	function Custom_Merchant_RecentDeals() {
+		$widget_ops = array( 'description' => gb__( 'More Deals for a merchant.' ) );
+		parent::WP_Widget( false, $name = gb__( 'Group Buying :: Merchant Deals ' ), $widget_ops );
+	}
+	
+	function widget( $args, $instance ) {
+		do_action( 'pre_custom_merchant_recent_deals', $args, $instance );
+		global $gb, $wp_query;
+		$temp = null;
+		extract( $args );
+
+		$title = apply_filters( 'widget_title', $instance['title'] );
+		$buynow = empty( $instance['buynow'] ) ? 'Buy Now' : $instance['buynow'];
+		$deals = ($instance['deals']) ? $instance['deals'] : 2;
+		
+		$merchant_id = false;
+		$post_not_in = false;
+		if ( is_singular('gb_merchant') ) {
+			$merchant_id = $wp_query->post->ID;
+		} elseif ( is_singular('gb_deal') ) {
+			$post_not_in = $wp_query->post->ID;
+			if ( gb_has_merchant ( $wp_query->post->ID ) ) {
+				$merchant_id = gb_get_merchant_id( $wp_query->post->ID ); 
+			}
+		}
+		
+		//If no merchant
+		if ( empty($merchant_id) ) return;
+		
+		$count = 1;
+		$deal_query= null;
+		$args=array(
+			'post_type' => gb_get_deal_post_type(),
+			'post_status' => 'publish',
+			'meta_query' => array(
+				array(
+					'key' => '_expiration_date',
+					'value' => array( 0, current_time( 'timestamp' ) ),
+					'compare' => 'NOT BETWEEN'
+				),
+				array(
+					'key' => '_merchant_id',
+					'value' => $merchant_id,
+					'compare' => '='
+				)),
+			'posts_per_page' => $deals,
+			
+		);
+		
+		if ( $post_not_in ) {
+			$args['post__not_in'] = array( $post_not_in );
+		}
+		
+		$deal_query = new WP_Query( $args );
+		if ( $deal_query->have_posts() ) {
+			echo $before_widget;
+			echo $before_title . $title . $after_title;
+			while ( $deal_query->have_posts() ) : $deal_query->the_post();
+
+			Group_Buying_Controller::load_view( 'widgets/recent-deals.php', array( 'buynow'=>$buynow ) );
+
+			endwhile;
+			echo $after_widget;
+		}
+		$deal_query = null; $deal_query = $temp;
+		wp_reset_query();
+		do_action( 'post_custom_merchant_recent_deals', $args, $instance );
+		
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['buynow'] = strip_tags( $new_instance['buynow'] );
+		$instance['deals'] = strip_tags( $new_instance['deals'] );
+		$instance['show_expired'] = strip_tags( $new_instance['show_expired'] );
+		return $instance;
+	}
+
+	function form( $instance ) {
+		$title = esc_attr( $instance['title'] );
+		$buynow = esc_attr( $instance['buynow'] );
+		$deals = esc_attr( $instance['deals'] );
+		$show_expired = esc_attr( $instance['show_expired'] );
+?>
+            <p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php gb_e( 'Title:' ); ?> <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
+            <p><label for="<?php echo $this->get_field_id( 'buynow' ); ?>"><?php gb_e( 'Buy now link text:' ); ?> <input class="widefat" id="<?php echo $this->get_field_id( 'buynow' ); ?>" name="<?php echo $this->get_field_name( 'buynow' ); ?>" type="text" value="<?php echo $buynow; ?>" /></label></p>
+            <p><label for="<?php echo $this->get_field_id( 'deals' ); ?>"><?php gb_e( 'Number of deals to display:' ); ?>
+            	<select id="<?php echo $this->get_field_id( 'deals' ); ?>" name="<?php echo $this->get_field_name( 'deals' ); ?>">
+					<option value="1">1</option>
+					<option value="2"<?php if ( $deals=="2" ) {echo ' selected="selected"';} ?>>2</option>
+					<option value="3"<?php if ( $deals=="3" ) {echo ' selected="selected"';} ?>>3</option>
+					<option value="4"<?php if ( $deals=="4" ) {echo ' selected="selected"';} ?>>4</option>
+					<option value="5"<?php if ( $deals=="5" ) {echo ' selected="selected"';} ?>>5</option>
+					<option value="10"<?php if ( $deals=="10" ) {echo ' selected="selected"';} ?>>10</option>
+					<option value="15"<?php if ( $deals=="15" ) {echo ' selected="selected"';} ?>>15</option>
+					<option value="-1"<?php if ( $deals=="-1" ) {echo ' selected="selected"';} ?>>All</option>
+				 </select>
+            </label></p>
+        <?php
+	}
+}
+
 
 
 

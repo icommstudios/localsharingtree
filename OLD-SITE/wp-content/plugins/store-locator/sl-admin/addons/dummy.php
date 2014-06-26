@@ -1,1 +1,0 @@
-/Applications/XAMPP/xamppfiles/htdocs/wordpress/wp-content/plugins/store-locator.2.0/sl-admin/addons/

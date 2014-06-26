@@ -48,7 +48,7 @@
 
 		</div>
 
-		<div class="lst-header-search">
+		<div class="lst-header-search" tabindex="2">
 				<?php get_search_form(); ?> 
 			</div>
 

@@ -10,6 +10,7 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 		'voucher_expiration_comments' => '_voucher_expiration_comments', // string
 		'agree_terms' => '_custom_agree_terms', // string
 		'agree_reviewed_information' => '_custom_agree_reviewed_information', // string
+		'deal_location' => '_custom_deal_location', // string
 	); // A list of meta keys this class cares about. Try to keep them in alphabetical order.
 	
 	public static function init() {
@@ -197,25 +198,20 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 	private static function show_meta_box( $post, $metabox ) {
 		
 		?>
-			<table class="form-table">
-				<tbody>
-					<tr>
-						<td>
-							<label for="<?php echo self::$meta_keys['voucher_expiration_comments'] ?>"><?php gb_e( 'Voucher Expiration Comments' ); ?></label><br />
-							<textarea style="width:98%;" name="<?php echo self::$meta_keys['voucher_expiration_comments'] ?>" id="<?php echo self::$meta_keys['voucher_expiration_comments'] ?>"><?php echo esc_attr_e( self::get_field($post->ID, self::$meta_keys['voucher_expiration_comments'])) ?></textarea>
-                    
-						</td>
-					</tr>
-                    <tr>
-						<td>
-							<label for="<?php echo self::$meta_keys['start_date'] ?>"><?php gb_e( 'Deal Start Date (requested by merchant)' ); ?></label><br />
-							<input style="width:98%;" name="<?php echo self::$meta_keys['start_date'] ?>" id="<?php echo self::$meta_keys['start_date'] ?>" value="<?php echo esc_attr_e( self::get_field($post->ID, self::$meta_keys['start_date'])) ?>">
-                            <em>Note: If "0", then merchant requests to Publish Now.</em>
-                    
-						</td>
-					</tr>
-             	</tbody>
-			</table>
+        	<p>
+                <label for="<?php echo self::$meta_keys['deal_location'] ?>"><?php gb_e( 'Deal Display Location (Online, Multiple or name of the location) ' ); ?></label><br />
+                <input style="width:98%;" name="<?php echo self::$meta_keys['deal_location'] ?>" id="<?php echo self::$meta_keys['deal_location'] ?>" value="<?php echo esc_attr_e( self::get_field($post->ID, self::$meta_keys['deal_location'])) ?>">
+                <em>Note: This information appears on the Deals list pages in the upper right of each deal.</em>
+            </p>   
+			<p>
+                <label for="<?php echo self::$meta_keys['voucher_expiration_comments'] ?>"><?php gb_e( 'Voucher Expiration Comments' ); ?></label><br />
+                <textarea style="width:98%;" name="<?php echo self::$meta_keys['voucher_expiration_comments'] ?>" id="<?php echo self::$meta_keys['voucher_expiration_comments'] ?>"><?php echo esc_attr_e( self::get_field($post->ID, self::$meta_keys['voucher_expiration_comments'])) ?></textarea>
+            </p>        
+			<p>
+                <label for="<?php echo self::$meta_keys['start_date'] ?>"><?php gb_e( 'Deal Start Date (requested by merchant)' ); ?></label><br />
+                <input style="width:98%;" name="<?php echo self::$meta_keys['start_date'] ?>" id="<?php echo self::$meta_keys['start_date'] ?>" value="<?php echo esc_attr_e( self::get_field($post->ID, self::$meta_keys['start_date'])) ?>">
+                <em>Note: If "0", then merchant requests to Publish Now.</em>
+           </p>
            
 		<?php
 	}
@@ -260,7 +256,11 @@ class SF_Deal_Fields extends Group_Buying_Controller {
 				self::$meta_keys['agree_reviewed_information'] => stripslashes($_POST[self::$meta_keys['agree_reviewed_information']])
 			));
 		}
-		
+		if ( isset( $_POST[self::$meta_keys['deal_location']] ) ) {
+			$deal->save_post_meta( array(
+				self::$meta_keys['deal_location'] => stripslashes($_POST[self::$meta_keys['deal_location']])
+			));
+		}
 		
 	}
 

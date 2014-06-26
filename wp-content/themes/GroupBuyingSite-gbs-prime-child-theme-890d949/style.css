@@ -32,6 +32,28 @@ body.logged-in {
 }
 
 
+#deals_loop .post {
+	position: relative;	
+}
+#deals_loop .post .deal_display_location {
+	position: absolute;
+	right: 10px;
+	margin-top: 0;
+	color: #000;
+}
+
+.business_deals .widget {
+	margin: 0;
+	padding: 0;
+	width: 
+}
+.business_deals .widget .deal_block {
+	width: 199px;
+	float: left;
+	margin-right: 15px;
+	margin-left: 0;
+}
+
 h2.section_heading, legend.section_heading, .section_heading a, .table_heading {
 display: inline-block;
 width: 100%;

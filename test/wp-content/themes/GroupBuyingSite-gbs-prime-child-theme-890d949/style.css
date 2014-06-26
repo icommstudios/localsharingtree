@@ -14,7 +14,7 @@ body {
     padding-top: 40px;
 }
 
-body.logged-in  {
+body.logged-in {
     padding-top: 0px;
 }
 
@@ -31,6 +31,28 @@ body.logged-in  {
     line-height: 1.5em;
 }
 
+
+#deals_loop .post {
+	position: relative;	
+}
+#deals_loop .post .deal_display_location {
+	position: absolute;
+	right: 10px;
+	margin-top: 0;
+	color: #000;
+}
+
+.business_deals .widget {
+	margin: 0;
+	padding: 0;
+	width: 
+}
+.business_deals .widget .deal_block {
+	width: 199px;
+	float: left;
+	margin-right: 15px;
+	margin-left: 0;
+}
 
 h2.section_heading, legend.section_heading, .section_heading a, .table_heading {
 display: inline-block;
@@ -174,6 +196,10 @@ background: #8e2a2a !important;
     margin-bottom: 0;
 }
 
+.fancybox-inner {
+    overflow: hidden !important;
+}
+
 span.csv_download_link {
     float:none;
 }
@@ -202,11 +228,6 @@ top: 0px; left: 0px;
 width: 100%;
 z-index: 1200;
 }
-
-
-/*.logged-in .topnav-wrap {
-top:32px;
-}*/
 
 .topnav {
 position: relative;
@@ -358,6 +379,13 @@ cursor: pointer;
     padding: 2%;
 }
 
+/*  Control height of main Deal image 
+#main_deal_wrap .deal_thumbnail {
+    max-height: 400px;
+    overflow: hidden;
+    border-radius: 0.4em;
+}*/
+
 /*  Single Deal Page - Share buttons */
 .social_share {
     float:none;
@@ -403,15 +431,15 @@ cursor: pointer;
 
 /*  LiveChat Hack */
 
-@media (max-width: 600px) {
-    #livechat-eye-catcher {
+@media (max-width: 780px) {
+    #livechat-eye-catcher, #livechat-full, #livechat-compact-container {
         display:none !important;
     }
 
-    #livechat-full {
+    /*#livechat-full {
         width:100% !important;
         right: 0px !important;
-    }
+    }*/
 }
 
 /*  Checkout Page */
@@ -590,30 +618,7 @@ padding: 4px 8px;
 
 }
 
-/* ===[ Phone-sized devices and the like ]===
-   ================================================== */
-@media only screen and (max-width: 680px) {
-
-    body {
-        padding-top: 0px;
-    }
-
-    img {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-    }
-        
-    .fancybox_message_banner {
-            min-width: 100px
-    }
-
-    .topnav-wrap {
-    position: relative;
-    }
-
-
-    #navigation ul.sub-menu {
+   #navigation ul.sub-menu {
         z-index: 200
     }
     .mini_header {
@@ -658,7 +663,41 @@ padding: 4px 8px;
         margin: 0 auto;
         text-align: center;
     }
+
+
+/* ===[ Phone-sized devices and the like ]===
+   ================================================== */
+@media only screen and (max-width: 680px) {
+
+    img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+    }
+        
+    .fancybox_message_banner {
+            min-width: 100px
+    }
 }
+@media only screen and (max-width: 780px) {
+
+body {
+    padding-top: 0px;
+    }
+ 
+ body.logged-in {
+    padding-top: 0px;
+    }
+
+    .logged-in .topnav-wrap {
+    top:0px;
+    }
+
+    .topnav-wrap {
+    position: relative;
+    }
+}
+
 @media (min-width: 768px) and (max-width: 979px) { 
     
     a.mainImg {
