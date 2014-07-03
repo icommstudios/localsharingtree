@@ -1,4 +1,12 @@
 /working-files/
 /OLD-SITE/
 sftp-config.json
+<<<<<<< HEAD
 wp-config.php
+=======
+
+sftp-config.json
+
+wp-config.php
+
+>>>>>>> FETCH_HEAD
