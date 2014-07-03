@@ -1,0 +1,8 @@
+/* Tablet-sized devices and the like */
+@media (max-width: 900px) {
+
+	.page_title h1 {
+		margin: 0;
+	}
+
+}

@@ -18,6 +18,11 @@ body.logged-in {
     padding-top: 0px;
 }
 
+.container {
+    max-width: 1020px;
+    width: auto;
+}
+
 .button-light {
     border-radius: 0.4em;
     background-color: rgba(0,0,0,.4) !important;
@@ -387,6 +392,48 @@ cursor: pointer;
 }*/
 
 /*  Single Deal Page - Share buttons */
+
+.page_title .featured_tag, .page_title .deal_title, .page_title .button_reset_filters_wrap {
+    float: left;
+}
+
+.page_title .featured_tag {
+    width:25%;
+    margin-right: 3%;
+    margin-top: 20px;
+    color: black;
+}
+
+.page_title .deal_title {
+    width: 55%;
+    margin-right: 2%;
+    text-align: center;
+ }
+
+.page_title .button_reset_filters_wrap {
+    width: 15%;
+}
+
+.button_reset_filters_wrap {
+    margin-top: 20px;
+
+}
+
+.button_reset_filters_wrap a.button {
+   display:block; 
+}
+
+#business .button_reset_filters_wrap a.button, #deal_single .button_reset_filters_wrap a.button {
+   display:inline;
+   float:right; 
+}
+
+#merchant_loop .button_reset_filters_wrap a.button {
+    display:inline;
+   float:none; 
+}
+
+
 .social_share {
     float:none;
     margin: -2px 0px 10px 0px;
@@ -541,26 +588,6 @@ text-overflow: ellipsis;
 .merchant_logo a, .merchant_logo a:hover {
     background: none;
 }
-
-.button_reset_filters_wrap {
-    margin: 12px 0px;
-
-}
-
-.button_reset_filters_wrap a.button {
-   display:block; 
-}
-
-#business .button_reset_filters_wrap a.button, #deal_single .button_reset_filters_wrap a.button {
-   display:inline;
-   float:right; 
-}
-
-#merchant_loop .button_reset_filters_wrap a.button {
-    display:inline;
-   float:none; 
-}
-
 
  /* Filter by Letter */
 .filter_by_letter>ul>li>a {
@@ -728,6 +755,19 @@ body {
     }
 }
 @media (max-width: 959px) { 
+
+/*  Single Deal Page - Share buttons */
+
+ .page_title .featured_tag, .page_title .deal_title, .page_title .button_reset_filters_wrap {
+    float: none;
+    display: block;
+    width: 100%;
+}
+
+    .page_title h1 {
+        margin: 0;
+    }
+
     #navigation {
         padding: 0px
     }
