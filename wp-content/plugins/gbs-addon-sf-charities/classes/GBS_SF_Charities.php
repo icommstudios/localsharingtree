@@ -28,7 +28,7 @@ class GB_SF_Charities extends Group_Buying_Controller {
 		add_filter ( 'manage_edit-'.self::POST_TYPE.'_columns', array( get_class(), 'register_columns' ) );
 		add_filter ( 'manage_'.self::POST_TYPE.'_posts_custom_column', array( get_class(), 'column_display' ), 10, 2 );
 		
-		// Add public view for Charity authorized users
+		// Add public view for Charity authorized users for current logged in user - Allow mutiple charities
 		add_action ('account_section_before_dash', array( get_class(), 'show_user_charity_section'), 10, 0);
 
 	}
@@ -350,11 +350,13 @@ class GB_SF_Charities extends Group_Buying_Controller {
 	}
 	
 	public static function show_user_charity_section() {
-		$charity_id = GB_SF_Charity::get_charity_id_for_user();
+		//Get mutiple charity_ids (if multiple charities assigned to user)
+		$charity_ids = GB_SF_Charity::get_all_charity_ids_for_user();
 
-		if ( $charity_id ) {
-			echo self::_load_view_to_string( 'account/charity-info', array( 'charity_id' => $charity_id ) );
-			
+		if ( $charity_ids) {
+			foreach ( $charity_ids as $charity_id ) {
+				echo self::_load_view_to_string( 'account/charity-info', array( 'charity_id' => $charity_id ) );
+			}
 		}
 		
 	}

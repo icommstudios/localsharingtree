@@ -2,7 +2,6 @@
 	
     <h2 class="section_heading background_alt gb_ff"><?php echo get_the_title($charity_id); ?>: <?php gb_e('Recent Donations'); ?> <a class="section_heading_link font_x_small alt_link"  href="<?php gb_charity_purchases_report_url($charity_id) ?>" title="<?php gb_e('View all Donations'); ?>"><?php gb_e('View all Donations'); ?></a></h2>
 		
-    
     <?php
 	
 		//Filter args
@@ -48,7 +47,7 @@
                 </tbody>
             </table><!-- End .gb_table -->
             <?php if ($purchases->found_posts > 5): ?>
-                <p><?php gb_e('This is a summary of your most recent donations.'); ?></p>
+                <p><?php gb_e('This is a summary of the most recent donations.'); ?></p>
             <?php endif ?>
             
 			<div>
@@ -58,7 +57,7 @@
             <?php
         } else {
             ?>
-                <p><?php gb_e('You have not received any donations yet.'); ?></p>
+                <p><?php printf(gb__('%s has not received any donations yet.'), get_the_title($charity_id)); ?></p>
             <?php
         }
 
