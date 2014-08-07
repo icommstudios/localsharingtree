@@ -17,6 +17,7 @@ require_once('customfunctions/sf-featured-deal/SF_Featured_Deals.class.php');
 require_once('customfunctions/sf-deal-fields/SF_DealFields.class.php');
 require_once('customfunctions/sf-custom-csv-reports/SF_CustomDealExport.class.php');
 require_once('customfunctions/sf-custom-csv-reports/SF_CustomSalesExport.class.php');
+require_once('customfunctions/sf-credit-codes/SF_CreditCodes.class.php');
 require_once('customfunctions/SF_CustomSearch.php');
 
 // This theme uses wp_nav_menu() in one location.
@@ -804,9 +805,9 @@ function sf_filter_archive_by_location_parse_query ( $query ) {
 				|| is_tax( 'gb_charity_type' )
 				|| is_tax( 'gb_merchant_type')  ) {
 					
-				if ( is_post_type_archive( 'gb_merchant' ) || is_post_type_archive( 'gb_merchant_type' ) ) {
+				if ( is_post_type_archive( 'gb_merchant' ) || is_tax( 'gb_merchant_type' ) ) {
 					$query->set( 'post_type', 'gb_merchant' );
-				} elseif (  is_post_type_archive( 'gb_charities' ) || is_post_type_archive( 'gb_charity_type' ) ) {
+				} elseif (  is_post_type_archive( 'gb_charities' ) || is_tax( 'gb_charity_type' ) ) {
 					$query->set( 'post_type', 'gb_charities' );
 				}
 			
