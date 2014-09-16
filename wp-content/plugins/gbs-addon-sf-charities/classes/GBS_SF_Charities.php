@@ -30,8 +30,130 @@ class GB_SF_Charities extends Group_Buying_Controller {
 		
 		// Add public view for Charity authorized users for current logged in user - Allow mutiple charities
 		add_action ('account_section_before_dash', array( get_class(), 'show_user_charity_section'), 10, 0);
+		
+		// Add Admin columns to Orders to assign charity (after purchase)
+		add_filter ( 'gb_mngt_purchases_columns', array( get_class(), 'purchase_register_columns' ), 15 );
+		add_filter ( 'gb_mngt_purchases_column_sf_charity', array( get_class(), 'purchase_column_display' ), 15, 1 );
+		
+		// Ajax handle Admin set charity
+		add_action( 'wp_ajax_nopriv_admin_ajax_set_sf_charity',  array( get_class(), 'admin_ajax_set_sf_charity' ), 10, 0 );
+		add_action( 'wp_ajax_admin_ajax_set_sf_charity',  array( get_class(), 'admin_ajax_set_sf_charity' ), 10, 0 );
+		add_action('admin_footer', array( get_class(), 'admin_scripts_sf_set_charity'), 10);
+		
+		
 
 	}
+	
+	
+	public static function purchase_register_columns( $columns ) {
+		$columns['sf_charity'] = __( 'Charity' );
+		return $columns;
+	}
+
+	public static function purchase_column_display( $item ) {
+		
+		$purchase = Group_Buying_Purchase::get_instance( $item->ID );
+
+		if ( !$purchase )
+			return; // return for that temp post
+			
+		$charity_id = false;
+		if ( is_a( $purchase, 'Group_Buying_Purchase' ) ) {
+			$charity_id = GB_SF_Charities::get_purchase_charity_id( $purchase );
+			$donation_amt = GB_SF_Charities::get_purchase_charity_donation_amount($purchase);
+			//$donation_perct = GB_SF_Charities::get_purchase_charity_donation_percentage($purchase);
+		}
+		
+		$display = '';
+		if ( !$charity_id ) {
+			$display .= '<div class="sf_admin_set_charity">';
+			$display .= '<input type="text" class="sf_admin_set_charity_input" class="input" style="width: 80px;" value="" placeholder="charity id">';
+			$display .= '<a href="#" data-purchase_id="'.esc_attr($item->ID).'" class="button sf_admin_set_charity_button">Save</a>';
+			$display .= '<div class="ajax_gif cloak"><img src="'.get_admin_url().'/images/wpspin_light.gif" valign="middle"> <em>Updating, please wait...</em></div>';
+			$display .= '</div>';
+		} else {
+			$display .= get_the_title( $charity_id ).' (id '.$charity_id.')';
+			if ( $donation_amt ) {
+				$display .= ' - '.gb_get_formatted_money($donation_amt).'';
+			}
+		}
+		echo $display;	
+	}
+	
+	public static function admin_ajax_set_sf_charity() {
+		
+		$purchase_id = $_POST['purchase_id'];
+		$charity_id = $_POST['charity_id'];
+		
+		if ( $purchase_id && $charity_id ) {
+			$result = self::admin_set_purchase_charity($purchase_id, $charity_id);
+			//header( 'Content-Type: application/json' );
+			if ( $result ) {
+				echo 1;
+			} else {
+				echo 0;
+			}
+		} else {
+			echo 0;
+		}
+		exit();	
+	}
+	
+	
+	public static function admin_set_purchase_charity($purchase_id, $charity_id) {
+		$purchase = Group_Buying_Purchase::get_instance( $purchase_id );
+		if ( !$purchase ) return false;
+			
+		//Calculate donation amount
+		$percentage = ( GB_SF_Charities_Checkout::DEFAULT_DONATION_PERCT ) ? GB_SF_Charities_Checkout::DEFAULT_DONATION_PERCT : 0;
+		$donation = ( $percentage ) ? $purchase->get_subtotal()*($percentage*0.01) : 0 ;
+		self::set_purchase_charity( $purchase, $charity_id, $donation, $percentage);	
+		return TRUE;
+	}
+	
+	public static function admin_scripts_sf_set_charity() {
+	?>
+    <script type="text/javascript">
+			jQuery(document).ready( function($) {
+				
+				jQuery('.sf_admin_set_charity_button').bind('click', function(e) {
+					e.preventDefault();
+					var $div_wrapper = jQuery(this).closest('.sf_admin_set_charity');
+					var $charity_id = jQuery('.sf_admin_set_charity_input', $div_wrapper).val();
+					var $purchase_id = jQuery(this).data('purchase_id');
+					
+					$('.sf_admin_set_charity_button', $div_wrapper).attr('disabled', true);
+					$('.sf_admin_set_charity_input', $div_wrapper).attr('disabled', true);
+					$('.ajax_gif', $div_wrapper).fadeIn();
+					//Ajax post
+					$.ajax({
+						type: 'POST',
+						//dataType: 'json',
+						url: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
+						data: {
+							action: 'admin_ajax_set_sf_charity',
+							purchase_id: $purchase_id, 
+							charity_id: $charity_id 
+						},
+						success: function(results) {
+							$('.ajax_gif', $div_wrapper).fadeOut();
+							if ( results && results == '1' ) {
+								jQuery($div_wrapper).append('<div>Saved</div>');
+							} else {
+								$('.sf_admin_set_charity_button', $div_wrapper).attr('disabled', false);
+								$('.sf_admin_set_charity_input', $div_wrapper).attr('disabled', false);
+								jQuery($div_wrapper).append('<div>Failed</div>');
+							}
+							
+						}
+					});
+				});
+
+			});
+		</script>
+    <?php	
+	}
+	
 	
 	public static function register_columns( $columns ) {
 		unset( $columns['date'] );
