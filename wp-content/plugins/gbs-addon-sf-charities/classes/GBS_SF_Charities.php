@@ -158,6 +158,7 @@ class GB_SF_Charities extends Group_Buying_Controller {
 	public static function register_columns( $columns ) {
 		unset( $columns['date'] );
 		//unset( $columns['author'] );
+		$columns['charity_id'] = __( 'Charity ID' );
 		$columns['authorized'] = __( 'Authorized' );
 		$columns['report'] = __( 'Reports' );
 		$columns['date'] = __( 'Published' );
@@ -186,6 +187,10 @@ class GB_SF_Charities extends Group_Buying_Controller {
 				}
 			}
 			echo $display;
+			break;
+		
+		case 'charity_id':
+			echo $charity->get_id();
 			break;
 		
 		case 'report':
