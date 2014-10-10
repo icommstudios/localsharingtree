@@ -66,7 +66,13 @@
 		<div id="nav_subscription" class="subscription_form clearfix">
 			<span id="subscribe_dd" class="contrast"><?php gb_e( 'Get the Latest Deals' ) ?></span>
 			<div id="subscription_form_wrap" class="cloak">
-				<?php gb_subscription_form(); ?>
+				<?php //gb_subscription_form(); ?>
+                <form action="/account/register" id="gb_continue_register_form" method="post" class="clearfix">
+                    <span class="option email_input_wrap clearfix">
+                        <input type="text" name="gb_user_email" id="gb_user_email" value="Enter your email" onblur="if (this.value == '')  {this.value = 'Enter your email';}" onfocus="if (this.value == 'Enter your email') {this.value = '';}">
+                    </span>
+                    <span class="submit clearfix"><input type="submit" class="button-primary" name="gb_continue_register" id="gb_continue_register" value="Continue →"></span>
+                </form>
 			</div>
 		</div><!-- #header_subscription.subscription_form -->
 	<?php endif ?>
