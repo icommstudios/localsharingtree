@@ -3,8 +3,8 @@
 Contributors: johnbillion  
 Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 Requires at least: 3.1  
-Tested up to: 3.9  
-Stable tag: 0.9  
+Tested up to: 4.0  
+Stable tag: 1.0  
 License: GPL v2 or later  
 
 Instant switching between user accounts in WordPress.
@@ -25,7 +25,8 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 
  * Only users with the ability to edit other users can switch user accounts. By default this is only Administrators on single site installs, and Super Admins on Multisite installs.
  * Passwords are not (and cannot be) revealed.
- * Implements WordPress' nonce security system, meaning only those who intend to switch users can switch.
+ * Uses the cookie authentication system in WordPress when remembering the account(s) you've switched from and when switching back.
+ * Implements the nonce security system in WordPress, meaning only those who intend to switch users can switch.
  * Full support for administration over SSL (if applicable).
 
 = Usage =
@@ -34,7 +35,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  2. Click this and you will immediately switch into that user account.
  3. You can switch back to your originating account via the *Switch back* link on each dashboard screen or in your profile menu in the WordPress toolbar.
 
-See the [FAQ](http://wordpress.org/plugins/user-switching/faq/) for information about the *Switch Off* feature.
+See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information about the *Switch Off* feature.
 
 = Translations Included =
 
@@ -62,7 +63,7 @@ Thanks to translations by Hassan Hisham, Tunghsiao Liu, Fx Bénard, Ralph Stenze
 
 == Installation ==
 
-If you have the [WordPress Developer plugin](http://wordpress.org/plugins/developer/) installed then User Switching is a one-click install from the Tools -> Developer screen.
+If you have the [WordPress Developer plugin](https://wordpress.org/plugins/developer/) installed then User Switching is a one-click install from the Tools -> Developer screen.
 
 Alternatively, you can install this plugin directly from your WordPress dashboard:
 
@@ -113,11 +114,17 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 == Upgrade Notice ==
 
-= 0.9 =
+= 1.0 =
 
-* Minor fixes for the `login_redirect` filter.
+* Security hardening for sites that use HTTPS in the admin area and HTTP on the front end.
 
 == Changelog ==
+
+= 1.0 =
+
+* Security hardening for sites that use HTTPS in the admin area and HTTP on the front end.
+* Add an extra auth check before the nonce verification.
+* Pretty icon next to the switch back links.
 
 = 0.9 =
 

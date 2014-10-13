@@ -206,3 +206,12 @@
 					jQuery('#easmedia_metabox_media_type').change();
 					
 });
+
+/* Page ScrollToTop */
+function scrollToTop() {
+    verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+    element = jQuery('body');
+    offset = element.offset();
+    offsetTop = offset.top;
+    jQuery('html, body').animate({scrollTop: offsetTop}, 700, 'linear');
+}

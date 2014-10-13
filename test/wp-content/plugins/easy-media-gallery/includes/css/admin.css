@@ -609,7 +609,34 @@ float:left;display:inline-block; text-decoration:none; outline:none; cursor:poin
 	background-image: -moz-linear-gradient(bottom, #009DD9, #0074A2) !important;
 	background-image: -webkit-gradient(linear, left bottom, left top, from(#009DD9), to(#0074A2)) !important;
 }	
-	
+
+/* Scroll to Top */
+.emg-scroll-top-wrapper {
+	background-image: url('../images/arrow_up.png');
+	background-repeat: no-repeat;
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    width: 40px;
+    height: 41px;
+    right: 30px;
+    bottom: 40px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+	z-index: 999;
+}
+.emg-scroll-top-wrapper:hover {
+	background-image: url('../images/arrow_up_dark.png');
+}
+.emg-scroll-top-wrapper.show {
+    visibility:visible;
+    cursor:pointer;
+    opacity: 1.0;
+}	
 
 @media only screen and (max-width: 768px) {
     .noty_buttons {

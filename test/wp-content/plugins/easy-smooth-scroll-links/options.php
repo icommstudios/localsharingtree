@@ -8,7 +8,7 @@
     <table class="widefat">
 		<thead>
 		   <tr>
-			 <th><a target="_blank" href="http://www.jeriffcheng.com/wordpress-plugins/easy-smooth-scroll-links">FAQs</a> - <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/easy-smooth-scroll-links?filter=5#postform">Rate it</a> - <a target="_blank" href="http://wordpress.org/support/plugin/easy-smooth-scroll-links">Support Forum</a>    ---- Suggestions? <a target="_blank" href="http://www.jeriffcheng.com/contact">Contact Me</a><br><br><strong  style="color: #ff0000;">Everyone should Read this Article: <a target="_blank" href="http://www.jeriffcheng.com/html-5-using-attribute-id-instead-of-attribute-name-for-anchors.html">HTML 5 – Using attribute ‘id’ instead of attribute ‘name’ for Anchors</a></strong></th>
+			 <th><a target="_blank" href="http://www.jeriffcheng.com/wordpress-plugins/easy-smooth-scroll-links">FAQs</a> - <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/easy-smooth-scroll-links?filter=5#postform">Rate it</a> - <a target="_blank" href="http://wordpress.org/support/plugin/easy-smooth-scroll-links">Support Forum</a>    ---- Suggestions? <a target="_blank" href="http://www.jeriffcheng.com/contact">Contact Me</a><br><br><strong  style="color: #ff0000;">Everyone should Read these articles: <br><a target="_blank" href="http://www.jeriffcheng.com/html-5-using-attribute-id-instead-of-attribute-name-for-anchors.html">HTML 5 – Using attribute ‘id’ instead of attribute ‘name’ for Anchors</a></strong></th>
 			 <th>
 		</thead>
 
@@ -100,60 +100,12 @@
 		</label>
 	</td>
 </tr>
-		   
 
-	   		   
-		   <tr>
-			 <td style="padding:5px;font-family:Verdana, Geneva, sans-serif;color:#666;">
-                 <label for="essl_top_enabled">
-                     <p><strong>Enable GoToTop Button ?</strong></p>
-                     <p><input type="checkbox" value="1" id="gototop_enabled" name="essl_top_enabled"  <?php if (get_option( 'essl_top_enabled' )) echo 'checked' ; ?>><strong>YES</strong>. &rarr;
-					 GoToTop Speed( Default:900) <input  size="10" id="topspeed" type="text" name="essl_top_speed" value="<?php echo get_option('essl_top_speed'); ?>" /> &rarr;Offset( Default:0) <input  size="10" id="topoffset" type="text" name="essl_top_offset" value="<?php echo get_option('essl_top_offset'); ?>" /> &rarr;Animation Effect <select name="essl_top_easing">
-    <option disabled="disabled" >Choose an Animation Effects</option>
-    <option name="essl_top_easing" value="easeInBounce" <?php echo (get_option('essl_top_easing') == "easeInBounce") ? 'selected="selected"' : ''; ?>>easeInBounce</option>
-    <option name="essl_top_easing" value="easeOutBounce"  <?php echo (get_option('essl_top_easing') == "easeOutBounce") ? 'selected="selected"' : ''; ?>>easeOutBounce</option>
-    <option name="essl_top_easing" value="easeInOutBounce"  <?php echo (get_option('essl_top_easing') == "easeInOutBounce") ? 'selected="selected"' : ''; ?>>easeInOutBounce</option>
-    <option name="essl_top_easing" value="easeInElastic"  <?php echo (get_option('essl_top_easing') == "easeInElastic") ? 'selected="selected"' : ''; ?>>easeInElastic</option>
-    <option name="essl_top_easing" value="easeOutElastic"  <?php echo (get_option('essl_top_easing') == "easeOutElastic") ? 'selected="selected"' : ''; ?>>easeOutElastic</option>
-    <option name="essl_top_easing" value="easeInOutElastic"  <?php echo (get_option('essl_top_easing') == "easeInOutElastic") ? 'selected="selected"' : ''; ?>>easeInOutElastic</option>
-    <option name="essl_top_easing" value="easeInCirc"  <?php echo (get_option('essl_top_easing') == "easeInCirc") ? 'selected="selected"' : ''; ?>>easeInCirc</option>
-    <option name="essl_top_easing" value="easeOutCirc"  <?php echo (get_option('essl_top_easing') == "easeOutCirc") ? 'selected="selected"' : ''; ?>>easeOutCirc</option>
-    <option name="essl_top_easing" value="easeInOutCirc"  <?php echo (get_option('essl_top_easing') == "easeInOutCirc") ? 'selected="selected"' : ''; ?>>easeInOutCirc</option>
-    <option name="essl_top_easing" value="easeInBack"  <?php echo (get_option('essl_top_easing') == "easeInBack") ? 'selected="selected"' : ''; ?>>easeInBack</option>
-    <option name="essl_top_easing" value="easeOutBack"  <?php echo (get_option('essl_top_easing') == "easeOutBack") ? 'selected="selected"' : ''; ?>>easeOutBack</option>
-    <option name="essl_top_easing" value="easeInOutBack"  <?php echo (get_option('essl_top_easing') == "easeInOutBack") ? 'selected="selected"' : ''; ?>>easeInOutBack</option>
-    <option name="essl_top_easing" value="easeInQuint"  <?php echo (get_option('essl_top_easing') == "easeInQuint") ? 'selected="selected"' : ''; ?>>easeInQuint</option>
-    <option name="essl_top_easing" value="easeOutQuint"  <?php echo (get_option('essl_top_easing') == "easeOutQuint") ? 'selected="selected"' : ''; ?>>easeOutQuint</option>
-    <option name="essl_top_easing" value="easeInOutQuint"  <?php echo (get_option('essl_top_easing') == "easeInOutQuint") ? 'selected="selected"' : ''; ?>>easeInOutQuint</option>
-    <option name="essl_top_easing" value="easeInExpo"  <?php echo (get_option('essl_top_easing') == "easeInExpo") ? 'selected="selected"' : ''; ?>>easeInExpo</option>
-    <option name="essl_top_easing" value="easeOutExpo"  <?php echo (get_option('essl_top_easing') == "easeOutExpo") ? 'selected="selected"' : ''; ?>>easeOutExpo</option>
-    <option name="essl_top_easing" value="easeInOutExpo"  <?php echo (get_option('essl_top_easing') == "easeInOutExpo") ? 'selected="selected"' : ''; ?>>easeInOutExpo</option>
-    <option name="essl_top_easing" value="easeInCubic"  <?php echo (get_option('essl_top_easing') == "easeInCubic") ? 'selected="selected"' : ''; ?>>easeInCubic</option>
-    <option name="essl_top_easing" value="easeOutCubic"  <?php echo (get_option('essl_top_easing') == "easeOutCubic") ? 'selected="selected"' : ''; ?>>easeOutCubic</option>
-    <option name="essl_top_easing" value="easeInOutCubic"  <?php echo (get_option('essl_top_easing') == "easeInOutCubic") ? 'selected="selected"' : ''; ?>>easeInOutCubic</option>
-    <option name="essl_top_easing" value="easeInQuart"  <?php echo (get_option('essl_top_easing') == "easeInQuart") ? 'selected="selected"' : ''; ?>>easeInQuart</option>
-    <option name="essl_top_easing" value="easeOutQuart"  <?php echo (get_option('essl_top_easing') == "easeOutQuart") ? 'selected="selected"' : ''; ?>>easeOutQuart</option>
-    <option name="essl_top_easing" value="easeInOutQuart"  <?php echo (get_option('essl_top_easing') == "easeInOutQuart") ? 'selected="selected"' : ''; ?>>easeInOutQuart</option>
-    <option name="essl_top_easing" value="easeInSine"  <?php echo (get_option('essl_top_easing') == "easeInSine") ? 'selected="selected"' : ''; ?>>easeInSine</option>
-    <option name="essl_top_easing" value="easeOutSine"  <?php echo (get_option('essl_top_easing') == "easeOutSine") ? 'selected="selected"' : ''; ?>>easeOutSine</option>
-    <option name="essl_top_easing" value="easeInOutSine"  <?php echo (get_option('essl_top_easing') == "easeInOutSine") ? 'selected="selected"' : ''; ?>>easeInOutSine</option>
-    <option name="essl_top_easing" value="easeInQuad"  <?php echo (get_option('essl_top_easing') == "easeInQuad") ? 'selected="selected"' : ''; ?>>easeInQuad</option>
-    <option name="essl_top_easing" value="easeOutQuad"  <?php echo (get_option('essl_top_easing') == "easeOutQuad") ? 'selected="selected"' : ''; ?>>easeOutQuad</option>
-    <option name="essl_top_easing" value="easeInOutQuad"  <?php echo (get_option('essl_top_easing') == "easeInOutQuad") ? 'selected="selected"' : ''; ?>>easeInOutQuad</option>
-</select></p>
-                 </label>			 
-
-             </td>
-		   </tr>			   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
+<tr>
+	<td style="padding:25px;font-family:Verdana, Geneva, sans-serif;color:#666;">	 
+		<label><strong>Enable Scrolling from One Page to Another ?</strong> </label><input type="checkbox" name="enable_essl_aggressive" value="1"<?php checked(1,get_option('enable_essl_aggressive'));?> /><br> <strong>Warning</strong>: This feature is experimental, might cause conflict with some slider plugins, or blank pages.
+	</td>
+</tr>
 		   
 		</tbody>
 		

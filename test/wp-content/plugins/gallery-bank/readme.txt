@@ -1,17 +1,21 @@
-=== Gallery Bank ===
-Contributors: Gallery-Bank,contact-banker
-Tags: admin, AJAX, album, albums, best gallery plugin, best portfolio plugin, comments, easy media gallery, filterable gallery, filterable portfolio, flash, foto, fotoalbum, gallery, gallery album, gallery bank, gallery image, gallery wordpress plugin, grid gallery, image, image album, image slider, images, lightbox, links, media, modal, multiple pictures, nextgen, page, pagination gallery, pagination portfolio, photo, photo album, photo albums, photo gallery, Photo Slider, photoalbum, photogallery, photos, picture, pictures, plugin, portfolio, portfolio gallery, portfolio wordpress plugin, Post, posts, responsive gallery, seo image, sidebar, slideshow, thumbnails, videos, website gallery, widget, wordpress gallery plugin, wordpress portfolio plugin, wp gallery, wp gallery plugin
+=== WP Gallery Bank - Best Gallery Albums Plugin ===
+Contributors: contact-banker,Gallery-Bank
+Donate link : http://tech-banker.com/gallery-bank/
+Tags: admin, AJAX, album, albums, best gallery, best gallery plugin, best portfolio plugin, comments, easy media gallery, fancy gallery, filterable gallery, filterable portfolio, flash, foto, fotoalbum, gallery, gallery album, gallery bank, gallery image, Gallery Plugin, gallery wordpress plugin, google, grid gallery, html5 player, html5 video, html5-audio, image, image album, image slider, images, lightbox, links, media, modal, multiple pictures, nextgen, page, pagination gallery, pagination portfolio, photo, photo album, photo albums, photo gallery, Photo Slider, photoalbum, photogallery, photos, picture, pictures, plugin, plugin for gallery, plugin gallery, portfolio, portfolio gallery, portfolio wordpress plugin, Post, posts, responsive gallery, seo image, shortcode, sidebar, slideshow, thumbnail, thumbnails, twitter, videos, website gallery, widget, wordpress gallery plugin, wordpress portfolio plugin, wp gallery, wp gallery plugin
 Requires at least: 3.3
-Tested up to: 3.9.1
-Stable tag: 3.0.31
+Tested up to: 3.9.2
+Stable tag: 3.0.62
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Gallery Bank is an easy to use Responsive WordPress Gallery Plugin for photos, videos, galleries and albums.
 
 == Description ==
+### [WordPress Gallery Bank - Best Gallery Albums Plugin](http://tech-banker.com/gallery-bank/)    
 
 Gallery Bank is a Wordpress Plugin designed to create elegant and beautiful gallery albums with images, videos using Grid Albums, List Albums, Individual Albums, Masonry Layouts and Thumbnail Layouts, Special Effects  & Animation Effects. 
+
+###IMPORTANT: If you think you found a bug in Gallery Bank or have any problem or question concerning Gallery Bank, do not hesitate to contact us at [support@tech-banker.com](mailto:support@tech-banker.com).  
 
 Gallery Bank has become the **Best Plugin** in the world for WordPress sites to display images. It has been designed to provide easiness and simplicity to the end user. It is a very simple but fully loaded with 200+ features(**Premium Version**) Plugin.
 
@@ -44,11 +48,11 @@ Gallery Bank has become the **Best Plugin** in the world for WordPress sites to 
 
 It provides a powerful engine for uploading and managing galleries of images & videos, with the ability to batch upload, add/delete/rearrange/sort images, edit thumbnails, 100+ settings, and even much more. It also provides different front-end display styles (filmstrips, slideshows, masonry, blog styles and thumbnail galleries), all of them comes with a wide array of options for controlling size, style, timing, transitions, controls, lightbox effects, and more.
 
-***The Gallery Bank WordPress Gallery Plugin is now proudly maintained by <a href="http://www.tech-banker.com">Tech Banker Pte Ltd.</a> since March 2014.***
+***The Gallery Bank WordPress Gallery Plugin is now proudly maintained by <a href="http://www.tech-banker.com">Tech Banker</a> since March 2014.***
 
 Gallery Bank is designed to adapt each portfolio to any situation and can be easily used on mobiles as it is a Responsive Plugin.
 
-***May 23, 2014: We're happy to announce that Gallery Bank reached 128,300+ plugin downloads in only 11 months. We frequently receive positive feedback from people using our Gallery Bank Plugin for WordPress. Thanks so much for your support!***
+***September 1, 2014: We're happy to announce that Gallery Bank reached 181,000+ plugin downloads in only 1 year. We frequently receive positive feedback from people using our Gallery Bank Plugin for WordPress. Thanks so much for your support!***
 
 <a href="http://tech-banker.com/forum/gallery-bank-support/" target="_blank">Support Desk - feel free to ask your Queries</a>
 
@@ -63,12 +67,12 @@ Gallery Bank is designed to adapt each portfolio to any situation and can be eas
 * [Captcha Bank](http://wordpress.org/extend/plugins/captcha-bank/) - An easy to use powerful wordpress Captcha Plugin to prevent spam on your site.lbums.
 
 
-= Key Features =
+### Key Features 
 
-* Multi-Lingual. Available now in 31 Languages.
+* Multi-Lingual. Available now in 33 Languages.
 * Responsive Gallery
 * Shortcode Wizard in your Page/Post.
-* Unlimited Albums Creation(**Premium Versions**). With Free Standard Version, you can only create upto 2 albums.
+* Unlimited Albums Creation(**Premium Versions**). With Free Standard Version, you can only create upto 3 albums.
 * Unlimited Images in each Album.
 * Edit Albums and add/edite/delete images.
 * Bulk Upload of Images
@@ -141,7 +145,7 @@ Visit [here](http://tech-banker.com/gallery-bank) to upgrade to Pro Version now.
 
 = Add New Albums =
 
-You can add upto 2 albums with unlimited images in your Gallery Bank. After that you need to upgrade to one of the premium versions for unlimited access with different features available according to different packages of Gallery Bank.
+You can add upto 3 albums with unlimited images in your Gallery Bank. After that you need to upgrade to one of the premium versions for unlimited access with different features available according to different packages of Gallery Bank.
 
 = Editing Albums = 
 In albums, editing can be done easily. You can edit or add more images/ pictures in your albums. You can change title/description of an album as well as title/description of each image uploaded in a particular album.
@@ -166,7 +170,7 @@ There is a Shortcode Editor availble in your Page/Post where you want to impleme
 With Global Settings, you can define different settings for Thumbnails, Albums, Lightboxes, Filters, Pagination and Slideshows.
 
 
-= Gallery Bank is now available in the following Languages = 
+### Gallery Bank is now available in the following Languages
 
 * Albanian (sq_AL)
 * Arabic (ar)
@@ -210,12 +214,26 @@ With Global Settings, you can define different settings for Thumbnails, Albums, 
 
 == Installation ==
 
-1. Login to your website and go to the Plugins section of your admin panel.
-2. Click the Add New button.
-3. Under Install Plugins, click the Upload link.
-4. Select the plugin zip file (gallery-bank.zip) from your computer then click the Install Now button.
-5. You should see a message stating that the plugin was installed successfully.
-6. Click the Activate Plugin link.
+### Minimum requirements.  
+*   Wordpress 3.3+  
+*   PHP 5.x  
+*   MySQL 5.x  
+
+### Performing a new installation  
+
+After downloading the ZIP file,  
+
+1. Log in to the administrator panel.  
+2. Go to Plugins Add > New > Upload.  
+3. Click “Choose file” (“Browse”) and select the downloaded zip file.  
+
+*For Mac Users*  
+*Go to your Downloads folder and locate the folder with the plugin. Right-click on the folder and select Compress. Now you have a newly created .zip file which can be installed as described here.*  
+
+1. Click “Install Now” button.  
+2. Click “Activate Plugin” button for activating the plugin.  
+
+If any problem occurs, please contact us at [support@tech-banker.com](mailto:support@tech-banker.com).
 
 == Frequently Asked Questions ==
 
@@ -480,8 +498,139 @@ is False in shortcode.
 16. Displaying List Album with Images.
 17. Displaying Individual Album with Images.
 
-
 == Changelog ==
+
+= 3.0.62 =
+
+* Few Bugs Fixed
+* Banner Updated
+
+= 3.0.61 =
+
+* Major Security Bug Fixed related to Upload.php file
+
+= 3.0.60 =
+
+* Few Bugs Fixed
+
+= 3.0.59 = 
+
+* Chinese Language Updated
+
+= 3.0.58 =
+
+* Few Bugs Fixed
+
+= 3.0.57 =
+
+* Few Bugs Fixed
+
+= 3.0.56 = 
+
+* Slovak Language Updated
+
+= 3.0.55 = 
+
+* Few Bugs Fixed
+
+= 3.0.54 = 
+
+* Few Bugs Fixed
+* Few Possible Security Issues Addressed
+
+= 3.0.53 = 
+
+* Language Bug Fixed
+
+= 3.0.52 = 
+
+* Danish Language Updated
+
+= 3.0.51 = 
+
+* Social Icons Added to Lightbox
+
+= 3.0.50 = 
+
+* Few Possible Security Issues Addressed
+
+= 3.0.49 = 
+
+* Polish Language Updated
+
+= 3.0.48 = 
+
+* Czech Language Updated
+
+= 3.0.47 =
+
+* Advanced Security for Plugin Implemented
+
+= 3.0.46 = 
+
+* Hungarian Language Updated
+
+= 3.0.45 =
+
+* Few Bugs Fixed
+* Banner Updated
+
+= 3.0.44 =
+
+* Arabic Language Updated
+
+= 3.0.43 =
+
+* Few Bugs Fixed
+* Banner Updated
+
+= 3.0.42 =
+
+* Thai Language Updated
+
+= 3.0.41 =
+
+* Few Bugs Fixed
+* Banner Updated
+
+= 3.0.40 =
+
+* Bug Fixed with Menu Links shown to Subscriber and other roles.
+
+= 3.0.39 =
+
+* Russian Language Updated
+
+= 3.0.38 =
+
+* Few Bugs Fixed
+* Banner Updated
+
+= 3.0.37 =
+
+* Major Bug Fixed related to Saving of Images
+* Major Bug Fixed related to Editing of existing Albums
+
+= 3.0.36 =
+
+* Bug Fixed related to Saving of Albums
+
+= 3.0.35 =
+
+* Major Security Bug Fixed related to Upload.php file
+
+= 3.0.34 =
+
+* Bugs Fixed Related to Set as Album 
+
+= 3.0.33 =
+
+* Few Bugs Fixed
+* Broken Add New Album Link Fixed
+
+= 3.0.32 =
+
+* Major Bug fixed with saving of Data
 
 = 3.0.31 =
 

@@ -199,7 +199,7 @@ switch ($album_type) {
         $index = array_search("language_direction", $setting_keys);
         $lang_dir_setting = $album_css[$index]->setting_value;
 		
-        $video_thumb_url = GALLERY_BK_PLUGIN_URL . "/assets/images/video.jpg";
+        $video_thumb_url = plugins_url("/assets/images/video.jpg",dirname(__FILE__));
         
 
 	break;

@@ -2,12 +2,12 @@
 Contributors: Acurax 
 Donate link:http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/
 
-Tags: social media,social,social media widget,social media icon,socialmedia,pinterest,social icon,social floating icon,social profiles,floating social media button,twitter facebook,social media button,google plus,google+
+Tags: floating social media, social network icon, social media widget, social media icon, socialmedia, social network widget, social floating icon, social profiles, floating social media button, social media button
 Requires at least: 2.8
-Tested up to: 3.8.1
+Tested up to: 3.9.1
 Stable tag: trunk
 
-Easy 2 Use Plugin 2 Show SocialMedia Icons That Floats,Can Configure Social Icon Design,Order & Size at Plugin Settings, Suport Widget & Shortcode
+Easy 2 Use Plugin 2 Show SocialMedia Icons That Floats,Can Configure Social Icon Design,Order & Size, Support Widget & Shortcode
 
 == Description ==
 
@@ -25,9 +25,9 @@ A Quicklook
 	
 	★ Enable/Disable Floating
 	
-	★ Most Downloaded Plugin With Floating Support
+	★ Most Downloaded Floating Social Network Plugin.
 	
-	★ Less Load - Essential Social Medias Only
+	★ Less Load - Essential Social Media Only
 	
 	★ Easy to Configure
 	
@@ -35,13 +35,11 @@ A Quicklook
 	
 	★ Featured Plugin On Many Plugin Review Sites
 
-You can make the icons to appear automatically or you can use social media widgets,
-short-code or PHP code to display icons where ever you like to show.
-If you use the option to show it automatically.
+You can make the social media icons to appear automatically or you can use social media widgets,
+short-code or PHP code to display the social media icons where ever you like to want.
 
-[Floating Social Media Icon Premium Version is available with more features and performance improvements](http://clients.acurax.com/link.php?id=11/ "Floating Social Media Icon Premium")
-
-The icons will fly from top left to bottom right and it will stay there
+If you choose to show Social Media Icon automatically.
+The icons will fly from top left to bottom right and the social media icons will stay there
 even if	user scrolls the page, thus it floats
 
 = [ LIVE DEMO ] =
@@ -53,11 +51,11 @@ even if	user scrolls the page, thus it floats
 
 Multiple Social Media Widget Support
 
-	★ Each Social Media Widget Can Have Seperate Icon Theme and Icon Size 
+	★ Each Social Media Widget Can Have Separate Icon Theme and Icon Size 
  
 Shortcode Support
 	
-	★ Each Shortcode Support Seperate social media Icon Theme and Icon Size (check faq)
+	★ Each Shortcode Support Separate social media Icon Theme and Icon Size (check faq)
 
 Icons in content
 
@@ -86,13 +84,7 @@ We Always Look Forward Your Comments and Suggestions for Future Updates. You can
 
 [Click Here To See a Live Demo](http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/ "Floating Social Media Icon Demo")
 
-**Want More Features?**
-
-[Click here to see the comparison between premium and free version.](http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/ "Premium Free Comparison")
-
-
-
-[Click Here to Order Professional Installation/Integration Service](http://clients.acurax.com/link.php?id=4/ "Professional Integration Service")
+[Floating Social Media Icon Premium Version is Available With more Features and Performance Improvements](http://clients.acurax.com/link.php?id=11/ "Floating Social Media Icon Premium")
 
 **About**
 
@@ -114,7 +106,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 Then Visit Plugin Configuration Settings and select a theme and size for icons. configure your social profile url. You are done!
 
-You need to go to Apperance >> Widgets to add "Acx Social Icon" Widget to your sidebar
+You need to go to Appearance >> Widgets to add "Acx Social Icon" Widget to your sidebar
 If you selected display mode as manual, you can use the shortcodes which is clearly mentioned in [Faq](http://wordpress.org/extend/plugins/floating-social-media-icon/faq/ "Frequently Asked Questions") section.
 
 [youtube http://www.youtube.com/watch?v=oK1iCywcjZY]
@@ -124,7 +116,7 @@ If you selected display mode as manual, you can use the shortcodes which is clea
 	NOTE: This video is old version video. Check Screenshots for
 	New Settings Page Option Preview.
 
-After Installation,Dont Forgot to Cast Your Vote on Combatibility :) Thanks for trying...
+After Installation,Dont Forgot to Cast Your Vote on Compatibility :) Thanks for trying...
 
 == Frequently Asked Questions ==
 
@@ -134,11 +126,11 @@ To hide an icon, Just dont give any value for that button link.. it will automat
 
 = Why the floating social media icon is not displaying on my page even if i made all properly? =
 
-Our Plugin Uses Hooks to integrate the suppported javascripts styles and html to the theme. So Make sure your theme **footer.php** have  **&lt;?php wp_footer(); ?&gt;** and **header.php** have  **&lt;?php wp_head(); ?&gt;** , Most of all the plugins work with the support of this code and if this is not present on your theme.. Its your themes mistake..
+Our Plugin Uses Hooks to integrate the supported javascripts styles and html to the theme. So Make sure your theme **footer.php** have  **&lt;?php wp_footer(); ?&gt;** and **header.php** have  **&lt;?php wp_head(); ?&gt;** , Most of all the plugins work with the support of this code and if this is not present on your theme.. Its your themes mistake..
 
 = How can i integrate the  **&lt;?php wp_footer(); ?&gt;** and  **&lt;?php wp_head(); ?&gt;** to my theme if it is not present on my theme? =
 
-It can be easily done.. Just to go Theme Editor which is under apperance and select footer.php and add  **&lt;?php wp_footer(); ?&gt;** before the closing body tag which is  **</body>** and then go and edit header.php and add  **&lt;?php wp_head(); ?&gt;** just before the closing head tag which is  **</head>**
+It can be easily done.. Just to go Theme Editor which is under appearance and select footer.php and add  **&lt;?php wp_footer(); ?&gt;** before the closing body tag which is  **</body>** and then go and edit header.php and add  **&lt;?php wp_head(); ?&gt;** just before the closing head tag which is  **</head>**
 
 = Can i disable the automated integration and place where ever i want? =
 
@@ -183,7 +175,7 @@ Possible, Its an advanced option, you just needs to upload your social icons to 
 
 Plugin Support Social Media Widget with almost same features of the shortcodes, You can have **many number of widgets where on each widget you can configure the Social Media Icons size and Icon Design/Style**.
 
-To add a widget to your sidebar.. you theme must support sidebars. Go to **Apperance >> Widgets**,to add "Acx Social Icons" widget to your sidebar.
+To add a widget to your sidebar.. you theme must support sidebars. Go to **Appearance >> Widgets**,to add "Acx Social Icons" widget to your sidebar.
 
 = How Many Social Media Widget Can i use? =
 
@@ -219,6 +211,14 @@ Have more questions ? [Drop a mail](http://www.acurax.com/contact.php/ "Drop an 
 4. Icon Size Selection, Reorder Icons Drag and Drop, Social Media Profile Link Settings. (Low Quality Screenshot To Load Fast)
 
 == Upgrade Notice ==
+
+= 1.3.5 =
+* June 04, 2014 | NOTE: Upgrading Will Not Make Any Changes to Settings/Configurations. Upgrade With Confidence :)
+* Added Option to Disable Floating Icons on Mobile Devices
+* Theme Warning Ignore Option
+* Added Troubleshooting Options
+* Improved User Interface
+* Stable Release
 
 = 1.3.4 =
 * March 07, 2014 | NOTE: UPGRADING PLUGIN WILL NOT CHANGE YOUR SETTINGS/CONFIGURATION.. UPGRADE WITH CONFIDENCE :)
@@ -331,6 +331,14 @@ Have more questions ? [Drop a mail](http://www.acurax.com/contact.php/ "Drop an 
 * Fixed Design Icon Clarity
 
 == Changelog ==
+
+= 1.3.5 =
+* June 04, 2014 | NOTE: UPGRADING PLUGIN WILL NOT CHANGE YOUR SETTINGS/CONFIGURATION.. UPGRADE WITH CONFIDENCE :)
+* Added Option to Disable Floating on Mobile Devices
+* Theme Warning Ignore Option
+* Added Troubleshooting Options
+* Improved User Interface
+* Stable Release
 
 = 1.3.4 =
 * March 07, 2014 | NOTE: UPGRADING PLUGIN WILL NOT CHANGE YOUR SETTINGS/CONFIGURATION.. UPGRADE WITH CONFIDENCE :)

@@ -1,10 +1,6 @@
 <?php
-global $wpdb,$current_user,$user_role_permission;
 $dynamicArray = array();
 $dynamicId = mt_rand(10, 10000);
-$role = $wpdb->prefix . "capabilities";
-$current_user->role = array_keys($current_user->$role);
-$role = $current_user->role[0];
 	switch($role)
 	{
 		case "administrator":
@@ -16,12 +12,7 @@ $role = $current_user->role[0];
 		case "author":
 			$user_role_permission = "publish_posts";
 		break;
-		case "contributor":
-			$user_role_permission = "edit_posts";
-		break;
-		case "subscriber":
-			$user_role_permission = "read";
-		break;
+		
 	}
 
 if (!current_user_can($user_role_permission))
@@ -47,7 +38,7 @@ else
 	        $column2 = "<a  href=\"javascript:void(0);\" title=\"" . $img_name . "\" >
 					<img type=\"image\" imgPath=\"" . $img_path . "\"  src=\"" . GALLERY_BK_THUMB_SMALL_URL . $img_path . "\" id=\"ux_gb_img\" name=\"ux_gb_img\" class=\"img dynamic_css\" imageid=\"" . $picid . "\" width=\"" . $img_width . "\"/></a><br/>
 					<label><strong>" . $img_name . "</strong></label><br/><label>" . date("F j, Y") . "</label><br/>
-					<input type=\"radio\" style=\"cursor: pointer;\" id=\"ux_rdl_cover\" name=\"ux_album_cover\" /><label>" . __(" Set as Album Cover", gallery_bank) . "</label>";
+					<input type=\"radio\" style=\"cursor: pointer;\" onclick=\"select_one_radio(this);\" id=\"ux_rdl_cover\" name=\"ux_album_cover\" /><label>" . __(" Set as Album Cover", gallery_bank) . "</label>";
 	        array_push($dynamicArray, $column2);
 	
 	        $column3 = "<input placeholder=\"" . __("Enter your Title", gallery_bank) . "\" class=\"layout-span12\" type=\"text\" name=\"ux_img_title_" . $picid . "\" id=\"ux_img_title_" . $picid . "\" />
@@ -66,86 +57,26 @@ else
 	        $ux_albumid = intval($_REQUEST["album_id"]);
 	        $ux_controlType = esc_attr($_REQUEST["controlType"]);
 	        $ux_img_name = esc_attr(html_entity_decode($_REQUEST["imagename"]));
-	        $ux_albumCover = esc_attr($_REQUEST["isAlbumCoverSet"]);
-	        $ux_title = html_entity_decode(esc_attr($_REQUEST["title"]));
-	        $ux_description = html_entity_decode(esc_attr($_REQUEST["description"]));
-	        $ux_tags = html_entity_decode(esc_attr($_REQUEST["tags"]));
-	        $ux_urlRedirect = esc_attr($_REQUEST["urlRedirect"]);
 	        $img_gb_path = esc_attr($_REQUEST["img_gb_path"]);
-	        $cover_width = intval($_REQUEST["cover_width"]);
-	        $cover_height = intval($_REQUEST["cover_height"]);
 	
 	        if ($ux_controlType == "image") {
-	            if ($ux_albumCover == "checked")
-	            {
-	                $wpdb->query
-	                    (
-	                        $wpdb->prepare
-	                            (
-	                                "INSERT INTO " . gallery_bank_pics() . " (album_id,thumbnail_url,title,description,url,video,date,tags,pic_name,album_cover)
-								VALUES(%d,%s,%s,%s,%s,%d,CURDATE(),%s,%s,%d)",
-	                                $ux_albumid,
-	                                $img_gb_path,
-	                                $ux_title,
-	                                $ux_description,
-	                                $ux_urlRedirect,
-	                                0,
-	                                $ux_tags,
-	                                $ux_img_name,
-	                                1
-	                            )
-	                    );
-	                process_album_upload($img_gb_path, $cover_width, $cover_height);
-	            } 
-	            else
-	            {
-	                $wpdb->query
-	                    (
-	                        $wpdb->prepare
-	                            (
-	                                "INSERT INTO " . gallery_bank_pics() . " (album_id,thumbnail_url,title,description,url,video,date,tags,pic_name,album_cover)
-								VALUES(%d,%s,%s,%s,%s,%d,CURDATE(),%s,%s,%d)",
-	                                $ux_albumid,
-	                                $img_gb_path,
-	                                $ux_title,
-	                                $ux_description,
-	                                $ux_urlRedirect,
-	                                0,
-	                                $ux_tags,
-	                                $ux_img_name,
-	                                0
-	                            )
-	                    );
-	            }
-	            echo $pic_id = $wpdb->insert_id;
-	            $wpdb->query
-	                (
-	                    $wpdb->prepare
-	                        (
-	                            "UPDATE " . gallery_bank_pics() . " SET sorting_order = %d WHERE pic_id = %d",
-	                            $pic_id,
-	                            $pic_id
-	                        )
-	                );
-	        }
-	        else
-	        {
-	            $wpdb->query
-	                (
-	                    $wpdb->prepare
-	                        (
-	                            "INSERT INTO " . gallery_bank_pics() . " (album_id,thumbnail_url,title,description,url,video,date,tags,pic_name)
-							VALUES(%d,%s,%s,%s,%s,%d,CURDATE(),%s,%s)",
-	                            $ux_albumid,
-	                            "",
-	                            $ux_title,
-	                            $ux_description,
-	                            $ux_urlRedirect,
-	                            1,
-	                            $ux_tags,
-	                            $ux_img_name
-	                        )
-	                );
+                $wpdb->query
+                    (
+                        $wpdb->prepare
+                            (
+                                "INSERT INTO " . gallery_bank_pics() . " (album_id,thumbnail_url,title,description,url,video,date,tags,pic_name,album_cover)
+							VALUES(%d,%s,%s,%s,%s,%d,CURDATE(),%s,%s,%d)",
+                                $ux_albumid,
+                                $img_gb_path,
+                                "",
+                                "",
+                                "http://",
+                                0,
+                                "",
+                                $ux_img_name,
+                                0
+                            )
+                    );
 	            echo $pic_id = $wpdb->insert_id;
 	            $wpdb->query
 	                (
@@ -164,7 +95,7 @@ else
 	        $albumId = intval($_REQUEST["albumid"]);
 	        $ux_edit_album_name1 = htmlspecialchars(esc_attr($_REQUEST["edit_album_name"]));
 	        $ux_edit_album_name = ($ux_edit_album_name1 == "") ? "Untitled Album" : $ux_edit_album_name1;
-	        $ux_edit_description = html_entity_decode(esc_attr($_REQUEST["uxEditDescription"]));
+	        $ux_edit_description = htmlspecialchars($_REQUEST["uxEditDescription"]);
 	        $wpdb->query
 	            (
 	                $wpdb->prepare
@@ -179,63 +110,63 @@ else
 	    }
 	    else if ($_REQUEST["param"] == "update_pic")
 	    {
-	        $ux_picId = intval($_REQUEST["picId"]);
-	        $ux_controlType = esc_attr($_REQUEST["controlType"]);
-	        $ux_albumCover = $_REQUEST["isAlbumCoverSet"];
-	        $ux_title = html_entity_decode(esc_attr($_REQUEST["title"]));
-	        $ux_description = html_entity_decode(esc_attr($_REQUEST["description"]));
-	       	$ux_tags = html_entity_decode(esc_attr($_REQUEST["tags"]));
-	        $ux_urlRedirect = esc_attr($_REQUEST["urlRedirect"]);
-	        $img_gb_path = esc_attr($_REQUEST["img_gb_path"]);
-	        $cover_width = intval($_REQUEST["cover_width"]);
-	        $cover_height = intval($_REQUEST["cover_height"]);
-	        if ($ux_controlType == "image") {
-	            if ($ux_albumCover == "checked") {
-	                $wpdb->query
-	                    (
-	                        $wpdb->prepare
-	                            (
-	                                "UPDATE " . gallery_bank_pics() . " SET title = %s, description = %s, url = %s, date = CURDATE(), tags = %s, album_cover = %d WHERE pic_id = %d",
-	                                $ux_title,
-	                                $ux_description,
-	                                $ux_urlRedirect,
-	                                $ux_tags,
-	                                1,
-	                                $ux_picId
-	                            )
-	                    );
-	                process_album_upload($img_gb_path, $cover_width, $cover_height);
-	            } else {
-	                $wpdb->query
-	                    (
-	                        $wpdb->prepare
-	                            (
-	                                "UPDATE " . gallery_bank_pics() . " SET title = %s, description = %s, url = %s, date = CURDATE(), tags = %s, album_cover = %d WHERE pic_id = %d",
-	                                $ux_title,
-	                                $ux_description,
-	                                $ux_urlRedirect,
-	                                $ux_tags,
-	                                0,
-	                                $ux_picId
-	                            )
-	                    );
-	            }
-	        } else {
-	            $wpdb->query
-	                (
-	                    $wpdb->prepare
-	                        (
-	                            "UPDATE " . gallery_bank_pics() . " SET title = %s, description = %s, date = CURDATE(), tags = %s, album_cover = %d WHERE pic_id = %d",
-	                            $ux_title,
-	                            $ux_description,
-	                            $ux_tags,
-	                            0,
-	                            $ux_picId
-	                        )
-	                );
-	        }
-	        die();
-	    }
+            $album_data = json_decode(stripcslashes($_REQUEST["album_data"]),true);
+            foreach($album_data as $field)
+            {
+                if ($field[0] == "image")
+                {
+                    if ($field[3] == "checked")
+                    {
+                        $wpdb->query
+                            (
+                                $wpdb->prepare
+                                    (
+                                        "UPDATE " . gallery_bank_pics() . " SET title = %s, description = %s, url = %s, date = CURDATE(), tags = %s, album_cover = %d WHERE pic_id = %d",
+                                        htmlspecialchars($field[4]),
+                                        htmlspecialchars($field[5]),
+                                        $field[7],
+                                        htmlspecialchars($field[6]),
+                                        1,
+                                        $field[1]
+                                    )
+                            );
+                        process_album_upload($field[2], $field[8], $field[9]);
+                    }
+                    else
+                    {
+                        $wpdb->query
+                            (
+                                $wpdb->prepare
+                                    (
+                                        "UPDATE " . gallery_bank_pics() . " SET title = %s, description = %s, url = %s, date = CURDATE(), tags = %s, album_cover = %d WHERE pic_id = %d",
+                                        htmlspecialchars($field[4]),
+                                        htmlspecialchars($field[5]),
+                                        $field[7],
+                                        htmlspecialchars($field[6]),
+                                        0,
+                                        $field[1]
+                                    )
+                            );
+                    }
+                }
+                else
+                {
+                    $wpdb->query
+                        (
+                            $wpdb->prepare
+                                (
+                                    "UPDATE " . gallery_bank_pics() . " SET title = %s, description = %s, date = CURDATE(), tags = %s, album_cover = %d WHERE pic_id = %d",
+                                    htmlspecialchars($field[4]),
+                                    htmlspecialchars($field[5]),
+                                    htmlspecialchars($field[6]),
+                                    0,
+                                    $field[1]
+                                )
+                        );
+                }
+            }
+            die();
+        }
 	    else if ($_REQUEST["param"] == "delete_pic")
 	    {
 	        $delete_array = (html_entity_decode($_REQUEST["delete_array"]));

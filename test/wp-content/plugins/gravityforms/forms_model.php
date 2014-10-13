@@ -657,6 +657,7 @@ class GFFormsModel {
         $lead_notes_table = self::get_lead_notes_table_name();
         $lead_detail_table = self::get_lead_details_table_name();
         $lead_detail_long_table = self::get_lead_details_long_table_name();
+        $lead_meta_table = self::get_lead_meta_table_name();
 
         do_action("gform_delete_entries", $form_id, $status);
 
@@ -687,6 +688,13 @@ class GFFormsModel {
                                     SELECT id FROM $lead_table WHERE form_id=%d {$status_filter}
                                 )", $form_id);
         $wpdb->query($sql);
+
+        //Delete from lead meta
+        $sql = $wpdb->prepare(" DELETE FROM $lead_meta_table
+        						WHERE lead_id IN (
+        							SELECT id FROM $lead_table WHERE form_id=%d {$status_filter}
+                                )", $form_id);
+    	$wpdb->query($sql);
 
         //Delete from lead
         $sql = $wpdb->prepare("DELETE FROM $lead_table WHERE form_id=%d {$status_filter}", $form_id);
@@ -784,6 +792,9 @@ class GFFormsModel {
 
         //copying confirmation meta
         self::update_form_meta($new_id, $confirmations, "confirmations");
+
+        do_action("gform_after_duplicate_form", $form_id, $new_id);
+
         return $new_id;
     }
 
@@ -1469,7 +1480,7 @@ class GFFormsModel {
         return null;
     }
 
-    public static function is_value_match( $field_value, $target_value, $operation="is", $source_field = null, $rule = null ){
+    public static function is_value_match( $field_value, $target_value, $operation="is", $source_field = null, $rule = null, $form = null ) {
 
         $is_match = false;
 
@@ -1497,7 +1508,7 @@ class GFFormsModel {
             $is_match = true;
         }
 
-        return apply_filters( 'gform_is_value_match', $is_match, $field_value, $target_value, $operation, $source_field, $rule );
+        return apply_filters( 'gform_is_value_match', $is_match, $field_value, $target_value, $operation, $source_field, $rule, $form );
     }
 
     private static function try_convert_float($text){
@@ -1579,7 +1590,7 @@ class GFFormsModel {
             $source_field = RGFormsModel::get_field($form, $rule["fieldId"]);
             $field_value = empty($lead) ? self::get_field_value($source_field, $field_values) : self::get_lead_field_value($lead, $source_field);
 
-            $is_value_match = self::is_value_match($field_value, $rule["value"], $rule["operator"], $source_field);
+            $is_value_match = self::is_value_match( $field_value, $rule['value'], $rule['operator'], $source_field, $rule, $form );
 
             if($is_value_match)
                 $match_count++;
@@ -2001,7 +2012,7 @@ class GFFormsModel {
             break;
 
             case "date" :
-                $value = self::prepare_date($field["dateFormat"], $value);
+                $value = self::prepare_date( rgar( $field, 'dateFormat' ), $value);
 
             break;
 
@@ -2108,13 +2119,23 @@ class GFFormsModel {
 
             break;
 
+            case 'password':
+
+                $encrypt_password = apply_filters( 'gform_encrypt_password', false, $field, $form );
+                if( $encrypt_password ) {
+                    $value = GFCommon::encrypt( $value );
+                    self::set_encrypted_fields( $lead_id, $field['id'] );
+                }
+
+            break;
+
             default:
 
                 // only filter HTML on non-array based values
                 if( ! is_array( $value ) ) {
 
                     //allow HTML for certain field types
-                    $allow_html = in_array($field["type"], array("post_custom_field", "post_title", "post_content", "post_excerpt", "post_tags")) || in_array($input_type, array("checkbox", "radio")) ? true : false;
+                    $allow_html = in_array($field["type"], array("post_custom_field", "post_title", "post_content", "post_excerpt", "post_tags" )) || in_array($input_type, array("checkbox", "radio")) ? true : false;
                     $allowable_tags = apply_filters("gform_allowable_tags_{$form_id}", apply_filters("gform_allowable_tags", $allow_html, $field, $form_id), $field, $form_id);
 
                     if($allowable_tags !== true)
@@ -3334,6 +3355,7 @@ class GFFormsModel {
 
         //running entry through gform_get_field_value filter
         foreach($leads as &$lead){
+
             foreach($form["fields"] as $field){
                 // skip types html, page and section?
                 if(isset($field["inputs"]) && is_array($field["inputs"])){
@@ -3341,9 +3363,15 @@ class GFFormsModel {
                         $lead[(string)$input["id"]] = apply_filters("gform_get_input_value", rgar($lead, (string)$input["id"]), $lead, $field, $input["id"]);
                     }
                 }
-                else{
+                else {
 
-                    $lead[$field["id"]] = apply_filters("gform_get_input_value", rgar($lead, (string)$field["id"]), $lead, $field, "");
+                    $value = rgar( $lead, (string) $field['id'] );
+
+                    if( self::is_encrypted_field( $lead['id'], $field['id'] ) )
+                        $value = GFCommon::decrypt( $value );
+
+                    $lead[$field["id"]] = apply_filters("gform_get_input_value", $value, $lead, $field, "" );
+
                 }
             }
         }
@@ -4074,7 +4102,60 @@ class GFFormsModel {
                     break;
                 case "global":
 
-                    $sql_array[] = $wpdb->prepare("value $operator %s", $search_term);
+					// include choice text
+					$forms = array();
+					if ( $form_id == 0 ) {
+						$forms = GFAPI::get_forms();
+					} elseif ( is_array( $form_id ) ) {
+						foreach ( $form_id as $id ){
+							$forms[] = GFAPI::get_form( $id );
+						}
+					} else {
+						$forms[] = GFAPI::get_form( $form_id );
+					}
+
+					$choice_texts_clauses = array();
+					foreach ( $forms as $form ) {
+						if ( isset( $form['fields'] ) ) {
+							$choice_texts_clauses_for_form = array();
+							foreach ( $form['fields'] as $field ) {
+								$choice_texts_clauses_for_field = array();
+								if ( isset( $field['choices'] ) && is_array( $field['choices'] ) ) {
+									foreach ( $field['choices'] as $choice ) {
+										if ( ( $operator == '=' && strtolower( $choice['text'] ) == strtolower( $val ) ) || ( $operator == 'like' && strpos( strtolower( $choice['text'] ), strtolower( $val ) ) !== false ) ) {
+											if ( rgar( $field, 'gsurveyLikertEnableMultipleRows' ) ){
+												$choice_value =  '%' . $choice['value'] . '%' ;
+												$choice_search_operator = 'like';
+											} else {
+												$choice_value =  $choice['value'];
+												$choice_search_operator = '=';
+											}
+											$choice_texts_clauses_for_field[] = $wpdb->prepare( "field_number BETWEEN %s AND %s AND value {$choice_search_operator} %s", (float) $field['id'] - 0.0001, (float) $field['id'] + 0.9999, $choice_value );
+										}
+									}
+								}
+								if ( ! empty( $choice_texts_clauses_for_field ) ) {
+									$choice_texts_clauses_for_form[] = join( ' OR ', $choice_texts_clauses_for_field );
+								}
+							}
+						}
+						if ( ! empty( $choice_texts_clauses_for_form ) ) {
+							$choice_texts_clauses[] = '(l.form_id = ' . $form['id'] . ' AND (' . join( ' OR ', $choice_texts_clauses_for_form ) . ' ))';
+						}
+					}
+					$choice_texts_clause = '';
+					if ( ! empty( $choice_texts_clauses) ){
+						$choice_texts_clause = join( ' OR ', $choice_texts_clauses );
+						$choice_texts_clause = "
+						l.id IN (
+                        SELECT
+                        lead_id
+                        FROM {$lead_details_table_name}
+                        WHERE {$choice_texts_clause} ) OR ";
+					}
+
+					$choice_value_clause = $wpdb->prepare( "value {$operator} %s", $search_term );
+					$sql_array[] = '(' . $choice_texts_clause . $choice_value_clause . ')';
                     break;
                 case "meta":
                     /* doesn't support "<>" for multiple values of the same key */
@@ -4349,6 +4430,33 @@ class GFFormsModel {
         }
         return $element;
     }
+
+    public static function get_encrypted_fields( $entry_id ) {
+
+        $encrypted_fields = gform_get_meta( $entry_id, '_encrypted_fields' );
+        if( empty( $encrypted_fields ) )
+            $encrypted_fields = array();
+
+        return $encrypted_fields;
+    }
+
+    public static function set_encrypted_fields( $entry_id, $field_ids ) {
+
+        if( ! is_array( $field_ids ) )
+            $field_ids = array( $field_ids );
+
+        $encrypted_fields = array_merge( self::get_encrypted_fields( $entry_id ), $field_ids );
+
+        gform_update_meta( $entry_id, '_encrypted_fields', $encrypted_fields );
+
+        return true;
+    }
+
+    public static function is_encrypted_field( $entry_id, $field_id ) {
+        $encrypted_fields = self::get_encrypted_fields( $entry_id );
+        return in_array( $field_id, $encrypted_fields );
+    }
+
 }
 
 class RGFormsModel extends GFFormsModel { }

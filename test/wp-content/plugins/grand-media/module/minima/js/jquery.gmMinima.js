@@ -1,6 +1,6 @@
 /*
  * Title                   : Minima Gallery Module
- * Version                 : 2.2
+ * Version                 : 2.5
  * Copyright               : 2013 CodEasily.com
  * Website                 : http://www.codeasily.com
  */
@@ -19,6 +19,7 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 				max_img_h = 0,
 
 				opt = {
+					'height': '500',
 					'property0': 'opaque', /* wmode */
 					'customCSS': '',
 					'moduleUrl': '',
@@ -39,6 +40,7 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 					'postID': 0
 				},
 				bool = {
+					'lockheight': false,
 					'autoSlideshow': true, /* autoSlideshow */
 					'counterStatus': true, /* counterStatus */
 					'hitcounter': false,
@@ -130,6 +132,7 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 							 });*/
 
 							// set responsive gallery height
+							var hiddenBustedItems = prototypes.doHideBuster($(Container));
 							var bars_height = opt.thumbnailsHeight + 80;
 							var size = prototypes.responsive_size(bars_height);
 							$('#gmMinima_ID' + ID + '_Flash', Container).css({'width':size[0], 'height': size[1]});
@@ -138,6 +141,7 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 								$('#gmMinima_ID' + ID + '_Flash', Container).css({'width':size[0], 'height': size[1]});
 							});
 							$(window).trigger('resize');
+							prototypes.undoHideBuster(hiddenBustedItems);
 						} else{
 							methods.noFlash();
 						}
@@ -155,25 +159,25 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 							$(pane).show().siblings('.gmcategory').hide();
 						});
 						$('.gmcategory', Container).not(':first').hide();
-						if(!$.isFunction($.fn.photoSwipe)){
+						if($.isFunction($.fn.photoSwipe)){
+							methods.alternative();
+						} else{
 							$('<link/>', {
 								rel: 'stylesheet',
 								type: 'text/css',
 								href: opt.pluginUrl + opt.photoswipe_css
 							}).appendTo('head');
 							$.getScript(opt.pluginUrl + opt.photoswipe_js)
-								.done(function( script, textStatus ) {
+								.done(function(script, textStatus){
 									methods.alternative();
 								});
-						} else{
-							methods.alternative();
 						}
 					},
 					alternative: function(){
 						setTimeout(function(){
 							$('.flashmodule_alternative', Container).removeClass('delay');
 						}, 3000);
-						var gmBodyScroll,
+						var gmBodyScrollTop, gmBodyScrollLeft,
 							psShowCaption, psImgTitle, psImgCaption = '', curel,
 							options = {
 								allowUserZoom:false,
@@ -228,7 +232,8 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 						$('.gmcategory', Container).each(function(){
 							var instance;
 							instance = $('a.photoswipe',this).on('click',function(){
-								gmBodyScroll = $('body').scrollTop();
+								gmBodyScrollTop = $('body').scrollTop();
+								gmBodyScrollLeft = $('body').scrollLeft();
 							}).photoSwipe(options);
 
 							instance.addEventHandler('PhotoSwipeOnSlideshowStart', function(){
@@ -240,6 +245,7 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 								$('.ps-slidetime').stop().width(0);
 							});
 							instance.addEventHandler('PhotoSwipeOnBeforeShow', function(e){
+								$(window).scrollLeft(0);
 								$('html').addClass('ps-noscroll');
 							});
 							instance.addEventHandler('PhotoSwipeOnShow', function(e){
@@ -257,7 +263,7 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 							instance.addEventHandler('PhotoSwipeOnHide', function(e){
 								$('html').removeClass('ps-noscroll');
 								$('.ps-slidetime').remove();
-								$(window).scrollTop(gmBodyScroll);
+								$(window).scrollTop(gmBodyScrollTop).scrollLeft(gmBodyScrollLeft);
 							});
 							instance.addEventHandler('PhotoSwipeOnDisplayImage', function(e){
 								curel = instance.getCurrentImage();
@@ -304,8 +310,12 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 					responsive_size: function(corr){
 						var w, h;
 						w = Container.width();
-						if(0 != opt.maxwidth){
+						if(0 !== opt.maxwidth){
 							w = Math.min(opt.maxwidth, w);
+						}
+						if(opt.lockheight){
+							h = ('%' == opt.height.slice(-1))? parseInt(opt.height)+'%' : parseInt(opt.height);
+							return [w, h];
 						}
 						h = Math.floor(w / ratio + corr);
 						if(max_img_h){
@@ -313,7 +323,7 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 						} else{
 							h = Math.min($(window).height(), h);
 						}
-						if((0 != opt.maxheight) && (opt.maxheight < h)){
+						if((0 !== opt.maxheight) && (opt.maxheight < h)){
 							h = opt.maxheight;
 							//w = Math.floor((h - bars_height) * ratio);
 						}
@@ -322,6 +332,28 @@ if(typeof jQuery.fn.gmMinima == 'undefined'){
 					swfobject_switchOffAutoHideShow: function(){// SWFObject temporarily hides your SWF or alternative content until the library has decided which content to display
 						if($.isFunction(swfobject.switchOffAutoHideShow)){
 							swfobject.switchOffAutoHideShow();
+						}
+					},
+					doHideBuster: function(item){// Make all parents & current item visible
+						var parent = item.parent(),
+							items = [];
+
+						if(item.prop('tagName') !== undefined && item.prop('tagName').toLowerCase() != 'body'){
+							items = prototypes.doHideBuster(parent);
+						}
+
+						if(item.css('display') == 'none'){
+							item.css('display', 'block');
+							items.push(item);
+						}
+
+						return items;
+					},
+					undoHideBuster: function(items){// Hide items in the array
+						var i;
+
+						for(i = 0; i < items.length; i++){
+							items[i].css('display', 'none');
 						}
 					}
 				};

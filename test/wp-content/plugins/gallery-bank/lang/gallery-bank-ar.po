@@ -1,77 +1,76 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery-Bank\n"
-"POT-Creation-Date: 2014-05-06 14:55+0530\n"
-"PO-Revision-Date: 2014-05-06 16:47+0530\n"
+"Project-Id-Version: Gallery Bank\n"
+"POT-Creation-Date: 2014-07-05 12:40+0530\n"
+"PO-Revision-Date: \n"
 "Last-Translator: \n"
-"Language-Team: Tech-Banker <support@tech-banker.com>\n"
-"Language: ar_SA\n"
+"Language-Team: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.4\n"
-"X-Poedit-Basepath: I:\\Kiran-work-Backup\\2014\\Gallery-Bank-Latest"
-"\\3.8.2\\Standard\\gallery-bank\\\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: C:\\wamp\\www\\prizing\\wp-content\\plugins\\gallery-bank"
+"\\\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: front_views/gallery-bank-shortcode.php:4
 msgid "Insert Gallery Bank Shortcode"
-msgstr "أدخل Gallery Bank-  رمز قصير"
+msgstr "أدخل إختصار بانك جالري"
 
 #: front_views/gallery-bank-shortcode.php:6
 msgid "Select an album below to add it to your post or page."
-msgstr "اختر ألبوما أدناه لإضافته إلى ما بعد أو الصفحة."
+msgstr "اختر ألبوم من الأسفل لإضافته إلي تدوينتك أو صفحتك"
 
 #: front_views/gallery-bank-shortcode.php:11
 msgid "Gallery Type"
-msgstr "معرض نوع"
+msgstr "نوع الجالري"
 
 #: front_views/gallery-bank-shortcode.php:13
 msgid "Albums with Images"
-msgstr "البوم مع الصور"
+msgstr "ألبوم مع الصور"
 
 #: front_views/gallery-bank-shortcode.php:15
 msgid "Only Images"
-msgstr "فقط- الصور "
+msgstr "صور فقط"
 
 #: front_views/gallery-bank-shortcode.php:18
 msgid "Album Format"
-msgstr "تنسيق الألبوم"
+msgstr "نوع الألبوم"
 
 #: front_views/gallery-bank-shortcode.php:20
 msgid "Select Album Format"
-msgstr "حدد تنسيق الألبوم"
+msgstr "أختر تنسيق الألبوم"
 
 #: front_views/gallery-bank-shortcode.php:27
 msgid "Select Album"
-msgstr "حدد الألبوم"
+msgstr "أختر ألبوم"
 
 #: front_views/gallery-bank-shortcode.php:29
 msgid "Select an Album"
-msgstr "حدد الألبوم"
+msgstr "اختر ألبوم"
 
 #: front_views/gallery-bank-shortcode.php:45
 msgid "Gallery Format"
-msgstr "الصور الإسلامية - نمط"
+msgstr "تنسيق الجالري"
 
 #: front_views/gallery-bank-shortcode.php:47
 msgid "Select Gallery Format "
-msgstr "اختار رواق تنسيق"
+msgstr "أختر تنسيق الجالري"
 
 #: front_views/gallery-bank-shortcode.php:56 views/album-preview.php:29
 #: views/images-sorting.php:220
 msgid "Images in Row"
-msgstr "صورة في صف"
+msgstr "الصور في صف"
 
 #: front_views/gallery-bank-shortcode.php:61
 msgid "Image Width"
-msgstr "إنش الطول الصورة"
+msgstr "عرض الصورة"
 
 #: front_views/gallery-bank-shortcode.php:68 views/album-sorting.php:170
 msgid "Albums in Row"
-msgstr "البوم في صف"
+msgstr "الألبومات في صف"
 
 #: front_views/gallery-bank-shortcode.php:73
 msgid "Text Format"
@@ -79,374 +78,365 @@ msgstr "تنسيق النص"
 
 #: front_views/gallery-bank-shortcode.php:75
 msgid "Select Format "
-msgstr "حدد تنسيق"
+msgstr "أختر تنسيق"
 
 #: front_views/gallery-bank-shortcode.php:82
 msgid "Special Effects"
-msgstr "المؤثرات الخاصة"
+msgstr "التأثيرات الخاصة"
 
 #: front_views/gallery-bank-shortcode.php:104
 msgid "Animation Effects"
-msgstr "آثار الرسوم المتحركة"
+msgstr "التأثيرات الحيوية"
 
 #: front_views/gallery-bank-shortcode.php:157
 msgid "Show Responsive Gallery"
-msgstr "إظهار متجاوب رواق"
+msgstr "جعل الجالري متجاوب ( ريسبونسف)"
 
 #: front_views/gallery-bank-shortcode.php:161
 msgid "Show Album Title"
-msgstr "عرض عنوان الالبوم"
+msgstr "أظهر عنوان الألبوم"
 
 #: front_views/gallery-bank-shortcode.php:166
 msgid "Insert Album"
-msgstr "ادخال الألبوم"
+msgstr "أدخل ألبوم"
 
 #: front_views/gallery-bank-shortcode.php:169
 msgid "Cancel"
-msgstr "الغاء"
+msgstr "إلغاء"
 
 #: front_views/gallery-bank-shortcode.php:481
 msgid "Please select an Album"
-msgstr "يرجى اختيار الألبوم"
+msgstr "الرجاء إختيار ألبوم"
 
 #: front_views/gallery-bank-shortcode.php:485
 msgid "Please select an Album Format"
-msgstr "يرجى اختيار تنسيق الألبوم"
+msgstr "الرجاء إختيار تنسيق الألبوم"
 
 #: front_views/gallery-bank-shortcode.php:489
 msgid "Please select a Gallery Images Format"
-msgstr "يرجى  تحديد تنسيق  رواق صور خاصة ب"
+msgstr "الرجاء إختيار تنسيق صور الألبوم"
 
 #: front_views/gallery-bank-shortcode.php:493
 msgid "Please select a Text Format for the Gallery"
-msgstr "يرجى تحديد تنسيق نص عن رواق"
+msgstr "الرجاء إختيار تنسيق النص للألبوم"
 
-#: gallery-bank.php:80
+#: gallery-bank.php:91
 msgid "<img src=\""
 msgstr "<img src=\""
 
-#: gallery-bank.php:82
+#: gallery-bank.php:93
 msgid "/wp-admin/admin.php?page=gallery_bank"
-msgstr ""
+msgstr "/wp-admin/admin.php?page=gallery_bank"
 
-#: gallery-bank.php:89 lib/gallery-bank-class.php:10 views/dashboard.php:164
+#: gallery-bank.php:100 lib/gallery-bank-class.php:11 views/dashboard.php:173
 msgid "Dashboard"
-msgstr "لوحة القيادة"
+msgstr "لوحة التحكم"
 
-#: gallery-bank.php:96 lib/gallery-bank-class.php:17
-#: views/add-new-album.php:95 views/dashboard.php:175
+#: gallery-bank.php:108 views/dashboard.php:186 views/dashboard.php:194
 msgid "Add New Album"
-msgstr "إضافة ألبوم جديد"
+msgstr "أضف ألبوم جديد "
 
-#: gallery-bank.php:103 lib/gallery-bank-class.php:20
-msgid "Album Sorting"
-msgstr "ألبوم - الفرز"
-
-#: gallery-bank.php:110 lib/gallery-bank-class.php:21 views/settings.php:259
-msgid "Global Settings"
-msgstr "إعدادات العالمية"
-
-#: gallery-bank.php:117 lib/gallery-bank-class.php:22
-#: views/gallery-bank-system-report.php:11
-msgid "System Status"
-msgstr "الحالة النظام"
-
-#: gallery-bank.php:124 lib/gallery-bank-class.php:23
-msgid "Purchase Pro Version"
-msgstr "الشراء النسخة برو"
-
-#: lib/add-new-album-class.php:49 views/edit-album.php:266
-#: views/edit-album.php:273
-msgid " Set as Album Cover"
-msgstr "مجموعة  على النحو غلاف الألبوم"
-
-#: lib/add-new-album-class.php:52 views/edit-album.php:215
-#: views/edit-album.php:279
-msgid "Enter your Title"
-msgstr "إدخال أوراق السيارة بك"
-
-#: lib/add-new-album-class.php:53 views/edit-album.php:220
-#: views/edit-album.php:284
-msgid "Enter your Description "
-msgstr "إدخال بك وصف"
-
-#: lib/add-new-album-class.php:55 views/edit-album.php:226
-#: views/edit-album.php:290
-msgid "Enter your Tags"
-msgstr "إدخال- الدليلية بك"
-
-#: lib/add-new-album-class.php:59 views/edit-album.php:311
-msgid "Delete Image"
-msgstr "بحذف الصورة"
-
-#: lib/gallery-bank-class.php:9 views/header.php:57
-msgid "Gallery Bank"
-msgstr "Gallery Bank"
-
-#: lib/gallery-bank-class.php:19 views/dashboard.php:198
+#: gallery-bank.php:116 lib/gallery-bank-class.php:12 views/dashboard.php:219
+#: views/header.php:87 views/header.php:99 views/header.php:111
+#: views/header.php:122
 msgid "Short-Codes"
 msgstr "رموز قصير"
 
-#: lib/gallery-bank-class.php:262
+#: gallery-bank.php:123 lib/gallery-bank-class.php:13 views/header.php:88
+#: views/header.php:100 views/header.php:112 views/header.php:123
+msgid "Album Sorting"
+msgstr "ترتيب الألبوم"
+
+#: gallery-bank.php:130 lib/gallery-bank-class.php:14 views/header.php:89
+#: views/header.php:101 views/header.php:113 views/header.php:124
+#: views/settings.php:259
+msgid "Global Settings"
+msgstr "الخصائص العامة"
+
+#: gallery-bank.php:137 lib/gallery-bank-class.php:15
+#: views/gallery-bank-system-report.php:11 views/header.php:90
+#: views/header.php:102
+msgid "System Status"
+msgstr "حالة النظام"
+
+#: gallery-bank.php:144 lib/gallery-bank-class.php:16 views/header.php:91
+#: views/header.php:103 views/header.php:114 views/header.php:125
+msgid "Purchase Pro Version"
+msgstr "شراء النسخة برو"
+
+#: lib/add-new-album-class.php:50 views/edit-album.php:328
+#: views/edit-album.php:335
+msgid " Set as Album Cover"
+msgstr "إجعلها غطاء للألبوم"
+
+#: lib/add-new-album-class.php:53 views/edit-album.php:276
+#: views/edit-album.php:341
+msgid "Enter your Title"
+msgstr "العنوان"
+
+#: lib/add-new-album-class.php:54 views/edit-album.php:281
+#: views/edit-album.php:346
+msgid "Enter your Description "
+msgstr "الوصف"
+
+#: lib/add-new-album-class.php:56 views/edit-album.php:287
+#: views/edit-album.php:352
+msgid "Enter your Tags"
+msgstr "الوسوم"
+
+#: lib/add-new-album-class.php:60 views/edit-album.php:373
+msgid "Delete Image"
+msgstr "حذف الصورة"
+
+#: lib/gallery-bank-class.php:10 views/header.php:74
+msgid "Gallery Bank"
+msgstr "جالري بانك"
+
+#: lib/gallery-bank-class.php:254
 msgid "Add Gallery using Gallery Bank"
-msgstr "إضافة الصور باستخدام جاليري Bank"
-
-#: views/add-new-album.php:99 views/add-new-album.php:229
-#: views/album-preview.php:16 views/album-sorting.php:138
-#: views/edit-album.php:85 views/edit-album.php:332
-#: views/images-sorting.php:182 views/settings.php:262 views/shortcode.php:12
-msgid "Back to Albums"
-msgstr "العودة إلى ألبومات"
-
-#: views/add-new-album.php:102 views/add-new-album.php:227
-msgid "Save and Submit Changes"
-msgstr "حفظ التغييرات"
-
-#: views/add-new-album.php:108
-msgid "Album Published. Kindly wait for the redirect to happen."
-msgstr "ألبوم النشر. التكرم انتظر لإعادة التوجيه أن يحدث."
-
-#: views/add-new-album.php:117 views/edit-album.php:97
-msgid "Album Details"
-msgstr "تفاصيل الألبوم"
-
-#: views/add-new-album.php:122 views/edit-album.php:101
-msgid "Album Title"
-msgstr "عنوان الالبوم"
-
-#: views/add-new-album.php:128 views/edit-album.php:106
-msgid "Enter your Album Title"
-msgstr "إدخال  الخاص بك عنوان الالبوم"
-
-#: views/add-new-album.php:134 views/edit-album.php:113
-msgid "Description"
-msgstr "وصف"
-
-#: views/add-new-album.php:148 views/edit-album.php:127
-msgid "Upload Images"
-msgstr "تحميل الصور"
-
-#: views/add-new-album.php:151 views/edit-album.php:130
-msgid "Your browser doesn\"t have Flash, Silverlight or HTML5 support."
-msgstr "لا يملك متصفحك فلاش، سيلفرلايت أو HTML5 دعم."
-
-#: views/add-new-album.php:158 views/edit-album.php:137
-msgid "Upload Videos"
-msgstr "تصل- حمولة فيديو"
-
-#: views/add-new-album.php:159 views/add-new-album.php:210
-#: views/edit-album.php:138 views/edit-album.php:183 views/settings.php:271
-#: views/settings.php:487 views/settings.php:717 views/settings.php:828
-#: views/settings.php:927 views/settings.php:1249 views/settings.php:1365
-#: views/settings.php:1416 views/settings.php:1468
-msgid " (Available in Premium Versions)"
-msgstr "(متوفر في إصدارات بريميوم)"
-
-#: views/add-new-album.php:165 views/edit-album.php:143
-msgid "Video Url"
-msgstr " الفيديو URL"
-
-#: views/add-new-album.php:171 views/edit-album.php:147
-msgid "Enter your Video Url"
-msgstr "إدخال عنوان الموقع الفيديو الخاص بك"
-
-#: views/add-new-album.php:178 views/edit-album.php:153
-msgid "Upload Video"
-msgstr "تصل- حمولة فيديو"
-
-#: views/add-new-album.php:189 views/edit-album.php:164
-msgid "Your Gallery Bank Album"
-msgstr "الخاص بك Gallery Bankالألبوم"
-
-#: views/add-new-album.php:200 views/edit-album.php:173
-msgid "Delete"
-msgstr "حذف"
-
-#: views/add-new-album.php:203 views/dashboard.php:194
-#: views/edit-album.php:176
-msgid "Thumbnail"
-msgstr "المصغرات"
-
-#: views/add-new-album.php:206 views/edit-album.php:179
-msgid "Title & Description"
-msgstr "العنوان والوصف"
-
-#: views/add-new-album.php:209 views/edit-album.php:182
-msgid "Tags (comma separated list)"
-msgstr "العلامات (قائمة مفصولة بفواصل)"
-
-#: views/add-new-album.php:213 views/edit-album.php:186
-msgid "Url to Redirect on click of an Image"
-msgstr "URL إلى إعادة توجيه في في انقر من  الصورة"
-
-#: views/add-new-album.php:277
-msgid ""
-"You will be only allowed to add 2 galleries. Kindly purchase Premium Version "
-"for full access!"
-msgstr ""
-"أنت سيتم السماح لإضافة 2 ألبومات. يرجى شراء النسخة قسط من أجل الوصول الكامل!"
-
-#: views/add-new-album.php:381 views/edit-album.php:504
-msgid "Are you sure you want to delete this Image?"
-msgstr "هل أنت متأكد أنك تريد حذف هذه الصورة؟"
-
-#: views/add-new-album.php:391 views/add-new-album.php:405
-#: views/album-sorting.php:252 views/dashboard.php:434 views/dashboard.php:438
-#: views/dashboard.php:442 views/edit-album.php:520 views/edit-album.php:536
-#: views/images-sorting.php:285
-msgid "This feature is only available in Paid Premium Version!"
-msgstr "هذه الميزة متوفرة فقط ف المدفوعة بريميوم  النسخة!"
+msgstr "أضف معرض بإستخدام جالري بانك"
 
 #: views/album-preview.php:13
 msgid "Album Preview"
-msgstr "ألبوم معاينة"
+msgstr "عرض الألبوم"
+
+#: views/album-preview.php:16 views/album-sorting.php:138
+#: views/edit-album.php:143 views/edit-album.php:397
+#: views/images-sorting.php:182 views/settings.php:262 views/shortcode.php:12
+msgid "Back to Albums"
+msgstr "العودة إلي الألبوم"
 
 #: views/album-preview.php:34 views/album-sorting.php:175
 #: views/images-sorting.php:224
 msgid "Please Choose"
-msgstr "الرجاء اختيار"
+msgstr "الرجاء الإختيار"
 
 #: views/album-sorting.php:134
 msgid "Re-Order Albums"
-msgstr "اعادة- رسالة طلب الالبومات"
+msgstr "إعادة ترتيب الألبومات"
 
 #: views/album-sorting.php:140 views/images-sorting.php:184
 msgid "Update Order"
-msgstr "التحديث رسالة طلب"
+msgstr "حدث الترتيب"
 
 #: views/album-sorting.php:143 views/images-sorting.php:187
 msgid "Sorting Order has been updated."
-msgstr "الفرز إشتراك بالدفع  وقد تم تحديث"
+msgstr "فرز الترتيب المحدث"
 
-#: views/dashboard.php:134
+#: views/album-sorting.php:252 views/dashboard.php:591 views/dashboard.php:595
+#: views/dashboard.php:599 views/edit-album.php:588 views/edit-album.php:604
+#: views/images-sorting.php:285
+msgid "This feature is only available in Paid Premium Version!"
+msgstr "هذه الميزة متوفرة فقط في النسخة  بريميوم المدفوعة!"
+
+#: views/dashboard.php:143
 msgid "Getting Started"
 msgstr ""
 
-#: views/dashboard.php:138
+#: views/dashboard.php:147
 msgid "Watch the Walk-Through Video"
 msgstr ""
 
-#: views/dashboard.php:147
+#: views/dashboard.php:156
 msgid "Gallery Bank, a Superlative High quality WordPress Plugin!"
 msgstr ""
 
-#: views/dashboard.php:154
+#: views/dashboard.php:163
 msgid "Get Gallery Bank Pro Features"
 msgstr ""
 
-#: views/dashboard.php:179
+#: views/dashboard.php:200
 msgid "Delete All Albums"
-msgstr "حذف جميع الالبومات"
+msgstr "حذف جميع الألبومات"
 
-#: views/dashboard.php:180
+#: views/dashboard.php:201
 msgid "Purge Images & Albums"
-msgstr "تطهير  صور خاصة ب و ألبومات"
+msgstr "حذف جميع الألبومات والصور"
 
-#: views/dashboard.php:181
+#: views/dashboard.php:202
 msgid "Restore Factory Settings"
-msgstr "استعادة إعدادات المصنع"
+msgstr "إستعادة إعدادات المصنع"
 
-#: views/dashboard.php:188
+#: views/dashboard.php:209
 msgid "Existing Albums Overview"
-msgstr " الموجودة- ألبومات نظرة عامة"
+msgstr "نظرة عامة للألبومات"
 
-#: views/dashboard.php:195
+#: views/dashboard.php:215 views/edit-album.php:235
+msgid "Thumbnail"
+msgstr "المصغرات"
+
+#: views/dashboard.php:216
 msgid "Title"
-msgstr "لقب"
+msgstr "العنوان"
 
-#: views/dashboard.php:196
+#: views/dashboard.php:217
 msgid "Total Images"
-msgstr "مجموع صور خاصة ب"
+msgstr "مجموع الصور"
 
-#: views/dashboard.php:197
+#: views/dashboard.php:218
 msgid "Date"
 msgstr "التسجيل"
 
-#: views/dashboard.php:262 views/edit-album.php:82
+#: views/dashboard.php:388 views/dashboard.php:397
 msgid "Edit Album"
-msgstr "تعديل الألبوم"
+msgstr "تحرير الألبوم"
 
-#: views/dashboard.php:267 views/images-sorting.php:178
+#: views/dashboard.php:406 views/images-sorting.php:178
 msgid "Re-Order Images"
-msgstr "اعادة إشتراك بالدفع صور خاصة ب"
+msgstr "إعادة ترتيب الصور"
 
-#: views/dashboard.php:272
+#: views/dashboard.php:411
 msgid "Preview Album"
-msgstr "معاينة- الألبوم"
+msgstr "معاينة الألبوم"
 
-#: views/dashboard.php:277
+#: views/dashboard.php:420 views/dashboard.php:429
 msgid "Delete Album"
-msgstr "حذف الألبوم"
+msgstr "حذف ألبوم"
 
-#: views/dashboard.php:302 views/purchase_pro_version.php:635
+#: views/dashboard.php:458 views/purchase_pro_version.php:710
 msgid "Need Support Help?"
 msgstr ""
 
-#: views/dashboard.php:314 views/purchase_pro_version.php:647
+#: views/dashboard.php:470 views/purchase_pro_version.php:722
 msgid "Lets get in touch!"
 msgstr ""
 
-#: views/dashboard.php:318 views/purchase_pro_version.php:651
+#: views/dashboard.php:474 views/purchase_pro_version.php:726
 msgid "Order Now!"
 msgstr ""
 
-#: views/dashboard.php:421
+#: views/dashboard.php:578
 msgid "Are you sure you want to delete this Album?"
-msgstr "هل أنت متأكد أنك تريد حذف هذا الألبوم؟"
+msgstr "هل أنت متأكد من حذف هذا الألبوم؟"
 
-#: views/edit-album.php:86 views/edit-album.php:331
-msgid "Update Album"
-msgstr "قم بتحديث الألبومات"
+#: views/edit-album.php:140
+msgid "Album"
+msgstr "الألبوم"
 
-#: views/edit-album.php:90
-msgid "Album Updated. Kindly wait for the redirect to happen."
-msgstr "ألبوم التحديث. التكرم انتظر لإعادة التوجيه أن يحدث."
+#: views/edit-album.php:144 views/edit-album.php:396
+msgid "Save Album"
+msgstr "انقاذ الألبوم"
 
-#: views/edit-album.php:236
+#: views/edit-album.php:148
+msgid "Album Saved. Kindly wait for the redirect to happen."
+msgstr "ألبوم المحفوظة. يرجى الانتظار لإعادة التوجيه أن يحدث."
+
+#: views/edit-album.php:155
+msgid "Album Details"
+msgstr "تفاصيل الألبوم"
+
+#: views/edit-album.php:159
+msgid "Album Title"
+msgstr "عنوان الألبوم"
+
+#: views/edit-album.php:164
+msgid "Enter your Album Title"
+msgstr "أدخل عنوان الألبوم"
+
+#: views/edit-album.php:171
+msgid "Description"
+msgstr "الوصف"
+
+#: views/edit-album.php:185
+msgid "Upload Images"
+msgstr "أرفع صور"
+
+#: views/edit-album.php:188
+msgid "Your browser doesn\"t have Flash, Silverlight or HTML5 support."
+msgstr "متصفحك لايدعم Flash أو Silverlight أو HTML5 ."
+
+#: views/edit-album.php:195
+msgid "Upload Videos"
+msgstr "أرفع فيديو"
+
+#: views/edit-album.php:196 views/edit-album.php:242 views/settings.php:271
+#: views/settings.php:487 views/settings.php:717 views/settings.php:828
+#: views/settings.php:927 views/settings.php:1249 views/settings.php:1365
+#: views/settings.php:1416 views/settings.php:1468
+msgid " (Available in Premium Versions)"
+msgstr "(المتاحة ف علاوة إصدارات)"
+
+#: views/edit-album.php:201
+msgid "Video Url"
+msgstr "رابط الفيديو"
+
+#: views/edit-album.php:205
+msgid "Enter your Video Url"
+msgstr "أدخل رابط الفيديو"
+
+#: views/edit-album.php:211
+msgid "Upload Video"
+msgstr "رفع فيديو"
+
+#: views/edit-album.php:222
+msgid "Your Gallery Bank Album"
+msgstr "ألبومك الخاص"
+
+#: views/edit-album.php:232
+msgid "Delete"
+msgstr "حذف"
+
+#: views/edit-album.php:238
+msgid "Title & Description"
+msgstr "العنوان والوصف"
+
+#: views/edit-album.php:241
+msgid "Tags (comma separated list)"
+msgstr "الوسوم ( أفصل بينها بـ , )"
+
+#: views/edit-album.php:245
+msgid "Url to Redirect on click of an Image"
+msgstr "رابط التوجيه عند الضغط علي الصورة"
+
+#: views/edit-album.php:297
 msgid "Delete Video"
 msgstr "حذف الفيديو"
 
+#: views/edit-album.php:575
+msgid "Are you sure you want to delete this Image?"
+msgstr "هل أنت متأكد من حذف الصورة؟"
+
 #: views/gallery-bank-system-report.php:14
 msgid "Get System Report"
-msgstr "الحصول  نظام تقرير"
+msgstr "أحصل على تقرير النظام"
 
 #: views/gallery-bank-system-report.php:18
 msgid "Close System Report"
-msgstr "قريبة تقرير النظام"
+msgstr "أغلق تقرير النظام"
 
 #: views/gallery-bank-system-report.php:109
 msgid "Default"
-msgstr "الافتراضي"
+msgstr "الإفتراضي"
 
 #: views/purchase_pro_version.php:25
 msgid "Gallery Bank Pricing"
-msgstr "Gallery Bank  التسعير"
+msgstr "التسعير معرض البنك"
 
 #: views/settings.php:263
 msgid "Update Settings"
-msgstr " قم بتحديث إعدادات"
+msgstr "تحديث الإعدادت "
 
 #: views/settings.php:270
 msgid "Thumbnail Settings"
-msgstr "إعدادات الصورة المصغرة"
+msgstr "إعدادت المصغرات"
 
 #: views/settings.php:282
 msgid "Thumbnail Size"
-msgstr "المصغرات حجم"
+msgstr "حجم المصغرات"
 
 #: views/settings.php:289 views/settings.php:297 views/settings.php:505
 #: views/settings.php:513
 msgid "Original"
-msgstr "أصلي"
+msgstr "طبيعي"
 
 #: views/settings.php:292 views/settings.php:300 views/settings.php:508
 #: views/settings.php:516
 msgid "Custom"
-msgstr "عرف"
+msgstr "مخصص"
 
 #: views/settings.php:309 views/settings.php:525
 msgid "Width"
-msgstr "إنش الطول"
+msgstr "العرض"
 
 #: views/settings.php:319 views/settings.php:535
 msgid "Height"
@@ -454,72 +444,72 @@ msgstr "الإرتفاع"
 
 #: views/settings.php:331 views/settings.php:546 views/settings.php:968
 msgid "Opacity"
-msgstr "عتامة"
+msgstr "غامض"
 
 #: views/settings.php:343 views/settings.php:558 views/settings.php:979
 msgid "Border Size"
-msgstr "الحدودية الحجم"
+msgstr "حجم الحدود"
 
 #: views/settings.php:354 views/settings.php:570 views/settings.php:990
 msgid "Border Radius"
-msgstr "الحدودية نصف القطر "
+msgstr "حجم الحدود"
 
 #: views/settings.php:365 views/settings.php:582 views/settings.php:1015
 msgid "Border Color"
-msgstr " الحدودية لون"
+msgstr "لون الحدود"
 
 #: views/settings.php:379
 msgid "Margin Between Images"
-msgstr "الهوامش بين صور خاصة ب"
+msgstr "دمج الصور"
 
 #: views/settings.php:389 views/settings.php:616 views/settings.php:1001
 msgid "Text Color"
-msgstr "لون النص"
+msgstr "لون الخط"
 
 #: views/settings.php:403 views/settings.php:633 views/settings.php:1075
 msgid "Text-Align"
-msgstr "النص محاذاة"
+msgstr "اتجاه الخط"
 
 #: views/settings.php:417 views/settings.php:647 views/settings.php:784
 #: views/settings.php:1089 views/settings.php:1297
 msgid "Font-Family"
-msgstr "الخط بين أفراد الأسرة"
+msgstr "نوع الخط"
 
 #: views/settings.php:440 views/settings.php:670 views/settings.php:1112
 msgid "Heading Font-Size"
-msgstr "يتوجه حجم الخط"
+msgstr "حجم خط العنوان"
 
 #: views/settings.php:457 views/settings.php:687 views/settings.php:1129
 msgid "Text Font-Size"
-msgstr "النص حجم الخط"
+msgstr "حجم خط النص"
 
 #: views/settings.php:474 views/settings.php:704
 msgid "Description Length"
-msgstr "وصف طول"
+msgstr "طول الوصف"
 
 #: views/settings.php:486
 msgid "Album Cover Settings"
-msgstr "غلاف الألبوم إعدادات"
+msgstr "إعدادت غطاء الألبوم"
 
 #: views/settings.php:498
 msgid "Cover Size"
-msgstr "غطاء الحجم"
+msgstr "حجم الغطاء"
 
 #: views/settings.php:596
 msgid "Margin Between Albums"
-msgstr "الهوامش بين ألبومات"
+msgstr "دمج الألبومات"
 
 #: views/settings.php:606
 msgid "Text for Album Click"
-msgstr "نص ل البوم- نقرة"
+msgstr "نص الألبوم عند النقر"
 
 #: views/settings.php:716
 msgid "Filter Settings"
-msgstr "مرشح إعدادات"
+msgstr "إعدادت الفلتر"
 
 #: views/settings.php:728
 msgid "Filters"
-msgstr "مرشحات"
+msgstr "الفلاتر"
 
 #: views/settings.php:735 views/settings.php:743 views/settings.php:1153
 #: views/settings.php:1161 views/settings.php:1179 views/settings.php:1186
@@ -541,11 +531,11 @@ msgstr "تعطيل"
 
 #: views/settings.php:756
 msgid "Filter Color"
-msgstr "فلتر- لون"
+msgstr "لون الفلتر"
 
 #: views/settings.php:770
 msgid "Filter Text Color"
-msgstr "منقي- نص لون "
+msgstr "لون نص الفلتر"
 
 #: views/settings.php:807 views/settings.php:1320
 msgid "Font-Size"
@@ -553,58 +543,58 @@ msgstr "حجم الخط"
 
 #: views/settings.php:827
 msgid "Roles & Capabilities"
-msgstr "أدوار وقدرات"
+msgstr "الأدوار والقدرات"
 
 #: views/settings.php:839
 msgid "Privileges for Admin"
-msgstr "امتيازات عن Admin"
+msgstr "مزايا الأدمن"
 
 #: views/settings.php:843 views/settings.php:859 views/settings.php:875
 #: views/settings.php:892 views/settings.php:910
 msgid "Full Control"
-msgstr "التحكم الكامل"
+msgstr "تحكم كامل"
 
 #: views/settings.php:846 views/settings.php:862 views/settings.php:878
 #: views/settings.php:895 views/settings.php:913
 msgid "Read"
-msgstr "قرأ"
+msgstr "قراءة"
 
 #: views/settings.php:849 views/settings.php:865 views/settings.php:881
 #: views/settings.php:898 views/settings.php:916
 msgid "Write"
-msgstr "إرسال بريد"
+msgstr "كتابة"
 
 #: views/settings.php:855
 msgid "Privileges for Editor"
-msgstr "امتيازات عن لمحرر"
+msgstr "مزايا المحرر"
 
 #: views/settings.php:871
 msgid "Privileges for Author"
-msgstr "امتيازات عن مؤلف"
+msgstr "مزايا الكاتب"
 
 #: views/settings.php:887
 msgid "Privileges for Contributor"
-msgstr "امتيازات عن مساهما"
+msgstr "مزايا المساهم"
 
 #: views/settings.php:904
 msgid "Privileges for Subscriber"
-msgstr "امتيازات عن مكتتب"
+msgstr "مزايا المشترك"
 
 #: views/settings.php:926
 msgid "Lightbox Settings"
-msgstr " صندوق الضوء إعدادات"
+msgstr "إعدادت اللايت بوكس"
 
 #: views/settings.php:938
 msgid "Lightbox Type"
-msgstr " العلبة الخفيفة نوع"
+msgstr "نوع الايت بوكس"
 
 #: views/settings.php:1029
 msgid "Inline Background"
-msgstr " إنلاين الخلفية"
+msgstr "الخلفية المضمنة"
 
 #: views/settings.php:1043
 msgid "Overlay Background"
-msgstr "تراكب الخلفية "
+msgstr "غطاء الخلفية"
 
 #: views/settings.php:1057
 msgid "Fade In Time"
@@ -612,15 +602,15 @@ msgstr "تتلاشى في الوقت المناسب"
 
 #: views/settings.php:1066
 msgid "Fade Out Time"
-msgstr "تتلاشى خارج الزمن"
+msgstr "تتلاشى بعد الزمن"
 
 #: views/settings.php:1146
 msgid "Facebook Comments"
-msgstr "Facebook- تعليقات "
+msgstr "تعليقات الفيسبوك "
 
 #: views/settings.php:1173
 msgid "Social Sharing"
-msgstr "التقاسم الاجتماعية"
+msgstr "مشاركة مواقع التواصل"
 
 #: views/settings.php:1198
 msgid "Image Title"
@@ -628,64 +618,196 @@ msgstr "عنوان الصورة"
 
 #: views/settings.php:1222
 msgid "Image Description"
-msgstr "الصورة الوصف"
+msgstr "وصف الصورة"
 
 #: views/settings.php:1248
 msgid "Front - End Layout Settings"
-msgstr " الجبهة إعدادات تخطيط النهاية "
+msgstr "إعدادات التصميم الأمامية والنهائية"
 
 #: views/settings.php:1260
 msgid "Text for Back Button"
-msgstr "نص -عن ظهر زر"
+msgstr "نص زر الرجوع"
 
 #: views/settings.php:1270
 msgid "Button Color"
-msgstr "زر لون"
+msgstr "لون الزر"
 
 #: views/settings.php:1283
 msgid "Button Text Color"
-msgstr "زر لون النص"
+msgstr "لون نص الزر"
 
 #: views/settings.php:1337
 msgid "Album Seperator"
-msgstr "البوم المفرق"
+msgstr "فصل الألبوم"
 
 #: views/settings.php:1364
 msgid "Pagination Settings for Images"
-msgstr "ترقيم الصفحات  إعدادات عن صور خاصة ب"
+msgstr "إعدادات ترقيم الصور"
 
 #: views/settings.php:1376
 msgid "Paging"
-msgstr "ترحيل الصفحات"
+msgstr "الترقيم"
 
 #: views/settings.php:1403
 msgid "No. of Images Per Page "
-msgstr "عدد صور خاصة ب لكل صفحة"
+msgstr "عدد الصور في كل صفحة"
 
 #: views/settings.php:1415
 msgid "Slide Show Settings"
-msgstr "الشرائح عرض إعدادات"
+msgstr "أعدادت السلايد شو"
 
 #: views/settings.php:1427
 msgid "Auto Play"
-msgstr "السيارات اللعب"
+msgstr "عرض تلقائي"
 
 #: views/settings.php:1454
 msgid "Interval"
-msgstr "الفاصل الزمني"
+msgstr "فاصل"
 
 #: views/settings.php:1467
 msgid "Language Direction Settings"
-msgstr "لغة اتجاه- اعدادات"
+msgstr "إعدادت إتجاه اللغة"
 
 #: views/settings.php:1479
 msgid "Language Direction"
-msgstr "اتجاه اللغة"
+msgstr "أتجاه اللغة"
 
 #: views/settings.php:1636
 msgid "This Feature is only available in Paid Premium Version!"
-msgstr "تتوفر هذه الميزة فقط في النسخة المدفوعة بريميوم!"
+msgstr "تتوفر هذه الميزة فقط في النسخة بريميوم المدفوعة!"
 
 #: views/shortcode.php:8
 msgid "Gallery Bank Short-Codes"
-msgstr " Gallery Bank رموز قصير"
+msgstr "معرض البنك قصيرة رموز"
+
+#~ msgid "VIEW ALL"
+#~ msgstr "أظهر الجميع"
+
+#~ msgid "Licensing"
+#~ msgstr "الترخيص"
+
+#~ msgid "Select Gallery"
+#~ msgstr "أختر معرض"
+
+#~ msgid "Select Gallery Format"
+#~ msgstr "أختر تنسيق المعرض"
+
+#~ msgid "Images In Row"
+#~ msgstr "الصور في صف"
+
+#~ msgid "Select Text Format"
+#~ msgstr "أختر تنسيق النص"
+
+#~ msgid "Special Effect"
+#~ msgstr "التأثيرات الخاصة"
+
+#~ msgid "Select Special Effect"
+#~ msgstr "أختر تأثير خاص"
+
+#~ msgid "Animation Effect"
+#~ msgstr "تأثيرات حيوية"
+
+#~ msgid "Responsive Gallery"
+#~ msgstr "جالري متجاوب ( ريسبونسف) "
+
+#~ msgid "Save and Submit Changes"
+#~ msgstr "حفظ وعرض التغييرات"
+
+#~ msgid "Album Published. Kindly wait for the redirect to happen."
+#~ msgstr "تم نشر الألبوم. الرجاء الإنتظار حتى يتم تحويلك "
+
+#~ msgid "Are you sure you want to delete these Images?"
+#~ msgstr "هل أنت متأكد من حذف الصور المحددة ؟"
+
+#~ msgid "Attention! A new vesion of Gallery Bank is available for download."
+#~ msgstr "تنبيه! هناك إصدار جديد من جالري بانك متوفر للتحميل."
+
+#~ msgid "Click"
+#~ msgstr "إضغط"
+
+#~ msgid "here"
+#~ msgstr "هنا"
+
+#~ msgid "to upgrade your version of Gallery Bank."
+#~ msgstr "لترقية أصدار جالري بانك"
+
+#~ msgid "Dashboard - Gallery Bank"
+#~ msgstr "لوحة التحكم - جالري بانك"
+
+#~ msgid "Date of Creation"
+#~ msgstr "تاريخ الإنشاء"
+
+#~ msgid "Are you sure you want to delete all Albums?"
+#~ msgstr "هل أنت متأكد من حذف جميع الألبومات؟"
+
+#~ msgid "Are you sure you want to Restore Factory Settings?"
+#~ msgstr "هل أنت متأكد من إعادة ضبط المصنع؟"
+
+#~ msgid "Are you sure you want to Purge all Images & Albums?"
+#~ msgstr "هل أنت متأكد من محو جميع الصور والألبومات؟"
+
+#~ msgid "Gallery Bank Documentation"
+#~ msgstr "توثيق جالري بانك"
+
+#~ msgid "Gallery Bank Licensing Module"
+#~ msgstr "وحدة ترخيص جالري بانك"
+
+#~ msgid "Success! Settings have been updated."
+#~ msgstr "لقد تم تحديث الإعدادت بنجاح."
+
+#~ msgid "Update"
+#~ msgstr "تحديث"
+
+#~ msgid "Restore Settings"
+#~ msgstr "إستعادة الإعدادت"
+
+#~ msgid "Settings has been updated."
+#~ msgstr "تم تحديث الإعدادت. "
+
+#~ msgid "Success! Settings have been restored."
+#~ msgstr "لقد تم إستعادة الإعدادت بنجاح."
+
+#~ msgid "Are you sure you want to restore settings?"
+#~ msgstr "هل أنت متأكد من إستعادة الإعدادات؟"
+
+#~ msgid " Rotate Image"
+#~ msgstr "اتجاه الصورة"
+
+#~ msgid "Upload Images "
+#~ msgstr "رفع صور"
+
+#~ msgid "Your Wordpress Version doesn\"t support Wp-media."
+#~ msgstr "إصدار الووردبرس الخاص بك لايدعم  Wp-media."
+
+#~ msgid "Upload Thumbnails "
+#~ msgstr "رفع المصغرات"
+
+#~ msgid "Show Albums"
+#~ msgstr "عرض الألبومات"
+
+#~ msgid "Responsive"
+#~ msgstr "متجاوب "
+
+#~ msgid "With Albums in Row"
+#~ msgstr "مع ألبومات في صف "
+
+#~ msgid "Image Uploader Settings"
+#~ msgstr "إعدادات رافع الصور"
+
+#~ msgid "Uploader for Images"
+#~ msgstr "رافع للصور"
+
+#~ msgid "WP Media"
+#~ msgstr "ووردبريس ميديا"
+
+#~ msgid "Change Uploading Image Name"
+#~ msgstr "غير اسم الصورة المحملة"
+
+#~ msgid "Image url location"
+#~ msgstr "موقع رابط الصورة"
+
+#~ msgid "Open in New Window"
+#~ msgstr "افتح في نافذة جديدة"
+
+#~ msgid "Same Window"
+#~ msgstr "نفس النافذة"

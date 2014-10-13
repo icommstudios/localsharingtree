@@ -16,6 +16,7 @@ $acx_si_icon_size = get_option('acx_si_icon_size');
 $acx_si_fsmi_menu_highlight = get_option('acx_si_fsmi_menu_highlight');
 $acx_si_fsmi_float_fix = get_option('acx_si_fsmi_float_fix');
 $acx_si_fsmi_theme_warning_ignore = get_option('acx_si_fsmi_theme_warning_ignore');
+$acx_si_fsmi_disable_mobile = get_option('acx_si_fsmi_disable_mobile');
 // *****************************************************
 // Check Credit Link
 function enqueue_acx_si_style()
@@ -311,38 +312,42 @@ function pbl_footer()
 			$acx_get_url = "http://";
 			$acx_get_url .= $_SERVER['HTTP_HOST'];
 			$acx_get_url .= $_SERVER['REQUEST_URI'];
+			$acx_installation_domain = $_SERVER['HTTP_HOST'];
+			$acx_installation_domain = str_replace("www.","",$acx_installation_domain);
+			$acx_installation_domain = str_replace(".","_",$acx_installation_domain);
+			if($acx_installation_domain == "") { $acx_installation_domain = "not_defined";}
 			$x = strlen($acx_get_url);
 			if(($x % 10) == 0)
 			{
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Animated Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/blog-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Wordpress Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Development Company</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Animated Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/blog-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Wordpress Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Development Company</a>";
 } else if(($x % 9) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Floating Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Floating Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/blog-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Blog Design Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Blog Designing Company</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Floating Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Floating Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/blog-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Blog Design Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Blog Designing Company</a>";
 } else if(($x % 8) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Social Media Plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Integration</a> Powered by <a href='http://www.acurax.com/services/blog-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Web Design Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Theme Designers</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Integration</a> Powered by <a href='http://www.acurax.com/services/blog-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Web Design Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Theme Designers</a>";
 } else if(($x % 7) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/web-designing.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Affordable Website Designer' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Website Design Expert</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/web-designing.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Affordable Website Designer' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Website Design Expert</a>";
 } else if(($x % 6) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='SocialMedia Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/web-development.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Web Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Web Development Company</a>";} else if(($x % 5) == 0)
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='SocialMedia Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/web-development.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Web Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Web Development Company</a>";} else if(($x % 5) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/website-redesign.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Website Redesign Experts' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Website Redesign Experts</a>";} else if(($x % 4) == 0)
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/website-redesign.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Website Redesign Experts' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Website Redesign Experts</a>";} else if(($x % 4) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/social-media-marketing-optimization/social-profile-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Social Profile Design Experts' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Social Profile Design Experts</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/social-media-marketing-optimization/social-profile-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Social Profile Design Experts' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Social Profile Design Experts</a>";
 } else if(($x % 3) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/' target='_blank' title='Wordpress Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Development Company</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/?ref=" . $acx_installation_domain . "' target='_blank' title='Wordpress Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Development Company</a>";
 } else if(($x % 2) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/web-designing.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Web Design Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Web Design Company</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/web-designing.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Web Design Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Web Design Company</a>";
 } else if(($x % 1) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Animated Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Wordpress Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Development Company</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Animated Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Wordpress Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Development Company</a>";
 } else 
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/online-store-design-development.php?utm_source=blink&utm_medium=link&utm_campaign=footer' target='_blank' title='Ecommerce Design Expert' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Ecommerce Design Expert</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/online-store-design-development.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Ecommerce Design Expert' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Ecommerce Design Expert</a>";
 }
 			// Ending Crediting
 			echo "</div>";
@@ -351,9 +356,8 @@ echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-
 } add_action('wp_footer', 'pbl_footer'); // pbl_footer
 function extra_style_acx_icon() // updated added class acx_fsmi_float_fix support
 {
-	global $acx_si_icon_size;
-	global $acx_si_fsmi_float_fix;
-	global $acx_si_display;
+	global $acx_si_icon_size, $acx_si_fsmi_float_fix, $acx_si_display, $acx_si_fsmi_disable_mobile;
+	if($acx_si_fsmi_disable_mobile == "") { $acx_si_fsmi_disable_mobile = "no"; }
 		echo "\n\n\n<!-- Starting Styles For Social Media Icon From Acurax International www.acurax.com -->\n<style type='text/css'>\n";
 		echo "#divBottomRight img \n{\n";
 		echo "width: " . $acx_si_icon_size . "px; \n}\n";
@@ -369,7 +373,11 @@ function extra_style_acx_icon() // updated added class acx_fsmi_float_fix suppor
 				echo ".acx_fsmi_float_fix a \n{\n";
 				echo "display:inline-block; \n}\n";
 			}
-			
+			if($acx_si_fsmi_disable_mobile == "yes")
+			{
+				echo "@media only screen and (max-width:650px) \n{\n#divBottomRight \n{\n";
+				echo "display:none !important; \n}\n}\n";
+			}
 			
 		echo "</style>\n<!-- Ending Styles For Social Media Icon From Acurax International www.acurax.com -->\n\n\n\n";
 }	add_action('admin_head', 'extra_style_acx_icon'); // ADMIN
@@ -480,7 +488,7 @@ function acx_fsmi_si_pluign_finish_version_update()
 		  </div>';
 }
 $acx_fsmi_si_current_version = get_option('acx_fsmi_si_current_version');
-if($acx_fsmi_si_current_version != '1.3.4') // Current Version
+if($acx_fsmi_si_current_version != '1.3.5') // Current Version
 {
 if (get_option('social_icon_array_order') != "")
 {
@@ -661,235 +669,333 @@ function socialicons_comparison($ad=2)
 {
 $ad_1 = '
 </hr>
-<a name="compare"></a>
-<div id="fsmi_landing_holder">
-<div id="fsmi_lp_compare">
-<div class="row_1">
-<div class="fsmi_lp_compare_row_1_1"></div> <!-- fsmi_lp_compare_row_1_1 -->
-<div id="fsmi_lp_f_group">
-<div class="left" style="padding-top: 173px;padding-bottom: 172px;">
-Display
-</div> <!-- left -->
-<div class="right">
-<div class="fsmi_lp_compare_row_1_features">More Sharp Quality Icons</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">20+ Icon Theme/Style</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Can Choose Icon Theme/Style</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Can Choose Icon Size</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Automatic/Manual Integration</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Set MouseOver text for each icon in Share Mode</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Set MouseOver text for each icon in Profile Link Mode</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Option to HIDE Invididual Share Icon</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Set Floating Icons in Vertical</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Define how many icons in 1 row</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Add Custom Icons</div> <!-- fsmi_lp_compare_row_1_features -->
-</div> <!-- right -->
-</div> <!-- fsmi_lp_f_group -->
-<div id="fsmi_lp_f_group">
-<div class="left" style="padding-top: 74px;padding-bottom: 74px;">
-Icon Function 
-</div> <!-- left -->
-<div class="right">
-<div class="fsmi_lp_compare_row_1_features">Link to Social Media Profile</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Share On Social Media</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Show Share on Posts/Pages</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Efficient Image Picker For Pinterest</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Define Social Media Meta for Each Page/Post</div> <!-- fsmi_lp_compare_row_1_features -->
-</div> <!-- right -->
-</div> <!-- fsmi_lp_f_group -->
-<div id="fsmi_lp_f_group">
-<div class="left" style="padding-top: 23px;padding-bottom: 25px;">
-Animation
-</div> <!-- left -->
-<div class="right">
-<div class="fsmi_lp_compare_row_1_features">Fly Animation</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Mouse Over Effects</div> <!-- fsmi_lp_compare_row_1_features -->
-</div> <!-- right -->
-</div> <!-- fsmi_lp_f_group -->
-<div id="fsmi_lp_f_group">
-<div class="left" style="padding-top: 65px;padding-bottom: 65px;">
-Fly Animation Repeat Interval
-</div> <!-- left -->
-<div class="right">
-<div class="fsmi_lp_compare_row_1_features">Based On Time in Seconds</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Based On Time in Minutes</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Based On Time in Hours</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Based on Page Views</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Based On Page Views and Time</div> <!-- fsmi_lp_compare_row_1_features -->
-</div> <!-- right -->
-</div> <!-- fsmi_lp_f_group -->
-<div id="fsmi_lp_f_group">
-<div class="left highlighted" style="padding-top: 24px;padding-bottom: 24px;">
-Multiple Fly Animation
-</div> <!-- left -->
-<div class="right">
-<div class="fsmi_lp_compare_row_1_features">Can Choose Fly Start Position</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Can Choose Fly End Position</div> <!-- fsmi_lp_compare_row_1_features -->
-</div> <!-- right -->
-</div> <!-- fsmi_lp_f_group -->
-<div id="fsmi_lp_f_group">
-<div class="left" style="padding-top: 40px;padding-bottom: 41px;">
-Easy to Configure
-</div> <!-- left -->
-<div class="right">
-<div class="fsmi_lp_compare_row_1_features">Ajax Based Settings Page</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Drag & Drop Reorder Icons</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Easy to Configure</div> <!-- fsmi_lp_compare_row_1_features -->
-</div> <!-- right -->
-</div> <!-- fsmi_lp_f_group -->
-<div id="fsmi_lp_f_group">
-<div class="left" style="padding-top: 90px;padding-bottom: 90px;">
-Widget Support
-</div> <!-- left -->
-<div class="right">
-<div class="fsmi_lp_compare_row_1_features">Multiple Widgets</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Seperate Icon Style/Theme For Each</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Seperate Icon Size For Each</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Set whether the icons to Link Profiles/SHARE</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Seperate Mouse Over Multiple Animation for Each</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Seperate Default Opacity for Each</div> <!-- fsmi_lp_compare_row_1_features -->
-</div> <!-- right -->
-</div> <!-- fsmi_lp_f_group -->
-<div id="fsmi_lp_f_group">
-<div class="left" style="padding-top: 90px;padding-bottom: 90px;">
-Shortcode Support
-</div> <!-- left -->
-<div class="right">
-<div class="fsmi_lp_compare_row_1_features">Multiple Instances</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Seperate Icon Style/Theme For Each</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Seperate Icon Size For Each</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Set whether the icons to Link Profiles/SHARE</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Seperate Mouse Over Multiple Animation for Each</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Seperate Default Opacity for Each</div> <!-- fsmi_lp_compare_row_1_features -->
-</div> <!-- right -->
-</div> <!-- fsmi_lp_f_group -->
-<div id="fsmi_lp_f_group">
-<div class="left" style="padding-top: 106px;padding-bottom: 107px;border-bottom:0px;">
-PHP Code Support
-</div> <!-- left -->
-<div class="right">
-<div class="fsmi_lp_compare_row_1_features">Multiple Instances</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Use Outside Loop</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Seperate Icon Style/Theme For Each</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Seperate Icon Size For Each</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features highlighted">Set whether the icons to Link Profiles/SHARE</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features">Seperate Mouse Over Multiple Animation for Each</div> <!-- fsmi_lp_compare_row_1_features -->
-<div class="fsmi_lp_compare_row_1_features" style="border-bottom:0px;">Seperate Default Opacity for Each</div> <!-- fsmi_lp_compare_row_1_features -->
-</div> <!-- right -->
-</div> <!-- fsmi_lp_f_group -->
-</div> <!-- row_1 -->
-<div class="row_2">
-<div class="fsmi_lp_compare_row_2_1"></div> <!-- fsmi_lp_compare_row_2_1 -->
-<div class="row_2_border">
-<div class="fsmi_lp_compare_row_2_2"></div> <!-- fsmi_lp_compare_row_2_1 -->
-<div class="n"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="y"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="y"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="y"></div>
-<div class="n"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="y"></div>
-<div class="n"></div>
-<div class="n"></div>
-<div class="n" style="border-bottom:0px;"></div>
-</div> <!-- row_2_border -->
-</div> <!-- row_2 -->
-<div class="row_3">
-<div class="fsmi_lp_compare_row_3_1"></div> <!-- fsmi_lp_compare_row_3_1 -->
-<div class="row_3_shadow">
-<a href="http://clients.acurax.com/floating-socialmedia.php?utm_source=plugin_fsmi_settings_table&utm_medium=link&utm_campaign=compare_buynow" target="_blank"><div class="fsmi_lp_compare_row_3_2"></div></a> <!-- fsmi_lp_compare_row_3_2 -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y"></div> <!-- y -->
-<div class="y" style="border-bottom:0px;"></div> <!-- y -->
-</div> <!-- row_3_shadow -->
-</div> <!-- row_3 -->
-</div> <!-- fsmi_lp_compare -->
-<div id="fsmi_lp_shadow"></div> <!-- fsmi_lp_shadow -->
-<!-- div style="font-family: arial; font-size: 11px; color: darkgreen; float: left; margin-left: 39px; margin-bottom: 5px;">* Special Offer Price on Premium Version for Free Plugin Users Valid Only Until Next Free Version Upgrade - Click Order Now to Get Premium Version for $19.50</div -->
-</div> <!-- fsmi_landing_holder -->
-<div id="ad_fsmi_2_button_order" style="float:left;margin-left: 445px;">
-<a href="http://clients.acurax.com/floating-socialmedia.php?utm_source=plugin_fsmi_settings&utm_medium=banner&utm_campaign=plugin_yellow_order" target="_blank"><div id="ad_fsmi_2_button_order_link"></div></a></div> <!-- ad_fsmi_2_button_order -->
-';
+<a name="compare"></a><div id="ss_middle_wrapper"> 
+		<div id="ss_middle_center"> 
+			<div id="ss_middle_inline_block"> 
+			
+				<div class="middle_h2_1"> 
+					<h2>Limited on Features ?</h2>
+					<h3>Compare and Decide</h3>
+				</div><!-- middle_h2_1 -->
+				
+<div id="ss_features_table"> 
+				
+					<div id="ss_table_header"> 
+						<div class="tb_h1"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+							<div class="tb_h2"> <h3>Features</h3> </div><!-- tb_h2 -->
+							<div class="tb_h3"> <div class="ss_download"> </div><!-- ss_download --> </div><!-- tb_h3 -->
+						<div class="tb_h4 fsmi_tb_h4"> <a href="http://clients.acurax.com/floating-socialmedia.php?utm_source=plugin_fsmi_settings_table&utm_medium=link&utm_campaign=compare_buynow" target="_blank"><div class="ss_buy_now"> </div><!-- ss_buy_now --></a> </div><!-- tb_h4 -->
+					</div><!-- ss_table_header -->
+						
+					<div class="ss_column_holder"> 
+					
+						<div class="tb_h1 mini"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+						<div class="ss_feature_group" style="padding-top: 197px;"> Display </div><!-- -->
+						<div class="tb_h1 mini"> <h3>Features</h3> </div><!-- tb_h1 -->
+						<div class="ss_features"> 
+							<ul>
+								<li>More Sharp Quality Icons</li>
+									<li>20+ Icon Theme/Style</li>
+										<li>Can Choose Icon Theme/Style</li>
+											<li>Can Choose Icon Size</li>
+												<li>Automatic/Manual Integration</li>
+													<li>Set MouseOver text for each icon in Share Mode</li>
+												<li>Set MouseOver text for each icon in Profile Link Mode</li>
+											<li>Option to HIDE Invididual Share Icon</li>
+										<li><strong>Set Floating Icons in Vertical</strong></li>
+									<li><strong>Define how many icons in 1 row</strong></li>
+								<li class="ss_last_one"><strong>Add Custom Icons</strong></li>
+							</ul>
+						</div><!-- ss_features -->
+						
+						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
+						<div class="ss_y_n_holder"> 
+							<div class="ss_no"> </div><!-- ss_no -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
+											<div class="ss_yes"> </div><!-- ss_yes -->
+												<div class="ss_no"> </div><!-- ss_no -->
+											<div class="ss_no"> </div><!-- ss_no -->
+										<div class="ss_no"> </div><!-- ss_no -->
+									<div class="ss_no"> </div><!-- ss_no -->
+								<div class="ss_no"> </div><!-- ss_no -->
+							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
+						</div><!-- ss_y_n_holder -->
+						
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
+											<div class="ss_yes"> </div><!-- ss_yes -->
+												<div class="ss_yes"> </div><!-- ss_yes -->
+											<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
+						</div><!-- ss_y_n_holder -->						
+						
+					</div><!-- column_holder -->
+					
+					<div class="ss_column_holder"> 
+					
+						<div class="tb_h1 mini"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+						<div class="ss_feature_group" style="padding-top: 30px;"> Icon Function </div><!-- -->
+						<div class="tb_h1 mini"> <h3>Features</h3> </div><!-- tb_h1 -->
+						<div class="ss_features"> 
+							<ul>
+								<li>Link to Social Media Profile</li>
+								<li class="ss_last_one"><strong>Share On Social Media</strong></li>
+							</ul>
+						</div><!-- ss_features -->
+						
+						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
+						</div><!-- ss_y_n_holder -->
+						
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
+						</div><!-- ss_y_n_holder -->						
+						
+					</div><!-- column_holder -->			
+
+					<div class="ss_column_holder"> 
+					
+						<div class="tb_h1 mini"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+						<div class="ss_feature_group" style="padding-top: 30px;"> Animation </div><!-- -->
+						<div class="tb_h1 mini"> <h3>Features</h3> </div><!-- tb_h1 -->
+						<div class="ss_features"> 
+							<ul>
+								<li>Fly Animation</li>
+								<li class="ss_last_one"><strong>Mouse Over Effects</strong></li>
+							</ul>
+						</div><!-- ss_features -->
+						
+						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
+						</div><!-- ss_y_n_holder -->
+						
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
+						</div><!-- ss_y_n_holder -->						
+						
+					</div><!-- column_holder -->	
+
+					<div class="ss_column_holder"> 
+					
+						<div class="tb_h1 mini"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+						<div class="ss_feature_group" style="padding-top: 84px;"> Fly Animation Repeat Interval</div><!-- -->
+						<div class="tb_h1 mini"> <h3>Features</h3> </div><!-- tb_h1 -->
+						<div class="ss_features"> 
+							<ul>
+								<li>Based On Time in Seconds</li>
+									<li><strong>Based On Time in Minutes</strong></li>
+										<li>Based On Time in Hours</li>
+									<li>Based on Page Views</li>
+								<li class="ss_last_one">Based On Page Views and Time</li>
+							</ul>
+						</div><!-- ss_features -->
+						
+						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
+						<div class="ss_y_n_holder"> 
+							<div class="ss_no"> </div><!-- ss_no -->
+								<div class="ss_no"> </div><!-- ss_no -->
+									<div class="ss_no"> </div><!-- ss_no -->
+								<div class="ss_no"> </div><!-- ss_no -->
+							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
+						</div><!-- ss_y_n_holder -->
+						
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
+						</div><!-- ss_y_n_holder -->						
+						
+					</div><!-- column_holder -->	
+
+					<div class="ss_column_holder"> 
+					
+						<div class="tb_h1 mini"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+						<div class="ss_feature_group" style="padding-top: 30px;"> Multiple Fly Animation<br/></div><!-- -->
+						<div class="tb_h1 mini"> <h3>Features</h3> </div><!-- tb_h1 -->
+						<div class="ss_features"> 
+							<ul>
+								<li>Can Choose Fly Start Position</li>
+								<li class="ss_last_one">Can Choose Fly End Position</li>
+							</ul>
+						</div><!-- ss_features -->
+						
+						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
+						<div class="ss_y_n_holder"> 
+							<div class="ss_no"> </div><!-- ss_no -->
+							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
+						</div><!-- ss_y_n_holder -->
+						
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
+						</div><!-- ss_y_n_holder -->						
+						
+					</div><!-- column_holder -->				
+
+					<div class="ss_column_holder"> 
+					
+						<div class="tb_h1 mini"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+						<div class="ss_feature_group" style="padding-top: 52px;">Easy to Configure</div><!-- -->
+						<div class="tb_h1 mini"> <h3>Features</h3> </div><!-- tb_h1 -->
+						<div class="ss_features"> 
+							<ul>
+								<li>Ajax Based Settings Page</li>
+									<li>Drag & Drop Reorder Icons</li>
+								<li class="ss_last_one">Easy to Configure</li>
+							</ul>
+						</div><!-- ss_features -->
+						
+						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
+						<div class="ss_y_n_holder"> 
+							<div class="ss_no"> </div><!-- ss_no -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
+						</div><!-- ss_y_n_holder -->
+						
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
+						</div><!-- ss_y_n_holder -->						
+						
+					</div><!-- column_holder -->			
+
+					<div class="ss_column_holder"> 
+					
+						<div class="tb_h1 mini"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+						<div class="ss_feature_group" style="padding-top: 106px;">Widget Support </div><!-- -->
+						<div class="tb_h1 mini"> <h3>Features</h3> </div><!-- tb_h1 -->
+						<div class="ss_features"> 
+							<ul>
+								<li>Multiple Widgets</li>
+									<li>Separate Icon Style/Theme For Each</li>
+										<li>Separate Icon Size For Each</li>
+										<li>Set whether the icons to Link Profiles/SHARE</li>
+									<li><strong>Separate Mouse Over Multiple Animation for Each</strong></li>
+								<li class="ss_last_one">Separate Default Opacity for Each</li>
+							</ul>
+						</div><!-- ss_features -->
+						
+						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
+						<div class="ss_y_n_holder">
+							<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_no"> </div><!-- ss_no -->
+								<div class="ss_no"> </div><!-- ss_no -->
+							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
+						</div><!-- ss_y_n_holder -->
+						
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
+						</div><!-- ss_y_n_holder -->						
+						
+					</div><!-- column_holder -->	
+
+					<div class="ss_column_holder"> 
+					
+						<div class="tb_h1 mini"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+						<div class="ss_feature_group" style="padding-top: 106px;">Shortcode Support </div><!-- -->
+						<div class="tb_h1 mini"> <h3>Features</h3> </div><!-- tb_h1 -->
+						<div class="ss_features"> 
+							<ul>
+								<li>Multiple Instances</li>
+									<li>Separate Icon Style/Theme For Each</li>
+										<li><strong>Separate Icon Size For Each</strong></li>
+										<li>Set whether the icons to Link Profiles/SHARE</li>
+									<li>Separate Mouse Over Multiple Animation for Each</li>
+								<li class="ss_last_one">Separate Default Opacity for Each</li>
+							</ul>
+						</div><!-- ss_features -->
+						
+						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
+						<div class="ss_y_n_holder">
+							<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_no"> </div><!-- ss_no -->
+								<div class="ss_no"> </div><!-- ss_no -->
+							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
+						</div><!-- ss_y_n_holder -->
+						
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
+						</div><!-- ss_y_n_holder -->						
+						
+					</div><!-- column_holder -->	
+
+					<div class="ss_column_holder"> 
+					
+						<div class="tb_h1 mini"> <h3>Feature Group</h3> </div><!-- tb_h1 -->
+						<div class="ss_feature_group" style="padding-top: 126px;">PHP Code Support </div><!-- -->
+						<div class="tb_h1 mini"> <h3>Features</h3> </div><!-- tb_h1 -->
+						<div class="ss_features"> 
+							<ul>
+								<li>Multiple Instances</li>
+									<li>Use Outside Loop</li>
+										<li>Separate Icon Style/Theme For Each</li>
+											<li>Separate Icon Size For Each</li>
+										<li><strong>Set whether the icons to Link Profiles/SHARE</strong></li>
+									<li>Separate Mouse Over Multiple Animation for Each</li>
+								<li class="ss_last_one">Separate Default Opacity for Each</li>
+							</ul>
+						</div><!-- ss_features -->
+						
+						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
+						<div class="ss_y_n_holder">
+							<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_no"> </div><!-- ss_no -->
+								<div class="ss_no"> </div><!-- ss_no -->
+							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
+						</div><!-- ss_y_n_holder -->
+						
+						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
+									<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
+						</div><!-- ss_y_n_holder -->						
+						
+					</div><!-- column_holder -->						
+					
+				
+					
+				</div><!-- ss_features_table -->		
+
+			<div id="ad_fsmi_2_button_order" style="float: left; width: 100%;">
+<a href="http://clients.acurax.com/floating-socialmedia.php?utm_source=plugin_fsmi_settings&utm_medium=banner&utm_campaign=plugin_yellow_order" target="_blank"><div id="ad_fsmi_2_button_order_link"></div></a></div> <!-- ad_fsmi_2_button_order --></div></div></div>';
 $ad_2='<div id="ad_fsmi_2"> <a href="http://clients.acurax.com/floating-socialmedia.php?utm_source=plugin_fsmi_settings&utm_medium=banner&utm_campaign=plugin_enjoy" target="_blank"><div id="ad_fsmi_2_button"></div></a> </div> <!-- ad_fsmi_2 --><br>
 <div id="ad_fsmi_2_button_order">
 <a href="http://clients.acurax.com/floating-socialmedia.php?utm_source=plugin_fsmi_settings&utm_medium=banner&utm_campaign=plugin_yellow_order" target="_blank"><div id="ad_fsmi_2_button_order_link"></div></a></div> <!-- ad_fsmi_2_button_order --> ';
@@ -908,4 +1014,46 @@ if (current_user_can('manage_options')) {
 }
 	die(); // this is required to return a proper result
 } add_action('wp_ajax_acx_fsmi_saveorder', 'acx_fsmi_saveorder_callback');
+function acx_quick_request_submit_callback()
+{
+	$acx_name =  $_POST['acx_name'];
+	$acx_email =  $_POST['acx_email'];
+	$acx_phone =  $_POST['acx_phone'];
+	$acx_weburl =  $_POST['acx_weburl'];
+	$acx_subject =  $_POST['acx_subject'];
+	$acx_question =  $_POST['acx_question'];
+if($acx_name == "" || $acx_email == "" || $acx_weburl == "" || $acx_subject == "" || $acx_question == "")
+{
+echo 2;
+} else
+{
+$current_user_acx = wp_get_current_user();
+$current_user_acx = $current_user->user_email;
+if($current_user_acx == "")
+{
+$current_user_acx = $acx_email;
+}
+$headers[] = 'From: ' . $acx_name . ' <' . $current_user_acx . '>';
+$headers[] = 'Content-Type: text/html; charset=UTF-8'; 
+$message = "Name: ".$acx_name . "\r\n <br>";
+$message = $message . "Email: ".$acx_email . "\r\n <br>";
+if($acx_phone != "")
+{
+$message = $message . "Phone: ".$acx_phone . "\r\n <br>";
+}
+// In case any of our lines are larger than 70 characters, we should use wordwrap()
+$acx_question = wordwrap($acx_question, 70, "\r\n <br>");
+$message = $message . "Website: ".$acx_weburl . "\r\n <br>";
+$message = $message . "Question: ".$acx_question . "\r\n <br>";
+$emailed = wp_mail( 'info@acurax.com', $acx_subject, $message, $headers );
+if($emailed)
+{
+echo 1;
+} else
+{
+echo 0;
+}
+}
+	die(); // this is required to return a proper result
+}add_action('wp_ajax_acx_quick_request_submit','acx_quick_request_submit_callback');
 ?>

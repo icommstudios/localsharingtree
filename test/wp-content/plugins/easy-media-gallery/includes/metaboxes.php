@@ -54,12 +54,39 @@ if ( strstr( $_SERVER['REQUEST_URI'], 'wp-admin/post-new.php' ) || strstr( $_SER
 	if ( get_post_type( get_the_ID() ) == 'easymediagallery' ) { 
 	?>
     
+            <style type="text/css" media="screen">
+		   @media only screen and (min-width: 1150px) {
+			   #side-sortables.fixed { position: fixed; top: 55px; right: 20px; width: 280px; }
+			   }	
+				</style>   
+    
         <script type="text/javascript">
 			/*<![CDATA[*/
 			/* Easy Media Gallery */  
 			
 jQuery(document).ready(function($) {
 	
+	jQuery(document).on( 'scroll', function(){
+		if (jQuery(window).scrollTop() > 700) {
+			jQuery('.emg-scroll-top-wrapper').addClass('show');
+			} else {
+				jQuery('.emg-scroll-top-wrapper').removeClass('show');
+				}
+			});
+ 
+    jQuery('.emg-scroll-top-wrapper').on('click', scrollToTop);
+	
+	var snpprevPosition = jQuery('#side-sortables').offset();
+	
+	jQuery(window).scroll(function(){
+		if(jQuery(window).scrollTop() > snpprevPosition.top) {
+			jQuery('#side-sortables').addClass('fixed');
+			    } 
+			 else {
+				 jQuery('#side-sortables').removeClass('fixed');
+			    }    
+		    });	
+
 		jQuery("#easmedia_metabox_media_video").change(function() {
 			vdo_url = jQuery("#easmedia_metabox_media_video").val();
 				if (vdo_url.match('http://new\.livestream\.com')) {
@@ -251,6 +278,13 @@ function IsValidAuUrl1(aurl1) {
  
 function easmedia_add_meta_box( $meta_box )
 {
+
+	echo '<div class="emg-scroll-top-wrapper">
+    		<span class="emg-scroll-top-inner">
+        		<i class="enotyfa"></i>
+    			</span>
+			</div>';
+	
     if ( !is_array( $meta_box ) ) return false;
     
     // Create a callback function
@@ -542,7 +576,7 @@ function easmedia_metabox_work(){
 	    $meta_box = array(
 		'id' => 'easmedia_metaboxmediatypeselect',
 		'title' =>  __( 'Media Options', 'easmedia' ),
-		'description' => __( '<div class="emginfobox"><span class="emg_blink">Upgrade to PRO</span> and you can select <a href="http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/" target="_blank">Grid Gallery</a>, <a href="http://ghozylab.com/best-photo-albums-wordpress-plugin/" target="_blank">Photo Albums</a>, <a href="http://ghozylab.com/wordpress-filterable-gallery-and-filterable-media-plugin/" target="_blank">Filterable Media</a>, HTML5 Video/Audio, Google Maps/Street View, embed from Soundcloud or Reverbnation and also Link to specific URL. You can learn more and see version comparison <a href="edit.php?post_type=easymediagallery&page=comparison">here</a> or go to Pro Version DEMO <a href="http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/" target="_blank">here</a></div><br>Select videos, images, gallery or audio files.', 'easmedia' ),
+		'description' => __( '<div class="emginfobox"><span class="emg_blink">Upgrade to PRO</span> and you can select <a href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/best-gallery-grid-galleries-plugin/" target="_blank">Grid Gallery</a>, <a href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/best-gallery-and-photo-albums-demo/" target="_blank">Photo Albums</a>, <a href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/best-wordpress-portfolio-plugin/" target="_blank">Filterable Media</a>, HTML5 Video/Audio, Google Maps/Street View, embed from Soundcloud or Reverbnation and also Link to specific URL. You can learn more and see version comparison <a href="edit.php?post_type=easymediagallery&page=comparison">here</a> or go to Pro Version DEMO <a href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/" target="_blank">here</a></div><br>Select videos, images, gallery or audio files.', 'easmedia' ),
 		'page' => 'easymediagallery',
 		'context' => 'normal',
 		'priority' => 'default',

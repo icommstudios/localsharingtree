@@ -658,8 +658,9 @@ div.pp_pic_holder {
 .pp_social .facebook {
     float: left;
     margin-left: 5px;
-    width: 55px;
-    overflow: hidden
+    width: 87px !important; 
+    overflow: hidden;
+    display: inline;
 }
 
 .pp_social .twitter {

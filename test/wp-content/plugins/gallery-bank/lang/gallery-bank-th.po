@@ -1,73 +1,72 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery-Bank\n"
-"POT-Creation-Date: 2014-05-06 15:03+0530\n"
-"PO-Revision-Date: 2014-05-06 16:44+0530\n"
+"Project-Id-Version: Gallery Bank\n"
+"POT-Creation-Date: 2014-06-24 12:42+0530\n"
+"PO-Revision-Date: \n"
 "Last-Translator: \n"
-"Language-Team: Tech-Banker <support@tech-banker.com>\n"
-"Language: th_TH\n"
+"Language-Team: \n"
+"Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
-"X-Poedit-Basepath: I:\\Kiran-work-Backup\\2014\\Gallery-Bank-Latest"
-"\\3.8.2\\Standard\\gallery-bank\\\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-KeywordsList: _e;__\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: C:\\wamp\\www\\prizing\\wp-content\\plugins\\gallery-bank"
+"\\\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: front_views/gallery-bank-shortcode.php:4
 msgid "Insert Gallery Bank Shortcode"
-msgstr "แทรก Gallery -  Bank รหัสสั้น"
+msgstr "เพิ่ม Gallery Bank Short Code"
 
 #: front_views/gallery-bank-shortcode.php:6
 msgid "Select an album below to add it to your post or page."
-msgstr "เลือกอัลบั้มด้านล่างไปยังเพิ่มมันไปยังของคุณเสาหรือหน้า"
+msgstr "เลือกอัลบั้มที่ต้องการเพิ่มในโพสต์หรือเพจ"
 
 #: front_views/gallery-bank-shortcode.php:11
 msgid "Gallery Type"
-msgstr "แกลลอรี่ประเภท"
+msgstr "ประเภทของแกลอรี่"
 
 #: front_views/gallery-bank-shortcode.php:13
 msgid "Albums with Images"
-msgstr "อัลบัม ด้วย- ภาพ"
+msgstr "อัลบั้มพร้อมรูปภาพ"
 
 #: front_views/gallery-bank-shortcode.php:15
 msgid "Only Images"
-msgstr "เพียง-รูปภาพ"
+msgstr "เฉพาะรูปภาพ"
 
 #: front_views/gallery-bank-shortcode.php:18
 msgid "Album Format"
-msgstr " อัลบั้มที่ จัดรูป"
+msgstr "รูปแบบของอัลบั้ม"
 
 #: front_views/gallery-bank-shortcode.php:20
 msgid "Select Album Format"
-msgstr "เลือก-อัลบั้มจัดรูปแบบ"
+msgstr "เลือกรูปแบบของอัลบั้ม"
 
 #: front_views/gallery-bank-shortcode.php:27
 msgid "Select Album"
-msgstr "เลือก-อัลบั้"
+msgstr "เลือกอัลบั้ม"
 
 #: front_views/gallery-bank-shortcode.php:29
 msgid "Select an Album"
-msgstr "เลือกอัลบั้มที่"
+msgstr "เลือกอัลบั้ม"
 
 #: front_views/gallery-bank-shortcode.php:45
 msgid "Gallery Format"
-msgstr "แกลลอรี่จัดรูปแบบ"
+msgstr "รูปแบบของแกลอรี่"
 
 #: front_views/gallery-bank-shortcode.php:47
 msgid "Select Gallery Format "
-msgstr "เลือก-จัดรูปแบบแกลเลอรี"
+msgstr "เลือกรูปแบบของแกลอรี่"
 
 #: front_views/gallery-bank-shortcode.php:56 views/album-preview.php:29
 #: views/images-sorting.php:220
 msgid "Images in Row"
-msgstr "ภาพในแถว"
+msgstr "จำนวนรูปในแถว"
 
 #: front_views/gallery-bank-shortcode.php:61
 msgid "Image Width"
-msgstr "ภาพความกว้าง"
+msgstr "ความกว้างของรูป"
 
 #: front_views/gallery-bank-shortcode.php:68 views/album-sorting.php:170
 msgid "Albums in Row"
@@ -75,450 +74,461 @@ msgstr "อัลบั้มในแถว"
 
 #: front_views/gallery-bank-shortcode.php:73
 msgid "Text Format"
-msgstr "ข้อความ-จัดรูปแบบ"
+msgstr "รูปแบบข้อความ"
 
 #: front_views/gallery-bank-shortcode.php:75
 msgid "Select Format "
-msgstr "เลือก-จัดรูป"
+msgstr "เลือกรูปแบบ"
 
 #: front_views/gallery-bank-shortcode.php:82
 msgid "Special Effects"
-msgstr "เทคนิคพิเศษยอด"
+msgstr "การแสดงผลแอนิเมชั่น"
 
 #: front_views/gallery-bank-shortcode.php:104
 msgid "Animation Effects"
-msgstr "ผลแอนิเมชั่"
+msgstr "รูปแบบแอนิเมชั่น"
 
 #: front_views/gallery-bank-shortcode.php:157
 msgid "Show Responsive Gallery"
-msgstr "แสดง-ที่ตอบสนองต่อ-แกลลอรี่"
+msgstr "แสดง Responsive Gallery"
 
 #: front_views/gallery-bank-shortcode.php:161
 msgid "Show Album Title"
-msgstr "แสดง-ชื่ออัลบั้มชื่อเรื่อง"
+msgstr "แสดงชื่ออัลบั้ม"
 
 #: front_views/gallery-bank-shortcode.php:166
 msgid "Insert Album"
-msgstr "แทรก-อัลบั้ม"
+msgstr "เพิ่มอัลบั้ม"
 
 #: front_views/gallery-bank-shortcode.php:169
 msgid "Cancel"
-msgstr "ยกเลิกการ"
+msgstr "ยกเลิก"
 
 #: front_views/gallery-bank-shortcode.php:481
 msgid "Please select an Album"
-msgstr "กรุณา กรุณาเลือกอัลบั้ม"
+msgstr "กรุณาเลือกอัลบั้ม"
 
 #: front_views/gallery-bank-shortcode.php:485
 msgid "Please select an Album Format"
-msgstr "กรุณาเลือกจัดรูปแบบอัลบั้ม"
+msgstr "เลือกรูปแบบอัลบั้ม"
 
 #: front_views/gallery-bank-shortcode.php:489
 msgid "Please select a Gallery Images Format"
-msgstr "กรุณาเลือกรูปแบบเฉลียง-ภาพของ-ลวดลาย"
+msgstr "เลือกรูปแบบแกลอรี่"
 
 #: front_views/gallery-bank-shortcode.php:493
 msgid "Please select a Text Format for the Gallery"
-msgstr "กรุณาเลือก-ข้อความข้อมูล-รูปแบบที่สำหรับ-แกลอรี่"
+msgstr "เลือกรูปแบบตัวอักษรของแกลอรี่"
 
-#: gallery-bank.php:80
+#: gallery-bank.php:97 gallery-bank.php:156 gallery-bank.php:215
+#: gallery-bank.php:258
 msgid "<img src=\""
-msgstr ""
+msgstr "<img src=\""
 
-#: gallery-bank.php:82
+#: gallery-bank.php:99 gallery-bank.php:158 gallery-bank.php:217
+#: gallery-bank.php:260
 msgid "/wp-admin/admin.php?page=gallery_bank"
-msgstr ""
+msgstr "/wp-admin/admin.php?page=gallery_bank"
 
-#: gallery-bank.php:89 lib/gallery-bank-class.php:10 views/dashboard.php:164
+#: gallery-bank.php:106 gallery-bank.php:165 gallery-bank.php:224
+#: gallery-bank.php:267 lib/gallery-bank-class.php:17
+#: lib/gallery-bank-class.php:30 lib/gallery-bank-class.php:43
+#: lib/gallery-bank-class.php:54 views/dashboard.php:173
 msgid "Dashboard"
-msgstr "แดชบอร์"
+msgstr "แผงหน้าแรก"
 
-#: gallery-bank.php:96 lib/gallery-bank-class.php:17
-#: views/add-new-album.php:95 views/dashboard.php:175
+#: gallery-bank.php:114 gallery-bank.php:173 views/dashboard.php:186
+#: views/dashboard.php:194
 msgid "Add New Album"
 msgstr "เพิ่มอัลบั้มใหม่"
 
-#: gallery-bank.php:103 lib/gallery-bank-class.php:20
+#: gallery-bank.php:122 gallery-bank.php:181 gallery-bank.php:231
+#: gallery-bank.php:274 lib/gallery-bank-class.php:18
+#: lib/gallery-bank-class.php:31 lib/gallery-bank-class.php:44
+#: lib/gallery-bank-class.php:55 views/dashboard.php:219 views/header.php:87
+#: views/header.php:99 views/header.php:111 views/header.php:122
+msgid "Short-Codes"
+msgstr ""
+
+#: gallery-bank.php:129 gallery-bank.php:188 gallery-bank.php:238
+#: gallery-bank.php:281 lib/gallery-bank-class.php:19
+#: lib/gallery-bank-class.php:32 lib/gallery-bank-class.php:45
+#: lib/gallery-bank-class.php:56 views/header.php:88 views/header.php:100
+#: views/header.php:112 views/header.php:123
 msgid "Album Sorting"
-msgstr "อัลบั้มการเรียงลำดับ"
+msgstr "จัดเรียงอัลบั้ม"
 
-#: gallery-bank.php:110 lib/gallery-bank-class.php:21 views/settings.php:259
+#: gallery-bank.php:136 gallery-bank.php:195 gallery-bank.php:245
+#: gallery-bank.php:288 lib/gallery-bank-class.php:20
+#: lib/gallery-bank-class.php:33 lib/gallery-bank-class.php:46
+#: lib/gallery-bank-class.php:57 views/header.php:89 views/header.php:101
+#: views/header.php:113 views/header.php:124 views/settings.php:259
 msgid "Global Settings"
-msgstr "การตั้งค่าสากล"
+msgstr "การตั้งค่าทั่วไป"
 
-#: gallery-bank.php:117 lib/gallery-bank-class.php:22
-#: views/gallery-bank-system-report.php:11
+#: gallery-bank.php:143 gallery-bank.php:202 lib/gallery-bank-class.php:21
+#: lib/gallery-bank-class.php:34 views/gallery-bank-system-report.php:11
+#: views/header.php:90 views/header.php:102
 msgid "System Status"
-msgstr "สถานะระบบ"
+msgstr "สถานะของระบบ"
 
-#: gallery-bank.php:124 lib/gallery-bank-class.php:23
+#: gallery-bank.php:150 gallery-bank.php:209 gallery-bank.php:252
+#: gallery-bank.php:295 lib/gallery-bank-class.php:22
+#: lib/gallery-bank-class.php:35 lib/gallery-bank-class.php:47
+#: lib/gallery-bank-class.php:58 views/header.php:91 views/header.php:103
+#: views/header.php:114 views/header.php:125
 msgid "Purchase Pro Version"
-msgstr "ซื้อรุ่น Pro"
+msgstr "ซื้อเวอร์ชั่น Pro"
 
-#: lib/add-new-album-class.php:49 views/edit-album.php:266
-#: views/edit-album.php:273
+#: lib/add-new-album-class.php:50 views/edit-album.php:328
+#: views/edit-album.php:335
 msgid " Set as Album Cover"
-msgstr "ตั้งเป็นปกอัลบั้ม"
+msgstr "ตั้งให้เป็นหน้าปกอัลบั้ม"
 
-#: lib/add-new-album-class.php:52 views/edit-album.php:215
-#: views/edit-album.php:279
+#: lib/add-new-album-class.php:53 views/edit-album.php:276
+#: views/edit-album.php:341
 msgid "Enter your Title"
-msgstr "ใส่ชื่อเรื่องของคุณ"
+msgstr "ใส่ชื่อรูป"
 
-#: lib/add-new-album-class.php:53 views/edit-album.php:220
-#: views/edit-album.php:284
+#: lib/add-new-album-class.php:54 views/edit-album.php:281
+#: views/edit-album.php:346
 msgid "Enter your Description "
-msgstr "ป้อนคำอธิบายของคุณ"
+msgstr "ใส่คำอธิบายรูป"
 
-#: lib/add-new-album-class.php:55 views/edit-album.php:226
-#: views/edit-album.php:290
+#: lib/add-new-album-class.php:56 views/edit-album.php:287
+#: views/edit-album.php:352
 msgid "Enter your Tags"
-msgstr "ป้อนแท็กของคุณ"
+msgstr "เพิ่ม Tag"
 
-#: lib/add-new-album-class.php:59 views/edit-album.php:311
+#: lib/add-new-album-class.php:60 views/edit-album.php:373
 msgid "Delete Image"
-msgstr "ลบ-รูปภาพ"
+msgstr "ลบรูป"
 
-#: lib/gallery-bank-class.php:9 views/header.php:57
+#: lib/gallery-bank-class.php:16 lib/gallery-bank-class.php:29
+#: lib/gallery-bank-class.php:42 lib/gallery-bank-class.php:53
+#: views/header.php:74
 msgid "Gallery Bank"
 msgstr "Gallery Bank"
 
-#: lib/gallery-bank-class.php:19 views/dashboard.php:198
-msgid "Short-Codes"
-msgstr "Short-Codes"
-
-#: lib/gallery-bank-class.php:262
+#: lib/gallery-bank-class.php:297
 msgid "Add Gallery using Gallery Bank"
-msgstr "เพิ่มแกลลอรี่โดยใช้Gallery Bank"
-
-#: views/add-new-album.php:99 views/add-new-album.php:229
-#: views/album-preview.php:16 views/album-sorting.php:138
-#: views/edit-album.php:85 views/edit-album.php:332
-#: views/images-sorting.php:182 views/settings.php:262 views/shortcode.php:12
-msgid "Back to Albums"
-msgstr "กลับไปที่ลบัม"
-
-#: views/add-new-album.php:102 views/add-new-album.php:227
-msgid "Save and Submit Changes"
-msgstr "ประหยัดและจำนนการเปลี่ยนแปลงที่"
-
-#: views/add-new-album.php:108
-msgid "Album Published. Kindly wait for the redirect to happen."
-msgstr "อัลบั้มที่เผยแพร่. กรุณารอเปลี่ยนเส้นทาง-สู่-เกิดขึ้น"
-
-#: views/add-new-album.php:117 views/edit-album.php:97
-msgid "Album Details"
-msgstr "อัลบั้มที่รายละเอียด"
-
-#: views/add-new-album.php:122 views/edit-album.php:101
-msgid "Album Title"
-msgstr "อัลบั้มที่ชื่อเรื่อง"
-
-#: views/add-new-album.php:128 views/edit-album.php:106
-msgid "Enter your Album Title"
-msgstr "ป้อนคุณอัลบั้มที่-ชื่อเรื่องของ"
-
-#: views/add-new-album.php:134 views/edit-album.php:113
-msgid "Description"
-msgstr "รูปพรรณสัณฐาน"
-
-#: views/add-new-album.php:148 views/edit-album.php:127
-msgid "Upload Images"
-msgstr "อัปโหลด-รูป"
-
-#: views/add-new-album.php:151 views/edit-album.php:130
-msgid "Your browser doesn\"t have Flash, Silverlight or HTML5 support."
-msgstr "เบราว์เซอร์ของคุณไม่ได้มีแฟลช, Silverlight หรือสนับสนุน HTML5"
-
-#: views/add-new-album.php:158 views/edit-album.php:137
-msgid "Upload Videos"
-msgstr "อัพโหลด-ทัศน์"
-
-#: views/add-new-album.php:159 views/add-new-album.php:210
-#: views/edit-album.php:138 views/edit-album.php:183 views/settings.php:271
-#: views/settings.php:487 views/settings.php:717 views/settings.php:828
-#: views/settings.php:927 views/settings.php:1249 views/settings.php:1365
-#: views/settings.php:1416 views/settings.php:1468
-msgid " (Available in Premium Versions)"
-msgstr "(ที่มีจำหน่าย ใน เบี้ยประกันภัย  รุ่น)"
-
-#: views/add-new-album.php:165 views/edit-album.php:143
-msgid "Video Url"
-msgstr "URL ของวิดีโอ"
-
-#: views/add-new-album.php:171 views/edit-album.php:147
-msgid "Enter your Video Url"
-msgstr "ป้อนวิดีโอUrlของท่"
-
-#: views/add-new-album.php:178 views/edit-album.php:153
-msgid "Upload Video"
-msgstr "อัพโหลด-ไฟล์วิดีโอ"
-
-#: views/add-new-album.php:189 views/edit-album.php:164
-msgid "Your Gallery Bank Album"
-msgstr "ของคุณGallery-Bank-อัลบั้ม"
-
-#: views/add-new-album.php:200 views/edit-album.php:173
-msgid "Delete"
-msgstr "ลบ"
-
-#: views/add-new-album.php:203 views/dashboard.php:194
-#: views/edit-album.php:176
-msgid "Thumbnail"
-msgstr "รูปย่อ"
-
-#: views/add-new-album.php:206 views/edit-album.php:179
-msgid "Title & Description"
-msgstr "ชื่อเรื่องและคำอธิบาย"
-
-#: views/add-new-album.php:209 views/edit-album.php:182
-msgid "Tags (comma separated list)"
-msgstr "แท็ก (จุลภาคคั่นรายการ)"
-
-#: views/add-new-album.php:213 views/edit-album.php:186
-msgid "Url to Redirect on click of an Image"
-msgstr "url ที่จะเปลี่ยนเส้นทางเมื่อคลิกรูปของรูปภาพ"
-
-#: views/add-new-album.php:277
-msgid ""
-"You will be only allowed to add 2 galleries. Kindly purchase Premium Version "
-"for full access!"
-msgstr "คุณจะได้รับอนุญาตเท่านั้นที่จะเพิ่ม 2 แกล กรุณาซื้อรุ่นพรีเมี่ยมสำหรับการเข้าถึงเต็ม"
-
-#: views/add-new-album.php:381 views/edit-album.php:504
-msgid "Are you sure you want to delete this Image?"
-msgstr "คุณแน่ใจหรือว่าต้องการที่จะลบรูปภาพนี้?"
-
-#: views/add-new-album.php:391 views/add-new-album.php:405
-#: views/album-sorting.php:252 views/dashboard.php:434 views/dashboard.php:438
-#: views/dashboard.php:442 views/edit-album.php:520 views/edit-album.php:536
-#: views/images-sorting.php:285
-msgid "This feature is only available in Paid Premium Version!"
-msgstr "คุณลักษณะนี้จะใช้ได้เฉพาะในรที่จ่ายพรีเมี่ยม เวอร์ชัน!"
+msgstr "เพิ่มแกลอรี่โดย Gallery Bank"
 
 #: views/album-preview.php:13
 msgid "Album Preview"
-msgstr "อัลบั้มที่แสดงตัวอย่าง"
+msgstr "ตัวอย่างอัลบั้ม"
+
+#: views/album-preview.php:16 views/album-sorting.php:138
+#: views/edit-album.php:143 views/edit-album.php:397
+#: views/images-sorting.php:182 views/settings.php:262 views/shortcode.php:12
+msgid "Back to Albums"
+msgstr "กลับไปที่อัลบั้ม"
 
 #: views/album-preview.php:34 views/album-sorting.php:175
 #: views/images-sorting.php:224
 msgid "Please Choose"
-msgstr "กรุณาเลือกที่"
+msgstr "กรุณาเลือก"
 
 #: views/album-sorting.php:134
 msgid "Re-Order Albums"
-msgstr "เรียงลำดับใหม่ - อัลบั้มรูป"
+msgstr "จัดเรียงอัลบั้มใหม่"
 
 #: views/album-sorting.php:140 views/images-sorting.php:184
 msgid "Update Order"
-msgstr "ของปรับปรุงสั่งซื้อ"
+msgstr "อัพเดทลำดับ"
 
 #: views/album-sorting.php:143 views/images-sorting.php:187
 msgid "Sorting Order has been updated."
-msgstr "การเรียงลำดับการสั่งซื้อสินค้าได้รับการปรับปรุง"
+msgstr "อัพเดทการจัดเรียงลำดับเรียบร้อย"
 
-#: views/dashboard.php:134
+#: views/album-sorting.php:252 views/dashboard.php:591 views/dashboard.php:595
+#: views/dashboard.php:599 views/edit-album.php:588 views/edit-album.php:604
+#: views/images-sorting.php:285
+msgid "This feature is only available in Paid Premium Version!"
+msgstr "คุณลักษณะนี้จะใช้ได้เฉพาะในรุ่นที่จ่ายพรีเมี่ยม!"
+
+#: views/dashboard.php:143
 msgid "Getting Started"
 msgstr ""
 
-#: views/dashboard.php:138
+#: views/dashboard.php:147
 msgid "Watch the Walk-Through Video"
 msgstr ""
 
-#: views/dashboard.php:147
+#: views/dashboard.php:156
 msgid "Gallery Bank, a Superlative High quality WordPress Plugin!"
 msgstr ""
 
-#: views/dashboard.php:154
+#: views/dashboard.php:163
+#, fuzzy
 msgid "Get Gallery Bank Pro Features"
-msgstr ""
+msgstr "เพิ่ม Gallery Bank Short Code"
 
-#: views/dashboard.php:179
+#: views/dashboard.php:200
 msgid "Delete All Albums"
-msgstr "ลบรายการทุกอัลบั้ม"
+msgstr "ลบทุกอัลบั้ม"
 
-#: views/dashboard.php:180
+#: views/dashboard.php:201
 msgid "Purge Images & Albums"
-msgstr "สะอาดรูปถ่ายและอัลบัม"
+msgstr "ลบอัลบั้มและรูป"
 
-#: views/dashboard.php:181
+#: views/dashboard.php:202
 msgid "Restore Factory Settings"
-msgstr "คืนค่าการ-ตั้งค่าจากโรงงาน"
+msgstr "ตั้งเป็นค่าเริ่มต้น"
 
-#: views/dashboard.php:188
+#: views/dashboard.php:209
 msgid "Existing Albums Overview"
-msgstr "ที่มีอยู่ใน  อัลบั้ -ภาพรวม"
+msgstr "ภาพรวมของอัลบั้ม"
 
-#: views/dashboard.php:195
+#: views/dashboard.php:215 views/edit-album.php:235
+msgid "Thumbnail"
+msgstr "ภาพขนาดเล็ก"
+
+#: views/dashboard.php:216
 msgid "Title"
-msgstr "ชื่อเรื่อง"
+msgstr "ชื่อ"
 
-#: views/dashboard.php:196
+#: views/dashboard.php:217
 msgid "Total Images"
-msgstr "รูปภาพรวม"
+msgstr "รูปทั้งหมด"
 
-#: views/dashboard.php:197
+#: views/dashboard.php:218
 msgid "Date"
 msgstr "วันที่"
 
-#: views/dashboard.php:262 views/edit-album.php:82
+#: views/dashboard.php:388 views/dashboard.php:397
 msgid "Edit Album"
-msgstr "แก้ไขอัลบั้ม"
+msgstr "แก้ใขอัลบั้ม"
 
-#: views/dashboard.php:267 views/images-sorting.php:178
+#: views/dashboard.php:406 views/images-sorting.php:178
 msgid "Re-Order Images"
-msgstr "เรียงลำดับใหม่ภาพ"
+msgstr "จัดเรียงรูปภาพใหม่"
 
-#: views/dashboard.php:272
+#: views/dashboard.php:411
 msgid "Preview Album"
-msgstr "แสดงตัวอย่างอัลบั้มที่"
+msgstr "ตัวอย่างอัลบั้ม"
 
-#: views/dashboard.php:277
+#: views/dashboard.php:420 views/dashboard.php:429
 msgid "Delete Album"
-msgstr "ลบรายการอัลบั้มที่"
+msgstr "ลบอัลบั้ม"
 
-#: views/dashboard.php:302 views/purchase_pro_version.php:635
+#: views/dashboard.php:458 views/purchase_pro_version.php:710
 msgid "Need Support Help?"
 msgstr ""
 
-#: views/dashboard.php:314 views/purchase_pro_version.php:647
+#: views/dashboard.php:470 views/purchase_pro_version.php:722
 msgid "Lets get in touch!"
 msgstr ""
 
-#: views/dashboard.php:318 views/purchase_pro_version.php:651
+#: views/dashboard.php:474 views/purchase_pro_version.php:726
 msgid "Order Now!"
 msgstr ""
 
-#: views/dashboard.php:421
+#: views/dashboard.php:578
 msgid "Are you sure you want to delete this Album?"
-msgstr "คุณแน่ใจหรือว่าต้องการที่จะลบอัลบั้มนี้?"
+msgstr "ต้องการลบอัลบั้มนี้ใช่ไหม"
 
-#: views/edit-album.php:86 views/edit-album.php:331
-msgid "Update Album"
-msgstr "ของปรับปรุง-อัลบั้ม"
+#: views/edit-album.php:140
+msgid "Album"
+msgstr "อัลบั้ม"
 
-#: views/edit-album.php:90
-msgid "Album Updated. Kindly wait for the redirect to happen."
-msgstr "อัลบั้มที่-ที่อัปเดตละม่อมรอการเปลี่ยนเส้นทางที่ไปยังเกิดขึ้น"
+#: views/edit-album.php:144 views/edit-album.php:396
+msgid "Save Album"
+msgstr "ประหยัด"
 
-#: views/edit-album.php:236
+#: views/edit-album.php:148
+msgid "Album Saved. Kindly wait for the redirect to happen."
+msgstr "อัลบั้มบันทึกแล้ว กรุณารอการเปลี่ยนเส้นทางที่จะเกิดขึ้น"
+
+#: views/edit-album.php:155
+msgid "Album Details"
+msgstr "รายละเอียดของอัลบั้ม"
+
+#: views/edit-album.php:159
+msgid "Album Title"
+msgstr "ชื่ออัลบั้ม"
+
+#: views/edit-album.php:164
+msgid "Enter your Album Title"
+msgstr "ใส่ชื่ออัลบั้ม"
+
+#: views/edit-album.php:171
+msgid "Description"
+msgstr "รายละเอียด"
+
+#: views/edit-album.php:185
+msgid "Upload Images"
+msgstr "อัพโหลดรูปภาพ"
+
+#: views/edit-album.php:188
+msgid "Your browser doesn\"t have Flash, Silverlight or HTML5 support."
+msgstr "บราวเซอร์ของคุณไม่รองรับ Flash, Silverlight และ HTML5"
+
+#: views/edit-album.php:195
+msgid "Upload Videos"
+msgstr "อัพโหลดวีดีโอ"
+
+#: views/edit-album.php:196 views/edit-album.php:242 views/settings.php:271
+#: views/settings.php:487 views/settings.php:717 views/settings.php:828
+#: views/settings.php:927 views/settings.php:1249 views/settings.php:1365
+#: views/settings.php:1416 views/settings.php:1468
+msgid " (Available in Premium Versions)"
+msgstr "(ที่มีจำหน่ายในเวอร์ชันพรีเมี่ยม)"
+
+#: views/edit-album.php:201
+msgid "Video Url"
+msgstr "Url ของวีดีโอ"
+
+#: views/edit-album.php:205
+msgid "Enter your Video Url"
+msgstr "ใส่ URL ของวีดีโอ"
+
+#: views/edit-album.php:211
+msgid "Upload Video"
+msgstr "อัพโหลดวีดีโอ"
+
+#: views/edit-album.php:222
+msgid "Your Gallery Bank Album"
+msgstr "อัลบั้มของคุณ"
+
+#: views/edit-album.php:232
+msgid "Delete"
+msgstr "ลบ"
+
+#: views/edit-album.php:238
+msgid "Title & Description"
+msgstr "ชื่อและรายละเอียด"
+
+#: views/edit-album.php:241
+msgid "Tags (comma separated list)"
+msgstr "Tags (ใส่คอมม่า (,) เพื่อใส่ Tags หลายรายการ)"
+
+#: views/edit-album.php:245
+msgid "Url to Redirect on click of an Image"
+msgstr "Url ที่ต้องการแสดงเมื่อคลิกที่รูปภาพ"
+
+#: views/edit-album.php:297
 msgid "Delete Video"
-msgstr "ลบวิดีโอ"
+msgstr "ลบวีดีโอ"
+
+#: views/edit-album.php:575
+msgid "Are you sure you want to delete this Image?"
+msgstr "ต้องการลบรูปนี้ใช่ไหม"
 
 #: views/gallery-bank-system-report.php:14
 msgid "Get System Report"
-msgstr "ได้รับ - ระบบ - รายงานการ"
+msgstr "ต้องการรายงานจากระบบ"
 
 #: views/gallery-bank-system-report.php:18
 msgid "Close System Report"
-msgstr "ใกล้ชิด-ระบบระบบ-รายงาน "
+msgstr "ปิดรายงานจากระบบ"
 
 #: views/gallery-bank-system-report.php:109
 msgid "Default"
-msgstr "ผิดนัด"
+msgstr "ค่าปกติ"
 
 #: views/purchase_pro_version.php:25
 msgid "Gallery Bank Pricing"
-msgstr "Gallery Bank ราคา"
+msgstr "Gallery Bank การกำหนดราคา"
 
 #: views/settings.php:263
 msgid "Update Settings"
-msgstr "การตั้งค่าของปรับปรุง"
+msgstr "อัพเดทการตั้งค่า"
 
 #: views/settings.php:270
 msgid "Thumbnail Settings"
-msgstr "การตั้งค่ารูปย่อ"
+msgstr "การตั้งค่าภาพขนาดเล็ก"
 
 #: views/settings.php:282
 msgid "Thumbnail Size"
-msgstr "รูปย่อ - ขนาด"
+msgstr "ขนาดของภาพขนาดเล็ก"
 
 #: views/settings.php:289 views/settings.php:297 views/settings.php:505
 #: views/settings.php:513
 msgid "Original"
-msgstr "ดั้งเดิม"
+msgstr "ต้นฉบับ"
 
 #: views/settings.php:292 views/settings.php:300 views/settings.php:508
 #: views/settings.php:516
 msgid "Custom"
-msgstr "ที่กำหนดเอง"
+msgstr "กำหนดเอง"
 
 #: views/settings.php:309 views/settings.php:525
 msgid "Width"
-msgstr "ความกว้"
+msgstr "กว้าง"
 
 #: views/settings.php:319 views/settings.php:535
 msgid "Height"
-msgstr "ส่วนสูง"
+msgstr "สูง"
 
 #: views/settings.php:331 views/settings.php:546 views/settings.php:968
 msgid "Opacity"
-msgstr "ความทึบแสง"
+msgstr "ความโปร่งใส"
 
 #: views/settings.php:343 views/settings.php:558 views/settings.php:979
 msgid "Border Size"
-msgstr "ชายแดน-ขนาด "
+msgstr "ขนาดของขอบ"
 
 #: views/settings.php:354 views/settings.php:570 views/settings.php:990
 msgid "Border Radius"
-msgstr "ชายแดนรัศมี"
+msgstr "รัศมีเส้นขอบ"
 
 #: views/settings.php:365 views/settings.php:582 views/settings.php:1015
 msgid "Border Color"
-msgstr "ชายแดน-สี"
+msgstr "สีของเส้นของ"
 
 #: views/settings.php:379
 msgid "Margin Between Images"
-msgstr "อัตรากำไรระหว่าง- ภาพ"
+msgstr "ขอบระหว่างรูปภาพ"
 
 #: views/settings.php:389 views/settings.php:616 views/settings.php:1001
 msgid "Text Color"
-msgstr "สีของเนื้อหา"
+msgstr "สีข้อความ"
 
 #: views/settings.php:403 views/settings.php:633 views/settings.php:1075
 msgid "Text-Align"
-msgstr "ข้อความ-จัดแนว"
+msgstr "การจัดเรียงข้อความ"
 
 #: views/settings.php:417 views/settings.php:647 views/settings.php:784
 #: views/settings.php:1089 views/settings.php:1297
 msgid "Font-Family"
-msgstr "Font-Family"
+msgstr "ฟอนต์"
 
 #: views/settings.php:440 views/settings.php:670 views/settings.php:1112
 msgid "Heading Font-Size"
-msgstr "มุ่งหน้าตัวอักษร-ขนาด"
+msgstr "ขนาดฟอนต์ของส่วนบน"
 
 #: views/settings.php:457 views/settings.php:687 views/settings.php:1129
 msgid "Text Font-Size"
-msgstr "ข้อความ-ตัวอักษร-ขนาด"
+msgstr "ขนาดของฟอนต์"
 
 #: views/settings.php:474 views/settings.php:704
 msgid "Description Length"
-msgstr "รายละเอียดความยาว"
+msgstr "ความยาวของรายละเอียด"
 
 #: views/settings.php:486
 msgid "Album Cover Settings"
-msgstr "ปกอัลบั้ม-การตั้งค่า"
+msgstr "ตั้งค่าหน้าปกอัลบั้ม"
 
 #: views/settings.php:498
 msgid "Cover Size"
-msgstr "ปก-ขนาด"
+msgstr "ขนาดของหน้าปก"
 
 #: views/settings.php:596
 msgid "Margin Between Albums"
-msgstr "อัตรากำไร-ระหว่าง -บั"
+msgstr "ขอบระหว่างอัลบั้ม"
 
 #: views/settings.php:606
 msgid "Text for Album Click"
-msgstr "ข้อความข้อมูลสำบั้ม -คลิก"
+msgstr "ข้อความเพื่อคลิกของอัลบั้ม"
 
 #: views/settings.php:716
 msgid "Filter Settings"
-msgstr "กรอง-การตั้งค่า"
+msgstr "ตั้งค่าการกรอง"
 
 #: views/settings.php:728
 msgid "Filters"
-msgstr "ตัวก"
+msgstr "การกรอง"
 
 #: views/settings.php:735 views/settings.php:743 views/settings.php:1153
 #: views/settings.php:1161 views/settings.php:1179 views/settings.php:1186
@@ -527,7 +537,7 @@ msgstr "ตัวก"
 #: views/settings.php:1383 views/settings.php:1391 views/settings.php:1434
 #: views/settings.php:1442
 msgid "Enable"
-msgstr "เปิดใช้งานการ"
+msgstr "เปิดใช้งาน"
 
 #: views/settings.php:738 views/settings.php:746 views/settings.php:1156
 #: views/settings.php:1164 views/settings.php:1181 views/settings.php:1189
@@ -536,37 +546,37 @@ msgstr "เปิดใช้งานการ"
 #: views/settings.php:1386 views/settings.php:1394 views/settings.php:1437
 #: views/settings.php:1445
 msgid "Disable"
-msgstr "ปิดการใช้"
+msgstr "ปิดใช้งาน"
 
 #: views/settings.php:756
 msgid "Filter Color"
-msgstr "กรอง-สีที"
+msgstr "สีของฟิลเตอร์"
 
 #: views/settings.php:770
 msgid "Filter Text Color"
-msgstr "กรอง-ข้อความสีของ"
+msgstr "สีตัวอักษรของฟิลเตอร์"
 
 #: views/settings.php:807 views/settings.php:1320
 msgid "Font-Size"
-msgstr "ตัวอักษร-ขนาด"
+msgstr "ขนาดของฟอนต์"
 
 #: views/settings.php:827
 msgid "Roles & Capabilities"
-msgstr "บทบาทและความสามารถ"
+msgstr "กฎและความสามารถ"
 
 #: views/settings.php:839
 msgid "Privileges for Admin"
-msgstr "สิทธิพิเศษ-สำห-ดูแลระบบ"
+msgstr "เอกสิทธิ์ของผู้ดูแล"
 
 #: views/settings.php:843 views/settings.php:859 views/settings.php:875
 #: views/settings.php:892 views/settings.php:910
 msgid "Full Control"
-msgstr "เต็ม ควบคุมทั้งหมด"
+msgstr "จัดการได้ทั้งหมด"
 
 #: views/settings.php:846 views/settings.php:862 views/settings.php:878
 #: views/settings.php:895 views/settings.php:913
 msgid "Read"
-msgstr "อ่านทั้ง"
+msgstr "อ่าน"
 
 #: views/settings.php:849 views/settings.php:865 views/settings.php:881
 #: views/settings.php:898 views/settings.php:916
@@ -575,116 +585,248 @@ msgstr "เขียน"
 
 #: views/settings.php:855
 msgid "Privileges for Editor"
-msgstr "สิทธิพิเศษสำ บรรณา"
+msgstr "เอกสิทธิ์ของผู้เรียบเรียง"
 
 #: views/settings.php:871
 msgid "Privileges for Author"
-msgstr "สิทธิพิเศษสำ- ผู้เขียน"
+msgstr "เอกสิทธิ์ของผู้เขียน"
 
 #: views/settings.php:887
 msgid "Privileges for Contributor"
-msgstr "Privileges for Contributor"
+msgstr "เอกสิทธิ์ของผู้มีส่วนร่วม"
 
 #: views/settings.php:904
 msgid "Privileges for Subscriber"
-msgstr "สิทธิพิเศษสำ- \tผู้เซ็นชื่อเห็นด้วย"
+msgstr "เอกสิทธิ์ของผู้ติดตาม"
 
 #: views/settings.php:926
 msgid "Lightbox Settings"
-msgstr "ไลท์บ็อก-การตั้งค่า"
+msgstr "การตั้งค่า Lightbox"
 
 #: views/settings.php:938
 msgid "Lightbox Type"
-msgstr "ไลท์บ็อกประเภทของ"
+msgstr "ประเภทของ Lightbox"
 
 #: views/settings.php:1029
 msgid "Inline Background"
-msgstr "แบบอินไลน์พื้นหลัง"
+msgstr "เส้นในพื้นหลัง"
 
 #: views/settings.php:1043
 msgid "Overlay Background"
-msgstr "ภาพซ้อนทับพื้นหลังของ"
+msgstr "วางทับพื้นหลัง"
 
 #: views/settings.php:1057
 msgid "Fade In Time"
-msgstr "จางหายในเวลา"
+msgstr "ระยะเวลาเฟดอิน"
 
 #: views/settings.php:1066
 msgid "Fade Out Time"
-msgstr "จางหายออกเวลา"
+msgstr "ระยะเวลาเฟดเอาท์"
 
 #: views/settings.php:1146
 msgid "Facebook Comments"
-msgstr "Facebook ความเห็น"
+msgstr "คอมเมนต์เฟซบุ๊ค"
 
 #: views/settings.php:1173
 msgid "Social Sharing"
-msgstr "ร่วมกันทางสังคม"
+msgstr "การแบ่งปันในวงสังคม"
 
 #: views/settings.php:1198
 msgid "Image Title"
-msgstr "รูปภาพ-ชื่อเรื่อง"
+msgstr "ชื่อรูปภาพ"
 
 #: views/settings.php:1222
 msgid "Image Description"
-msgstr "รูปภาพคำอธิบาย"
+msgstr "คำบรรยายรูปภาพ"
 
 #: views/settings.php:1248
 msgid "Front - End Layout Settings"
-msgstr "ด้านหน้าจบ เค้าโครงเหมือนการตั้งค่า "
+msgstr "การตั้งค่าหน้าหลักและหน้าการจัดการ"
 
 #: views/settings.php:1260
 msgid "Text for Back Button"
-msgstr "ข้อความสำหกลับปุ่มที่"
+msgstr "ข้อความสำหรับปุ่มกลับ"
 
 #: views/settings.php:1270
 msgid "Button Color"
-msgstr "ปุ่มที่สีที่"
+msgstr "สีของปุ่มกด"
 
 #: views/settings.php:1283
 msgid "Button Text Color"
-msgstr "ปุ่มที่ข้อความ-สีที่"
+msgstr "สีตัวอักษรของปุ่มกด"
 
 #: views/settings.php:1337
 msgid "Album Seperator"
-msgstr "อัลบั้ม-เครื่องสกัด"
+msgstr "ตัวแบ่งอัลบั้ม"
 
 #: views/settings.php:1364
 msgid "Pagination Settings for Images"
-msgstr "การแบ่งหน้า-การตั้งค่-สำหรับ-รูปภาพ\t"
+msgstr "ตั้งค่าเลขหน้าของรูป"
 
 #: views/settings.php:1376
 msgid "Paging"
-msgstr "เพจจิ้ง"
+msgstr "การแบ่งหน้า"
 
 #: views/settings.php:1403
 msgid "No. of Images Per Page "
-msgstr "นวนของภาพต่อหน้า"
+msgstr "จำนวนรูปต่อหน้า"
 
 #: views/settings.php:1415
 msgid "Slide Show Settings"
-msgstr "การแสดงภาพนิ่ง-การตั้งค่า"
+msgstr "การตั้งค่าการนำเสนอภาพนิ่ง"
 
 #: views/settings.php:1427
 msgid "Auto Play"
-msgstr "ออโต้การเล่น"
+msgstr "เล่นอัตโนมัติ"
 
 #: views/settings.php:1454
 msgid "Interval"
-msgstr " อันตรภาค"
+msgstr "ระยะห่าง"
 
 #: views/settings.php:1467
 msgid "Language Direction Settings"
-msgstr "ภาษาทิศทาง-การตั้งค่า"
+msgstr "การตั้งค่าทิศทางภาษา"
 
 #: views/settings.php:1479
 msgid "Language Direction"
-msgstr "ภาษาทิศทาง"
+msgstr "ทิศทางภาษา"
 
 #: views/settings.php:1636
 msgid "This Feature is only available in Paid Premium Version!"
-msgstr "คุณลักษณะนี้จะใช้ได้เฉพาะในรที่จ่ายพรีเมี่ยม เวอร์ชัน!"
+msgstr "คุณลักษณะนี้จะใช้ได้เฉพาะในรุ่นที่จ่ายพรีเมี่ยม!"
 
 #: views/shortcode.php:8
 msgid "Gallery Bank Short-Codes"
-msgstr "Gallery Bank -สั้นรหัส"
+msgstr "แกลลอรี่ธนาคารสั้นรหัส"
+
+#~ msgid "VIEW ALL"
+#~ msgstr "ดูทั้งหมด"
+
+#~ msgid "Licensing"
+#~ msgstr "ใบอนุญาติ"
+
+#~ msgid "Select Gallery"
+#~ msgstr "เลือกแกลอรี่"
+
+#~ msgid "Select Gallery Format"
+#~ msgstr "เลือกรูปแบบของแกลอรี่"
+
+#~ msgid "Images In Row"
+#~ msgstr "จำนวนรูปในแถว"
+
+#~ msgid "Select Text Format"
+#~ msgstr "เลือกรูปแบบของข้อความ"
+
+#~ msgid "Special Effect"
+#~ msgstr "การแสดงผลพิเศษ"
+
+#~ msgid "Select Special Effect"
+#~ msgstr "เลือกรูปแบบการแสดงผลพิเศษ"
+
+#~ msgid "Animation Effect"
+#~ msgstr "รูปแบบของอนิเมชั่น"
+
+#~ msgid "Responsive Gallery"
+#~ msgstr "Responsive Gallery"
+
+#~ msgid "Save and Submit Changes"
+#~ msgstr "บันทึกการเปลี่ยนแปลง"
+
+#~ msgid "Album Published. Kindly wait for the redirect to happen."
+#~ msgstr "เผยแพร่สำเร็จ กรุณารอโหลดหน้าใหม่อีกครั้ง"
+
+#~ msgid "Are you sure you want to delete these Images?"
+#~ msgstr "ต้องการลบรูปภาพเหล่านี้ใช่ไหม"
+
+#~ msgid "Attention! A new vesion of Gallery Bank is available for download."
+#~ msgstr "คำเตือน ! Gallery Bank มีเวอร์ชั่นใหม่ให้อัพโหลดแล้ว"
+
+#~ msgid "Click"
+#~ msgstr "คลิก"
+
+#~ msgid "here"
+#~ msgstr "ที่นี่"
+
+#~ msgid "to upgrade your version of Gallery Bank."
+#~ msgstr "เพื่ออัพเดทเวอร์ชั่นของ Gallery Bank"
+
+#~ msgid "Dashboard - Gallery Bank"
+#~ msgstr "หน้าแรก - Gallery Bank"
+
+#~ msgid "Date of Creation"
+#~ msgstr "วันที่สร้าง"
+
+#~ msgid "Are you sure you want to delete all Albums?"
+#~ msgstr "ต้องการลบอัลบั้มทั้งหมดใช่ไหม"
+
+#~ msgid "Are you sure you want to Restore Factory Settings?"
+#~ msgstr "ต้องการตั้งเป็นค่าเริ่มต้นใช่ไหม"
+
+#~ msgid "Are you sure you want to Purge all Images & Albums?"
+#~ msgstr "ต้องการลบรูปภาพและอัลบั้มทั้งหมดใช่ไหม"
+
+#~ msgid "Gallery Bank Documentation"
+#~ msgstr "เอกสารกำกับโปรแกรม Gallery Bank"
+
+#~ msgid "Gallery Bank Licensing Module"
+#~ msgstr "โมดูลการลงทะเบียน Gallery Bank"
+
+#~ msgid "Success! Settings have been updated."
+#~ msgstr "การตั้งค่าอัพเดทเรียบร้อยแล้ว !"
+
+#~ msgid "Update"
+#~ msgstr "อัพเดท"
+
+#~ msgid "Restore Settings"
+#~ msgstr "กู้คืนการตั้งค่า"
+
+#~ msgid "Settings has been updated."
+#~ msgstr "การตั้งค่าอัพเดทแล้ว"
+
+#~ msgid "Success! Settings have been restored."
+#~ msgstr "กู้คืนการตั้งค่าเรียบร้อยแล้ว"
+
+#~ msgid "Are you sure you want to restore settings?"
+#~ msgstr "ต้องการกู้คืนค่าเดิมใช่ไหม"
+
+#~ msgid " Rotate Image"
+#~ msgstr "หมุนรูปภาพ"
+
+#~ msgid "Upload Images "
+#~ msgstr "อัพโหลดรูปภาพ"
+
+#~ msgid "Your Wordpress Version doesn\"t support Wp-media."
+#~ msgstr "เวอร์ชั่น Wordpress ของคุณไม่รองรับ Wp-Media"
+
+#~ msgid "Upload Thumbnails "
+#~ msgstr "อัพโหลดรูปขนาดเล็ก"
+
+#~ msgid "Show Albums"
+#~ msgstr "แสดงอัลบั้ม"
+
+#~ msgid "Responsive"
+#~ msgstr "การตอบสนอง"
+
+#~ msgid "With Albums in Row"
+#~ msgstr "กับอัลบั้มในแถว"
+
+#~ msgid "Image Uploader Settings"
+#~ msgstr "การตั้งค่าการอัพโหลดรูปภาพ"
+
+#~ msgid "Uploader for Images"
+#~ msgstr "ตัวจัดการการอัพโหลดสำหรับรูปภาพ"
+
+#~ msgid "WP Media"
+#~ msgstr "สื่อ WP"
+
+#~ msgid "Change Uploading Image Name"
+#~ msgstr "เปลี่ยนชื่อรูปที่กำลังอัพโหลด"
+
+#~ msgid "Image url location"
+#~ msgstr "ที่ตั้ง Url ของรูปภาพ"
+
+#~ msgid "Open in New Window"
+#~ msgstr "เปิดในหน้าต่างใหม่"
+
+#~ msgid "Same Window"
+#~ msgstr "หน้าต่างเดียวกัน"

@@ -1,6 +1,8 @@
 <?php
 $default_options = array(
 	'maxwidth' => '0',
+	'lockheight' => '0',
+	'height' => '500',
 	'maxheight' => '0',
 	'autoSlideshow' => '1',
 	'slideshowDelay' => '10',
@@ -33,35 +35,47 @@ $options_tree = array(
 				'attr' => 'type="number" min="0"',
 				'text' => 'Set the maximum width of the gallery. Leave 0 to disable max-width.'
 			),
+			'lockheight' => array(
+				'label' => 'Set height manually',
+				'tag' => 'checkbox',
+				'attr' => 'data-watch="change"',
+				'text' => 'By default a gallery automatically calculates own height to best fit the tallest image in a gallery.'
+			),
+			'height' => array(
+				'label' => 'Height',
+				'tag' => 'input',
+				'attr' => 'type="text" min="0" data-lockheight="is:1"',
+				'text' => 'Set height of the gallery. Do not set % unless you know what you doing.'
+			),
 			'maxheight' => array(
 				'label' => 'Max-Height',
 				'tag' => 'input',
-				'attr' => 'type="number" min="0"',
+				'attr' => 'type="number" min="0" data-lockheight="is:0"',
 				'text' => 'Set the maximum height of the gallery. Leave 0 to disable max-height.'
 			),
 			'autoSlideshow' => array(
 				'label' => 'Automatic Slideshow',
 				'tag' => 'checkbox',
 				'attr' => '',
-				'text' => '',
+				'text' => ''
 			),
 			'slideshowDelay' => array(
 				'label' => 'Slideshow Delay',
 				'tag' => 'input',
 				'attr' => 'type="number" min="1" max="300"',
-				'text' => 'Set delay between slides in seconds',
+				'text' => 'Set delay between slides in seconds'
 			),
 			'thumbnailsWidth' => array(
 				'label' => 'Thumbnails Width',
 				'tag' => 'input',
 				'attr' => 'type="number" min="0" max="300"',
-				'text' => 'Set bottom thumbnails width in pixels',
+				'text' => 'Set bottom thumbnails width in pixels'
 			),
 			'thumbnailsHeight' => array(
 				'label' => 'Thumbnails Height',
 				'tag' => 'input',
 				'attr' => 'type="number" min="0" max="300"',
-				'text' => 'Set bottom thumbnails height in pixels',
+				'text' => 'Set bottom thumbnails height in pixels'
 			),
 			'property0' => array(
 				'label' => 'Wmode for flash object',
@@ -93,7 +107,7 @@ $options_tree = array(
 				'label' => 'Show image views/likes counter',
 				'tag' => 'checkbox',
 				'attr' => '',
-				'text' => '',
+				'text' => ''
 			),
 			'barBgColor' => array(
 				'label' => 'Header & Footer Background Color',
@@ -196,7 +210,7 @@ $options_tree = array(
 				'label' => 'Display LoveLink?',
 				'tag' => 'checkbox',
 				'attr' => '',
-				'text' => 'Selecting "Yes" will show the lovelink icon (codeasily.com) somewhere on the gallery',
+				'text' => 'Selecting "Yes" will show the lovelink icon (codeasily.com) somewhere on the gallery'
 			)*/
 		)
 	)

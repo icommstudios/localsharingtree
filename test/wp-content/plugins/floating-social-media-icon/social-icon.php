@@ -75,7 +75,7 @@ update_option('acx_si_installed_date', $acx_si_installed_date);
 		$social_icon_array_order = array(0,1,2,3,4,5,6);
 		$social_icon_array_order = serialize($social_icon_array_order);
 		update_option('social_icon_array_order', $social_icon_array_order);
-		$acx_fsmi_si_current_version = "1.3.4";  // Current Version
+		$acx_fsmi_si_current_version = "1.3.5";  // Current Version
 		update_option('acx_fsmi_si_current_version', $acx_fsmi_si_current_version);
 	} else 
 	{
@@ -122,25 +122,38 @@ update_option('acx_si_installed_date', $acx_si_installed_date);
 	
 	
 <div class="wrap">
+<div style='background: none repeat scroll 0% 0% white; height: 100%; display: inline-block; padding: 8px; margin-top: 5px; border-radius: 15px; min-height: 450px; width: 100%;'>
 <?php
 $acx_si_fsmi_acx_service_banners = get_option('acx_si_fsmi_acx_service_banners');
 if ($acx_si_fsmi_acx_service_banners != "no") { ?>
-<p class="widefat" style="padding:8px;width:99%;height: 75px;">
-	<b>Acurax Services >> </b><br>
-	<a href="http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=plugin-page&utm_medium=banner&utm_campaign=fsmi" target="_blank" id="wtd" style="background:url(<?php echo plugins_url('images/wtd.jpg', __FILE__);?>);"></a>
-	
-	<a href="http://www.acurax.com/services/web-designing.php?utm_source=plugin-page&utm_medium=banner&utm_campaign=fsmi" target="_blank" id="wd" style="background:url(<?php echo plugins_url('images/wd.jpg', __FILE__);?>);"></a>
-	<a href="http://www.acurax.com/social-media-marketing-optimization/social-profile-design.php?utm_source=plugin-page&utm_medium=banner&utm_campaign=fsmi" target="_blank" id="spd" style="background:url(<?php echo plugins_url('images/spd.jpg', __FILE__);?>);"></a>
-	<a href="http://www.acurax.com/services/website-redesign.php?utm_source=plugin-page&utm_medium=banner&utm_campaign=fsmi" target="_blank" id="wrd" style="background:url(<?php echo plugins_url('images/wr.jpg', __FILE__);?>);"></a>
-</p>
+<div id="acx_ad_banners_fsmi">
+<a href="http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=plugin-page&utm_medium=banner&utm_campaign=fsmi" target="_blank" class="acx_ad_fsmi_1">
+<div class="acx_ad_fsmi_title">Wordpress Expert Support</div> <!-- acx_ad_fsmi_title -->
+<div class="acx_ad_fsmi_desc">Troubleshoot WordPress site issues</div> <!-- acx_ad_fsmi_desc -->
+</a> <!--  acx_ad_fsmi_1 -->
+
+<a href="http://www.acurax.com/services/website-redesign.php?utm_source=plugin-page&utm_medium=banner&utm_campaign=fsmi" target="_blank" class="acx_ad_fsmi_1">
+<div class="acx_ad_fsmi_title">Custom Theme Design</div> <!-- acx_ad_fsmi_title -->
+<div class="acx_ad_fsmi_desc acx_ad_fsmi_desc2" style="padding-top: 4px; height: 41px; font-size: 13px; text-align: center;">Create, modify, or customise, themes</div> <!-- acx_ad_fsmi_desc -->
+</a> <!--  acx_ad_fsmi_1 -->
+
+<a href="http://www.acurax.com/services/web-development.php?utm_source=plugin-page&utm_medium=banner&utm_campaign=fsmi" target="_blank" class="acx_ad_fsmi_1">
+<div class="acx_ad_fsmi_title">Plugin Development</div> <!-- acx_ad_fsmi_title -->
+<div class="acx_ad_fsmi_desc acx_ad_fsmi_desc3" style="padding-top: 4px; height: 41px; font-size: 13px; text-align: center;">Custom plugin development according to your needs</div> <!-- acx_ad_fsmi_desc -->
+</a> <!--  acx_ad_fsmi_1 -->
+
+<a href="http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=plugin-page&utm_medium=banner&utm_campaign=fsmi" target="_blank" class="acx_ad_fsmi_1">
+<div class="acx_ad_fsmi_title">Quick Support</div> <!-- acx_ad_fsmi_title -->
+<div class="acx_ad_fsmi_desc acx_ad_fsmi_desc4" style="padding-top: 4px; height: 41px; font-size: 13px; text-align: center;">Explain errors and recommend solutions</div> <!-- acx_ad_fsmi_desc -->
+</div> <!--  acx_ad_fsmi_1 -->
+</a> <!--  acx_ad_banners_fsmi -->
 <?php } else { ?>
 <p class="widefat" style="padding:8px;width:99%;">
 <b>Acurax Services >> </b>
-<a href="http://www.acurax.com/services/blog-design.php" target="_blank">Wordpress Theme Design</a> | 
-<a href="http://www.acurax.com/services/web-designing.php" target="_blank">Website Design</a> | 
-<a href="http://www.acurax.com/social-media-marketing-optimization/social-profile-design.php" target="_blank">Social Profile Design</a> | 
-<a href="http://www.acurax.com/social-media-marketing-optimization/twitter-background-design.php" target="_blank">Twitter Background Design</a> | 
-<a href="http://www.acurax.com/social-media-marketing-optimization/facebook-page-design.php" target="_blank">Facebook Page Design</a>
+<a href="http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=plugin-page&utm_medium=banner_link&utm_campaign=fsmi" target="_blank">Wordpress Expert Support</a> | 
+<a href="http://www.acurax.com/services/website-redesign.php?utm_source=plugin-page&utm_medium=banner_link&utm_campaign=fsmi" target="_blank">Custom Theme Design</a> | 
+<a href="http://www.acurax.com/services/web-development.php?utm_source=plugin-page&utm_medium=banner_link&utm_campaign=fsmi" target="_blank">Plugin Development</a> | 
+<a href="http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=plugin-page&utm_medium=banner_link&utm_campaign=fsmi" target="_blank">Quick Support</a>
 </p>
 <?php } ?>
 <?php
@@ -148,7 +161,7 @@ if($acx_si_fsmi_hide_advert == "no")
 {
 ?>
 <div id="acx_fsmi_premium">
-<a style="margin: 8px 0px 0px 10px; float: left; font-size: 16px; font-weight: bold;" href="http://clients.acurax.com/floating-socialmedia.php?utm_source=plugin&utm_medium=highlight&utm_campaign=fsmi" target="_blank">Fully Featured - Premium Floating Social Media Icon</a>
+<a style="margin: 8px 0px 0px 10px; float: left; font-size: 16px; font-weight: bold;" href="http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?utm_source=plugin&utm_medium=highlight&utm_campaign=fsmi" target="_blank">Fully Featured - Premium Floating Social Media Icon</a>
 <a style="margin: -14px 0px 0px 10px; float: left;" href="http://clients.acurax.com/floating-socialmedia.php?utm_source=plugin&utm_medium=highlight_yellow&utm_campaign=fsmi" target="_blank"><img src="<?php echo plugins_url('images/yellow.png', __FILE__);?>"></a>
 </div> <!-- acx_fsmi_premium -->
 <?php } ?>
@@ -375,14 +388,14 @@ Please do a favour by enabling back-link to our site. <a href="admin.php?page=Ac
 		<?php  
 	} ?>
 	<p class="submit">
-		<input type="submit" name="Submit" value="<?php _e('Save Configuration', 'acx_si_config' ) ?>" />
+		<input type="submit" name="Submit" class="button" value="<?php _e('Save Configuration', 'acx_si_config' ) ?>" />
 		<a name="updated">.</a>
 	</p>
 </form>
 <?php if($_GET["status"] == "updated") { ?>
 <div style="display: block; background-color: rgb(255, 255, 224); padding: 10px; border: 1px solid rgb(230, 219, 85); font-family: arial; font-size: 13px; font-weight: bold; text-align: center; border-radius: 10px 10px 10px 10px;">Acurax Floating Social Media Icon Update Successfully Completed - Thank You</div>
 <?php
-$acx_fsmi_si_current_version = "1.3.4";  // Current Version
+$acx_fsmi_si_current_version = "1.3.5";  // Current Version
 update_option('acx_fsmi_si_current_version', $acx_fsmi_si_current_version);
 } ?>
 <hr/>
@@ -396,4 +409,4 @@ socialicons_comparison(1); ?>
 	<p class="widefat" style="padding:8px;width:99%;">
 		Something Not Working Well? Have a Doubt? Have a Suggestion? - <a href="http://www.acurax.com/contact.php" target="_blank">Contact us now</a> | Need a Custom Designed Theme For your Blog or Website? Need a Custom Header Image? - <a href="http://www.acurax.com/contact.php" target="_blank">Contact us now</a>
 	</p>
-</div>
+</div></div>

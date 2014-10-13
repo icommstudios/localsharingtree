@@ -4,7 +4,20 @@
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+
+	<?php if ( has_post_thumbnail() ) : ?>
+	<meta property="og:image" content="<?php
+
+$thumb_id = get_post_thumbnail_id();
+
+$thumb_url = wp_get_attachment_image_src($thumb_id,'thumbnail-size', true);
+
+echo $thumb_url[0];
+
+?>" />
+	<?php endif; ?>
+
 	<title>
 	    <?php
 		global $page, $paged;

@@ -16,7 +16,7 @@
                     if ($albumCover->album_cover == 0) {
                         ?>
                         <img id="album_img<?php echo $album->album_id; ?>"
-                             src="<?php echo stripcslashes(GALLERY_BK_PLUGIN_URL . "/assets/images/album-cover.png"); ?>"
+                             src="<?php echo stripcslashes(plugins_url("/assets/images/album-cover.png",dirname(__FILE__))); ?>"
                              style=" height: <?php echo $cover_thumbnail_height; ?>px;"/>
                     <?php
                     } else {
@@ -28,7 +28,7 @@
                 } else {
                     ?>
                     <img id="album_img<?php echo $album->album_id; ?>"
-                         src="<?php echo stripcslashes(GALLERY_BK_PLUGIN_URL . "/assets/images/album-cover.png"); ?>"
+                         src="<?php echo stripcslashes(plugins_url("/assets/images/album-cover.png",dirname(__FILE__))); ?>"
                          style=" height: <?php echo $cover_thumbnail_height; ?>px;"/>
                 <?php
                 }

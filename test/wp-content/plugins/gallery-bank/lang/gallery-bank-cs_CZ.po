@@ -1,32 +1,30 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Czech Language - Gallery Bank\n"
-"POT-Creation-Date: 2014-05-06 14:56+0530\n"
+"Project-Id-Version: Gallery Bank\n"
+"POT-Creation-Date: 2014-07-17 16:35+0530\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
-"Language-Team: Tech Banker <support@tech-banker.com>\n"
-"Language: cs_CZ\n"
+"Language-Team: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Poedit 1.6.6\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-Basepath: I:\\Kiran-work-Backup\\2014\\Gallery-Bank-Latest"
-"\\3.8.2\\Standard\\gallery-bank\\\n"
+"X-Poedit-Basepath: D:\\gallery-bank\\\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: front_views/gallery-bank-shortcode.php:4
 msgid "Insert Gallery Bank Shortcode"
-msgstr "Vlož zkrácený kód"
+msgstr "Vložte Bank Shortcode galerie"
 
 #: front_views/gallery-bank-shortcode.php:6
 msgid "Select an album below to add it to your post or page."
-msgstr "Vyber album níže a přidej ho do svého příspěvku nebo stránky."
+msgstr "Vyberte album, které chcete přidat do Vašeho příspěvku / stránky."
 
 #: front_views/gallery-bank-shortcode.php:11
 msgid "Gallery Type"
-msgstr "Typ galerie"
+msgstr "Druh galerie"
 
 #: front_views/gallery-bank-shortcode.php:13
 msgid "Albums with Images"
@@ -42,15 +40,15 @@ msgstr "Formát alba"
 
 #: front_views/gallery-bank-shortcode.php:20
 msgid "Select Album Format"
-msgstr "Vyberte alb Nejnovější Formátu"
+msgstr "Vyberte formát alba"
 
 #: front_views/gallery-bank-shortcode.php:27
 msgid "Select Album"
-msgstr "Vyber album"
+msgstr "Vyberte album"
 
 #: front_views/gallery-bank-shortcode.php:29
 msgid "Select an Album"
-msgstr "Vyber album"
+msgstr "Vyberte album"
 
 #: front_views/gallery-bank-shortcode.php:45
 msgid "Gallery Format"
@@ -58,28 +56,28 @@ msgstr "Formát galerie"
 
 #: front_views/gallery-bank-shortcode.php:47
 msgid "Select Gallery Format "
-msgstr "Zvol formát galerie "
+msgstr "Vyberte formát galerie"
 
-#: front_views/gallery-bank-shortcode.php:56 views/album-preview.php:29
-#: views/images-sorting.php:220
+#: front_views/gallery-bank-shortcode.php:56 views/album-preview.php:56
+#: views/images-sorting.php:247
 msgid "Images in Row"
-msgstr "Obrázky na řádku"
+msgstr "Obrázky v řadě"
 
 #: front_views/gallery-bank-shortcode.php:61
 msgid "Image Width"
 msgstr "Šířka obrázku"
 
-#: front_views/gallery-bank-shortcode.php:68 views/album-sorting.php:170
+#: front_views/gallery-bank-shortcode.php:68 views/album-sorting.php:197
 msgid "Albums in Row"
-msgstr "Alba na řádku"
+msgstr "Alba v řadě"
 
 #: front_views/gallery-bank-shortcode.php:73
 msgid "Text Format"
-msgstr "formát textu"
+msgstr "Formát textu"
 
 #: front_views/gallery-bank-shortcode.php:75
 msgid "Select Format "
-msgstr "Zvolte formát␣"
+msgstr "Vyberte formát "
 
 #: front_views/gallery-bank-shortcode.php:82
 msgid "Special Effects"
@@ -87,19 +85,19 @@ msgstr "Speciální efekty"
 
 #: front_views/gallery-bank-shortcode.php:104
 msgid "Animation Effects"
-msgstr "Efekty animace"
+msgstr "Efekty animací"
 
 #: front_views/gallery-bank-shortcode.php:157
 msgid "Show Responsive Gallery"
-msgstr "Ukázat Reagující Galerie"
+msgstr "Zobrazit galerie v responsivním náhledu"
 
 #: front_views/gallery-bank-shortcode.php:161
 msgid "Show Album Title"
-msgstr "Ukaž název alba"
+msgstr "Zobrazit název alba"
 
 #: front_views/gallery-bank-shortcode.php:166
 msgid "Insert Album"
-msgstr "Vlož album"
+msgstr "Vložit album"
 
 #: front_views/gallery-bank-shortcode.php:169
 msgid "Cancel"
@@ -107,588 +105,719 @@ msgstr "Zrušit"
 
 #: front_views/gallery-bank-shortcode.php:481
 msgid "Please select an Album"
-msgstr "Vyber album"
+msgstr "Vyberte album"
 
 #: front_views/gallery-bank-shortcode.php:485
 msgid "Please select an Album Format"
-msgstr "Prosím vyber formát alba"
+msgstr "Vyberte formát alba"
 
 #: front_views/gallery-bank-shortcode.php:489
 msgid "Please select a Gallery Images Format"
-msgstr "Prosím vyber formát obrázků v galerii"
+msgstr "Vyberte formát obrázkové galerie"
 
 #: front_views/gallery-bank-shortcode.php:493
 msgid "Please select a Text Format for the Gallery"
-msgstr "Prosím vyber formát textu pro galerii"
+msgstr "Vyberte formátování textu pro galerii"
 
-#: gallery-bank.php:80
+#: gallery-bank.php:98 gallery-bank.php:157 gallery-bank.php:216
 msgid "<img src=\""
-msgstr ""
+msgstr "<img src=\""
 
-#: gallery-bank.php:82
+#: gallery-bank.php:100 gallery-bank.php:159 gallery-bank.php:218
 msgid "/wp-admin/admin.php?page=gallery_bank"
-msgstr ""
+msgstr "/wp-admin/admin.php?page=gallery_bank"
 
-#: gallery-bank.php:89 lib/gallery-bank-class.php:10 views/dashboard.php:164
+#: gallery-bank.php:107 gallery-bank.php:166 gallery-bank.php:225
+#: lib/gallery-bank-class.php:16 lib/gallery-bank-class.php:29
+#: lib/gallery-bank-class.php:42 views/dashboard.php:196
 msgid "Dashboard"
-msgstr "Ovládání"
+msgstr "Dashboard"
 
-#: gallery-bank.php:96 lib/gallery-bank-class.php:17
-#: views/add-new-album.php:95 views/dashboard.php:175
+#: gallery-bank.php:115 gallery-bank.php:174 gallery-bank.php:233
+#: views/dashboard.php:207
 msgid "Add New Album"
-msgstr "Přidej nové album"
+msgstr "Přidat nové album"
 
-#: gallery-bank.php:103 lib/gallery-bank-class.php:20
+#: gallery-bank.php:123 gallery-bank.php:182 gallery-bank.php:241
+#: lib/gallery-bank-class.php:17 lib/gallery-bank-class.php:30
+#: lib/gallery-bank-class.php:43 views/dashboard.php:232 views/header.php:87
+#: views/header.php:99 views/header.php:111 views/header.php:122
+msgid "Short-Codes"
+msgstr "Krátké kódy"
+
+#: gallery-bank.php:130 gallery-bank.php:189 gallery-bank.php:248
+#: lib/gallery-bank-class.php:18 lib/gallery-bank-class.php:31
+#: lib/gallery-bank-class.php:44 views/header.php:88 views/header.php:100
+#: views/header.php:112 views/header.php:123
 msgid "Album Sorting"
-msgstr "Album třídění"
+msgstr "Řazení alba"
 
-#: gallery-bank.php:110 lib/gallery-bank-class.php:21 views/settings.php:259
+#: gallery-bank.php:137 gallery-bank.php:196 gallery-bank.php:255
+#: lib/gallery-bank-class.php:19 lib/gallery-bank-class.php:32
+#: lib/gallery-bank-class.php:45 views/header.php:89 views/header.php:101
+#: views/header.php:113 views/header.php:124 views/settings.php:285
 msgid "Global Settings"
-msgstr "Celkové nastavení"
+msgstr "Globální nastavení"
 
-#: gallery-bank.php:117 lib/gallery-bank-class.php:22
-#: views/gallery-bank-system-report.php:11
+#: gallery-bank.php:144 gallery-bank.php:203 gallery-bank.php:262
+#: lib/gallery-bank-class.php:20 lib/gallery-bank-class.php:33
+#: lib/gallery-bank-class.php:46 views/gallery-bank-system-report.php:38
+#: views/header.php:90 views/header.php:102
 msgid "System Status"
 msgstr "Stav systému"
 
-#: gallery-bank.php:124 lib/gallery-bank-class.php:23
+#: gallery-bank.php:151 gallery-bank.php:210 gallery-bank.php:269
+#: lib/gallery-bank-class.php:21 lib/gallery-bank-class.php:34
+#: lib/gallery-bank-class.php:47 views/header.php:91 views/header.php:103
+#: views/header.php:114 views/header.php:125
 msgid "Purchase Pro Version"
-msgstr "Nákup Pro verzi"
+msgstr "Kupte si Pro verzi"
 
-#: lib/add-new-album-class.php:49 views/edit-album.php:266
-#: views/edit-album.php:273
+#: lib/add-new-album-class.php:50 views/edit-album.php:355
+#: views/edit-album.php:362
 msgid " Set as Album Cover"
-msgstr "␣Nastavit jako obal alba"
+msgstr " nastavit jako fotku alba"
 
-#: lib/add-new-album-class.php:52 views/edit-album.php:215
-#: views/edit-album.php:279
+#: lib/add-new-album-class.php:53 views/edit-album.php:303
+#: views/edit-album.php:368
 msgid "Enter your Title"
-msgstr "Zadej název alba"
+msgstr "Vložte Název"
 
-#: lib/add-new-album-class.php:53 views/edit-album.php:220
-#: views/edit-album.php:284
+#: lib/add-new-album-class.php:54 views/edit-album.php:308
+#: views/edit-album.php:373
 msgid "Enter your Description "
-msgstr "Zadej popis␣"
+msgstr "Vložte popis "
 
-#: lib/add-new-album-class.php:55 views/edit-album.php:226
-#: views/edit-album.php:290
+#: lib/add-new-album-class.php:56 views/edit-album.php:314
+#: views/edit-album.php:379
 msgid "Enter your Tags"
-msgstr "Zadej své značky"
+msgstr "Vložte Tagy"
 
-#: lib/add-new-album-class.php:59 views/edit-album.php:311
+#: lib/add-new-album-class.php:60 views/edit-album.php:400
 msgid "Delete Image"
-msgstr "Smaž obrázek"
+msgstr "Smazat obrázek"
 
-#: lib/gallery-bank-class.php:9 views/header.php:57
+#: lib/gallery-bank-class.php:15 lib/gallery-bank-class.php:28
+#: lib/gallery-bank-class.php:41 views/header.php:74
 msgid "Gallery Bank"
-msgstr "Galerie Bank"
+msgstr "Gallery Bank"
 
-#: lib/gallery-bank-class.php:19 views/dashboard.php:198
-msgid "Short-Codes"
-msgstr "Krátká kódy"
-
-#: lib/gallery-bank-class.php:262
+#: lib/gallery-bank-class.php:291
 msgid "Add Gallery using Gallery Bank"
-msgstr "Přidej Galerii pomocí Galerie Bank"
+msgstr "Přidejte galerii pomocí Gallery Bank"
 
-#: views/add-new-album.php:99 views/add-new-album.php:229
-#: views/album-preview.php:16 views/album-sorting.php:138
-#: views/edit-album.php:85 views/edit-album.php:332
-#: views/images-sorting.php:182 views/settings.php:262 views/shortcode.php:12
+#: views/album-preview.php:40
+msgid "Album Preview"
+msgstr "Náhled alba"
+
+#: views/album-preview.php:43 views/album-sorting.php:165
+#: views/edit-album.php:170 views/edit-album.php:424
+#: views/images-sorting.php:209 views/settings.php:288 views/shortcode.php:42
 msgid "Back to Albums"
 msgstr "Zpět na alba"
 
-#: views/add-new-album.php:102 views/add-new-album.php:227
-msgid "Save and Submit Changes"
-msgstr "Ulož a odešli změny"
-
-#: views/add-new-album.php:108
-msgid "Album Published. Kindly wait for the redirect to happen."
-msgstr "Album zveřejněno. Počkejte na přesměrování."
-
-#: views/add-new-album.php:117 views/edit-album.php:97
-msgid "Album Details"
-msgstr "Detaily alba"
-
-#: views/add-new-album.php:122 views/edit-album.php:101
-msgid "Album Title"
-msgstr "Název alba"
-
-#: views/add-new-album.php:128 views/edit-album.php:106
-msgid "Enter your Album Title"
-msgstr "Zadej název alba"
-
-#: views/add-new-album.php:134 views/edit-album.php:113
-msgid "Description"
-msgstr "Popisek"
-
-#: views/add-new-album.php:148 views/edit-album.php:127
-msgid "Upload Images"
-msgstr "Nahrej obrázky"
-
-#: views/add-new-album.php:151 views/edit-album.php:130
-msgid "Your browser doesn\"t have Flash, Silverlight or HTML5 support."
-msgstr ""
-"Váš prohlížeč nemá naintalováno nebo nepodporuje Flash, Silverlight nebo "
-"HTML5."
-
-#: views/add-new-album.php:158 views/edit-album.php:137
-msgid "Upload Videos"
-msgstr "Nahrej videa"
-
-#: views/add-new-album.php:159 views/add-new-album.php:210
-#: views/edit-album.php:138 views/edit-album.php:183 views/settings.php:271
-#: views/settings.php:487 views/settings.php:717 views/settings.php:828
-#: views/settings.php:927 views/settings.php:1249 views/settings.php:1365
-#: views/settings.php:1416 views/settings.php:1468
-msgid " (Available in Premium Versions)"
-msgstr "(K dispozici v Prémiový verze)"
-
-#: views/add-new-album.php:165 views/edit-album.php:143
-msgid "Video Url"
-msgstr "Url adresa videa"
-
-#: views/add-new-album.php:171 views/edit-album.php:147
-msgid "Enter your Video Url"
-msgstr "Zadej URL adresu videa"
-
-#: views/add-new-album.php:178 views/edit-album.php:153
-msgid "Upload Video"
-msgstr "Nahrej video"
-
-#: views/add-new-album.php:189 views/edit-album.php:164
-msgid "Your Gallery Bank Album"
-msgstr "Vaše alba v Galerie Bank"
-
-#: views/add-new-album.php:200 views/edit-album.php:173
-msgid "Delete"
-msgstr "Smazat"
-
-#: views/add-new-album.php:203 views/dashboard.php:194
-#: views/edit-album.php:176
-msgid "Thumbnail"
-msgstr "Náhled"
-
-#: views/add-new-album.php:206 views/edit-album.php:179
-msgid "Title & Description"
-msgstr "Název a popisek"
-
-#: views/add-new-album.php:209 views/edit-album.php:182
-msgid "Tags (comma separated list)"
-msgstr "Tagy (čárkou oddělený seznam)"
-
-#: views/add-new-album.php:213 views/edit-album.php:186
-msgid "Url to Redirect on click of an Image"
-msgstr "URL k přesměrování při kliknutí na obrázek"
-
-#: views/add-new-album.php:277
-msgid ""
-"You will be only allowed to add 2 galleries. Kindly purchase Premium Version "
-"for full access!"
-msgstr ""
-"Budete mít pouze nemá právo přidat 2 galerie. Laskavě koupit Prémiový verze "
-"pro plný přístup!"
-
-#: views/add-new-album.php:381 views/edit-album.php:504
-msgid "Are you sure you want to delete this Image?"
-msgstr "Opravdu chceš smazat tento obrázek?"
-
-#: views/add-new-album.php:391 views/add-new-album.php:405
-#: views/album-sorting.php:252 views/dashboard.php:434 views/dashboard.php:438
-#: views/dashboard.php:442 views/edit-album.php:520 views/edit-album.php:536
-#: views/images-sorting.php:285
-msgid "This feature is only available in Paid Premium Version!"
-msgstr "Tato funkce je k dispozici pouze v placené verzi Premium!"
-
-#: views/album-preview.php:13
-msgid "Album Preview"
-msgstr "Album náhled"
-
-#: views/album-preview.php:34 views/album-sorting.php:175
-#: views/images-sorting.php:224
+#: views/album-preview.php:61 views/album-sorting.php:202
+#: views/images-sorting.php:251
 msgid "Please Choose"
-msgstr "Vyber prosím"
+msgstr "Vyberte"
 
-#: views/album-sorting.php:134
+#: views/album-sorting.php:161
 msgid "Re-Order Albums"
-msgstr "Změna pořadí alb"
+msgstr "Přeskládat alba"
 
-#: views/album-sorting.php:140 views/images-sorting.php:184
+#: views/album-sorting.php:167 views/images-sorting.php:211
 msgid "Update Order"
-msgstr "Aktualizace pořadí"
+msgstr "Změnit pořadí"
 
-#: views/album-sorting.php:143 views/images-sorting.php:187
+#: views/album-sorting.php:170 views/images-sorting.php:214
 msgid "Sorting Order has been updated."
-msgstr "Porřadí bylo aktualizováno."
+msgstr "Systém řazení byl aktualizován"
 
-#: views/dashboard.php:134
+#: views/album-sorting.php:279 views/dashboard.php:469 views/dashboard.php:473
+#: views/dashboard.php:477 views/edit-album.php:615 views/edit-album.php:631
+#: views/images-sorting.php:312
+msgid "This feature is only available in Paid Premium Version!"
+msgstr "Tato funkce je k dispozici pouze v placené verzi pojistné!"
+
+#: views/dashboard.php:166
 msgid "Getting Started"
 msgstr ""
 
-#: views/dashboard.php:138
+#: views/dashboard.php:170
 msgid "Watch the Walk-Through Video"
 msgstr ""
 
-#: views/dashboard.php:147
+#: views/dashboard.php:179
 msgid "Gallery Bank, a Superlative High quality WordPress Plugin!"
 msgstr ""
 
-#: views/dashboard.php:154
+#: views/dashboard.php:186
 msgid "Get Gallery Bank Pro Features"
-msgstr ""
+msgstr "Získat Gallery Bank Pro funkce"
 
-#: views/dashboard.php:179
+#: views/dashboard.php:213
 msgid "Delete All Albums"
-msgstr "Smazat všechny alba"
+msgstr "Smazat všechna alba"
 
-#: views/dashboard.php:180
+#: views/dashboard.php:214
 msgid "Purge Images & Albums"
-msgstr "Navždy smazat obrázky a olba"
+msgstr "Obnovit obrázky & alba"
 
-#: views/dashboard.php:181
+#: views/dashboard.php:215
 msgid "Restore Factory Settings"
-msgstr "Obnovit výrobní nastavení"
+msgstr "Obnovit tovární nastavení"
 
-#: views/dashboard.php:188
+#: views/dashboard.php:222
 msgid "Existing Albums Overview"
-msgstr "Přehled existujících alb"
+msgstr "Přehled aktuálních alb"
 
-#: views/dashboard.php:195
+#: views/dashboard.php:228 views/edit-album.php:262
+msgid "Thumbnail"
+msgstr "Náhled"
+
+#: views/dashboard.php:229
 msgid "Title"
-msgstr "Titulek"
+msgstr "Nadpis"
 
-#: views/dashboard.php:196
+#: views/dashboard.php:230
 msgid "Total Images"
 msgstr "Celkem obrázků"
 
-#: views/dashboard.php:197
+#: views/dashboard.php:231
 msgid "Date"
-msgstr "Přidáno"
+msgstr "datum"
 
-#: views/dashboard.php:262 views/edit-album.php:82
+#: views/dashboard.php:296
 msgid "Edit Album"
-msgstr "Uprav Album"
+msgstr "Editovat album"
 
-#: views/dashboard.php:267 views/images-sorting.php:178
+#: views/dashboard.php:301 views/images-sorting.php:205
 msgid "Re-Order Images"
-msgstr "Změna pořadí obrázků"
+msgstr "Znovu seřadit obrázky"
 
-#: views/dashboard.php:272
+#: views/dashboard.php:306
 msgid "Preview Album"
-msgstr "Náhled na album"
+msgstr "Náhled alba"
 
-#: views/dashboard.php:277
+#: views/dashboard.php:311
 msgid "Delete Album"
 msgstr "Smazat album"
 
-#: views/dashboard.php:302 views/purchase_pro_version.php:635
+#: views/dashboard.php:336 views/purchase_pro_version.php:738
 msgid "Need Support Help?"
 msgstr ""
 
-#: views/dashboard.php:314 views/purchase_pro_version.php:647
-msgid "Lets get in touch!"
+#: views/dashboard.php:348 views/purchase_pro_version.php:750
+msgid "Let's get in touch!"
 msgstr ""
 
-#: views/dashboard.php:318 views/purchase_pro_version.php:651
+#: views/dashboard.php:352 views/purchase_pro_version.php:754
 msgid "Order Now!"
 msgstr ""
 
-#: views/dashboard.php:421
+#: views/dashboard.php:456
 msgid "Are you sure you want to delete this Album?"
-msgstr "Opravdu chceš smazat toto album?"
+msgstr "Opravdu chcete smazat toto album?"
 
-#: views/edit-album.php:86 views/edit-album.php:331
-msgid "Update Album"
-msgstr "Aktualizuj album"
+#: views/edit-album.php:167
+msgid "Album"
+msgstr "alba"
 
-#: views/edit-album.php:90
-msgid "Album Updated. Kindly wait for the redirect to happen."
-msgstr "Album Aktualizováno. Počkej na přesměrování."
+#: views/edit-album.php:171 views/edit-album.php:423
+msgid "Save Album"
+msgstr "Uložit alba"
 
-#: views/edit-album.php:236
+#: views/edit-album.php:175
+msgid "Album Saved. Kindly wait for the redirect to happen."
+msgstr "alba uložené. Laskavě počkejte na přesměrování se stane."
+
+#: views/edit-album.php:182
+msgid "Album Details"
+msgstr "Detaily alba"
+
+#: views/edit-album.php:186
+msgid "Album Title"
+msgstr "Název alba"
+
+#: views/edit-album.php:191
+msgid "Enter your Album Title"
+msgstr "Vložte název alba"
+
+#: views/edit-album.php:198
+msgid "Description"
+msgstr "Popis"
+
+#: views/edit-album.php:212
+msgid "Upload Images"
+msgstr "Nahrát obrázky"
+
+#: views/edit-album.php:215
+msgid "Your browser doesn\"t have Flash, Silverlight or HTML5 support."
+msgstr "Váš prohlížeč nepodporuje Flash, Silverlight nebo HTML5."
+
+#: views/edit-album.php:222
+msgid "Upload Videos"
+msgstr "Nahrát videa"
+
+#: views/edit-album.php:223 views/edit-album.php:269 views/settings.php:297
+#: views/settings.php:513 views/settings.php:743 views/settings.php:854
+#: views/settings.php:953 views/settings.php:1275 views/settings.php:1391
+#: views/settings.php:1442 views/settings.php:1494
+msgid " (Available in Premium Versions)"
+msgstr "K dispozici v Premium verze"
+
+#: views/edit-album.php:228
+msgid "Video Url"
+msgstr "URL videa"
+
+#: views/edit-album.php:232
+msgid "Enter your Video Url"
+msgstr "Vložte URL videa"
+
+#: views/edit-album.php:238
+msgid "Upload Video"
+msgstr "Nahrát video"
+
+#: views/edit-album.php:249
+msgid "Your Gallery Bank Album"
+msgstr "Album Vaší Bank Gallery"
+
+#: views/edit-album.php:259
+msgid "Delete"
+msgstr "Smazat"
+
+#: views/edit-album.php:265
+msgid "Title & Description"
+msgstr "Název a popis"
+
+#: views/edit-album.php:268
+msgid "Tags (comma separated list)"
+msgstr "Tagy (oddělené čárkou)"
+
+#: views/edit-album.php:272
+msgid "Url to Redirect on click of an Image"
+msgstr "URL, na kterou se přejde při kliknutí na obrázek"
+
+#: views/edit-album.php:324
 msgid "Delete Video"
-msgstr "Smaž Video"
+msgstr "Smazat video"
 
-#: views/gallery-bank-system-report.php:14
+#: views/edit-album.php:602
+msgid "Are you sure you want to delete this Image?"
+msgstr "Opravdu chcete smazat tento obrázek?"
+
+#: views/gallery-bank-system-report.php:41
 msgid "Get System Report"
-msgstr "Získej zpráva systému"
+msgstr "Systémové hlášení"
 
-#: views/gallery-bank-system-report.php:18
+#: views/gallery-bank-system-report.php:45
 msgid "Close System Report"
-msgstr "Zavřít Systémová zpráva"
+msgstr "Zavřít systémové hlášení"
 
-#: views/gallery-bank-system-report.php:109
+#: views/gallery-bank-system-report.php:136
 msgid "Default"
-msgstr "Standardní"
+msgstr "Výchozí"
 
-#: views/purchase_pro_version.php:25
+#: views/purchase_pro_version.php:53
 msgid "Gallery Bank Pricing"
 msgstr "Gallery Bank Stanovení ceny"
 
-#: views/settings.php:263
+#: views/settings.php:289
 msgid "Update Settings"
-msgstr "Aktualizuj nastavení"
+msgstr "Aktualizovat nastavení"
 
-#: views/settings.php:270
+#: views/settings.php:296
 msgid "Thumbnail Settings"
-msgstr "Náhled nastavení"
+msgstr "Možnosti náhledu"
 
-#: views/settings.php:282
+#: views/settings.php:308
 msgid "Thumbnail Size"
-msgstr "Velikost náhledů"
+msgstr "Velikost náhledu"
 
-#: views/settings.php:289 views/settings.php:297 views/settings.php:505
-#: views/settings.php:513
+#: views/settings.php:315 views/settings.php:323 views/settings.php:531
+#: views/settings.php:539
 msgid "Original"
-msgstr "Originální"
+msgstr "Původní"
 
-#: views/settings.php:292 views/settings.php:300 views/settings.php:508
-#: views/settings.php:516
+#: views/settings.php:318 views/settings.php:326 views/settings.php:534
+#: views/settings.php:542
 msgid "Custom"
-msgstr "Upravené"
+msgstr "Vlastní"
 
-#: views/settings.php:309 views/settings.php:525
+#: views/settings.php:335 views/settings.php:551
 msgid "Width"
 msgstr "Šířka"
 
-#: views/settings.php:319 views/settings.php:535
+#: views/settings.php:345 views/settings.php:561
 msgid "Height"
 msgstr "Výška"
 
-#: views/settings.php:331 views/settings.php:546 views/settings.php:968
+#: views/settings.php:357 views/settings.php:572 views/settings.php:994
 msgid "Opacity"
-msgstr "Průhlednost"
+msgstr "Neprůhledný"
 
-#: views/settings.php:343 views/settings.php:558 views/settings.php:979
+#: views/settings.php:369 views/settings.php:584 views/settings.php:1005
 msgid "Border Size"
-msgstr "Šířka okraje"
+msgstr "Velikost hranic"
 
-#: views/settings.php:354 views/settings.php:570 views/settings.php:990
+#: views/settings.php:380 views/settings.php:596 views/settings.php:1016
 msgid "Border Radius"
-msgstr "Zakulacení rohů"
+msgstr "Radius hranic"
 
-#: views/settings.php:365 views/settings.php:582 views/settings.php:1015
+#: views/settings.php:391 views/settings.php:608 views/settings.php:1041
 msgid "Border Color"
-msgstr "Barva rámečku"
+msgstr "Barva hranic"
 
-#: views/settings.php:379
+#: views/settings.php:405
 msgid "Margin Between Images"
-msgstr "Vzdálenost mezi obrázky"
+msgstr "Mezera mezi obrázky"
 
-#: views/settings.php:389 views/settings.php:616 views/settings.php:1001
+#: views/settings.php:415 views/settings.php:642 views/settings.php:1027
 msgid "Text Color"
 msgstr "Barva textu"
 
-#: views/settings.php:403 views/settings.php:633 views/settings.php:1075
+#: views/settings.php:429 views/settings.php:659 views/settings.php:1101
 msgid "Text-Align"
 msgstr "Zarovnání textu"
 
-#: views/settings.php:417 views/settings.php:647 views/settings.php:784
-#: views/settings.php:1089 views/settings.php:1297
+#: views/settings.php:443 views/settings.php:673 views/settings.php:810
+#: views/settings.php:1115 views/settings.php:1323
 msgid "Font-Family"
-msgstr "Písma"
+msgstr "Druh písma"
 
-#: views/settings.php:440 views/settings.php:670 views/settings.php:1112
+#: views/settings.php:466 views/settings.php:696 views/settings.php:1138
 msgid "Heading Font-Size"
-msgstr "Velikost hlavičky"
+msgstr "Velikost písma záhlaví"
 
-#: views/settings.php:457 views/settings.php:687 views/settings.php:1129
+#: views/settings.php:483 views/settings.php:713 views/settings.php:1155
 msgid "Text Font-Size"
 msgstr "Velikost textu"
 
-#: views/settings.php:474 views/settings.php:704
+#: views/settings.php:500 views/settings.php:730
 msgid "Description Length"
 msgstr "Délka popisu"
 
-#: views/settings.php:486
+#: views/settings.php:512
 msgid "Album Cover Settings"
 msgstr "Nastavení obálky alba"
 
-#: views/settings.php:498
+#: views/settings.php:524
 msgid "Cover Size"
 msgstr "Velikost obálky"
 
-#: views/settings.php:596
+#: views/settings.php:622
 msgid "Margin Between Albums"
-msgstr "Vzdálenost mezi alby"
+msgstr "Mezera mezi alby"
 
-#: views/settings.php:606
+#: views/settings.php:632
 msgid "Text for Album Click"
-msgstr "Text pro kliknutí na album"
+msgstr "Text při kliknutí na album"
 
-#: views/settings.php:716
+#: views/settings.php:742
 msgid "Filter Settings"
 msgstr "Nastavení filtru"
 
-#: views/settings.php:728
+#: views/settings.php:754
 msgid "Filters"
 msgstr "Filtry"
 
-#: views/settings.php:735 views/settings.php:743 views/settings.php:1153
-#: views/settings.php:1161 views/settings.php:1179 views/settings.php:1186
-#: views/settings.php:1204 views/settings.php:1211 views/settings.php:1228
-#: views/settings.php:1235 views/settings.php:1343 views/settings.php:1350
-#: views/settings.php:1383 views/settings.php:1391 views/settings.php:1434
-#: views/settings.php:1442
+#: views/settings.php:761 views/settings.php:769 views/settings.php:1179
+#: views/settings.php:1187 views/settings.php:1205 views/settings.php:1212
+#: views/settings.php:1230 views/settings.php:1237 views/settings.php:1254
+#: views/settings.php:1261 views/settings.php:1369 views/settings.php:1376
+#: views/settings.php:1409 views/settings.php:1417 views/settings.php:1460
+#: views/settings.php:1468
 msgid "Enable"
-msgstr "Povolit"
+msgstr "Aktivovat"
 
-#: views/settings.php:738 views/settings.php:746 views/settings.php:1156
-#: views/settings.php:1164 views/settings.php:1181 views/settings.php:1189
-#: views/settings.php:1206 views/settings.php:1213 views/settings.php:1230
-#: views/settings.php:1237 views/settings.php:1345 views/settings.php:1353
-#: views/settings.php:1386 views/settings.php:1394 views/settings.php:1437
-#: views/settings.php:1445
+#: views/settings.php:764 views/settings.php:772 views/settings.php:1182
+#: views/settings.php:1190 views/settings.php:1207 views/settings.php:1215
+#: views/settings.php:1232 views/settings.php:1239 views/settings.php:1256
+#: views/settings.php:1263 views/settings.php:1371 views/settings.php:1379
+#: views/settings.php:1412 views/settings.php:1420 views/settings.php:1463
+#: views/settings.php:1471
 msgid "Disable"
 msgstr "Zakázat"
 
-#: views/settings.php:756
+#: views/settings.php:782
 msgid "Filter Color"
-msgstr "Barevný filtr"
+msgstr "Barva filtru"
 
-#: views/settings.php:770
+#: views/settings.php:796
 msgid "Filter Text Color"
 msgstr "Barva textu filtru"
 
-#: views/settings.php:807 views/settings.php:1320
+#: views/settings.php:833 views/settings.php:1346
 msgid "Font-Size"
 msgstr "Velikost písma"
 
-#: views/settings.php:827
+#: views/settings.php:853
 msgid "Roles & Capabilities"
-msgstr "Úlohy a schopnosti"
+msgstr "Role a oprávnění"
 
-#: views/settings.php:839
+#: views/settings.php:865
 msgid "Privileges for Admin"
-msgstr "Oprávnění administrátora"
+msgstr "Přístupová práva Admina"
 
-#: views/settings.php:843 views/settings.php:859 views/settings.php:875
-#: views/settings.php:892 views/settings.php:910
+#: views/settings.php:869 views/settings.php:885 views/settings.php:901
+#: views/settings.php:918 views/settings.php:936
 msgid "Full Control"
-msgstr "Úplné řízení"
+msgstr "Plná kontrola"
 
-#: views/settings.php:846 views/settings.php:862 views/settings.php:878
-#: views/settings.php:895 views/settings.php:913
+#: views/settings.php:872 views/settings.php:888 views/settings.php:904
+#: views/settings.php:921 views/settings.php:939
 msgid "Read"
-msgstr "Číst"
+msgstr "Čtení"
 
-#: views/settings.php:849 views/settings.php:865 views/settings.php:881
-#: views/settings.php:898 views/settings.php:916
+#: views/settings.php:875 views/settings.php:891 views/settings.php:907
+#: views/settings.php:924 views/settings.php:942
 msgid "Write"
-msgstr "Napsat"
+msgstr "Zápis"
 
-#: views/settings.php:855
+#: views/settings.php:881
 msgid "Privileges for Editor"
-msgstr "Oprávnění editora"
+msgstr "Přístupová práva Editora"
 
-#: views/settings.php:871
+#: views/settings.php:897
 msgid "Privileges for Author"
-msgstr "Oprávnění autora"
+msgstr "Přístupová práva Autora"
 
-#: views/settings.php:887
+#: views/settings.php:913
 msgid "Privileges for Contributor"
-msgstr "Oprávnění přispěvatele"
+msgstr "Přístupová práva přispěvatele"
 
-#: views/settings.php:904
+#: views/settings.php:930
 msgid "Privileges for Subscriber"
-msgstr "Oprávnění odběratele"
+msgstr "Přístupová práva odběratele"
 
-#: views/settings.php:926
+#: views/settings.php:952
 msgid "Lightbox Settings"
 msgstr "Nastavení lightboxu"
 
-#: views/settings.php:938
+#: views/settings.php:964
 msgid "Lightbox Type"
 msgstr "Typ lightboxu"
 
-#: views/settings.php:1029
+#: views/settings.php:1055
 msgid "Inline Background"
 msgstr "Inline pozadí"
 
-#: views/settings.php:1043
+#: views/settings.php:1069
 msgid "Overlay Background"
 msgstr "Překrytí pozadí"
 
-#: views/settings.php:1057
+#: views/settings.php:1083
 msgid "Fade In Time"
-msgstr "Doba Fade In"
+msgstr "Čas zesílení"
 
-#: views/settings.php:1066
+#: views/settings.php:1092
 msgid "Fade Out Time"
-msgstr "Doba Fade Out"
+msgstr "Čas zeslabení"
 
-#: views/settings.php:1146
+#: views/settings.php:1172
 msgid "Facebook Comments"
-msgstr "Komentáře Facebooku "
+msgstr "Facebook komentáře"
 
-#: views/settings.php:1173
+#: views/settings.php:1199
 msgid "Social Sharing"
-msgstr "Sociální sdílení"
+msgstr "Sdílení na sociálních sítích"
 
-#: views/settings.php:1198
+#: views/settings.php:1224
 msgid "Image Title"
 msgstr "Název obrázku"
 
-#: views/settings.php:1222
+#: views/settings.php:1248
 msgid "Image Description"
 msgstr "Popis obrázku"
 
-#: views/settings.php:1248
+#: views/settings.php:1274
 msgid "Front - End Layout Settings"
-msgstr "Nastavení rozvržení FrontEndu "
+msgstr "Nastavení Front - End rozložení"
 
-#: views/settings.php:1260
+#: views/settings.php:1286
 msgid "Text for Back Button"
-msgstr "Text na tlačítko Zpět"
+msgstr "Text tlačítka"
 
-#: views/settings.php:1270
+#: views/settings.php:1296
 msgid "Button Color"
 msgstr "Barva tlačítka"
 
-#: views/settings.php:1283
+#: views/settings.php:1309
 msgid "Button Text Color"
-msgstr "Barva textu tlačítka "
+msgstr "Barva textu tlačítka"
 
-#: views/settings.php:1337
+#: views/settings.php:1363
 msgid "Album Seperator"
-msgstr "Odělování alb"
+msgstr "Oddělovač alb"
 
-#: views/settings.php:1364
+#: views/settings.php:1390
 msgid "Pagination Settings for Images"
-msgstr "Nastavení stránkování obrázků"
+msgstr "Nastavení stránkování pro obrázky"
 
-#: views/settings.php:1376
+#: views/settings.php:1402
 msgid "Paging"
 msgstr "Stránkování"
 
-#: views/settings.php:1403
+#: views/settings.php:1429
 msgid "No. of Images Per Page "
-msgstr "Počet obrázků na stránku"
+msgstr "Počet obrázků na stránku "
 
-#: views/settings.php:1415
+#: views/settings.php:1441
 msgid "Slide Show Settings"
-msgstr "Nastavení Slide Show"
+msgstr "Nastavení prezentace snímků"
 
-#: views/settings.php:1427
+#: views/settings.php:1453
 msgid "Auto Play"
-msgstr "Auto Play"
+msgstr "Automatické přehrávání"
 
-#: views/settings.php:1454
+#: views/settings.php:1480
 msgid "Interval"
 msgstr "Interval"
 
-#: views/settings.php:1467
+#: views/settings.php:1493
 msgid "Language Direction Settings"
-msgstr "Směr nastavení jazyka"
+msgstr "Nastavení jazyka ovládání"
 
-#: views/settings.php:1479
+#: views/settings.php:1505
 msgid "Language Direction"
-msgstr "Směr jazyka"
+msgstr "Jazyk ovládání"
 
-#: views/settings.php:1636
+#: views/settings.php:1662
 msgid "This Feature is only available in Paid Premium Version!"
-msgstr "Tato funkce je k dispozici pouze v placené verzi Premium!"
+msgstr "Tato funkce je k dispozici pouze v placené verzi pojistné!"
 
-#: views/shortcode.php:8
+#: views/shortcode.php:38
 msgid "Gallery Bank Short-Codes"
-msgstr "Gallery Bank Krátká kódy"
+msgstr "Gallery Bank Krátké kódy"
+
+#~ msgid "VIEW ALL"
+#~ msgstr "ZOBRAZIT VŠE"
+
+#~ msgid "Licensing"
+#~ msgstr "Licence"
+
+#~ msgid "Select Gallery"
+#~ msgstr "Vybrat galerii"
+
+#~ msgid "Select Gallery Format"
+#~ msgstr "Vybrat formát galerie"
+
+#~ msgid "Images In Row"
+#~ msgstr "Počet obrázků v řádku"
+
+#~ msgid "Select Text Format"
+#~ msgstr "Vybrat formát textu"
+
+#~ msgid "Special Effect"
+#~ msgstr "Speciální efekt"
+
+#~ msgid "Select Special Effect"
+#~ msgstr "Vybrat speciální efekt"
+
+#~ msgid "Animation Effect"
+#~ msgstr "Efekt animace"
+
+#~ msgid "Responsive Gallery"
+#~ msgstr "Responsivní galerie"
+
+#~ msgid "Save and Submit Changes"
+#~ msgstr "Ulož a aktualizuj změny"
+
+#~ msgid "Album Published. Kindly wait for the redirect to happen."
+#~ msgstr "Album bylo publikováno. Počkejte na přeměrování."
+
+#~ msgid "Are you sure you want to delete these Images?"
+#~ msgstr "Opravdu chcete smazat tyto obrázky?"
+
+#~ msgid "Attention! A new vesion of Gallery Bank is available for download."
+#~ msgstr "Pozor! Nová verze Gallery Bank ke stažení."
+
+#~ msgid "Click"
+#~ msgstr "Klikněte"
+
+#~ msgid "here"
+#~ msgstr "zde"
+
+#~ msgid "to upgrade your version of Gallery Bank."
+#~ msgstr "pro upgrade vaší verze Gallery Bank."
+
+#~ msgid "Dashboard - Gallery Bank"
+#~ msgstr "Dashboard"
+
+#~ msgid "Date of Creation"
+#~ msgstr "Datum vytvoření"
+
+#~ msgid "Are you sure you want to delete all Albums?"
+#~ msgstr "Opravdu chcete smazat všechna alba?"
+
+#~ msgid "Are you sure you want to Restore Factory Settings?"
+#~ msgstr "Opravdu chcete obnovit původní nastavení?"
+
+#~ msgid "Are you sure you want to Purge all Images & Albums?"
+#~ msgstr "Opravdu chcete obnovit všechny obrázky & galerie?"
+
+#~ msgid "Gallery Bank Documentation"
+#~ msgstr "Dokumentace Gallery Bank"
+
+#~ msgid "Gallery Bank Licensing Module"
+#~ msgstr "Licenční modul Gallery Bank"
+
+#~ msgid "Success! Settings have been updated."
+#~ msgstr "Nastavení bylo úspěšně aktualizováno!"
+
+#~ msgid "Update"
+#~ msgstr "Aktualizovat"
+
+#~ msgid "Restore Settings"
+#~ msgstr "Obnovit nastavení"
+
+#~ msgid "Settings has been updated."
+#~ msgstr "Nastavení bylo aktualizováno."
+
+#~ msgid "Success! Settings have been restored."
+#~ msgstr "Nastavení bylo úspěšně obnoveno!"
+
+#~ msgid "Are you sure you want to restore settings?"
+#~ msgstr "Opravdu chcete obnovit nastavení?"
+
+#~ msgid " Rotate Image"
+#~ msgstr " Otočit obrázek"
+
+#~ msgid "Upload Images "
+#~ msgstr "Nahrát obrázky "
+
+#~ msgid "Your Wordpress Version doesn\"t support Wp-media."
+#~ msgstr "Vaše verze Wordpressu nepodporuje WP media."
+
+#~ msgid "Upload Thumbnails "
+#~ msgstr "Nahrát náhledy "
+
+#~ msgid "Show Albums"
+#~ msgstr "Ukázat alba"
+
+#~ msgid "Responsive"
+#~ msgstr "Responsivní"
+
+#~ msgid "With Albums in Row"
+#~ msgstr "S alby v řadě"
+
+#~ msgid "Image Uploader Settings"
+#~ msgstr "Nastavení uploaderu obrázků"
+
+#~ msgid "Uploader for Images"
+#~ msgstr "Uploader obrázků"
+
+#~ msgid "WP Media"
+#~ msgstr "WP media"
+
+#~ msgid "Change Uploading Image Name"
+#~ msgstr "Změnit jméno nahrávaného obrázku"
+
+#~ msgid "Image url location"
+#~ msgstr "URL umístění obrázku"
+
+#~ msgid "Open in New Window"
+#~ msgstr "Otevřít v novém okně"
+
+#~ msgid "Same Window"
+#~ msgstr "Ve stejném okně"

@@ -5,18 +5,56 @@
 
 function create_global_menus_for_gallery_bank()
 {
-	global $wpdb;
-    add_menu_page("Gallery Bank", __("Gallery Bank", gallery_bank), "read", "gallery_bank", "", GALLERY_BK_PLUGIN_URL . "/assets/images/icon.png");
-    add_submenu_page("gallery_bank", "Dashboard", __("Dashboard", gallery_bank), "read", "gallery_bank", "gallery_bank");
-	add_submenu_page("gallery_bank", "Short-Codes", __("Short-Codes", gallery_bank), "read", "gallery_bank_shortcode", "gallery_bank_shortcode");
-    add_submenu_page("gallery_bank", "Album Sorting", __("Album Sorting", gallery_bank), "read", "gallery_album_sorting", "gallery_album_sorting");
-    add_submenu_page("gallery_bank", "Gallery Bank", __("Global Settings", gallery_bank), "read", "global_settings", "global_settings");
-    add_submenu_page("gallery_bank", "System Status", __("System Status", gallery_bank), "read", "gallery_bank_system_status", "gallery_bank_system_status");
-	add_submenu_page("gallery_bank", "Purchase Pro Version", __("Purchase Pro Version", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
-    add_submenu_page("", "", "", "read", "view_album", "view_album");
-    add_submenu_page("", "", "", "read", "album_preview", "album_preview");
-    add_submenu_page("", "", "", "read", "save_album", "save_album");
-    add_submenu_page("", "", "", "read", "images_sorting", "images_sorting");
+	global $wpdb,$current_user;
+	$role = $wpdb->prefix . "capabilities";
+    $current_user->role = array_keys($current_user->$role);
+    $role = $current_user->role[0];
+	
+	switch ($role) {
+		case "administrator":
+			add_menu_page("Gallery Bank", __("Gallery Bank", gallery_bank), "read", "gallery_bank", "", plugins_url("/assets/images/icon.png" , dirname(__FILE__)));
+			add_submenu_page("gallery_bank", "Dashboard", __("Dashboard", gallery_bank), "read", "gallery_bank", "gallery_bank");
+			add_submenu_page("gallery_bank", "Short-Codes", __("Short-Codes", gallery_bank), "read", "gallery_bank_shortcode", "gallery_bank_shortcode");
+			add_submenu_page("gallery_bank", "Album Sorting", __("Album Sorting", gallery_bank), "read", "gallery_album_sorting", "gallery_album_sorting");
+			add_submenu_page("gallery_bank", "Gallery Bank", __("Global Settings", gallery_bank), "read", "global_settings", "global_settings");
+			add_submenu_page("gallery_bank", "System Status", __("System Status", gallery_bank), "read", "gallery_bank_system_status", "gallery_bank_system_status");
+			add_submenu_page("gallery_bank", "Purchase Pro Version", __("Purchase Pro Version", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
+			add_submenu_page("", "", "", "read", "view_album", "view_album");
+			add_submenu_page("", "", "", "read", "album_preview", "album_preview");
+			add_submenu_page("", "", "", "read", "save_album", "save_album");
+			add_submenu_page("", "", "", "read", "images_sorting", "images_sorting");
+		break;
+		case "editor":
+			add_menu_page("Gallery Bank", __("Gallery Bank", gallery_bank), "read", "gallery_bank", "", plugins_url("/assets/images/icon.png" , dirname(__FILE__)));
+			add_submenu_page("gallery_bank", "Dashboard", __("Dashboard", gallery_bank), "read", "gallery_bank", "gallery_bank");
+			add_submenu_page("gallery_bank", "Short-Codes", __("Short-Codes", gallery_bank), "read", "gallery_bank_shortcode", "gallery_bank_shortcode");
+			add_submenu_page("gallery_bank", "Album Sorting", __("Album Sorting", gallery_bank), "read", "gallery_album_sorting", "gallery_album_sorting");
+			add_submenu_page("gallery_bank", "Gallery Bank", __("Global Settings", gallery_bank), "read", "global_settings", "global_settings");
+			add_submenu_page("gallery_bank", "System Status", __("System Status", gallery_bank), "read", "gallery_bank_system_status", "gallery_bank_system_status");
+			add_submenu_page("gallery_bank", "Purchase Pro Version", __("Purchase Pro Version", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
+			add_submenu_page("", "", "", "read", "view_album", "view_album");
+			add_submenu_page("", "", "", "read", "album_preview", "album_preview");
+			add_submenu_page("", "", "", "read", "save_album", "save_album");
+			add_submenu_page("", "", "", "read", "images_sorting", "images_sorting");
+		break;
+		case "author":
+			add_menu_page("Gallery Bank", __("Gallery Bank", gallery_bank), "read", "gallery_bank", "", plugins_url("/assets/images/icon.png" , dirname(__FILE__)));
+			add_submenu_page("gallery_bank", "Dashboard", __("Dashboard", gallery_bank), "read", "gallery_bank", "gallery_bank");
+			add_submenu_page("gallery_bank", "Short-Codes", __("Short-Codes", gallery_bank), "read", "gallery_bank_shortcode", "gallery_bank_shortcode");
+			add_submenu_page("gallery_bank", "Album Sorting", __("Album Sorting", gallery_bank), "read", "gallery_album_sorting", "gallery_album_sorting");
+			add_submenu_page("gallery_bank", "Gallery Bank", __("Global Settings", gallery_bank), "read", "global_settings", "global_settings");
+			add_submenu_page("gallery_bank", "System Status", __("System Status", gallery_bank), "read", "gallery_bank_system_status", "gallery_bank_system_status");
+			add_submenu_page("gallery_bank", "Purchase Pro Version", __("Purchase Pro Version", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
+			add_submenu_page("", "", "", "read", "view_album", "view_album");
+			add_submenu_page("", "", "", "read", "album_preview", "album_preview");
+			add_submenu_page("", "", "", "read", "save_album", "save_album");
+			add_submenu_page("", "", "", "read", "images_sorting", "images_sorting");
+		break;
+		case "contributor":
+		break;
+		case "subscriber":
+		break;
+	}
 }
 //--------------------------------------------------------------------------------------------------------------//
 // FUNCTIONS FOR REPLACING TABLE NAMES
@@ -45,6 +83,10 @@ function gallery_bank_settings()
 //---------------------------------------------------------------------------------------------------------------//
 function gallery_bank()
 {
+	global $wpdb,$current_user,$user_role_permission;
+	$role = $wpdb->prefix . "capabilities";
+	$current_user->role = array_keys($current_user->$role);
+	$role = $current_user->role[0];
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/dashboard.php";
 }
@@ -52,6 +94,10 @@ function gallery_bank()
 
 function gallery_bank_shortcode()
 {
+	global $wpdb, $current_user,$wp_version;
+	$role = $wpdb->prefix . "capabilities";
+	$current_user->role = array_keys($current_user->$role);
+	$role = $current_user->role[0];
 	include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
 	include_once GALLERY_BK_PLUGIN_DIR . "/views/shortcode.php";
 }
@@ -62,42 +108,57 @@ function save_album()
 	(
 		"SELECT count(album_id) FROM ".gallery_bank_albums()
 	);
-	if($album_count < 3)
+	if($album_count <= 3)
 	{
-		global $wpdb;
+		global $wpdb,$current_user,$user_role_permission;
+		$role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$role);
+		$role = $current_user->role[0];
 		include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
 		include_once GALLERY_BK_PLUGIN_DIR . "/views/edit-album.php";
 	}
 	else 
 	{
-		?>
-		<script type="text/javascript">
-			window.location.href="admin.php?page=gallery_bank";
-		</script>
-		<?php
+        header("Location:admin.php?page=gallery_bank");
 	}
 }
 
 function global_settings()
 {
+	global $wpdb, $current_user,$wp_version;
+	$role = $wpdb->prefix . "capabilities";
+	$current_user->role = array_keys($current_user->$role);
+	$role = $current_user->role[0];
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/settings.php";
 }
 
 function gallery_album_sorting()
 {
+	global $wpdb,$current_user,$user_role_permission;
+	$role = $wpdb->prefix . "capabilities";
+	$current_user->role = array_keys($current_user->$role);
+	$role = $current_user->role[0];
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/album-sorting.php";
 }
 
 function images_sorting()
 {
+	global $wpdb,$current_user,$user_role_permission;
+	$role = $wpdb->prefix . "capabilities";
+	$current_user->role = array_keys($current_user->$role);
+	$role = $current_user->role[0];
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/images-sorting.php";
 }
 
 function album_preview()
 {
+	global $wpdb,$current_user,$user_role_permission;
+	$role = $wpdb->prefix . "capabilities";
+	$current_user->role = array_keys($current_user->$role);
+	$role = $current_user->role[0];
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/album-preview.php";
 }
@@ -105,12 +166,20 @@ function album_preview()
 
 function gallery_bank_system_status()
 {
+	global $wpdb,$wp_version,$current_user,$user_role_permission;
+	$role = $wpdb->prefix . "capabilities";
+	$current_user->role = array_keys($current_user->$role);
+	$role = $current_user->role[0];
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/gallery-bank-system-report.php";
 }
 
 function gallery_bank_purchase()
 {
+	global $wpdb,$current_user,$user_role_permission;
+	$role = $wpdb->prefix . "capabilities";
+	$current_user->role = array_keys($current_user->$role);
+	$role = $current_user->role[0];
 	include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/purchase_pro_version.php";
 }
@@ -124,23 +193,23 @@ function backend_scripts_calls()
     wp_enqueue_script("jquery-ui-sortable");
     wp_enqueue_script("jquery-ui-dialog");
     wp_enqueue_script("farbtastic");
-    wp_enqueue_script("imgLiquid.js", GALLERY_BK_PLUGIN_URL . "/assets/js/imgLiquid.js");
-    wp_enqueue_script("jquery.dataTables.min.js", GALLERY_BK_PLUGIN_URL . "/assets/js/jquery.dataTables.min.js");
-    wp_enqueue_script("jquery.validate.min.js", GALLERY_BK_PLUGIN_URL . "/assets/js/jquery.validate.min.js");
-    wp_enqueue_script("plupload.full.min.js", GALLERY_BK_PLUGIN_URL . "/assets/js/plupload.full.min.js");
-    wp_enqueue_script("jquery.plupload.queue.js", GALLERY_BK_PLUGIN_URL . "/assets/js/jquery.plupload.queue.js");
-    wp_enqueue_script("jquery.Tooltip.js", GALLERY_BK_PLUGIN_URL . "/assets/js/jquery.Tooltip.js");
-    wp_enqueue_script("bootstrap.js", GALLERY_BK_PLUGIN_URL . "/assets/js/bootstrap.js");
-	wp_enqueue_script("jquery.prettyPhoto.js", GALLERY_BK_PLUGIN_URL . "/assets/js/jquery.prettyPhoto.js");
+    wp_enqueue_script("imgLiquid.js", plugins_url("/assets/js/imgLiquid.js",dirname(__FILE__)));
+    wp_enqueue_script("jquery.dataTables.min.js", plugins_url("/assets/js/jquery.dataTables.min.js",dirname(__FILE__)));
+    wp_enqueue_script("jquery.validate.min.js", plugins_url("/assets/js/jquery.validate.min.js",dirname(__FILE__)));
+    wp_enqueue_script("plupload.full.min.js", plugins_url("/assets/js/plupload.full.min.js",dirname(__FILE__)));
+    wp_enqueue_script("jquery.plupload.queue.js", plugins_url("/assets/js/jquery.plupload.queue.js",dirname(__FILE__)));
+    wp_enqueue_script("jquery.Tooltip.js", plugins_url("/assets/js/jquery.Tooltip.js",dirname(__FILE__)));
+    wp_enqueue_script("bootstrap.js", plugins_url("/assets/js/bootstrap.js",dirname(__FILE__)));
+	wp_enqueue_script("jquery.prettyPhoto.js", plugins_url("/assets/js/jquery.prettyPhoto.js",dirname(__FILE__)));
 }
 
 function frontend_plugin_js_scripts_gallery_bank()
 {
     wp_enqueue_script("jquery");
-    wp_enqueue_script("jquery.masonry.min.js", GALLERY_BK_PLUGIN_URL . "/assets/js/jquery.masonry.min.js");
-    wp_enqueue_script("isotope.pkgd.js", GALLERY_BK_PLUGIN_URL . "/assets/js/isotope.pkgd.js");
-    wp_enqueue_script("imgLiquid.js", GALLERY_BK_PLUGIN_URL . "/assets/js/imgLiquid.js");
-	wp_enqueue_script("jquery.prettyPhoto.js", GALLERY_BK_PLUGIN_URL . "/assets/js/jquery.prettyPhoto.js");
+    wp_enqueue_script("jquery.masonry.min.js", plugins_url("/assets/js/jquery.masonry.min.js",dirname(__FILE__)));
+    wp_enqueue_script("isotope.pkgd.js", plugins_url("/assets/js/isotope.pkgd.js",dirname(__FILE__)));
+    wp_enqueue_script("imgLiquid.js", plugins_url("/assets/js/imgLiquid.js",dirname(__FILE__)));
+	wp_enqueue_script("jquery.prettyPhoto.js", plugins_url("/assets/js/jquery.prettyPhoto.js",dirname(__FILE__)));
 }
 
 //--------------------------------------------------------------------------------------------------------------//
@@ -149,20 +218,20 @@ function backend_css_calls()
 {
     wp_enqueue_style("farbtastic");
 	wp_enqueue_style("wp-jquery-ui-dialog");
-    wp_enqueue_style("jquery.plupload.queue.css", GALLERY_BK_PLUGIN_URL . "/assets/css/jquery.plupload.queue.css");
-    wp_enqueue_style("stylesheet.css", GALLERY_BK_PLUGIN_URL . "/assets/css/stylesheet.css");
-    wp_enqueue_style("font-awesome.css", GALLERY_BK_PLUGIN_URL . "/assets/css/font-awesome/css/font-awesome.css");
-    wp_enqueue_style("system-message.css", GALLERY_BK_PLUGIN_URL . "/assets/css/system-message.css");
-    wp_enqueue_style("gallery-bank.css", GALLERY_BK_PLUGIN_URL . "/assets/css/gallery-bank.css");
-	wp_enqueue_style("prettyPhoto.css", GALLERY_BK_PLUGIN_URL . "/assets/css/prettyPhoto.css");
-	wp_enqueue_style("css3_grid_style.css", GALLERY_BK_PLUGIN_URL . "/assets/css/css3_grid_style.css");
-	wp_enqueue_style("responsive.css", GALLERY_BK_PLUGIN_URL . "/assets/css/responsive.css");
+    wp_enqueue_style("jquery.plupload.queue.css", plugins_url("/assets/css/jquery.plupload.queue.css",dirname(__FILE__)));
+    wp_enqueue_style("stylesheet.css", plugins_url("/assets/css/stylesheet.css",dirname(__FILE__)));
+    wp_enqueue_style("font-awesome.css", plugins_url("/assets/css/font-awesome/css/font-awesome.css",dirname(__FILE__)));
+    wp_enqueue_style("system-message.css", plugins_url("/assets/css/system-message.css",dirname(__FILE__)));
+    wp_enqueue_style("gallery-bank.css", plugins_url("/assets/css/gallery-bank.css",dirname(__FILE__)));
+	wp_enqueue_style("prettyPhoto.css", plugins_url("/assets/css/prettyPhoto.css",dirname(__FILE__)));
+	wp_enqueue_style("css3_grid_style.css", plugins_url("/assets/css/css3_grid_style.css",dirname(__FILE__)));
+	wp_enqueue_style("responsive.css", plugins_url("/assets/css/responsive.css",dirname(__FILE__)));
 }
 
 function frontend_plugin_css_scripts_gallery_bank()
 {
-    wp_enqueue_style("gallery-bank.css", GALLERY_BK_PLUGIN_URL . "/assets/css/gallery-bank.css");
-	wp_enqueue_style("prettyPhoto.css", GALLERY_BK_PLUGIN_URL . "/assets/css/prettyPhoto.css");
+    wp_enqueue_style("gallery-bank.css", plugins_url("/assets/css/gallery-bank.css",dirname(__FILE__)));
+	wp_enqueue_style("prettyPhoto.css", plugins_url("/assets/css/prettyPhoto.css",dirname(__FILE__)));
 }
 
 //--------------------------------------------------------------------------------------------------------------//
@@ -174,6 +243,10 @@ if (isset($_REQUEST["action"])) {
             add_action("admin_init", "album_gallery_library");
             function album_gallery_library()
             {
+            	global $wpdb,$current_user,$user_role_permission;
+            	$role = $wpdb->prefix . "capabilities";
+            	$current_user->role = array_keys($current_user->$role);
+            	$role = $current_user->role[0];
                 include_once GALLERY_BK_PLUGIN_DIR . "/lib/add-new-album-class.php";
             }
             break;
@@ -182,6 +255,28 @@ if (isset($_REQUEST["action"])) {
             function front_view_all_albums_library()
             {
                 include_once GALLERY_BK_PLUGIN_DIR . "/lib/front-view-all-albums-class.php";
+            }
+            break;
+		case "upload_library":
+            add_action("admin_init", "upload_library");
+            function upload_library()
+            {
+            	global $wpdb,$current_user,$user_role_permission;
+            	$role = $wpdb->prefix . "capabilities";
+            	$current_user->role = array_keys($current_user->$role);
+            	$role = $current_user->role[0];
+            	
+            	$fileName = esc_attr($_REQUEST["name"]);
+            	$extension = explode(".", $fileName);
+		 		if($extension[1] == "jpg" || $extension[1] == "jpeg" || $extension[1] == "gif" || $extension[1] == "png" || $extension[1] == "JPG" || $extension[1] == "JPEG" || $extension[1] == "GIF" || $extension[1] == "PNG")
+		 		{
+            		include_once GALLERY_BK_PLUGIN_DIR . "/lib/upload.php";
+            	}
+                else 
+                {
+                	die();
+                }
+                
             }
             break;
     }

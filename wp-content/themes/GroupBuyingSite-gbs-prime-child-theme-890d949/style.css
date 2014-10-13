@@ -18,6 +18,12 @@ body.logged-in {
     padding-top: 0px;
 }
 
+.prime.prime_alt {
+    background-color: #f9f9f9;
+    background-color: rgba(0,0,0,0.02);
+    text-shadow: rgba(255,254,255,0.5) 1px 1px 2px;
+}
+
 .container {
     max-width: 1020px;
     width: auto;
@@ -391,6 +397,51 @@ cursor: pointer;
     border-radius: 0.4em;
 }*/
 
+/*  ReCaptcha 
+#recaptcha_widget_div {
+    overflow:hidden;
+}*/
+
+#gb-account-user-info td.first, #gb-account-account-info td.first, #gb-account-contact-info td.first {
+    text-align: left;
+    vertical-align: middle;
+    font-weight: bold;
+    width: 92px;
+    }
+
+table.account tbody tr td span.required {
+    float:right;
+    margin-right: 0px;
+}
+
+input.text-input, .gb-form-field input, .text-area, .gb-form-field textarea, input[type="text"], input[type="password"], textarea {
+    -webkit-appearance: none;
+    }
+
+
+@media only screen and (max-width : 680px) {
+    table.collapsable tbody tr td span.required {
+        margin-right:40px;
+        float: right;
+    }
+
+    #gb_account_register {
+        overflow:hidden;
+    }
+
+    #gb_account_register .formtable table td {
+        padding: 10px 0px;
+    }
+
+    #gb_contact_country {
+        max-width: 250px;
+    }
+
+    #gb-account-user-info td.first, #gb-account-account-info td.first, #gb-account-contact-info td.first {
+    width: 100%;
+    }
+}
+
 /*  Single Deal Page - Share buttons */
 
 .page_title .featured_tag, .page_title .deal_title, .page_title .button_reset_filters_wrap {
@@ -417,6 +468,16 @@ cursor: pointer;
 .button_reset_filters_wrap {
     margin-top: 20px;
 
+}
+
+#business .page_title .button_reset_filters_wrap {
+    float: right;
+    margin-top: 0px;
+}
+
+.charity_single .button_reset_filters_wrap {
+    margin-top: 0px;
+    margin-bottom: 20px;
 }
 
 .button_reset_filters_wrap a.button {

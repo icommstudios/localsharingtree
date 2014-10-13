@@ -8,19 +8,21 @@ jQuery(function($){
 
 	GmediaSelect = {
 		msg_selected: function(obj, global){
-			var gm_cb = $('.'+obj+' input'),
+			var gm_cb = $('.' + obj + ' input'),
 				qty_v = gm_cb.length,
 				sel_v = gm_cb.filter(':checked').length,
 				c = $('#cb_global');
-			if(sel_v != qty_v && sel_v != 0){
+			if((sel_v != qty_v) && (0 !== sel_v)){
 				c.css('opacity', '0.5').prop('checked', true);
-			} else if(sel_v == qty_v && qty_v != 0){
+			} else if((sel_v == qty_v) && (0 !== qty_v)){
 				c.css('opacity', '1').prop('checked', true);
-			} else if(sel_v == 0){
+			} else if(0 === sel_v){
 				c.css('opacity', '1').prop('checked', false);
 			}
 
-			if(!$('#gm-selected').length){ return; }
+			if(!$('#gm-selected').length){
+				return;
+			}
 
 			var sel = $('#gm-selected'),
 				arr = sel.val().split(','),
@@ -45,7 +47,7 @@ jQuery(function($){
 			}
 
 			if(sel.data('userid')){
-				var storedData = getStorage('gmedia_u' + sel.data('userid') + '_');
+				var storedData = getStorage('gmuser_' + sel.data('userid') + '_');
 				storedData.set(sel.data('key'), arr);
 			}
 			$('#gm-selected-qty').text(arr.length);
@@ -62,26 +64,26 @@ jQuery(function($){
 			sel.trigger('change');
 		},
 		chk_all: function(type, obj){
-			$('.'+obj+' input').filter(function(){
+			$('.' + obj + ' input').filter(function(){
 				return type? $(this).data('type') == type : true;
 			}).prop('checked', true).closest('div.list-group-item').addClass('active');
 		},
 		chk_none: function(type, obj){
-			$('.'+obj+' input').filter(function(){
+			$('.' + obj + ' input').filter(function(){
 				return type? $(this).data('type') == type : true;
 			}).prop('checked', false).closest('div.list-group-item').removeClass('active');
 		},
 		chk_toggle: function(type, obj){
 			if(type){
-				if($('.'+obj+' input:checked').filter(function(){
+				if($('.' + obj + ' input:checked').filter(function(){
 					return $(this).data('type') == type;
 				}).length){
 					GmediaSelect.chk_none(type, obj);
 				} else{
-					GmediaSelect.chk_all(type, obj)
+					GmediaSelect.chk_all(type, obj);
 				}
 			} else{
-				$('.'+obj+' input').each(function(){
+				$('.' + obj + ' input').each(function(){
 					$(this).prop("checked", !$(this).prop("checked")).closest('div.list-group-item').toggleClass('active');
 				});
 			}
@@ -179,14 +181,17 @@ jQuery(function($){
 		},
 		init: function(){
 			$('#toplevel_page_GrandMedia').addClass('current').removeClass('wp-not-current-submenu');
+			if(!("ontouchstart" in document.documentElement)){
+				$('html').addClass('no-touch');
+			}
 
 			/*
-			$(document).ajaxStart(function(){
-				$('body').addClass('gmedia-busy');
-			}).ajaxStop(function(){
-				$('body').removeClass('gmedia-busy');
-			});
-			*/
+			 $(document).ajaxStart(function(){
+			 $('body').addClass('gmedia-busy');
+			 }).ajaxStop(function(){
+			 $('body').removeClass('gmedia-busy');
+			 });
+			 */
 
 			$('[data-confirm]').click(function(){
 				return GmediaFunction.confirm($(this).data('confirm'));
@@ -218,7 +223,7 @@ jQuery(function($){
 				$('.modal-content', modal_div).html(
 					$('<iframe />', {
 						name: 'gmeditFrame',
-						id:   'gmeditFrame',
+						id: 'gmeditFrame',
 						width: '100%',
 						height: '500',
 						src: $(this).attr('href')
@@ -239,7 +244,7 @@ jQuery(function($){
 				$('.modal-body', modal_div).html(
 					$('<iframe />', {
 						name: 'previewFrame',
-						id:   'previewFrame',
+						id: 'previewFrame',
 						width: '100%',
 						src: $(this).attr('href'),
 						load: function(){
@@ -263,8 +268,11 @@ jQuery(function($){
 				};
 				$.post(ajaxurl, post_data, function(data, textStatus, jqXHR){
 					console.log(data);
-					var id = data.ID;
-					$('#list-item-'+id).find('.modified').text(data.modified);
+					var item = $('#list-item-' + data.ID);
+					item.find('.modified').text(data.modified);
+					if(data.tags){
+						item.find('.gmedia_tags_input').val(data.tags);
+					}
 					$('body').removeClass('gmedia-busy');
 				});
 			});
@@ -285,7 +293,7 @@ jQuery(function($){
 				$('#importModal').modal({
 					backdrop: 'static',
 					show: true
-				}).on('shown.bs.modal', function(){
+				}).on('shown.bs.modal',function(){
 					$('#import_form').submit();
 				}).on('hidden.bs.modal', function(){
 					$('#import-done').button('reset').prop('disabled', true);
@@ -297,7 +305,7 @@ jQuery(function($){
 				e.preventDefault();
 				$('body').addClass('gmedia-busy');
 				var module = $(this).data('module');
-				$('.module_install').filter('[data-module="'+module+'"]').button('loading');
+				$('.module_install').filter('[data-module="' + module + '"]').button('loading');
 				var post_data = {
 					action: 'gmedia_module_install', download: $(this).attr('href'), module: module, _wpnonce: $('#_wpnonce').val()
 				};
@@ -317,46 +325,46 @@ jQuery(function($){
 });
 
 
-function getStorage(key_prefix){
+function getStorage(keyPprefix){
 	// use document.cookie:
 	return {
 		set: function(id, data){
-			document.cookie = key_prefix + id + '=' + encodeURIComponent(data);
+			document.cookie = keyPprefix + id + '=' + encodeURIComponent(data);
 		},
 		get: function(id, data){
 			var cookies = document.cookie, parsed = {};
 			cookies.replace(/([^=]+)=([^;]*);?\s*/g, function(whole, key, value){
 				parsed[key] = decodeURIComponent(value);
 			});
-			return parsed[key_prefix + id];
+			return parsed[keyPprefix + id];
 		}
 	};
 }
 
 /*
-function gmHashCode(str){
-	var l = str.length,
-		hash = 5381 * l * (str.charCodeAt(0) + l);
-	for(var i = 0; i < str.length; i++){
-		hash += Math.floor((str.charCodeAt(i) + i + 0.33) / (str.charCodeAt(l - i - 1) + l) + (str.charCodeAt(i) + l) * (str.charCodeAt(l - i - 1) + i + 0.33));
-	}
-	return hash;
-}
-function gmCreateKey(site, lic, uuid){
-	if(!lic){
-		lic = '0:lk';
-	}
-	if(!uuid){
-		uuid = 'xyxx-xxyx-xxxy';
-	}
-	var d = gmHashCode((site + ':' + lic).toLowerCase());
-	var p = d;
-	uuid = uuid.replace(/[xy]/g, function(c){
-		var r = d % 16 | 0, v = c == 'x'? r : (r & 0x7 | 0x8);
-		d = Math.floor(d * 15 / 16);
-		return v.toString(16);
-	});
-	var key = p + ': ' + lic + '-' + uuid;
-	return key.toLowerCase();
-}
-*/
+ function gmHashCode(str){
+ var l = str.length,
+ hash = 5381 * l * (str.charCodeAt(0) + l);
+ for(var i = 0; i < str.length; i++){
+ hash += Math.floor((str.charCodeAt(i) + i + 0.33) / (str.charCodeAt(l - i - 1) + l) + (str.charCodeAt(i) + l) * (str.charCodeAt(l - i - 1) + i + 0.33));
+ }
+ return hash;
+ }
+ function gmCreateKey(site, lic, uuid){
+ if(!lic){
+ lic = '0:lk';
+ }
+ if(!uuid){
+ uuid = 'xyxx-xxyx-xxxy';
+ }
+ var d = gmHashCode((site + ':' + lic).toLowerCase());
+ var p = d;
+ uuid = uuid.replace(/[xy]/g, function(c){
+ var r = d % 16 | 0, v = c == 'x'? r : (r & 0x7 | 0x8);
+ d = Math.floor(d * 15 / 16);
+ return v.toString(16);
+ });
+ var key = p + ': ' + lic + '-' + uuid;
+ return key.toLowerCase();
+ }
+ */

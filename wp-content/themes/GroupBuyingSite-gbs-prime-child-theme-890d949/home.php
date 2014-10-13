@@ -53,8 +53,9 @@ get_header(); ?>
 					
 				</div>
 
-				<p style="text-align: center;"><a href="http://localsharingtree.com/test/wp-content/uploads/2013/07/Slide-6.jpg"><img class="alignnone  wp-image-339" alt="Slide 6" src="http://localsharingtree.com/test/wp-content/uploads/2013/07/Slide-6.jpg" width="305" height="230" data-id="339" /></a> <a href="http://localsharingtree.com/test/wp-content/uploads/2013/07/Slide-7.jpg"><img class="alignnone  wp-image-340" alt="Slide 7" src="http://localsharingtree.com/test/wp-content/uploads/2013/07/Slide-7.jpg" width="305" height="230" data-id="340" /></a> <a href="http://localsharingtree.com/test/wp-content/uploads/2013/07/Slide-8.jpg"><img class="alignnone  wp-image-341" alt="Slide 8" src="http://localsharingtree.com/test/wp-content/uploads/2013/07/Slide-8.jpg" width="305" height="230" data-id="341" /></a></p>
+				<p style="text-align: center;"><a href="http://localsharingtree.com/wp-content/uploads/2013/07/landing-page-31.jpg"><img class="alignnone  wp-image-339" alt="Slide 6" src="http://localsharingtree.com/wp-content/uploads/2013/07/landing-page-31.jpg" width="305" height="230" data-id="339" /></a> <a href="http://localsharingtree.com/wp-content/uploads/2013/07/New-Landing-11.jpg"><img class="alignnone  wp-image-340" alt="Slide 7" src="http://localsharingtree.com/wp-content/uploads/2013/07/New-Landing-11.jpg" width="305" height="230" data-id="340" /></a> <a href="http://localsharingtree.com/wp-content/uploads/2013/07/landing-page-21.jpg"><img class="alignnone  wp-image-341" alt="Slide 8" src="http://localsharingtree.com/wp-content/uploads/2013/07/landing-page-21.jpg" width="305" height="230" data-id="341" /></a></p>
 
+				<p>&nbsp;</p>
 				<p>&nbsp;</p>
 			
 			</div><!-- // .mini_header -->

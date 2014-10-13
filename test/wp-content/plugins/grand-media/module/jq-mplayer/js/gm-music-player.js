@@ -1,17 +1,17 @@
 /*
- * Title                   : Music Player Module for Gmedia Gallery plugin
- * Version                 : 1.6
- * Copyright               : 2013 CodEasily.com
- * Website                 : http://www.codeasily.com
+ * Title      : Music Player Module for Gmedia Gallery plugin
+ * Version    : 2.0
+ * Copyright  : 2013 CodEasily.com
+ * Website    : http://www.codeasily.com
  */
 (function($) {
 	$.fn.gmMusicPlayer = function(playlist, userOptions) {
 		var $self = this, opt_str, opt_int, opt_bool, opt_obj, options, cssSelector, appMgr, playlistMgr, interfaceMgr, ratingsMgr,
-				layout, ratings, myPlaylist, current;
-
+				layout, ratings, myPlaylist, current,
+			$uid = $(this).data('uid');
 		cssSelector = {
 			jPlayer: ".gm-music-player",
-			jPlayerInterface: '.jp-interface',
+			jPlayerInterface: '.jqmp-'+$uid,
 			playerPrevious: ".jp-interface .jp-previous",
 			playerNext: ".jp-interface .jp-next",
 			trackList:'.gmmp-tracklist',
@@ -29,8 +29,8 @@
 			playing:'.gmmp-playing',
 			moreButton:'.gmmp-more',
 			player:'.gmmp-player',
-			artist:'.gmmp-artist',
-			artistOuter:'.gmmp-artist-outer',
+			//artist:'.gmmp-artist',
+			//artistOuter:'.gmmp-artist-outer',
 			albumCover:'.gmmp-img',
 			description:'.gmmp-description',
 			descriptionShowing:'.gmmp-showing'
@@ -38,7 +38,7 @@
 
 		opt_str = {
 			width:'auto',
-			linkText:'Download',
+			buttonText:'Download',
 			moreText:'View More...'
 		};
 		opt_int = {
@@ -76,9 +76,9 @@
 			playlist.init(options.jPlayer);
 
 			//don't initialize the ratings until the playlist has been built, which wont happen until after the jPlayer ready event
-			$self.bind('mbPlaylistLoaded', function() {
+			$self.on('mbPlaylistLoaded', function() {
 				if(options.rating){
-					$self.bind('mbInterfaceBuilt', function() {
+					$self.on('mbInterfaceBuilt', function() {
 						ratings = new ratingsMgr();
 					});
 				}
@@ -104,7 +104,6 @@
 			};
 
 			function init(playlistOptions) {
-
 				$myJplayer = $('.gm-music-player .jPlayer-container', $self);
 
 
@@ -121,27 +120,27 @@
 				//apply any user defined jPlayer options
 				jPlayerOptions = $.extend(true, {}, jPlayerDefaults, playlistOptions);
 
-				$myJplayer.bind($.jPlayer.event.ready, function() {
+				$myJplayer.on($.jPlayer.event.ready, function() {
 
 					//Bind jPlayer events. Do not want to pass in options object to prevent them from being overridden by the user
-					$myJplayer.bind($.jPlayer.event.ended, function(event) {
+					$myJplayer.on($.jPlayer.event.ended, function(event) {
 						playlistNext();
 					});
 
-					$myJplayer.bind($.jPlayer.event.play, function(event) {
+					$myJplayer.on($.jPlayer.event.play, function(event) {
 						$myJplayer.jPlayer("pauseOthers");
 						$tracks.eq(current).addClass(attr(cssSelector.playing)).siblings().removeClass(attr(cssSelector.playing));
 					});
 
-					$myJplayer.bind($.jPlayer.event.playing, function(event) {
+					$myJplayer.on($.jPlayer.event.playing, function(event) {
 						playing = true;
 					});
 
-					$myJplayer.bind($.jPlayer.event.pause, function(event) {
+					$myJplayer.on($.jPlayer.event.pause, function(event) {
 						playing = false;
 					});
 
-					$myJplayer.bind($.jPlayer.event.loadeddata, function(event) {
+					$myJplayer.on($.jPlayer.event.loadeddata, function(event) {
 						if(event.jPlayer.status.duration != 'NaN'){
 							$tracks.eq(current).find(cssSelector.duration).text($.jPlayer.convertTime( event.jPlayer.status.duration ));
 						}
@@ -160,7 +159,7 @@
 						return false;
 					});
 
-					$self.bind('mbInitPlaylistAdvance', function(e) {
+					$self.on('mbInitPlaylistAdvance', function(e) {
 						var changeTo = this.getData('mbInitPlaylistAdvance');
 
 						if (changeTo != current) {
@@ -182,6 +181,7 @@
 					$self.trigger('mbPlaylistLoaded');
 
 					playlistInit(options.autoplay);
+
 				});
 
 				//Initialize jPlayer
@@ -295,8 +295,12 @@
 			}
 
 			function setLink($track, index) {
-				if (myPlaylist[index].button != '') {
-					$track.find(cssSelector.button).removeClass(attr(cssSelector.buttonNotActive)).attr('href', myPlaylist[index].button).html(options.linkText);
+				if (myPlaylist[index].button !== '') {
+					$track.find(cssSelector.button).removeClass(attr(cssSelector.buttonNotActive)).attr('href', myPlaylist[index].button).html(options.buttonText);
+					var ext = myPlaylist[index].button.slice(-4);
+					if(('.mp3' == ext) || ('.ogg' == ext) ){
+						$track.find(cssSelector.button).attr('download', '');
+					}
 				}
 			}
 
@@ -374,12 +378,12 @@
 				$player = $(cssSelector.player, $self),
 						$title = $player.find(cssSelector.title),
 						$text = $player.find(cssSelector.text),
-						$artist = $player.find(cssSelector.artist),
+						//$artist = $player.find(cssSelector.artist),
 						$albumCover = $player.find(cssSelector.albumCover);
 
 				setDescription();
 
-				$self.bind('mbPlaylistAdvance mbPlaylistInit', function() {
+				$self.on('mbPlaylistAdvance mbPlaylistInit', function() {
 					setTitle();
 					//setArtist();
 					setText();
@@ -396,7 +400,7 @@
 				//I would normally use the templating plugin for something like this, but I wanted to keep this plugin's footprint as small as possible
 				markup =
 						'<div class="gm-music-player">' +
-								'	<div class="gmmp-player jp-interface">' +
+								'	<div class="gmmp-player jp-interface jqmp-'+$uid+'">' +
 								'		<div class="gmmp-album-cover">' +
 								'			<span class="gmmp-img"></span>' +
 								'   	<span class="gmmp-highlight"></span>' +
@@ -450,7 +454,7 @@
 								' <div class="jPlayer-container"></div>' +
 								'</div>';
 
-				var mw = (0 == options.maxwidth)? 'none' : options.maxwidth;
+				var mw = (0 === options.maxwidth)? 'none' : options.maxwidth;
 				$interface = $(markup).css({display:'none', opacity:0, width: options.width, 'max-width': mw}).appendTo($self).slideDown('slow', function() {
 					$interface.animate({opacity:1});
 
@@ -462,6 +466,7 @@
 				$title.html(trackName(current));
 			}
 
+			/*
 			function setArtist() {
 				if (isUndefined(myPlaylist[current].artist))
 					$artist.parent(cssSelector.artistOuter).animate({opacity:0}, 'fast');
@@ -469,9 +474,10 @@
 					$artist.html(myPlaylist[current].artist).parent(cssSelector.artistOuter).animate({opacity:1}, 'fast');
 				}
 			}
+			*/
 
 			function setText() {
-				if (myPlaylist[current].text == '')
+				if (myPlaylist[current].text === '')
 					$text.animate({opacity:0}, 'fast', function(){ $(this).empty() });
 				else {
 					$text.html(myPlaylist[current].text).animate({opacity:1}, 'fast');
@@ -481,7 +487,7 @@
 			function setCover() {
 				$albumCover.animate({opacity:0}, 'fast', function() {
 					$(this).empty();
-					if (!isUndefined(myPlaylist[current].cover) || myPlaylist[current].cover != '') {
+					if (!isUndefined(myPlaylist[current].cover) || myPlaylist[current].cover !== '') {
 						var now = current;
 						$('<img src="' + myPlaylist[current].cover + '" alt="album cover" />').load(function(){
 							if(now == current)
@@ -505,13 +511,13 @@
 
 		/** Common Functions **/
 		function trackName(index) {
-			if (myPlaylist[index].title != '')
+			if (myPlaylist[index].title !== '')
 				return myPlaylist[index].title;
-			else if (myPlaylist[index].mp3 != '')
+			if (myPlaylist[index].mp3 !== '')
 				return fileName(myPlaylist[index].mp3);
-			else if (myPlaylist[index].oga != '')
+			if (myPlaylist[index].oga !== '')
 				return fileName(myPlaylist[index].oga);
-			else return 'NaN';
+			return 'NaN';
 		}
 
 		function fileName(path) {
@@ -527,7 +533,7 @@
 			}
 			else {
 				//if the rating isn't set, use 0
-				var rating = !isUndefined(myPlaylist[index].rating) ? Math.ceil(myPlaylist[index].rating) : 0;
+				var rating = isUndefined(myPlaylist[index].rating)? 0 : Math.ceil(myPlaylist[index].rating);
 				applyCurrentlyPlayingRating(rating);
 			}
 		}

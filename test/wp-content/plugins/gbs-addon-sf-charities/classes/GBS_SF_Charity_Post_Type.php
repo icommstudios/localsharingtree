@@ -153,6 +153,18 @@ class GB_SF_Charity extends Group_Buying_Post_Type {
 		return $account_id;
 	}
 	
+	public static function get_all_charity_ids_for_user( $user_id = 0 ) {
+		if ( !$user_id ) {
+			$user_id = (int)get_current_user_id();
+		}
+		$authorized_ids = self::find_by_meta( self::POST_TYPE, array( self::$meta_keys['authorized_users'] => $user_id ) );
+		if ( empty( $authorized_ids ) ) {
+			//$account_id = self::blank_merchant();
+			$authorized_ids = false;
+		}
+		return $authorized_ids; //return multiple
+	}
+	
 	
 	public static function custom_add_locations_taxonomy() {
 		register_taxonomy_for_object_type( Group_Buying_Deal::LOCATION_TAXONOMY, 'gb_charities' );
@@ -243,12 +255,15 @@ class GB_SF_Charity extends Group_Buying_Post_Type {
 	/**
 	 *
 	 *
-	 * @param int     $charity_id The charity to look for
+	 * @param int     $user_id The user_id to look for charities
 	 * @return array List of IDs
 	 */
 	public static function get_charities_by_account( $user_id ) {
-		$charities = self::find_by_meta( self::POST_TYPE, array( self::$meta_keys['authorized_users'] => $user_id ) );
-		return $charities;
+		$all_charities = array();
+		if ( $user_id != false ) {
+			$all_charities = self::find_by_meta( self::POST_TYPE, array( self::$meta_keys['authorized_users'] => $user_id ) );
+		}
+		return $all_charities;
 	}
 
 

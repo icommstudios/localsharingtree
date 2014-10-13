@@ -4,7 +4,7 @@
  */
 
 function gmedia_image_editor(){
-	global $gmCore, $gmDB, $user_ID, $gmGallery;
+	global $gmCore;
 	$gmid = $gmCore->_get('id');
 	//$gmedia = $gmDB->get_gmedia($gmid);
 	$gmedia_src = $gmCore->gm_get_media_image($gmid, 'original');
@@ -15,7 +15,7 @@ function gmedia_image_editor(){
 	<div class="panel panel-default" id="gmedit" data-src="<?php echo $gmedia_src; ?>">
 		<div class="panel-heading clearfix">
 			<div class="btn-toolbar pull-right">
-				<?php if(file_exists($fileinfo['filepath_original'].'_backup')){ ?>
+				<?php if(file_exists($fileinfo['filepath_original'] . '_backup')){ ?>
 					<button type="button" id="gmedit-restore" name="gmedit_restore" class="btn btn-warning pull-left" data-confirm="<?php _e('Do you really want restore original image?') ?>"><?php _e('Restore Original', 'gmLang'); ?></button>
 				<?php } ?>
 				<div class="btn-group pull-left">
@@ -181,17 +181,21 @@ function gmedia_image_editor(){
 				var post_data = {
 					action: 'gmedit_save', id: gmid, image: a, applyto: $('#applyto').val(), _wpnonce: $('#_wpnonce').val()
 				};
-				$.post(ajaxurl, post_data, function(c){
-					if(!c.error){
+				$.post(ajaxurl, post_data).always(function(c){
+					if(c.msg && !c.error){
 						var parent_doc = window.parent.document;
-						$('#list-item-'+gmid, parent_doc)
+						$('#list-item-' + gmid, parent_doc)
 							.find('.gmedia-thumb').attr('src', '<?php echo $gmedia_thumb_src; ?>?' + time)
 							.end().find('.modified').text(c.modified);
 						$('#gmedia-panel', parent_doc).before(c.msg);
 						window.parent.closeModal('gmeditModal');
 					} else{
 						$('#gmedit-save').button('reset').prop('disabled', false);
-						$('#media-edit-form-container .alert-box').html(c.error).show();
+						if(c.error){
+							$('#media-edit-form-container .alert-box').html(c.error).show();
+						} else{
+							$('#media-edit-form-container .alert-box').text(c).show();
+						}
 					}
 				});
 			};
@@ -207,10 +211,10 @@ function gmedia_image_editor(){
 				var post_data = {
 					action: 'gmedit_restore', id: gmid, _wpnonce: $('#_wpnonce').val()
 				};
-				$.post(ajaxurl, post_data, function(c){
-					if(!c.error){
+				$.post(ajaxurl, post_data).always(function(c){
+					if(c.msg && !c.error){
 						var parent_doc = window.parent.document;
-						$('#list-item-'+gmid, parent_doc)
+						$('#list-item-' + gmid, parent_doc)
 							.find('.gmedia-thumb').attr('src', '<?php echo $gmedia_thumb_src; ?>?' + time)
 							.end().find('.modified').text(c.modified);
 						$('#gmedia-panel', parent_doc).before(c.msg);
@@ -219,7 +223,11 @@ function gmedia_image_editor(){
 						$('#media-edit-form-container .alert-box').html(c.msg).show();
 						$("#gmedit-restore").remove();
 					} else{
-						$('#media-edit-form-container .alert-box').html(c.error).show();
+						if(c.error){
+							$('#media-edit-form-container .alert-box').html(c.error).show();
+						} else{
+							$('#media-edit-form-container .alert-box').text(c).show();
+						}
 					}
 					$('#gmedit-save').button('reset').prop('disabled', false);
 				});
