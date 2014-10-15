@@ -435,7 +435,7 @@ function custom_handle_merchant_register_deals() {
 	//Register merchant
 	if ( $_GET['action_page'] == 'register_merchant' ) {
 		if ( !is_user_logged_in() ) {
-			Group_Buying_Controller::set_message( gb__( 'In order to Register Your Business, You Must Register as a User, or Log In First.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
+			Group_Buying_Controller::set_message( gb__( 'In order to Register Your Business You Must Register as a User, or Log In First.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
 			//Redirect to login
 			Group_Buying_Controller::login_required();
 		} else {
@@ -445,9 +445,9 @@ function custom_handle_merchant_register_deals() {
 				wp_redirect( gb_get_merchant_registration_url() );
 				exit();
 			} else {
-				Group_Buying_Controller::set_message( gb__( 'You have already registered your business, if you need to make changes, you can do so on your Account page.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
-				//wp_redirect( gb_get_merchant_account_url() );
-				wp_redirect( gb_get_account_url() );
+				Group_Buying_Controller::set_message( gb__( 'You have already registered your business. <br>If you need to make changes, you can do so on your <a style="color: #FFF; text-decoration: underline;" href="'.gb_get_account_url().'">Account page</a>.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
+				wp_redirect( gb_get_merchant_account_url() );
+				//wp_redirect( gb_get_account_url() );
 				exit();
 					
 			}
