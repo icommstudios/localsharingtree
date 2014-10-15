@@ -402,12 +402,16 @@ cursor: pointer;
     overflow:hidden;
 }*/
 
-#gb-account-user-info td.first, #gb-account-account-info td.first, #gb-account-contact-info td.first {
+#gb-account-user-info td.first, #gb-account-account-info td.first, #gb-account-contact-info td.first, #gb_deal_submission td.first, #gb_deal_submission td.first, #gb_deal_submission td.first, #gb_merchant_register td.first, #gb_merchant_register td.first, #gb_merchant_register td.first {
     text-align: left;
     vertical-align: middle;
     font-weight: bold;
-    width: 92px;
+    height: auto;
+    margin-left: 0px;
+    padding-bottom: 15px;
     }
+
+#gb_merchant_register table td { height: auto; }
 
 table.account tbody tr td span.required {
     float:right;
@@ -416,7 +420,25 @@ table.account tbody tr td span.required {
 
 input.text-input, .gb-form-field input, .text-area, .gb-form-field textarea, input[type="text"], input[type="password"], textarea {
     -webkit-appearance: none;
+    width:92%;
     }
+input[type="checkbox"] {
+    width:auto;
+}
+
+
+#gb_deal_submission { padding:0px;}
+#gb_deal_thumbnail, #gb_contact_merchant_thumbnail {
+    font-size: 12px; /* Hack to keep form from overflowing */
+}
+
+#gb_merchant_register.main_block {
+    padding:0px;
+}
+
+#sf_credit_code_apply {
+width:92%;
+}
 
 
 @media only screen and (max-width : 680px) {
@@ -433,13 +455,18 @@ input.text-input, .gb-form-field input, .text-area, .gb-form-field textarea, inp
         padding: 10px 0px;
     }
 
-    #gb_contact_country {
+    #gb_contact_country, #gb_contact_business_country {
         max-width: 250px;
     }
 
-    #gb-account-user-info td.first, #gb-account-account-info td.first, #gb-account-contact-info td.first {
+    #gb-account-user-info td.first, #gb-account-account-info td.first, #gb-account-contact-info td.first, #gb_deal_submission td.first, #gb_deal_submission td.first, #gb_deal_submission td.first {
     width: 100%;
     }
+}
+@media only screen and (max-width : 900px) {
+.account_sidebar ul li a:hover, .account_sidebar ul .current_page a:hover {
+    padding-left: 10px;
+}
 }
 
 /*  Single Deal Page - Share buttons */
