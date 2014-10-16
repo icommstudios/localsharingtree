@@ -430,6 +430,17 @@ function custom_gb_redirect_away_from_home() {
 //Handle Merchant Register & Submit Deal links & redirect
 add_action( 'init', 'custom_handle_merchant_register_deals', 99 );
 function custom_handle_merchant_register_deals() {
+	//Check if merchant register form and already hase mechant registered
+	if ( stripos($_SERVER['REQUEST_URI'], 'merchant/register') !== false && is_user_logged_in() ) { //Group_Buying_Merchants_Registration::is_merchant_registration_page()
+		//On merchant registration page and already has merchant
+		if ( gb_get_merchants_by_account( get_current_user_id() ) ) {
+			Group_Buying_Controller::set_message( gb__( 'You have already registered your business. <br>If you need to make changes, you can do so on your <a style="color: #FFF; text-decoration: underline;" href="'.gb_get_account_url().'">Account page</a>.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
+			wp_redirect( gb_get_merchant_account_url() );
+			//wp_redirect( gb_get_account_url() );
+			exit();
+		}
+	}
+	
 	if ( !isset( $_GET['action_page'] ) ) return;
 	
 	//Register merchant

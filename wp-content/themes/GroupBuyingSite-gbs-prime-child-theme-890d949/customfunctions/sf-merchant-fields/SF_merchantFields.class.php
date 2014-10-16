@@ -5,6 +5,7 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 	private static $meta_keys = array(
 		'checks_payable' => '_custom_checks_payable', // string
 		'ein' => '_custom_ein', // string
+		'member_chamber_of_commerce' => '_custom_member_chamber_of_commerce', // string
 		'contact_email' => '_custom_contact_email', // string
 		'agree_terms' => '_custom_agree_terms', // string
 		'business_street' => '_custom_business_street', // string
@@ -78,6 +79,13 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 						<td>
 							<label for="<?php echo self::$meta_keys['contact_email'] ?>"><?php gb_e('Contact Email'); ?></label><br />
 							<input type="text" name="<?php echo self::$meta_keys['contact_email'] ?>" value="<?php echo self::get_meta_value($post->ID, 'contact_email') ?>" id="<?php echo self::$meta_keys['contact_email'] ?>" class="large-text">
+                    
+						</td>
+					</tr>
+                     <tr>
+						<td>
+							<label for="<?php echo self::$meta_keys['member_chamber_of_commerce'] ?>"><?php gb_e('Are you a member of any Chamber of Commerce? If so, please list below:'); ?></label><br />
+							<input type="text" name="<?php echo self::$meta_keys['member_chamber_of_commerce'] ?>" value="<?php echo self::get_meta_value($post->ID, 'member_chamber_of_commerce') ?>" id="<?php echo self::$meta_keys['member_chamber_of_commerce'] ?>" class="large-text">
                     
 						</td>
 					</tr>
@@ -193,19 +201,20 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 		$ein = isset( $_POST[self::$meta_keys['ein']] ) ? stripslashes(esc_attr($_POST[self::$meta_keys['ein']])) : '';
 		$agree_terms = isset( $_POST[self::$meta_keys['agree_terms']] ) ? stripslashes(esc_attr($_POST[self::$meta_keys['agree_terms']])) : '';
 		$contact_email = isset( $_POST[self::$meta_keys['contact_email']] ) ? stripslashes(esc_attr($_POST[self::$meta_keys['contact_email']])) : '';
-		
+		$member_chamber_of_commerce = isset( $_POST[self::$meta_keys['member_chamber_of_commerce']] ) ? stripslashes(esc_attr($_POST[self::$meta_keys['member_chamber_of_commerce']])) : '';
+	
 		$business_street = isset( $_POST[self::$meta_keys['business_street']] ) ? stripslashes(esc_attr($_POST[self::$meta_keys['business_street']])) : '';
 		$business_city = isset( $_POST[self::$meta_keys['business_city']] ) ? stripslashes(esc_attr($_POST[self::$meta_keys['business_city']])) : '';
 		$business_zone = isset( $_POST[self::$meta_keys['business_zone']] ) ? stripslashes(esc_attr($_POST[self::$meta_keys['business_zone']])) : '';
 		$business_postal_code = isset( $_POST[self::$meta_keys['business_postal_code']] ) ? stripslashes(esc_attr($_POST[self::$meta_keys['business_postal_code']])) : '';
 		$business_country = isset( $_POST[self::$meta_keys['business_country']] ) ? stripslashes(esc_attr($_POST[self::$meta_keys['business_country']])) : '';
 		
-		
 		self::set_meta_value( $post_id, $checks_payable, 'checks_payable' );
 		self::set_meta_value( $post_id, $ein, 'ein' );
-		self::set_meta_value( $post_id, $contact_email, 'contact_email' );
 		self::set_meta_value( $post_id, $agree_terms, 'agree_terms' );
-		
+		self::set_meta_value( $post_id, $contact_email, 'contact_email' );
+		self::set_meta_value( $post_id, $member_chamber_of_commerce, 'member_chamber_of_commerce' );
+
 		self::set_meta_value( $post_id, $business_street, 'business_street' );
 		self::set_meta_value( $post_id, $business_city, 'business_city' );
 		self::set_meta_value( $post_id, $business_zone, 'business_zone' );
@@ -254,13 +263,16 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 		if ( isset($_POST['gb_contact_ein']) ) {
 			self::set_meta_value($merchant_id, stripslashes(esc_html($_POST['gb_contact_ein'])), 'ein' );
 		}
-		if ( isset($_POST['gb_contact_contact_email']) ) {
-			self::set_meta_value($merchant_id, stripslashes(esc_html($_POST['gb_contact_contact_email'])), 'contact_email' );
-		}
-		
 		if ( isset($_POST['gb_contact_agree_terms']) ) {
 			self::set_meta_value($merchant_id, stripslashes(esc_html($_POST['gb_contact_agree_terms'])), 'agree_terms' );
 		}
+		if ( isset($_POST['gb_contact_contact_email']) ) {
+			self::set_meta_value($merchant_id, stripslashes(esc_html($_POST['gb_contact_contact_email'])), 'contact_email' );
+		}
+		if ( isset($_POST['gb_member_chamber_of_commerce']) ) {
+			self::set_meta_value($merchant_id, stripslashes(esc_html($_POST['gb_member_chamber_of_commerce'])), 'member_chamber_of_commerce' );
+		}
+		
 		if ( isset($_POST['gb_contact_business_street']) ) {
 			self::set_meta_value($merchant_id, stripslashes(esc_html($_POST['gb_contact_business_street'])), 'business_street' );
 		}
@@ -316,6 +328,15 @@ class SF_GBS_Merchant_Fields extends Group_Buying_Controller {
 			'required' => TRUE,
 			'default' => self::get_meta_value( $merchant_id, 'ein' ),
 		);
+		
+		$fields['member_chamber_of_commerce'] = array(
+			'weight' => 52,
+			'label' => self::__('Are you a member of any Chamber of Commerce? If so, please list below:'),
+			'type' => 'text',
+			'required' => FALSE,
+			'default' => self::get_meta_value( $merchant_id, 'member_chamber_of_commerce' ),
+		);
+	
 		
 		$fields['name']['weight'] = 8;
 		$fields['phone']['required'] = TRUE;
