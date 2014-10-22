@@ -149,13 +149,13 @@
 						ob_start();
 						$widget_instance['title'] = strip_tags( '' );
 						$widget_instance['buynow'] = strip_tags( 'Buy Now' );
-						$widget_instance['deals'] = strip_tags( 2 );
+						$widget_instance['deals'] = -1;
 						the_widget('Custom_Merchant_RecentDeals', $widget_instance, array( ) ); 
 						$merchant_deals_widget = ob_get_clean();
 						//If we have any
 						if ( $merchant_deals_widget ) : ?>
                                 
-                    	<div class="business business_deals section clearfix">
+                    	<div class="business business_deals section clearfix" style="margin-bottom: 0;">
 							<div class="section_title clearfix">
 								<h4 class="font_large gb_ff"><?php gb_e('More Deal Options') ?></h4>
 								<span class="expand font_x_small background_alt"><?php gb_e('More info') ?></span>
