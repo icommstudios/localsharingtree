@@ -419,9 +419,8 @@ table.account tbody tr td span.required {
 }
 
 input.text-input, .gb-form-field input, .text-area, .gb-form-field textarea, input[type="text"], input[type="password"], textarea {
-    -webkit-appearance: none;
-    width:92%;
-    }
+   width:92%;
+}
 input[type="checkbox"] {
     width:auto;
 }
