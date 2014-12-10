@@ -6,6 +6,12 @@ Template Name: Current Deals (based on preferred location)
 get_header(); ?>
 
 		<div id="deals_loop" class="container prime main clearfix">
+
+			<div id="page_sidebar" class="sidebar clearfix">
+				<?php do_action('gb_above_default_sidebar') ?>
+				<?php dynamic_sidebar( 'deals-sidebar' );?> 
+				<?php do_action('gb_below_default_sidebar') ?>
+			</div>
 			
 			<div id="content" class="clearfix">
 
@@ -66,12 +72,6 @@ get_header(); ?>
 				<?php wp_reset_query(); ?>
 
 			</div><!-- #content_wrap -->
-
-			<div id="page_sidebar" class="sidebar clearfix">
-				<?php do_action('gb_above_default_sidebar') ?>
-				<?php dynamic_sidebar( 'deals-sidebar' );?> 
-				<?php do_action('gb_below_default_sidebar') ?>
-			</div>
 
 		</div><!-- #single_page -->
 
