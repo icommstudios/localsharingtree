@@ -19,6 +19,8 @@ require_once('customfunctions/sf-custom-csv-reports/SF_CustomDealExport.class.ph
 require_once('customfunctions/sf-custom-csv-reports/SF_CustomSalesExport.class.php');
 require_once('customfunctions/sf-credit-codes/SF_CreditCodes.class.php');
 require_once('customfunctions/SF_CustomSearch.php');
+require_once('customfunctions/SF_CustomTaxonomies.php');
+require_once('customfunctions/sf-deal-filters/SF_DealFilters.php');
 
 // This theme uses wp_nav_menu() in one location.
 register_nav_menus( array(
@@ -702,7 +704,8 @@ function wp_pagination($this_query = null) {
 function custom_show_filter_letters() {
 
 	//Also show locations filter
-	$locations = get_terms("gb_location", array('hide_empty' => false, 'fields' => 'all'));
+	//$locations = get_terms("gb_location", array('hide_empty' => false, 'fields' => 'all'));
+	$locations = gb_get_locations(); //Use gb_get_locations so territory filters are applied
 	
 	$selected_locations = ( !empty($_GET['sf_filter_loc']) ) ? explode(',', $_GET['sf_filter_loc']) : array();
 	echo '<div class="filter_by_location">';

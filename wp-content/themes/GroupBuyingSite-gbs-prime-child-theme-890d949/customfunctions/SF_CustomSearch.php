@@ -57,8 +57,15 @@ class SF_Custom_Search extends Group_Buying_Controller {
 		$where = '';
 		$search = '';
 		
-		//Setup where - limit post types
-		$where = " AND $wpdb->posts.post_type IN ('gb_deal', 'gb_merchant', 'gb_charities') AND ($wpdb->posts.post_status = 'publish')";
+		//Search deals only?
+		$search_deal_loc = $_REQUEST['search_deal_loc'];
+		if ( $search_deal_loc ) {
+			//Setup where - limit post types
+			$where = " AND $wpdb->posts.post_type IN ('gb_deal') AND ($wpdb->posts.post_status = 'publish')";
+		} else {
+			//Setup where - limit post types
+			$where = " AND $wpdb->posts.post_type IN ('gb_deal', 'gb_merchant', 'gb_charities') AND ($wpdb->posts.post_status = 'publish')";
+		}
 		
 		//Search title
 		$searchand = '';
@@ -98,8 +105,16 @@ class SF_Custom_Search extends Group_Buying_Controller {
 			$where .= " ( $search ) ";	
 			$where .= " ) ";	//End serach AND wrapper
 		}
-	
 		
+		//Are we search for a specific deal location
+		$search_deal_loc = $_REQUEST['search_deal_loc'];
+		if ( !empty( $search_deal_loc ) ) {
+			$search_deal_ids = self::sf_search_get_deal_ids_in_location( $search_deal_loc ) ;
+			$where .= " AND ( "; //Start search AND wrapper
+			$where .= " ( $wpdb->posts.ID IN (".implode(',', $search_deal_ids).") ) ";	
+			$where .= " ) ";	//End serach AND wrapper
+		}
+	
 		if ( self::DEBUG ) error_log('new search query: '.$where);
 		return $where;
 	}
@@ -115,6 +130,7 @@ class SF_Custom_Search extends Group_Buying_Controller {
 			//$on[] = "ttax.taxonomy = 'post_tag'";
 			
 			// if we're searching custom taxonomies
+			
 			$all_taxonomies = get_object_taxonomies( 'gb_deal' );
 			foreach ( $all_taxonomies as $taxonomy ) {
 				if ( $taxonomy == 'post_tag' || $taxonomy == 'category' )
@@ -161,6 +177,31 @@ class SF_Custom_Search extends Group_Buying_Controller {
 		}
 	 	return $template;
 	}
+	
+	public function sf_search_get_deal_ids_in_location($location_id) {
+		$args = array(
+			'post_type' => 'gb_deal',
+			'suppress_filters' => true,
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'gb_location',
+					'field'    => 'term_id',
+					'terms'    => $location_id,
+				),
+			),
+		);
+		$query = new WP_Query( $args );
+		$return = array();
+		if ( $query->posts ) {
+			foreach ( $query->posts as $post) {
+				$return[] = $post->ID;
+			}
+		} else {
+			$return = PHP_INT_MAX;
+		}
+		return $return;
+	}
+
 
 	
 }
