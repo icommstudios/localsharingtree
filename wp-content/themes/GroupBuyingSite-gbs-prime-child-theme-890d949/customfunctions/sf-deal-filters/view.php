@@ -1,19 +1,23 @@
-<div class="sf_offer_filters_wrapper" style="color: #000; position: relative;">
-<div id="sf_filter_ajax_loading" style="display: none; position: absolute; left: 50%; top: 10px;"><img src="<?php echo get_admin_url(); ?>/images/wpspin_light.gif" id="sf_filter_loading_ajax_gif"></div>
+<div class="sf_offer_filters_wrapper">
+<div id="sf_filter_ajax_loading"><img src="<?php echo get_admin_url(); ?>/images/ajax-loader.gif" id="sf_filter_loading_ajax_gif"></div>
 <form id="sf-offer-filters-form" name="sf-offer-filters-form" action="" method="get">
+<input type="hidden" name="sf-offer-filter-submitted" value="1">
 <?php
 //Territory (nav menu with custom walker) 
 echo '<div class="sf_filter filter_territories">';
-echo '<h4 class="sf_filter_label">Territories: </h4>';
+echo '<h2 class="sf_filter_label widget-title toggle-btn active">Territories</h2> ';
+echo '<div class="toggle-content territory">';
 //wp_nav_menu( array('theme_location'=>'sf_territory_menu', 'walker' => new SF_Territory_Menu_Walker(), 'depth' => 0) );
 
 $locations = get_nav_menu_locations();
 $menu = wp_get_nav_menu_object( $locations[ 'sf_territory_menu' ] );
-$child_menu_items = array();
+$visible_in_parent_menu_items = array();
+$visible_in_starting_child_items = array();
+$all_child_menu_items = array();
 $top_menu_items = array();
 $selected_default_territories = array();
 $selected_territories = ( !empty($_GET['sf_filter_ter']) ) ? (array)$_GET['sf_filter_ter'] : array();
-//Set default territory
+//Set default territory (if first view)
 if ( empty( $selected_territories ) ) {
 	if ( is_tax('gb_location') ) {
 		global $wp_query;
@@ -26,17 +30,24 @@ if ( empty( $selected_territories ) ) {
 }
 if ( $menu && ! is_wp_error($menu) && !isset($menu_items) ) {
 	$menu_items = wp_get_nav_menu_items( $menu->term_id, array( 'update_post_term_cache' => false ) );
+	$locations_with_deals = get_terms("gb_location", array('hide_empty' => TRUE, 'fields' => 'ids'));
 	foreach ( (array) $menu_items as $menu_item ) {
 		if ( !$menu_item->menu_item_parent ) {
-			$top_menu_items[ $menu_item->ID ] = $menu_item;
+			$top_menu_items[ (int)$menu_item->ID ] = $menu_item;
 		}
 	}
 	foreach ( (array) $menu_items as $menu_item ) {
+		//Only add if has deals
+		if ( !$menu_item->object_id || !in_array($menu_item->object_id, $locations_with_deals) ) {
+			continue;
+		}
+		//If not one of the top level menu items
 		if ( $menu_item->menu_item_parent ) {
-			if ( in_array( $menu_item->menu_item_parent, (array)$selected_territories) || in_array( $top_menu_items[$menu_item->menu_item_parent]->object_id, (array)$selected_default_territories)  ) {
-				$visible_child_menu_items[$menu_item->object_id] = $menu_item; //add only once
+			if ( in_array( $top_menu_items[$menu_item->menu_item_parent]->object_id, (array)$selected_territories) || in_array( $top_menu_items[$menu_item->menu_item_parent]->object_id, (array)$selected_default_territories)  ) {
+				$visible_in_starting_child_items[(int)$menu_item->object_id] = $menu_item; //add to list of child items to start showing
 			}
-			$all_child_menu_items[$menu_item->object_id] = $menu_item; //add only once
+			$visible_in_parent_menu_items[(int)$menu_item->object_id][] = (int)$menu_item->menu_item_parent; //add to list of parents to show this in
+			$all_child_menu_items[(int)$menu_item->object_id] = $menu_item; //add only once
 		} 
 	}
 	
@@ -44,37 +55,48 @@ if ( $menu && ! is_wp_error($menu) && !isset($menu_items) ) {
 //Show territories (the top level menu items)
 foreach ( (array) $top_menu_items as $menu_item ) {
 	//echo $menu_item->ID.' - '.$menu_item->title;
-	if ( in_array( $menu_item->ID, $selected_territories) || in_array( $menu_item->object_id, $selected_default_territories) ) {
+	if ( in_array( $menu_item->object_id, $selected_territories) || in_array( $menu_item->object_id, $selected_default_territories) ) {
 		$checked_territory = 'checked="checked"';
 	} else {
 		$checked_territory = '';
 	}
-	echo '<label for="territory_filter_'.$menu_item->ID.'" class="sf_filter_item_label sf_filter_territory_label"><input '.$checked_territory.' type="checkbox" name="sf_filter_ter[]" class="sf_filter_item sf_filter_territory sf_filter_checkbox" value="'.$menu_item->ID.'"> '.$menu_item->title.'</label> ';
+	echo '<label for="territory_filter_'.(int)$menu_item->ID.'" class="sf_filter_item_label sf_filter_territory_label"><input id="territory_filter_'.(int)$menu_item->ID.'" '.$checked_territory.' type="checkbox" name="sf_filter_ter[]" data-menu_id="'.(int)$menu_item->ID.'" class="sf_filter_item sf_filter_territory sf_filter_checkbox" value="'.(int)$menu_item->object_id.'"> '.$menu_item->title.'</label> ';
 }
+echo '</div>';
 echo '</div>';
 
 //Show only child locations from menu items
 $selected_locations = ( !empty($_GET['sf_filter_loc']) ) ? (array)$_GET['sf_filter_loc'] : array();
 echo '<div class="sf_filter filter_by_location">';
-echo '<h4 class="sf_filter_label">Location: </h4>';
+echo '<h2 class="sf_filter_label widget-title toggle-btn">Location</h2>';
+echo '<div class="toggle-content location">';
 $count_item = 0;
 foreach ( (array) $all_child_menu_items as $menu_item ) {
 	$count_item++;
-	//If in territory parent
-	if ( isset($visible_child_menu_items[$menu_item->object_id]) ) {
+	//If in array of territory parents
+	if ( isset($visible_in_starting_child_items[(int)$menu_item->object_id]) ) {
 		$item_styles = '';
 	} else {
 		$item_styles = 'display: none;';
 	}
 	if ( isset( $_GET['sf_filter_loc']) && in_array( $menu_item->object_id, $selected_locations) ) {
 		$checked_location = 'checked="checked"';
-	} elseif ( !isset( $_GET['sf_filter_loc']) && isset($visible_child_menu_items[$menu_item->object_id]) ) {
+	} elseif ( !isset( $_GET['sf_filter_loc']) && isset($visible_in_starting_child_items[(int)$menu_item->object_id]) ) {
 		$checked_location = 'checked="checked"'; //first time and in parents child items
 	} else {
 		$checked_location = '';
 	}
-	echo '<label style="'.$item_styles .'" for="location_filter_'.$menu_item->object_id.'" class="sf_filter_item_label sf_ter_parent_'.$menu_item->menu_item_parent.'"><input '.$checked_location.' type="checkbox" name="sf_filter_loc[]" class="sf_filter_item sf_filter_checkbox" value="'.$menu_item->object_id.'"> '.$menu_item->title.'</label> ';
+	//Classes for each parent to show this item in
+	$add_class_parent_territories = '';
+	if ( isset($visible_in_parent_menu_items[$menu_item->object_id]) ) {
+		$json_parent_territory_ids = implode(',', (array)$visible_in_parent_menu_items[$menu_item->object_id] );
+		foreach ( (array)$visible_in_parent_menu_items[$menu_item->object_id] as $parent_menu_item_id ) {
+			$add_class_parent_territories .= 'sf_ter_parent_'.$parent_menu_item_id.' ';
+		}
+	}
+	echo '<label style="'.$item_styles .'" for="location_filter_'.(int)$menu_item->object_id.'" class="sf_filter_item_label"><input id="location_filter_'.(int)$menu_item->object_id.'" data-json_parent_ids="'.$json_parent_territory_ids.'" '.$checked_location.' type="checkbox" name="sf_filter_loc[]" class="sf_filter_item sf_filter_checkbox '.$add_class_parent_territories.'" value="'.(int)$menu_item->object_id.'"> '.$menu_item->title.'</label> ';
 }
+echo '</div>';
 echo '</div>';
 
 //Locations filter
@@ -107,7 +129,8 @@ if ( class_exists('SF_CustomTaxonomies') ) {
 	if ( !empty($terms) && !is_wp_error($terms) ) {
 		$selected_terms = ( !empty($_GET['sf_filter_avg_price']) ) ? (array)$_GET['sf_filter_avg_price'] : array();
 		echo '<div class="sf_filter filter_by_avg_price">';
-		echo '<h4 class="sf_filter_label">Price: </h4>';
+		echo '<h2 class="sf_filter_label widget-title toggle-btn">Price</h2>';
+		echo '<div class="toggle-content avg_price">';
 		$count_item = 0;
 		foreach ( $terms as $term ) {
 			$count_item++;
@@ -119,6 +142,7 @@ if ( class_exists('SF_CustomTaxonomies') ) {
 			echo '<label for="avg_price_filter_'.$term->term_id.'" class="sf_filter_item_label"><input '.$checked_term.' type="checkbox" name="sf_filter_avg_price[]" class="sf_filter_item sf_filter_checkbox" value="'.$term->term_id.'"> '.$term->name.'</label> ';
 		}
 		echo '</div>';
+		echo '</div>';
 	}
 	
 }
@@ -128,7 +152,8 @@ $terms = get_terms("gb_category", array('hide_empty' => TRUE, 'fields' => 'all')
 if ( !empty($terms) && !is_wp_error($terms) ) {
 	$selected_terms = ( !empty($_GET['sf_filter_cat']) ) ? (array)$_GET['sf_filter_cat'] : array();
 	echo '<div class="sf_filter filter_by_cat">';
-	echo '<h4 class="sf_filter_label">Category: </h4>';
+	echo '<h2 class="sf_filter_label widget-title toggle-btn">Category</h2>';
+	echo '<div class="toggle-content category">';
 	$count_item = 0;
 	foreach ( $terms as $term ) {
 		$count_item++;
@@ -141,11 +166,12 @@ if ( !empty($terms) && !is_wp_error($terms) ) {
 		echo '<label for="cat_filter_'.$term->term_id.'" class="sf_filter_item_label"><input '.$checked_term.' type="checkbox" name="sf_filter_cat[]" class="sf_filter_item sf_filter_checkbox" value="'.$term->term_id.'"> '.$term->name.'</label> ';
 	}
 	echo '</div>';
+	echo '</div>';
 }
 
 ?>
-<div style="margin-top: 10px;">
-<button type="submit" class="btn btn-success"> Apply Filter</button>
+<div style="display: none;">
+<button type="submit" class="button font_small"> Apply Filter</button>
 </div>
 </form>
 
@@ -157,17 +183,52 @@ jQuery(document).ready( function($){
 		//Show locations under this territory
 		if ( $(this).hasClass('sf_filter_territory') ) {
 			if ( $(this).is(':checked') ) {
-				$('.sf_ter_parent_' + $(this).val() + ' input' ).attr('checked', true);
-				$('.sf_ter_parent_' + $(this).val() ).show();
+				$('.sf_ter_parent_' + $(this).data('menu_id')).each(function(index, value){
+					$(this).attr('checked', true);
+					$(this).closest('label').show();
+				});
 			} else {
-				$('.sf_ter_parent_' + $(this).val() + ' input' ).attr('checked', false);
-				$('.sf_ter_parent_' + $(this).val() ).hide();
+				//Only uncheck and hide if all territories that have this child are unchecked
+				var this_menu_id = $(this).data('menu_id');
+				$('.sf_ter_parent_' + this_menu_id).each(function(index, value){
+					var blnHideit = true;
+					
+					var parent_ids_array = new Array();
+					var parent_ids_array_string = $(this).data('json_parent_ids');
+					parent_ids_array_string.toString();
+					if ( parent_ids_array_string.length > 0 ) {
+						if ( parent_ids_array_string.indexOf(',') != -1 ) {
+							var parent_ids_array = parent_ids_array_string.split(',');
+						} else {
+							var parent_ids_array = new Array(parent_ids_array_string); //only one
+						}
+					}
+					
+					if ( parent_ids_array.length > 0 ) {
+						//alert( 'looping: ' +  $(this).attr('id') + ' ' + parent_ids_array );
+						$.each(parent_ids_array, function(key, parent_id) {
+							if ( this_menu_id != parent_id ) {
+								var parent_id_string = '#territory_filter_' + parent_id;
+								if ( $(parent_id_string).length > 0 && $(parent_id_string).is(':checked') ) {
+									blnHideit = false;
+								}
+							}
+						});
+					} 
+					
+					if ( blnHideit == true ) {
+						$(this).attr('checked', false);
+						$(this).closest('label').hide();
+					}
+				});
+				
 			}
 			$load_sf_filter_results(this);
 		} else {
 			$load_sf_filter_results(this);	
 		}
 	});
+	
 	
 	$load_sf_filter_results = function(elem) {
 		
@@ -177,6 +238,13 @@ jQuery(document).ready( function($){
 		var call_url = '<?php
 		 $current_url = $_SERVER['REQUEST_URI'];
 		 $current_url_parts = explode('?', $current_url);
+		 if ( $current_url_parts[0] ) {
+			 $current_url = $current_url_parts[0];
+		 }
+		 //Remove page number (always start at page 0 )
+		 if ( stripos($current_url, '/page/') !== false && stripos($current_url, '/page/') > 0 ) {
+			$current_url_parts = explode('/page/', $current_url);
+		 }
 		 if ( $current_url_parts[0] ) {
 			 $current_url = $current_url_parts[0];
 		 }
@@ -190,8 +258,20 @@ jQuery(document).ready( function($){
 			$('#sf_filter_ajax_loading').hide();
 		});
 		
-		
 	}
+	
+	// Hide toggle content by default
+	setTimeout(
+	  function() 
+	  {
+		$(".toggle-content.category, .toggle-content.avg_price, .toggle-content.location").slideToggle( "fast" );
+	  }, 500);
+
+	$( "h2.toggle-btn" ).click(function() {
+	  $(this).parent().children( ".toggle-content" ).slideToggle( "fast" );
+	  $(this).parent().children( "h2.toggle-btn" ).toggleClass( "active" );
+	});
+	
 });
 </script>
 </div>

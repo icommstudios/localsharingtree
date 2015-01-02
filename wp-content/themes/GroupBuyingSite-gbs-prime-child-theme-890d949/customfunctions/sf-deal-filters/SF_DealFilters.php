@@ -66,6 +66,16 @@ function sf_filter_locations_territories( $terms ) {
 	return $terms;
 }
 
+add_filter('gb_list_locations_link', 'custom_sf_moredeals_gb_list_locations_link', 10, 2);
+function custom_sf_moredeals_gb_list_locations_link($link, $slug) {
+	//Change to /moredeals url
+	$url = site_url('/moredeals');
+	//Add location query var to set location (setting location is handled by built-in GBS functions)
+	$url = add_query_arg( array('location' => $slug), $url);
+	return $url;
+}
+
+
 register_nav_menus( array('sf_territory_menu' => gb__( 'Territory Menu' ) ) );
 
 //On valid deal filter page
@@ -91,6 +101,11 @@ function sf_filter_deal_archives_parse_query ( $query ) {
 			return $query;
 		}
 		if ( !sf_on_valid_deal_filter_page() ) {
+			return $query;
+		}
+		
+		//Do we have any filters to make?
+		if ( !isset($_REQUEST['sf_filter_ajax']) ) {
 			return $query;
 		}
 		
