@@ -18,10 +18,20 @@ body.logged-in {
     padding-top: 0px;
 }
 
-.prime.prime_alt {
-    background-color: #f9f9f9;
-    background-color: rgba(0,0,0,0.02);
-    text-shadow: rgba(255,254,255,0.5) 1px 1px 2px;
+@media (min-width: 768px) {
+    .hidden-desktop {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .hidden-mobile {
+        display: none;
+    }
+}
+
+.block {
+    display: block !important;
 }
 
 .container {
@@ -32,7 +42,7 @@ body.logged-in {
 .button-light {
     border-radius: 0.4em;
     background-color: rgba(0,0,0,.4) !important;
-
+    text-align: center;
     text-shadow: rgba(0,0,0,0.5) 0 1px 1px;
     border: none;
     padding: 8px;
@@ -40,6 +50,11 @@ body.logged-in {
     -webkit-appearance: none;
     font-size: 1em;
     line-height: 1.5em;
+    color: white;
+}
+
+.button-light:hover {
+    color: #ccc;
 }
 
 
@@ -68,6 +83,10 @@ body.logged-in {
 h2.section_heading, legend.section_heading, .section_heading a, .table_heading {
 display: inline-block;
 width: 100%;
+}
+
+.font_small {
+    font-size: .7em;
 }
 
 
@@ -294,6 +313,7 @@ font-size: 12px;
     position: relative;
     right:0; top:0;
     text-align: left;
+    max-width: 100%;
 }
 #login_wrap a {
     color: #025A78;
@@ -397,77 +417,6 @@ cursor: pointer;
     border-radius: 0.4em;
 }*/
 
-/*  ReCaptcha 
-#recaptcha_widget_div {
-    overflow:hidden;
-}*/
-
-#gb-account-user-info td.first, #gb-account-account-info td.first, #gb-account-contact-info td.first, #gb_deal_submission td.first, #gb_deal_submission td.first, #gb_deal_submission td.first, #gb_merchant_register td.first, #gb_merchant_register td.first, #gb_merchant_register td.first {
-    text-align: left;
-    vertical-align: middle;
-    font-weight: bold;
-    height: auto;
-    margin-left: 0px;
-    padding-bottom: 15px;
-    }
-
-#gb_merchant_register table td { height: auto; }
-
-table.account tbody tr td span.required {
-    float:right;
-    margin-right: 0px;
-}
-
-input.text-input, .gb-form-field input, .text-area, .gb-form-field textarea, input[type="text"], input[type="password"], textarea {
-   width:92%;
-}
-input[type="checkbox"] {
-    width:auto;
-}
-
-
-#gb_deal_submission { padding:0px;}
-#gb_deal_thumbnail, #gb_contact_merchant_thumbnail {
-    font-size: 12px; /* Hack to keep form from overflowing */
-}
-
-#gb_merchant_register.main_block {
-    padding:0px;
-}
-
-#sf_credit_code_apply {
-width:92%;
-}
-
-
-@media only screen and (max-width : 680px) {
-    table.collapsable tbody tr td span.required {
-        margin-right:40px;
-        float: right;
-    }
-
-    #gb_account_register {
-        overflow:hidden;
-    }
-
-    #gb_account_register .formtable table td {
-        padding: 10px 0px;
-    }
-
-    #gb_contact_country, #gb_contact_business_country {
-        max-width: 250px;
-    }
-
-    #gb-account-user-info td.first, #gb-account-account-info td.first, #gb-account-contact-info td.first, #gb_deal_submission td.first, #gb_deal_submission td.first, #gb_deal_submission td.first {
-    width: 100%;
-    }
-}
-@media only screen and (max-width : 900px) {
-.account_sidebar ul li a:hover, .account_sidebar ul .current_page a:hover {
-    padding-left: 10px;
-}
-}
-
 /*  Single Deal Page - Share buttons */
 
 .page_title .featured_tag, .page_title .deal_title, .page_title .button_reset_filters_wrap {
@@ -494,16 +443,6 @@ width:92%;
 .button_reset_filters_wrap {
     margin-top: 20px;
 
-}
-
-#business .page_title .button_reset_filters_wrap {
-    float: right;
-    margin-top: 0px;
-}
-
-.charity_single .button_reset_filters_wrap {
-    margin-top: 0px;
-    margin-bottom: 20px;
 }
 
 .button_reset_filters_wrap a.button {
@@ -562,6 +501,90 @@ width:92%;
 }
 
 
+/* Deal Search Filters */
+
+.sf_offer_filters_wrapper {
+    position: relative;
+    color:#333;
+    font-size: 14px;
+}
+
+#sf_filter_ajax_loading {
+    display: none;
+    position: absolute;
+    right: 50%; top: 50%;
+    margin-right: -16px;
+    margin-top: -16px;
+}
+
+#sf-offer-filters-form h2.toggle-btn {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+#sf-offer-filters-form h2.toggle-btn:before {
+    content: '';
+    position: absolute;
+    right: 10px; top: 5px;
+    display: inline-block;
+    width: 15px; height: 26px;
+    background: url("img/sprite.png") no-repeat scroll -45px -246px transparent;
+      /* IE 8 */
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+      /* IE 5-7 */
+      filter: alpha(opacity=50);
+      /* Netscape */
+      -moz-opacity: 0.5;
+      /* Safari 1.x */
+      -khtml-opacity: 0.5;
+      /* Good browsers */
+      opacity: 0.5;
+}
+
+#sf-offer-filters-form h2.toggle-btn.active:before {
+      /* IE 8 */
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+      /* IE 5-7 */
+      filter: alpha(opacity=100);
+      /* Netscape */
+      -moz-opacity: 1;
+      /* Safari 1.x */
+      -khtml-opacity: 1;
+      /* Good browsers */
+      opacity: 1;
+}
+
+#sf-offer-filters-form .button {
+    margin-top: 15px;
+    width: 100%;
+}
+
+#sf-offer-filters-form .toggle-content {
+    padding-top: 0px;
+    padding-bottom: 10px;
+}
+#sf-offer-filters-form .select_all_toggles {
+	padding-bottom: 10px;
+}
+
+#sf-offer-filters-form label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+    #deals_loop .sidebar {
+        display: block;
+    }
+
+@media (max-width: 900px) {
+    #deals_loop .sidebar {
+        width: 100%;
+        position: relative;
+        min-height: 0px;
+        background: none;
+    }
+}
 
 /*  LiveChat Hack */
 
@@ -717,7 +740,7 @@ padding: 4px 8px;
     }
 
     #lst_logo {
-    max-width: 60%;
+    max-width: 50%;
     float: left;
     }
 

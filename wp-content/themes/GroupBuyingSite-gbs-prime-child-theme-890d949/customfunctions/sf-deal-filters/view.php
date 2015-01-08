@@ -7,8 +7,8 @@
 echo '<div class="sf_filter filter_territories">';
 echo '<h2 class="sf_filter_label widget-title toggle-btn active">Territories</h2> ';
 echo '<div class="toggle-content territory">';
-//wp_nav_menu( array('theme_location'=>'sf_territory_menu', 'walker' => new SF_Territory_Menu_Walker(), 'depth' => 0) );
-
+echo '<div class="select_all_toggles"><a class="filter_select_all">Select all</a> &nbsp;|&nbsp; <a class="filter_select_none">Deselect all</a></div>';
+//Get territory menu (custom Wordpress menu for territories)
 $locations = get_nav_menu_locations();
 $menu = wp_get_nav_menu_object( $locations[ 'sf_territory_menu' ] );
 $visible_in_parent_menu_items = array();
@@ -28,8 +28,10 @@ if ( empty( $selected_territories ) ) {
 		$selected_default_territories[] = $term_object->term_id;
 	}
 }
+//Loop menu items to organize menu items into top level (territories) and children (locations)
 if ( $menu && ! is_wp_error($menu) && !isset($menu_items) ) {
 	$menu_items = wp_get_nav_menu_items( $menu->term_id, array( 'update_post_term_cache' => false ) );
+	//Get array of location terms with posts ( deals )
 	$locations_with_deals = get_terms("gb_location", array('hide_empty' => TRUE, 'fields' => 'ids'));
 	foreach ( (array) $menu_items as $menu_item ) {
 		if ( !$menu_item->menu_item_parent ) {
@@ -70,6 +72,7 @@ $selected_locations = ( !empty($_GET['sf_filter_loc']) ) ? (array)$_GET['sf_filt
 echo '<div class="sf_filter filter_by_location">';
 echo '<h2 class="sf_filter_label widget-title toggle-btn">Location</h2>';
 echo '<div class="toggle-content location">';
+echo '<div class="select_all_toggles"><a class="filter_select_all">Select all</a> &nbsp;|&nbsp; <a class="filter_select_none">Deselect all</a></div>';
 $count_item = 0;
 foreach ( (array) $all_child_menu_items as $menu_item ) {
 	$count_item++;
@@ -131,6 +134,7 @@ if ( class_exists('SF_CustomTaxonomies') ) {
 		echo '<div class="sf_filter filter_by_avg_price">';
 		echo '<h2 class="sf_filter_label widget-title toggle-btn">Price</h2>';
 		echo '<div class="toggle-content avg_price">';
+		echo '<div class="select_all_toggles"><a class="filter_select_all">Select all</a> &nbsp;|&nbsp; <a class="filter_select_none">Deselect all</a></div>';
 		$count_item = 0;
 		foreach ( $terms as $term ) {
 			$count_item++;
@@ -154,6 +158,7 @@ if ( !empty($terms) && !is_wp_error($terms) ) {
 	echo '<div class="sf_filter filter_by_cat">';
 	echo '<h2 class="sf_filter_label widget-title toggle-btn">Category</h2>';
 	echo '<div class="toggle-content category">';
+	echo '<div class="select_all_toggles"><a class="filter_select_all">Select all</a> &nbsp;|&nbsp; <a class="filter_select_none">Deselect all</a></div>';
 	$count_item = 0;
 	foreach ( $terms as $term ) {
 		$count_item++;
@@ -181,6 +186,7 @@ jQuery(document).ready( function($){
 	 	//e.preventDefault();
 		
 		//Show locations under this territory
+		/*
 		if ( $(this).hasClass('sf_filter_territory') ) {
 			if ( $(this).is(':checked') ) {
 				$('.sf_ter_parent_' + $(this).data('menu_id')).each(function(index, value){
@@ -227,7 +233,60 @@ jQuery(document).ready( function($){
 		} else {
 			$load_sf_filter_results(this);	
 		}
+		*/
+		
+		$handle_territory_change(this); //runs if item type is terriory
+		$load_sf_filter_results(this);	//runs for all item types
+		
 	});
+	
+	$handle_territory_change = function(elem) {
+		//Show locations under this territory
+		if ( $(elem).hasClass('sf_filter_territory') ) {
+			if ( $(elem).is(':checked') ) {
+				$('.sf_ter_parent_' + $(elem).data('menu_id')).each(function(index, value){
+					$(this).attr('checked', true);
+					$(this).closest('label').show();
+				});
+			} else {
+				//Only uncheck and hide if all territories that have this child are unchecked
+				var this_menu_id = $(elem).data('menu_id');
+				$('.sf_ter_parent_' + this_menu_id).each(function(index, value){
+					var blnHideit = true;
+					
+					var parent_ids_array = new Array();
+					var parent_ids_array_string = $(this).data('json_parent_ids');
+					parent_ids_array_string.toString();
+					if ( parent_ids_array_string.length > 0 ) {
+						if ( parent_ids_array_string.indexOf(',') != -1 ) {
+							var parent_ids_array = parent_ids_array_string.split(',');
+						} else {
+							var parent_ids_array = new Array(parent_ids_array_string); //only one
+						}
+					}
+					
+					if ( parent_ids_array.length > 0 ) {
+						//alert( 'looping: ' +  $(this).attr('id') + ' ' + parent_ids_array );
+						$.each(parent_ids_array, function(key, parent_id) {
+							if ( this_menu_id != parent_id ) {
+								var parent_id_string = '#territory_filter_' + parent_id;
+								if ( $(parent_id_string).length > 0 && $(parent_id_string).is(':checked') ) {
+									blnHideit = false;
+								}
+							}
+						});
+					} 
+					
+					if ( blnHideit == true ) {
+						$(this).attr('checked', false);
+						$(this).closest('label').hide();
+					}
+				});
+				
+			}
+			//$load_sf_filter_results(elem);
+		}
+	}
 	
 	
 	$load_sf_filter_results = function(elem) {
@@ -259,6 +318,45 @@ jQuery(document).ready( function($){
 		});
 		
 	}
+	
+	//Show all & Show none
+	$(".filter_select_all").bind('click', function() {
+		var parentelem = $(this).closest('.sf_filter');
+		var save_changed_elem = false;
+		$('.sf_filter_item_label', parentelem).each(function(index){
+			if ( $(this).is(':visible') && $('input[type=checkbox]', this).attr('checked') != true ) {
+				$('input[type=checkbox]', this).attr('checked', true);
+				save_changed_elem = $('input[type=checkbox]', this);
+				//if item type is territory, then update locations shown
+				if ( $(save_changed_elem).hasClass('sf_filter_territory') ) {
+					$handle_territory_change(save_changed_elem);
+				}
+			}
+		});
+		//if changes, then trigger update using last changed element as trigger
+		if ( save_changed_elem ) {
+			$load_sf_filter_results(save_changed_elem);
+		}
+	});
+	$(".filter_select_none").bind('click', function() {
+		var parentelem = $(this).closest('.sf_filter');
+		var save_changed_elem = false;
+		$('.sf_filter_item_label', parentelem).each(function(index){
+			if ( $(this).is(':visible') && $('input[type=checkbox]', this).attr('checked') != false ) {
+				$('input[type=checkbox]', this).attr('checked', false);
+				save_changed_elem = $('input[type=checkbox]', this);
+				//if item type is territory, then update locations shown
+				if ( $(save_changed_elem).hasClass('sf_filter_territory') ) {
+					$handle_territory_change(save_changed_elem);
+				}
+			}
+		});
+		//if changes, then trigger update using last changed element as trigger
+		if ( save_changed_elem ) {
+			$load_sf_filter_results(save_changed_elem);
+		}
+	});
+
 	
 	// Hide toggle content by default
 	setTimeout(
