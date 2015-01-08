@@ -69,6 +69,7 @@
 	$fields[] = ob_get_clean();
 	
 	// Add the category selections
+	/*
 	$drop_down = wp_dropdown_categories( array(
 				'taxonomy' => 'gb_location',
 				'name' => 'gb_checkout_charity_location',
@@ -79,6 +80,18 @@
 				'show_option_none'   => ' -- Select one -- ',
 			) );
 	$fields[] = '<span class="category_charity_selection clearfix"><label for="gb_checkout_charity_location">Filter by Location: </label>' . $drop_down . '</span>';
+	*/
+	
+	//Build manually
+	$locations = gb_get_locations();
+	$dropdown_field_location = '<select name="gb_checkout_charity_location" id="gb_checkout_charity_location" class="gb-charity-category-selections">';
+	$dropdown_field_location .= '<option value="-1"> -- Select one -- </option>';
+	foreach ( $locations as $loc ) {
+		$selected = ( $_REQUEST['gb_checkout_charity_location'] == $loc->term_id ) ? 'selected="selected"' : '';
+		$dropdown_field_location .= '<option class="level-0" value="'.$loc->term_id.'" '.$selected.'>'.$loc->name.'</option>';
+	}
+	$dropdown_field_location .= '</select>';
+	$fields[] = '<span class="category_charity_selection clearfix"><label for="gb_checkout_charity_location">Filter by Location: </label>' . $dropdown_field_location . '</span>';
 
 	// Add the category selections
 	$drop_down = wp_dropdown_categories( array(
