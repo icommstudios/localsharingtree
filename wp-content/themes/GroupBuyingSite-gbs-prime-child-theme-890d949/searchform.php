@@ -6,6 +6,8 @@
 <form role="search" method="get" class="searchform" id="searchform" action="<?php echo home_url( '/' ); ?>">
     <div>
         <?php 
+		/*
+		//Add filter by location - DISABLED
 		if ( is_singular('gb_deal') || is_post_type_archive( 'gb_deal' ) || is_tax( 'gb_category' ) || is_tax( 'gb_tag') || is_tax( 'gb_location') 
 		|| is_page_template('page-currentdeals-location.php') || is_page_template('page-currentdeals.php') || is_page_template('page-currentdeals-random-location.php') 
 		|| is_page_template('page-donedeals-location.php') || is_page_template('page-donedeals.php') || is_page_template('page-futuredeals-location.php')
@@ -25,13 +27,12 @@
 			?>
         <input type="text" placeholder="<?php echo esc_attr($search_placeholder); ?>" value="" name="s" id="s" />
         <input type="hidden" value="<?php echo esc_attr($location_id); ?>" name="search_deal_loc" id="search_deal_loc" />
-        
-            <?php
-		} else { ?>
-        <input type="text" placeholder="search..." value="" name="s" id="s" />
         <?php
 		}
+		*/
 		?>
+        <input type="text" placeholder="search..." value="" name="s" id="s" />
+        
         <input type="submit" id="searchsubmit" value="Search" />
     </div>
 </form>
