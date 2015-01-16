@@ -50,7 +50,7 @@ class SF_Custom_Search extends Group_Buying_Controller {
 		//Save query instance (used in other later filters)
 		self::$query_instance = &$wp_query;
 		
-		if ( !self::$query_instance->query_vars['s'] ) return $where;
+		if ( !self::$query_instance->query_vars['s'] ) return $where.' AND 1 = 2';
 		$search_terms = explode(' ', self::$query_instance->query_vars['s']);
 		
 		//Start over
