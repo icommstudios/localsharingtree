@@ -17,6 +17,7 @@ $marginhlf = $mrgnbox / 2;
 $theoptstl = easy_get_option( 'easymedia_frm_size' );
 $globalwidth = stripslashes( $theoptstl[ 'width' ] );
 $pattover = easy_get_option( 'easymedia_style_pattern' );
+$overcol = easy_get_option( 'easymedia_overlay_col' );
 $ttlcol = easy_get_option( 'easymedia_ttl_col' );
 $thumbhov = ucfirst( easy_get_option( 'easymedia_hover_style' ) ) . '.png';
 $thumbhov = plugins_url( 'css/images/' . $thumbhov . '', dirname(__FILE__) );
@@ -31,7 +32,7 @@ $borderrgbaopcty = easy_get_option( 'easymedia_thumb_border_opcty' ) / 100;
 echo '.view {margin-bottom:'.$mrgnbox.'px; margin-right:'.$marginhlf.'px; margin-left:'.$marginhlf.'px;}';
 echo '.da-thumbs article.da-animate p{color:'.$ttlcol.' !important;}';
 if ( easy_get_option( 'easymedia_disen_icocol' ) == '1' ) {
-echo 'span.link_post, span.zoom {background-color:'.$thumbiconcol.';}';
+echo 'span.link_post, span.zoom, span.zooma {background-color:'.$thumbiconcol.';}';
 }
 
 if ( easy_get_option( 'easymedia_disen_hovstyle' ) == '1' ) {
@@ -59,6 +60,9 @@ echo $addshadow;
 if ( $pattover != '' || $pattover != 'no_pattern' ) {	
 echo '#mbOverlay {background: url(../css/images/patterns/'.$pattover.'); background-repeat: repeat;}';
 }
+
+// Thumbnails Title Background color @since 1.2.61
+echo '.da-thumbs article.da-animate p { background: rgba('.easymedia_hex2rgb( easy_get_option( 'easymedia_ttl_back_col' ) ).',0.5) !important;}';
 
 // IE <8 Handle
 
@@ -96,7 +100,7 @@ echo '.da-thumbs article{position: absolute; background: rgba('.$thumbhovcol.','
 				}
 				
 // Magnify Icon
-if ( easy_get_option( 'easymedia_mag_icon' ) != '' ) {	
+if ( easy_get_option( 'easymedia_mag_icon' ) != '' && $disenico == 1 ) {	
 echo '	
 span.zoom{
 background-image:url(../css/images/magnify/'.easy_get_option( 'easymedia_mag_icon' ).'.png); background-repeat:no-repeat; background-position:center;

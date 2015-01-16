@@ -1,4 +1,4 @@
-<form id="gb_account_register" class="registration_layout main_block"  action="<?php gb_account_register_url(); ?>" method="post" enctype="multipart/form-data">
+<form id="gb_account_register" class="registration_layout"  action="<?php gb_account_register_url(); ?>" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="gb_account_action" value="<?php echo Group_Buying_Accounts_Registration::FORM_ACTION; ?>" />
 	<?php foreach ( $panes as $pane ) {
 		echo $pane['body'];

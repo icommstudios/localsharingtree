@@ -7,6 +7,12 @@ get_header(); ?>
 
 		<div id="deals_loop" class="container prime main clearfix">
 			
+			<div id="page_sidebar" class="sidebar clearfix">
+				<?php do_action('gb_above_default_sidebar') ?>
+				<?php dynamic_sidebar( 'deals-sidebar' );?> 
+				<?php do_action('gb_below_default_sidebar') ?>
+			</div>
+
 			<div id="content" class="clearfix">
 
 				<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
@@ -38,12 +44,11 @@ get_header(); ?>
 							'value' => array(0, current_time('timestamp')),
 							'compare' => 'NOT BETWEEN'
 						)),
-					
 				);
 				// get prefered location if it's set
 				if ( gb_has_location_preference() ) {
 					$location = gb_get_preferred_location();
-					$args = array_merge( array(gb_get_deal_location_tax() => $location), $args);
+					$args = array_merge( array(gb_get_deal_location_tax() => $location), $args);	
 				}
 				
 				// Randomly order posts upon home page load and allow pagination
@@ -110,12 +115,6 @@ get_header(); ?>
 				<?php wp_reset_query(); ?>
 
 			</div><!-- #content_wrap -->
-
-			<div id="page_sidebar" class="sidebar clearfix">
-				<?php do_action('gb_above_default_sidebar') ?>
-				<?php dynamic_sidebar( 'deals-sidebar' );?> 
-				<?php do_action('gb_below_default_sidebar') ?>
-			</div>
 
 		</div><!-- #single_page -->
 

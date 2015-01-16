@@ -239,7 +239,11 @@ height:190px; width:300px; margin-top:30px; border: solid 6px #fff; -moz-box-sha
 	}	
 .imgpreviewboxc {margin-top:30px; border: solid 6px #fff; -moz-box-shadow: 1px 1px 3px #3b3a3b; box-shadow: 1px 1px 3px #666666;float:right; }
 .vidpreviewboxc {margin-top:30px; -moz-box-shadow: 1px 1px 3px #3b3a3b; box-shadow: 1px 1px 3px #666666;float:right; }
-.imgthumblist {border: solid 2px #fff; -moz-box-shadow: 1px 1px 3px #3b3a3b; box-shadow: 1px 1px 3px #666666; }
+.imgthumblist {
+    border: 2px solid #FFF;
+    box-shadow: 1px 1px 3px #666;
+    border-radius: 50%;
+}
 
 
 /* Video Preview */
@@ -609,8 +613,143 @@ float:left;display:inline-block; text-decoration:none; outline:none; cursor:poin
 	background-image: -moz-linear-gradient(bottom, #009DD9, #0074A2) !important;
 	background-image: -webkit-gradient(linear, left bottom, left top, from(#009DD9), to(#0074A2)) !important;
 }	
-	
 
+/* Scroll to Top */
+.emg-scroll-top-wrapper {
+	background-image: url('../images/arrow_up.png');
+	background-repeat: no-repeat;
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    width: 40px;
+    height: 41px;
+    right: 30px;
+    bottom: 40px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+	z-index: 999;
+}
+.emg-scroll-top-wrapper:hover {
+	background-image: url('../images/arrow_up_dark.png');
+}
+.emg-scroll-top-wrapper.show {
+    visibility:visible;
+    cursor:pointer;
+    opacity: 1.0;
+}	
+
+/* Buy Now */
+#emgbuydiv a:focus {
+	box-shadow:none !important; 
+	}
+	
+/* Image Picker @since 1.2.79 */	
+
+#emg_images_container {
+	margin-top: 15px;
+	}
+	
+#emg_images_container li {	
+	float: left;
+	position:relative;
+	padding: 2px;
+	background-color: #FFF;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+	margin: 5px;
+	height: 94px;
+	width: 94px;
+	}
+
+.emgthumbhandler img {
+	max-width:90px !important;
+	max-height:90px !important;
+	cursor: move;
+	}
+	
+#emg_images_container li span {
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    background: url('../images/delmedia.png') no-repeat scroll left top transparent;
+    cursor: pointer;
+    position: relative;
+    top: -105px;
+    right: -10px;
+    float: right;
+}
+
+.emg-sortable-placeholder { 
+	border-radius:5px; 
+    border: 1px dashed #CACACA;  
+    height: 60px;  
+    width: 94px;  
+    background: #F3F3F3;  
+	}
+	
+.gtips {
+    width: 21px;
+    height: 21px;
+    background: url('../images/tips.png') no-repeat scroll left top transparent;
+	padding-left:23px;
+	}
+.gtipslist {
+	padding-left:10px;
+	list-style:circle;
+	}
+	
+.easmedia_metabox_media_gallery td {
+	vertical-align:top;
+	}
+	
+	
+/* Featured Plugin Styles
+-------------------------------------------------------------- */
+#ghozy-featured h2 { margin: 0 0 15px; }
+#ghozy-featured .ghozy-extension { float: left; margin: 0 15px 15px 0; background: #FFF; border: 1px solid #DEDEDE; width: 320px; height: auto; position: relative; }
+#ghozy-featured .ghozy-extension h3 { margin: 0 0 8px; font-size: 13px;  }
+#ghozy-featured .ghozy-extension .button-secondary { position: relative; left: 0px; margin-bottom: 5px; }
+#ghozy-featured .ghozy-browse-all { clear:both; width:100%; }
+#ghozy-featured .ghozy-extension .third-party { display: none; }
+#ghozy-featured .ghozy-extension .feedtop { padding: 8px; }
+#ghozy-featured .feedbottom {clear: both; background-color: #FAFAFA; border-top: 1px solid #DEDEDE; overflow: hidden; }
+#ghozy-featured .feeddesc { margin-bottom: 25px; padding: 0px 8px 8px 8px; }
+#ghozy-featured .getitfeed { margin-left: 8px; bottom: 8px;}
+
+.infoboxdemo {
+	margin-bottom: 20px;
+	color:#0469BB;
+	padding: 16px;
+	margin: 0px 0px 15px 0px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-khtml-border-radius: 10px;
+	border-radius: 7px;
+	padding-left: 55px;
+	background: #eee;
+	font-style: italic;
+	font-weight:bold;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	background: #fffadb url(../images/Info.png) no-repeat scroll 10px 15px;
+	border: 1px solid #f5d145;
+	color: #9e660d;
+	width: 320px;
+	line-height:1.5em;
+	}
+.infoboxdemo a{	
+	color:#0469BB;
+	text-decoration:none !important;
+	}
+	
+.infoboxdemo a:hover{	
+	color: #1694FA;
+	text-decoration:none !important;
+	}
+		
 @media only screen and (max-width: 768px) {
     .noty_buttons {
        text-align: center !important;

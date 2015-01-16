@@ -6,11 +6,17 @@
 function create_global_menus_for_gallery_bank()
 {
 	global $wpdb,$current_user;
-	$role = $wpdb->prefix . "capabilities";
-    $current_user->role = array_keys($current_user->$role);
-    $role = $current_user->role[0];
-	
-	switch ($role) {
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
+	switch ($gb_role) {
 		case "administrator":
 			add_menu_page("Gallery Bank", __("Gallery Bank", gallery_bank), "read", "gallery_bank", "", plugins_url("/assets/images/icon.png" , dirname(__FILE__)));
 			add_submenu_page("gallery_bank", "Dashboard", __("Dashboard", gallery_bank), "read", "gallery_bank", "gallery_bank");
@@ -18,7 +24,9 @@ function create_global_menus_for_gallery_bank()
 			add_submenu_page("gallery_bank", "Album Sorting", __("Album Sorting", gallery_bank), "read", "gallery_album_sorting", "gallery_album_sorting");
 			add_submenu_page("gallery_bank", "Gallery Bank", __("Global Settings", gallery_bank), "read", "global_settings", "global_settings");
 			add_submenu_page("gallery_bank", "System Status", __("System Status", gallery_bank), "read", "gallery_bank_system_status", "gallery_bank_system_status");
-			add_submenu_page("gallery_bank", "Purchase Pro Version", __("Purchase Pro Version", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
+			add_submenu_page("gallery_bank", "Recommendations", __("Recommendations", gallery_bank), "read", "gallery_bank_recommended_plugins", "gallery_bank_recommended_plugins");
+			add_submenu_page("gallery_bank", "Premium Editions", __("Premium Editions", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
+			add_submenu_page("gallery_bank", " Our Other Services ", __("Our Other Services", gallery_bank), "read", "gallery_bank_other_services", "gallery_bank_other_services");
 			add_submenu_page("", "", "", "read", "view_album", "view_album");
 			add_submenu_page("", "", "", "read", "album_preview", "album_preview");
 			add_submenu_page("", "", "", "read", "save_album", "save_album");
@@ -31,7 +39,9 @@ function create_global_menus_for_gallery_bank()
 			add_submenu_page("gallery_bank", "Album Sorting", __("Album Sorting", gallery_bank), "read", "gallery_album_sorting", "gallery_album_sorting");
 			add_submenu_page("gallery_bank", "Gallery Bank", __("Global Settings", gallery_bank), "read", "global_settings", "global_settings");
 			add_submenu_page("gallery_bank", "System Status", __("System Status", gallery_bank), "read", "gallery_bank_system_status", "gallery_bank_system_status");
-			add_submenu_page("gallery_bank", "Purchase Pro Version", __("Purchase Pro Version", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
+			add_submenu_page("gallery_bank", "Recommendations", __("Recommendations", gallery_bank), "read", "gallery_bank_recommended_plugins", "gallery_bank_recommended_plugins");
+			add_submenu_page("gallery_bank", "Premium Editions", __("Premium Editions", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
+			add_submenu_page("gallery_bank", " Our Other Services ", __("Our Other Services", gallery_bank), "read", "gallery_bank_other_services", "gallery_bank_other_services");
 			add_submenu_page("", "", "", "read", "view_album", "view_album");
 			add_submenu_page("", "", "", "read", "album_preview", "album_preview");
 			add_submenu_page("", "", "", "read", "save_album", "save_album");
@@ -44,15 +54,13 @@ function create_global_menus_for_gallery_bank()
 			add_submenu_page("gallery_bank", "Album Sorting", __("Album Sorting", gallery_bank), "read", "gallery_album_sorting", "gallery_album_sorting");
 			add_submenu_page("gallery_bank", "Gallery Bank", __("Global Settings", gallery_bank), "read", "global_settings", "global_settings");
 			add_submenu_page("gallery_bank", "System Status", __("System Status", gallery_bank), "read", "gallery_bank_system_status", "gallery_bank_system_status");
-			add_submenu_page("gallery_bank", "Purchase Pro Version", __("Purchase Pro Version", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
+			add_submenu_page("gallery_bank", "Recommendations", __("Recommendations", gallery_bank), "read", "gallery_bank_recommended_plugins", "gallery_bank_recommended_plugins");
+			add_submenu_page("gallery_bank", "Premium Editions", __("Premium Editions", gallery_bank), "read", "gallery_bank_purchase", "gallery_bank_purchase");
+			add_submenu_page("gallery_bank", " Our Other Services ", __("Our Other Services", gallery_bank), "read", "gallery_bank_other_services", "gallery_bank_other_services");
 			add_submenu_page("", "", "", "read", "view_album", "view_album");
 			add_submenu_page("", "", "", "read", "album_preview", "album_preview");
 			add_submenu_page("", "", "", "read", "save_album", "save_album");
 			add_submenu_page("", "", "", "read", "images_sorting", "images_sorting");
-		break;
-		case "contributor":
-		break;
-		case "subscriber":
 		break;
 	}
 }
@@ -84,9 +92,16 @@ function gallery_bank_settings()
 function gallery_bank()
 {
 	global $wpdb,$current_user,$user_role_permission;
-	$role = $wpdb->prefix . "capabilities";
-	$current_user->role = array_keys($current_user->$role);
-	$role = $current_user->role[0];
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/dashboard.php";
 }
@@ -95,25 +110,38 @@ function gallery_bank()
 function gallery_bank_shortcode()
 {
 	global $wpdb, $current_user,$wp_version;
-	$role = $wpdb->prefix . "capabilities";
-	$current_user->role = array_keys($current_user->$role);
-	$role = $current_user->role[0];
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
 	include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
 	include_once GALLERY_BK_PLUGIN_DIR . "/views/shortcode.php";
 }
 function save_album()
 {
-	global $wpdb;
+	global $wpdb,$current_user,$user_role_permission;
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
 	$album_count = $wpdb->get_var
 	(
 		"SELECT count(album_id) FROM ".gallery_bank_albums()
 	);
 	if($album_count <= 3)
 	{
-		global $wpdb,$current_user,$user_role_permission;
-		$role = $wpdb->prefix . "capabilities";
-		$current_user->role = array_keys($current_user->$role);
-		$role = $current_user->role[0];
 		include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
 		include_once GALLERY_BK_PLUGIN_DIR . "/views/edit-album.php";
 	}
@@ -126,9 +154,16 @@ function save_album()
 function global_settings()
 {
 	global $wpdb, $current_user,$wp_version;
-	$role = $wpdb->prefix . "capabilities";
-	$current_user->role = array_keys($current_user->$role);
-	$role = $current_user->role[0];
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/settings.php";
 }
@@ -136,9 +171,16 @@ function global_settings()
 function gallery_album_sorting()
 {
 	global $wpdb,$current_user,$user_role_permission;
-	$role = $wpdb->prefix . "capabilities";
-	$current_user->role = array_keys($current_user->$role);
-	$role = $current_user->role[0];
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/album-sorting.php";
 }
@@ -146,9 +188,16 @@ function gallery_album_sorting()
 function images_sorting()
 {
 	global $wpdb,$current_user,$user_role_permission;
-	$role = $wpdb->prefix . "capabilities";
-	$current_user->role = array_keys($current_user->$role);
-	$role = $current_user->role[0];
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/images-sorting.php";
 }
@@ -156,9 +205,16 @@ function images_sorting()
 function album_preview()
 {
 	global $wpdb,$current_user,$user_role_permission;
-	$role = $wpdb->prefix . "capabilities";
-	$current_user->role = array_keys($current_user->$role);
-	$role = $current_user->role[0];
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/album-preview.php";
 }
@@ -167,9 +223,16 @@ function album_preview()
 function gallery_bank_system_status()
 {
 	global $wpdb,$wp_version,$current_user,$user_role_permission;
-	$role = $wpdb->prefix . "capabilities";
-	$current_user->role = array_keys($current_user->$role);
-	$role = $current_user->role[0];
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
     include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/gallery-bank-system-report.php";
 }
@@ -177,12 +240,55 @@ function gallery_bank_system_status()
 function gallery_bank_purchase()
 {
 	global $wpdb,$current_user,$user_role_permission;
-	$role = $wpdb->prefix . "capabilities";
-	$current_user->role = array_keys($current_user->$role);
-	$role = $current_user->role[0];
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
 	include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
     include_once GALLERY_BK_PLUGIN_DIR . "/views/purchase_pro_version.php";
 }
+
+function gallery_bank_recommended_plugins()
+{
+	global $wpdb,$current_user,$user_role_permission;
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
+	include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
+	include_once GALLERY_BK_PLUGIN_DIR . "/views/recommended-plugins.php";
+}
+
+function gallery_bank_other_services()
+{
+	global $wpdb,$current_user,$user_role_permission;
+	if(is_super_admin())
+	{
+		$gb_role = "administrator";
+	}
+	else
+	{
+		$gb_role = $wpdb->prefix . "capabilities";
+		$current_user->role = array_keys($current_user->$gb_role);
+		$gb_role = $current_user->role[0];
+	}
+	include_once GALLERY_BK_PLUGIN_DIR . "/views/header.php";
+	include_once GALLERY_BK_PLUGIN_DIR . "/views/other-services.php";
+}
+
+
 //--------------------------------------------------------------------------------------------------------------//
 //CODE FOR CALLING JAVASCRIPT FUNCTIONS
 //--------------------------------------------------------------------------------------------------------------//
@@ -201,6 +307,7 @@ function backend_scripts_calls()
     wp_enqueue_script("jquery.Tooltip.js", plugins_url("/assets/js/jquery.Tooltip.js",dirname(__FILE__)));
     wp_enqueue_script("bootstrap.js", plugins_url("/assets/js/bootstrap.js",dirname(__FILE__)));
 	wp_enqueue_script("jquery.prettyPhoto.js", plugins_url("/assets/js/jquery.prettyPhoto.js",dirname(__FILE__)));
+	wp_enqueue_style("google-fonts-roboto", "//fonts.googleapis.com/css?family=Roboto Condensed:300|Roboto Condensed:300|Roboto Condensed:300|Roboto Condensed:regular|Roboto Condensed:300");
 }
 
 function frontend_plugin_js_scripts_gallery_bank()
@@ -224,7 +331,7 @@ function backend_css_calls()
     wp_enqueue_style("system-message.css", plugins_url("/assets/css/system-message.css",dirname(__FILE__)));
     wp_enqueue_style("gallery-bank.css", plugins_url("/assets/css/gallery-bank.css",dirname(__FILE__)));
 	wp_enqueue_style("prettyPhoto.css", plugins_url("/assets/css/prettyPhoto.css",dirname(__FILE__)));
-	wp_enqueue_style("css3_grid_style.css", plugins_url("/assets/css/css3_grid_style.css",dirname(__FILE__)));
+	wp_enqueue_style("premium-edition.css", plugins_url("/assets/css/premium-edition.css",dirname(__FILE__)));
 	wp_enqueue_style("responsive.css", plugins_url("/assets/css/responsive.css",dirname(__FILE__)));
 }
 
@@ -244,9 +351,16 @@ if (isset($_REQUEST["action"])) {
             function album_gallery_library()
             {
             	global $wpdb,$current_user,$user_role_permission;
-            	$role = $wpdb->prefix . "capabilities";
-            	$current_user->role = array_keys($current_user->$role);
-            	$role = $current_user->role[0];
+            	if(is_super_admin())
+            	{
+            		$gb_role = "administrator";
+            	}
+            	else
+            	{
+            		$gb_role = $wpdb->prefix . "capabilities";
+	            	$current_user->role = array_keys($current_user->$gb_role);
+	            	$gb_role = $current_user->role[0];
+            	}
                 include_once GALLERY_BK_PLUGIN_DIR . "/lib/add-new-album-class.php";
             }
             break;
@@ -262,78 +376,42 @@ if (isset($_REQUEST["action"])) {
             function upload_library()
             {
             	global $wpdb,$current_user,$user_role_permission;
-            	$role = $wpdb->prefix . "capabilities";
-            	$current_user->role = array_keys($current_user->$role);
-            	$role = $current_user->role[0];
-            	
-            	$fileName = esc_attr($_REQUEST["name"]);
-            	$extension = explode(".", $fileName);
-		 		if($extension[1] == "jpg" || $extension[1] == "jpeg" || $extension[1] == "gif" || $extension[1] == "png" || $extension[1] == "JPG" || $extension[1] == "JPEG" || $extension[1] == "GIF" || $extension[1] == "PNG")
-		 		{
-            		include_once GALLERY_BK_PLUGIN_DIR . "/lib/upload.php";
+            	if(is_super_admin())
+            	{
+            		$gb_role = "administrator";
             	}
-                else 
-                {
-                	die();
-                }
+            	else
+            	{
+            		$gb_role = $wpdb->prefix . "capabilities";
+	            	$current_user->role = array_keys($current_user->$gb_role);
+	            	$gb_role = $current_user->role[0];
+            	}
+                $filetype = $_REQUEST["file_type"];
+				if($filetype == "image/jpeg" || $filetype == "image/jpg" || $filetype == "image/png" || $filetype == "image/gif" )
+				{
+					$file_name = $_REQUEST["file_name"];
+					$extension = explode(".", $file_name);
+					if(count($extension) == 2)
+					{
+						if($extension[1] == "jpg" || $extension[1] == "jpeg" || $extension[1] == "gif" || $extension[1] == "png" || $extension[1] == "JPG" || $extension[1] == "JPEG" || $extension[1] == "GIF" || $extension[1] == "PNG")
+						{
+							include_once GALLERY_BK_PLUGIN_DIR . "/lib/upload.php";
+						}
+					}
+					else 
+					{
+						die();
+					}
+					
+				}
+				else 
+				{
+					die();
+				}
                 
             }
             break;
     }
-}
-/*****************************************************************************************************************/
-function gallery_bank_enqueue_pointer_script_style()
-{
-    $enqueue_pointer_script_style = false;
-
-    // Get array list of dismissed pointers for current user and convert it to array
-
-    $dismissed_pointers = explode(",", get_user_meta(get_current_user_id(), "dismissed_wp_pointers", true));
-
-    // Check if our pointer is not among dismissed ones
-    if (!in_array("gallery_bank_pointer", $dismissed_pointers)) {
-        $enqueue_pointer_script_style = true;
-
-        // Add footer scripts using callback function
-        add_action("admin_print_footer_scripts", "gallery_bank_pointer_print_scripts");
-    }
-
-    // Enqueue pointer CSS and JS files, if needed
-    if ($enqueue_pointer_script_style) {
-        wp_enqueue_style("wp-pointer");
-        wp_enqueue_script("wp-pointer");
-    }
-}
-
-add_action("admin_enqueue_scripts", "gallery_bank_enqueue_pointer_script_style");
-
-function gallery_bank_pointer_print_scripts()
-{
-
-    $pointer_content = "<h3>Gallery Bank</h3>";
-    $pointer_content .= "<p>If you are using Gallery Bank for the first time, you can view this <a href='http://tech-banker.com/gallery-bank/' target='_blank'>link</a> to know about the features.</p>";
-    ?>
-
-    <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $("#toplevel_page_gallery_bank").pointer({
-                content: "<?php echo $pointer_content; ?>",
-                position: {
-                    edge: "left", // arrow direction
-                    align: "center" // vertical alignment
-                },
-                pointerWidth: 350,
-                close: function () {
-                    $.post(ajaxurl, {
-                        pointer: "gallery_bank_pointer", // pointer ID
-                        action: "dismiss-wp-pointer"
-                    });
-                }
-            }).pointer("open");
-        });
-    </script>
-
-<?php
 }
 
 /**************************************************************************************************/
@@ -408,15 +486,6 @@ function extract_short_code_for_gallery_images($album_id, $album_type, $gallery_
     return $gallery_bank_output_album;
 }
 
-function array_iunique($array)
-{
-    return array_intersect_key(
-        $array,
-        array_unique(array_map("StrToUpper", $array))
-    );
-}
-
-
 /*****************************************************************************************************************/
 add_shortcode("gallery_bank", "gallery_bank_short_code");
 add_action("admin_init", "backend_scripts_calls");
@@ -424,3 +493,4 @@ add_action("admin_init", "backend_css_calls");
 add_action("init", "frontend_plugin_js_scripts_gallery_bank");
 add_action("init", "frontend_plugin_css_scripts_gallery_bank");
 add_action("admin_menu", "create_global_menus_for_gallery_bank");
+add_action( "network_admin_menu", "create_global_menus_for_gallery_bank" );

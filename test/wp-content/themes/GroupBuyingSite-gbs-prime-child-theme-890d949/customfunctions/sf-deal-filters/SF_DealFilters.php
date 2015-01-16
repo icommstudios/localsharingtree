@@ -66,71 +66,17 @@ function sf_filter_locations_territories( $terms ) {
 	return $terms;
 }
 
+add_filter('gb_list_locations_link', 'custom_sf_moredeals_gb_list_locations_link', 10, 2);
+function custom_sf_moredeals_gb_list_locations_link($link, $slug) {
+	//Change to /moredeals url
+	$url = site_url('/moredeals');
+	//Add location query var to set location (setting location is handled by built-in GBS functions)
+	$url = add_query_arg( array('location' => $slug), $url);
+	return $url;
+}
+
 
 register_nav_menus( array('sf_territory_menu' => gb__( 'Territory Menu' ) ) );
-
-class SF_Territory_Menu_Walker extends Walker_Nav_Menu {
-	
-    // Don't start the second level
-    function start_lvl(&$output, $depth=0, $args=array()) {
-        //if( $depth > 0 ) return;
-        //parent::start_lvl(&$output, $depth,$args);
-		$output .= "\n";
-    }
- 
-    function end_lvl(&$output, $depth=0, $args=array()) {
-        //parent::end_lvl(&$output, $depth,$args);
-		$output .= "\n";
-    }
- 
-    // Don't print second-level elements
-    function start_el(&$output, $item, $depth=0, $args=array()) {
-		global $sf_territories;
-		
-        if ( $depth > 0 ) {
-			//$sf_territories[] = '';
-		} else {
-			//parent::start_el(&$output, $item, $depth, $args);
-			$selected_items = $_GET['sf_filter_ter'];
-			if ( isset( $_GET['sf_filter_ter']) && in_array( $item->ID, $selected_items) ) {
-				$checked_item = 'checked="checked"';
-			} else {
-				$checked_item = '';
-			}
-			$title = apply_filters( 'the_title', $item->title, $item->ID );
-			$output .= '<label for="territory_filter_'.$item->ID.'" class="sf_filter_item_label"><input '.$checked_item.' type="checkbox" name="sf_filter_ter[]" class="sf_filter_item  sf_filter_item_territory sf_filter_checkbox" value="'.$item->ID.'"> '.$title.'</label> ';
-		}
-    }
- 
-    function end_el(&$output, $item, $depth=0, $args=array()) {
-        if( $depth > 0 ) return;
-        //parent::end_el(&$output, $item, $depth, $args);
-		$output .= "";
-    }
- 
-    // Only follow down one branch
-	/*
-    function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) {
- 		global $sf_territories;
-        // Check if element as a 'current element' class
-        $current_element_markers = array( 'current-menu-item', 'current-menu-parent', 'current-menu-ancestor' );
-        $current_class = array_intersect( $current_element_markers, $element->classes );
- 
-        // If element has a 'current' class, it is an ancestor of the current element
-        $ancestor_of_current = !empty($current_class);
- 
-        // If this is a top-level link and not the current, or ancestor of the current menu item - stop here.
-        if ( $depth == 0 ) {
-			$id_field = $this->db_fields['id'];
-			$id = $element->$id_field;
-			$sf_territories[ $element->ID ] = $children_elements[$id];
-		}
- 
-        //parent::display_element( $element, array(&$children_elements), $max_depth, $depth, $args, array(&$output));
-		parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output);
-    }
-	*/
-}
 
 //On valid deal filter page
 function sf_on_valid_deal_filter_page() {
@@ -148,7 +94,7 @@ function sf_on_valid_deal_filter_page() {
 add_filter('parse_query', 'sf_filter_deal_archives_parse_query', 11 );
 function sf_filter_deal_archives_parse_query ( $query ) {
 	
-   if ( !is_admin() && $query->is_main_query() ) {
+   if ( !is_admin() && ($query->is_main_query() || $query->query['sf_page_main_query']) ) {
 	   
 		$q_vars = &$query->query_vars;
 		if ( isset($q_vars['suppress_filters']) ) {
@@ -158,32 +104,77 @@ function sf_filter_deal_archives_parse_query ( $query ) {
 			return $query;
 		}
 		
+		//Do we have any filters to make?
+		if ( !isset($_REQUEST['sf_filter_ajax']) ) {
+			return $query;
+		}
+		
+		$sf_filters = $_GET;
+		/*
+		session_start();
+		if ( isset($_GET['sf-offer-filter-submitted']) ) {
+			$sf_filters = $_GET;
+			$_SESSION['sf-offer-filters'] = $sf_filters; //save to session
+		} else {
+			//Load from session
+			$sf_filters = $_SESSION['sf-offer-filters'];
+		}
+		*/
+		
 		$tax_query = array(); //tax query changes
 		
-		if ( isset( $_GET['sf_filter_loc'] ) && !empty( $_GET['sf_filter_loc'] ) ) {
+		//Remove any existing location filter
+		unset($query->query['gb_location']);
+		unset($q_vars['gb_location']);
+		if ( $q_vars['tax_query'] ) {
+			foreach ($q_vars['tax_query'] as $tqk => $tq ) {
+				if ( isset($tq['taxonomy']) && $tq['taxonomy'] == 'gb_location' ) {
+					unset($q_vars['tax_query'][$tqk]);
+				}
+			}
+		}
+		//Remove any existing cat filter
+		unset($query->query['gb_category']);
+		unset($q_vars['gb_category']);
+		if ( $q_vars['tax_query'] ) {
+			foreach ($q_vars['tax_query'] as $tqk => $tq ) {
+				if ( isset($tq['taxonomy']) && $tq['taxonomy'] == 'gb_category' ) {
+					unset($q_vars['tax_query'][$tqk]);
+				}
+			}
+		}
+		
+		//Merge territories (if exist), with locations
+		$filter_locations = (array)$sf_filters['sf_filter_ter'];
+		if ( isset( $sf_filters['sf_filter_ter'] ) && !empty( $sf_filters['sf_filter_ter'] ) ) {
+			$filter_locations = array_merge($filter_locations, (array)$sf_filters['sf_filter_ter']);
+		}
+		
+		if ( !empty( $filter_locations ) ) {
 			//Build tax query
 			$tax_query[] = array(
 							'taxonomy' => 'gb_location',
 							'field' => 'id',
-							'terms' => (array)$_GET['sf_filter_loc'],
+							'terms' => (array)$sf_filters['sf_filter_loc'],
 							'operator' => 'IN'
 						);
+			
 		} 
-		if ( isset( $_GET['sf_filter_avg_price'] ) && !empty( $_GET['sf_filter_avg_price'] ) ) {
+		if ( isset( $sf_filters['sf_filter_avg_price'] ) && !empty( $sf_filters['sf_filter_avg_price'] ) ) {
 			//Build tax query
 			$tax_query[] = array(
 							'taxonomy' => 'sf_gb_avg_price',
 							'field' => 'id',
-							'terms' => (array)$_GET['sf_filter_avg_price'],
+							'terms' => (array)$sf_filters['sf_filter_avg_price'],
 							'operator' => 'IN'
 						);
 		} 
-		if ( isset( $_GET['sf_filter_cat'] ) && !empty( $_GET['sf_filter_cat'] ) ) {
+		if ( isset( $sf_filters['sf_filter_cat'] ) && !empty( $sf_filters['sf_filter_cat'] ) ) {
 			//Build tax query
 			$tax_query[] = array(
 							'taxonomy' => 'gb_category',
 							'field' => 'id',
-							'terms' => (array)$_GET['sf_filter_cat'],
+							'terms' => (array)$sf_filters['sf_filter_cat'],
 							'operator' => 'IN'
 						);
 		} 
@@ -204,13 +195,13 @@ function sf_filter_deal_archives_parse_query ( $query ) {
 		
 		//Add price filter
 		/*
-		if ( isset( $_GET['sf_filter_price'] ) && !empty( $_GET['sf_filter_price'] ) ) {
+		if ( isset( $sf_filters['sf_filter_price'] ) && !empty( $sf_filters['sf_filter_price'] ) ) {
 			
-			//$prices = explode(',', $_GET['sf_filter_price']);
+			//$prices = explode(',', $sf_filters['sf_filter_price']);
 			
 			//Build meta query
 			$meta_query = array();
-			foreach ( (array)$_GET['sf_filter_price'] as $price ) {
+			foreach ( (array)$sf_filters['sf_filter_price'] as $price ) {
 				if ( $price ) {
 					$price_pieces = explode('-',$price);
 					$meta_query[] = 

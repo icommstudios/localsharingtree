@@ -35,6 +35,7 @@ get_header(); ?>
 				$args=array(
 					'post_type' => gb_get_deal_post_type(),
 					'post_status' => 'future',
+					'sf_page_main_query' => true,
 					'paged' => $paged,
 				);
 				$deal_query = new WP_Query($args);

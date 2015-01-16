@@ -1,5 +1,5 @@
 <?php
-error_reporting('0');
+// error_reporting('E_ALL');
 //*************** Include style.css in Header ********
 // Getting Option From DB *****************************	
 $acx_si_theme = get_option('acx_si_theme');
@@ -13,11 +13,77 @@ $acx_si_gplus = get_option('acx_si_gplus');
 $acx_si_pinterest = get_option('acx_si_pinterest');
 $acx_si_feed = get_option('acx_si_feed');
 $acx_si_icon_size = get_option('acx_si_icon_size');
-$acx_si_fsmi_menu_highlight = get_option('acx_si_fsmi_menu_highlight');
 $acx_si_fsmi_float_fix = get_option('acx_si_fsmi_float_fix');
 $acx_si_fsmi_theme_warning_ignore = get_option('acx_si_fsmi_theme_warning_ignore');
 $acx_si_fsmi_disable_mobile = get_option('acx_si_fsmi_disable_mobile');
 // *****************************************************
+$social_icon_array_order = get_option('social_icon_array_order');
+if(is_serialized($social_icon_array_order))
+{
+$social_icon_array_order = unserialize($social_icon_array_order);
+}
+function acx_fsmi_orderarray_refresh()
+{
+global $social_icon_array_order;
+/* Starting The Logic Count and Re Configuring Order Array */	
+	$total_arrays = ACX_FSMI_TOTAL_STATIC_SERVICES; // Number Of Static Services ,<< Earlier its 10
+	if(is_serialized($social_icon_array_order))
+	{
+		$social_icon_array_order = unserialize($social_icon_array_order);
+	}
+	if($social_icon_array_order == "")
+	{
+	$social_icon_array_order = array();
+	}	
+	if (empty($social_icon_array_order)) 
+	{
+		for( $i = 0; $i < $total_arrays; $i++ )
+		{
+			array_push($social_icon_array_order,$i);
+		}
+		
+		if(!is_serialized($social_icon_array_order))
+		{
+		$social_icon_array_order = serialize($social_icon_array_order);
+		}
+		update_option('social_icon_array_order', $social_icon_array_order);
+	} else 
+	{
+		// Counting and Adding New Keys (UPGRADE PURPOSE)
+		$social_icon_array_order = get_option('social_icon_array_order');
+		if(is_serialized($social_icon_array_order))
+		{
+		$social_icon_array_order = unserialize($social_icon_array_order);
+		}
+		$social_icon_array_count = count($social_icon_array_order); 
+		if ($social_icon_array_count < $total_arrays) 
+		{
+			for( $i = $social_icon_array_count; $i < $total_arrays; $i++ )
+			{
+				array_push($social_icon_array_order,$i);
+			} // for
+		} else
+		{
+		//	$acx_diff = ($social_icon_array_count - $total_arrays);
+			$acx_temp_array = $social_icon_array_order;
+			foreach ($social_icon_array_order as $key => $value)
+			{
+				if($social_icon_array_order[$key]>=$total_arrays)
+				{
+					unset($acx_temp_array[$key]);
+				}
+			}
+			$acx_temp_array = array_values($acx_temp_array);
+			$social_icon_array_order = $acx_temp_array;
+		}
+		if(!is_serialized($social_icon_array_order))
+		{
+		$social_icon_array_order = serialize($social_icon_array_order);
+		}
+		update_option('social_icon_array_order', $social_icon_array_order);
+	} // else closing of if array null
+/* Ending The Logic Count and Re Configuring Order Array */	
+}
 // Check Credit Link
 function enqueue_acx_si_style()
 {
@@ -32,44 +98,61 @@ function check_acx_credit($yes,$no)
 { 	$acx_si_credit = get_option('acx_si_credit');
 	if($acx_si_credit != "no") { echo $yes; } else { echo $no; } 
 }
-function acurax_si_simple($theme = "") // Added Default "" // Updated << and V (alt added to Images Title Added to Links)
+function acurax_si_simple($theme = "",$size = "") // Added Default "" // Updated << and V (alt added to Images Title Added to Links)
 {
+
 	// Getting Globals *****************************	
 	global $acx_si_theme, $acx_si_credit, $acx_si_display , $acx_si_twitter, $acx_si_facebook, $acx_si_youtube, 		
 	$acx_si_linkedin, $acx_si_gplus, $acx_si_pinterest, $acx_si_feed, $acx_si_icon_size;
 	// *****************************************************
+	
+	if($size == "")
+	{
+	$size = $acx_si_icon_size;
+	}
+	if($size != "")
+	{
+	$size = $size."px";
+	$acx_si_icon_height_width_attribute = "height='".$size."' width='".$size."'";
+	} else
+	{
+	$acx_si_icon_height_width_attribute = "";
+	}
 	if ($theme == "") { $acx_si_touse_theme = $acx_si_theme; } else { $acx_si_touse_theme = $theme; }
 		//******** MAKING EACH BUTTON LINKS ********************
 		if	($acx_si_twitter == "") { $twitter_link = ""; } else 
 		{
-			$twitter_link = "<a href='http://www.twitter.com/". $acx_si_twitter ."' target='_blank' title='Visit Us On Twitter'>" . "<img src=" . plugins_url('images/themes/'. $acx_si_touse_theme .'/twitter.png', __FILE__) . " style='border:0px;' alt='Visit Us On Twitter' /></a>";
+			$twitter_link = "<a href='http://www.twitter.com/". $acx_si_twitter ."' target='_blank' title='Visit Us On Twitter'>" . "<img src=" . plugins_url('images/themes/'. $acx_si_touse_theme .'/twitter.png', __FILE__) . " style='border:0px;' alt='Visit Us On Twitter' ".$acx_si_icon_height_width_attribute." /></a>";
 		}
 		if	($acx_si_facebook == "") { $facebook_link = ""; } else 
 		{
-			$facebook_link = "<a href='". $acx_si_facebook ."' target='_blank' title='Visit Us On Facebook'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/facebook.png', __FILE__) . " style='border:0px;' alt='Visit Us On Facebook' /></a>";
+			$facebook_link = "<a href='". $acx_si_facebook ."' target='_blank' title='Visit Us On Facebook'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/facebook.png', __FILE__) . " style='border:0px;' alt='Visit Us On Facebook' ".$acx_si_icon_height_width_attribute." /></a>";
 		}
 		if	($acx_si_gplus == "") { $gplus_link = ""; } else 
 		{
-			$gplus_link = "<a href='". $acx_si_gplus ."' target='_blank' title='Visit Us On Google Plus'>" . "<img src=" . plugins_url('images/themes/'. $acx_si_touse_theme .'/googleplus.png', __FILE__) . " style='border:0px;' alt='Visit Us On Google Plus' /></a>";
+			$gplus_link = "<a href='". $acx_si_gplus ."' target='_blank' title='Visit Us On Google Plus'>" . "<img src=" . plugins_url('images/themes/'. $acx_si_touse_theme .'/googleplus.png', __FILE__) . " style='border:0px;' alt='Visit Us On Google Plus' ".$acx_si_icon_height_width_attribute." /></a>";
 		}
 		if	($acx_si_pinterest == "") { $pinterest_link = ""; } else 
 		{
-			$pinterest_link = "<a href='". $acx_si_pinterest ."' target='_blank' title='Visit Us On Pinterest'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/pinterest.png', __FILE__) . " style='border:0px;' alt='Visit Us On Pinterest' /></a>";
+			$pinterest_link = "<a href='". $acx_si_pinterest ."' target='_blank' title='Visit Us On Pinterest'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/pinterest.png', __FILE__) . " style='border:0px;' alt='Visit Us On Pinterest' ".$acx_si_icon_height_width_attribute." /></a>";
 		}
 		if	($acx_si_youtube == "") { $youtube_link = ""; } else 
 		{
-			$youtube_link = "<a href='". $acx_si_youtube ."' target='_blank' title='Visit Us On Youtube'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/youtube.png', __FILE__) . " style='border:0px;' alt='Visit Us On Youtube' /></a>";
+			$youtube_link = "<a href='". $acx_si_youtube ."' target='_blank' title='Visit Us On Youtube'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/youtube.png', __FILE__) . " style='border:0px;' alt='Visit Us On Youtube' ".$acx_si_icon_height_width_attribute." /></a>";
 		}
 		if	($acx_si_linkedin == "") { $linkedin_link = ""; } else 
 		{
-			$linkedin_link = "<a href='". $acx_si_linkedin ."' target='_blank' title='Visit Us On Linkedin'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/linkedin.png', __FILE__) . " style='border:0px;' alt='Visit Us On Linkedin' /></a>";
+			$linkedin_link = "<a href='". $acx_si_linkedin ."' target='_blank' title='Visit Us On Linkedin'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/linkedin.png', __FILE__) . " style='border:0px;' alt='Visit Us On Linkedin' ".$acx_si_icon_height_width_attribute." /></a>";
 		}
 		if	($acx_si_feed == "") { $feed_link = ""; } else 
 		{
-			$feed_link = "<a href='". $acx_si_feed ."' target='_blank' title='Check Our Feed'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/feed.png', __FILE__) . " style='border:0px;' alt='Check Our Feed' /></a>";
+			$feed_link = "<a href='". $acx_si_feed ."' target='_blank' title='Check Our Feed'>" . "<img src=" . plugins_url('images/themes/' . $acx_si_touse_theme .'/feed.png', __FILE__) . " style='border:0px;' alt='Check Our Feed' ".$acx_si_icon_height_width_attribute." /></a>";
 		}
-		$social_icon_array_order = get_option('social_icon_array_order');
+	$social_icon_array_order = get_option('social_icon_array_order');
+	if(is_serialized($social_icon_array_order))
+	{
 	$social_icon_array_order = unserialize($social_icon_array_order);
+	}
 	foreach ($social_icon_array_order as $key => $value)
 	{
 		if ($value == 0) { echo $twitter_link; } 
@@ -98,7 +181,7 @@ function acx_theme_check_wp_head() {
 		}
 		
 		// wp_head() not found:
-		echo "<div class=\"highlight\" style=\"width: 99%; margin-top: 10px; margin-bottom: 10px; border: 1px solid darkred;\">" . "Your theme needs to be fixed for plugins to work (Especially Floating Social Media Icon). To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>&lt;?php wp_head(); ?&gt;</code> just before the <code>&lt;/head&gt;</code> line of your theme's <code>header.php</code> file." . "</div>";
+		echo "<div class=\"highlight\" style=\"margin-top: 10px; margin-bottom: 10px; border: 1px solid darkred; padding: 1%; width: 97%; border-radius: 7px;\">" . "Your theme needs to be fixed for plugins to work (Especially Floating Social Media Icon). To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>".htmlspecialchars("<?php wp_head(); ?>")."</code> just before the <code>".htmlspecialchars("</head>")."</code> line of your theme's <code>header.php</code> file. - [If everything is working properly, you can disable this warning at <a href=\"admin.php?page=Acurax-Social-Icons-Misc\">misc page</a>]" . "</div>";
 	}
 } // theme check 
 if($acx_si_fsmi_theme_warning_ignore != "yes")
@@ -122,7 +205,7 @@ function acx_theme_check_wp_footer() {
 		}
 		
 		// wp_footer() not found:
-		echo "<div class=\"highlight\" style=\"width: 99%; margin-top: 10px; margin-bottom: 10px; border: 1px solid darkred;\">" . "Your theme needs to be fixed for plugins to work (Especially Floating Social Media Icon). To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>&lt;?php wp_footer(); ?&gt;</code> just before the <code>&lt;/body&gt;</code> line of your theme's <code>footer.php</code> file." . "</div>";
+		echo "<div class=\"highlight\" style=\"margin-top: 10px; margin-bottom: 10px; border: 1px solid darkred; padding: 1%; width: 97%; border-radius: 7px;\">" . "Your theme needs to be fixed for plugins to work (Especially Floating Social Media Icon). To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>".htmlspecialchars("<?php wp_footer(); ?>")."</code> just before the <code>".htmlspecialchars("</body>")."</code> line of your theme's <code>footer.php</code> file. - [If everything is working properly, you can disable this warning at <a href=\"admin.php?page=Acurax-Social-Icons-Misc\">misc page</a>]" . "</div>";
 	}
 }
 if($acx_si_fsmi_theme_warning_ignore != "yes")
@@ -140,7 +223,7 @@ function acurax_icons()
 	//*********************** STARTED DISPLAYING THE ICONS ***********************
 		echo "\n\n\n<!-- Starting Icon Display Code For Social Media Icon From Acurax International www.acurax.com -->\n";
 		echo "<div id='divBottomRight' style='text-align:center;'>";
-		acurax_si_simple();		
+		acurax_si_simple($acx_si_theme,$acx_si_icon_size);		
 		echo "</div>\n";
 		echo "<!-- Ending Icon Display Code For Social Media Icon From Acurax International www.acurax.com -->\n\n\n";
 	//*****************************************************************************
@@ -291,7 +374,9 @@ function acx_load_floating_js()
 		}
 		return el;
 	}
-	 JSFX_FloatDiv("divBottomRight", <?php echo $x; ?>, <?php echo $y; ?>).flt();
+	jQuery( document ).ready(function() {
+	JSFX_FloatDiv("divBottomRight", <?php echo $x; ?>, <?php echo $y; ?>).flt();
+	});
 	</script>
 	<?php echo "<!-- Ending Javascript Code For Social Media Icon From Acurax International www.acurax.com -->\n\n\n";
 } 	if ($acx_si_display == "auto" || $acx_si_display == "both") 
@@ -319,16 +404,16 @@ function pbl_footer()
 			$x = strlen($acx_get_url);
 			if(($x % 10) == 0)
 			{
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Animated Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/blog-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Wordpress Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Development Company</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress Plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Animated Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Wordpress Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Development Company</a>";
 } else if(($x % 9) == 0)
 {
 echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Floating Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Floating Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/blog-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Blog Design Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Blog Designing Company</a>";
 } else if(($x % 8) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Integration</a> Powered by <a href='http://www.acurax.com/services/blog-design.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Web Design Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Theme Designers</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Integration</a> Powered by <a href='http://www.acurax.com/services/web-designing.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Acurax Web Design Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Theme Designers</a>";
 } else if(($x % 7) == 0)
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/web-designing.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Affordable Website Designer' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Website Design Expert</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/web-designing.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Affordable Website Designer' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Website Designing Company</a>";
 } else if(($x % 6) == 0)
 {
 echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='SocialMedia Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/web-development.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Web Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Web Development Company</a>";} else if(($x % 5) == 0)
@@ -347,7 +432,7 @@ echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-
 echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Animated Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Wordpress Development Company' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Wordpress Development Company</a>";
 } else 
 {
-echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/online-store-design-development.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Ecommerce Design Expert' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax Ecommerce Design Expert</a>";
+echo "<a href='http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/?ref=" . $acx_installation_domain . "' target='_blank' title='Social Media Wordpress plugin' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Social Media Icons</a> Powered by <a href='http://www.acurax.com/services/online-store-design-development.php?utm_source=blink&utm_medium=link&utm_campaign=footer&ref=" . $acx_installation_domain . "' target='_blank' title='Ecommerce Design Expert' style='text-align:center;color:gray;font-family:arial;font-size:11px;text-decoration:none;'>Acurax E-Commerce Website Design Company</a>";
 }
 			// Ending Crediting
 			echo "</div>";
@@ -384,11 +469,7 @@ function extra_style_acx_icon() // updated added class acx_fsmi_float_fix suppor
 	add_action('wp_head', 'extra_style_acx_icon'); // PUBLIC 
 function acx_si_admin_style()  // Adding Style For Admin
 {
-global $acx_si_fsmi_menu_highlight;
 	echo '<link rel="stylesheet" type="text/css" href="' .plugins_url('style_admin.css', __FILE__). '">';
-	if ($acx_si_fsmi_menu_highlight != "no") {
-	echo '<link rel="stylesheet" type="text/css" href="' .plugins_url('dynamic_admin_style.css', __FILE__). '">';
-	} // updated
 }	add_action('admin_head', 'acx_si_admin_style'); // ADMIN
 	$acx_si_display = get_option('acx_si_display');
 if	($acx_si_display == "auto" || $acx_si_display == "both") 
@@ -402,8 +483,21 @@ function DISPLAY_ACURAX_ICONS_SC($atts)
 	extract(shortcode_atts(array(
 	"theme" => '',
 	"size" => $acx_si_icon_size,
-	"autostart" => 'false'
+	"align" => 'center'
 	), $atts));
+	if($align == "center")
+	{
+	$align = "center";
+	} else if($align == "left")
+	{
+	$align = "left";
+	} else if($align == "right")
+	{
+	$align = "right";
+	} else
+	{
+	$align = "center";
+	}
 	if (!is_numeric($theme)) { $theme = ""; } else {
 	if ($theme > ACX_SOCIALMEDIA_TOTAL_THEMES) { $theme = ""; }
 	}
@@ -420,8 +514,8 @@ function DISPLAY_ACURAX_ICONS_SC($atts)
 		echo ".scid-" . $acx_si_sc_id . " img \n{\n";
 		echo "width:" . $size . "px !important; \n}\n";
 		echo "</style>";
-		echo "<div id='short_code_si_icon' style='text-align:center;' class='acx_fsmi_float_fix scid-" . $acx_si_sc_id . "'>"; // updated
-		acurax_si_simple($theme);
+		echo "<div id='short_code_si_icon' style='text-align:".$align.";' class='acx_fsmi_float_fix scid-" . $acx_si_sc_id . "'>"; // updated
+		acurax_si_simple($theme,$size);
 		echo "</div>";
 		$content = ob_get_contents();
 		ob_end_clean();
@@ -429,20 +523,42 @@ function DISPLAY_ACURAX_ICONS_SC($atts)
 	} 
 	else echo "<!-- Select Display Mode as Manual To Show The Acurax Social Media Icons -->";
 } // DISPLAY_ACURAX_ICONS_SC
-function DISPLAY_ACURAX_ICONS()
+function DISPLAY_ACURAX_ICONS($theme="",$size="",$align="")
 {
-		global $acx_si_display, $acx_si_icon_size;;
+		global $acx_si_display, $acx_si_icon_size;
+				
+	if($align == "center")
+	{
+	$align = "center";
+	} else if($align == "left")
+	{
+	$align = "left";
+	} else if($align == "right")
+	{
+	$align = "right";
+	} else
+	{
+	$align = "center";
+	}
+	if (!is_numeric($theme)) { $theme = ""; } else {
+	if ($theme > ACX_SOCIALMEDIA_TOTAL_THEMES) { $theme = ""; }
+	}
+	if (!is_numeric($size)) { $size = $acx_si_icon_size; } else {
+	if ($size > 55) { $size = $acx_si_icon_size; }
+	}
+		
+		
 	if ($acx_si_display != "auto" || $acx_si_display == "both") 
 	{
 		echo "\n\n\n<!-- Starting Styles For Social Media Icon (PHP CODE) From Acurax International www.acurax.com 
 		-->\n<style 
 		type='text/css'>\n";
 		echo "#short_code_si_icon img \n{\n";
-		echo "width: " . $acx_si_icon_size . "px; \n}\n";
+		echo "width: " . $size . "px; \n}\n";
 		echo "</style>\n<!-- Ending Styles For Social Media Icon (PHP CODE) From Acurax International www.acurax.com 
 		-->\n\n\n\n";
-		echo "<div id='short_code_si_icon' style='text-align:center;'>";
-		acurax_si_simple();
+		echo "<div id='short_code_si_icon' style='text-align:".$align.";'>";
+		acurax_si_simple($theme,$size);
 		echo "</div>";
 	} 
 	else echo "<!-- Select Display Mode as Manual To Show The Acurax Social Media Icons -->";
@@ -467,19 +583,31 @@ function acx_si_custom_admin_js()
 	wp_enqueue_script('jquery-ui-sortable');
 }	add_action( 'admin_enqueue_scripts', 'acx_si_custom_admin_js' );
 // wp-admin Notices >> Finish Upgrade
+//-- **************** CODE TO FIND PAGE STARTS HERE ********************************
+if(ISSET($_GET['page']))
+{
+$acx_si_current_page = $_GET['page'];
+} else
+{
+$acx_si_current_page = "";
+}
+//-- **************** CODE TO FIND PAGE ENDS HERE***********************************
 function acx_si_pluign_upgrade_not_finished()
 {
     echo '<div class="error">
 		  <p><b>Thanks for updating Floating Social Media Icon plugin... You need to visit <a href="admin.php?page=Acurax-Social-Icons-Settings">Plugin\'s Settings Page</a> to Complete the Updating Process - <a href="admin.php?page=Acurax-Social-Icons-Settings">Click Here Visit Social Icon Plugin Settings</a></b></p>
 		  </div>';
 }
-$total_arrays = 7; // Number Of Services
+$total_arrays = ACX_FSMI_TOTAL_STATIC_SERVICES; // Number Of Services
 $social_icon_array_order = get_option('social_icon_array_order');
 $social_icon_array_order = unserialize($social_icon_array_order);
 $social_icon_array_count = count($social_icon_array_order); 
 if ($social_icon_array_count < $total_arrays) 
 {
-	add_action('admin_notices', 'acx_si_pluign_upgrade_not_finished',1);
+	if($acx_si_current_page != "Acurax-Social-Icons-Settings")
+	{
+		add_action('admin_notices', 'acx_si_pluign_upgrade_not_finished',1);
+	}
 }
 function acx_fsmi_si_pluign_finish_version_update()
 {
@@ -488,11 +616,14 @@ function acx_fsmi_si_pluign_finish_version_update()
 		  </div>';
 }
 $acx_fsmi_si_current_version = get_option('acx_fsmi_si_current_version');
-if($acx_fsmi_si_current_version != '1.3.5') // Current Version
+if($acx_fsmi_si_current_version != '1.3.8') // Current Version
 {
 if (get_option('social_icon_array_order') != "")
 {
+	if($acx_si_current_page != "Acurax-Social-Icons-Settings")
+	{
 	add_action('admin_notices', 'acx_fsmi_si_pluign_finish_version_update',1);
+	}
 }
 }
 // wp-admin Notices >> Plugin not configured
@@ -508,7 +639,10 @@ if ($social_icon_array_count == $total_arrays)
 {
 if ($acx_si_twitter == "" && $acx_si_facebook == "" && $acx_si_youtube == "" && $acx_si_linkedin == ""  && $acx_si_pinterest == "" && $acx_si_gplus == "" && $acx_si_feed == "")
 {
+	if($acx_si_current_page != "Acurax-Social-Icons-Settings")
+	{
 	add_action('admin_notices', 'acx_si_pluign_not_configured',1);
+	}
 } // Chking If Plugin Not Configured
 } // Chking $social_icon_array_count == $total_arrays
 // wp-admin Notices >> Plugin not configured
@@ -592,7 +726,7 @@ class Acx_Social_Icons_Widget extends WP_Widget
 		echo "</style>";
 		echo "<div id='acurax_si_simple' class='acx_fsmi_float_fix " . $this->get_field_id('widget') . "'"; // updated
 		if($icon_align != "") { echo " style='text-align:" . $icon_align . ";'>"; } else { echo " style='text-align:center;'>"; }
-		acurax_si_simple($icon_theme);
+		acurax_si_simple($icon_theme,$icon_size);
 		echo "</div>";
         // This is defined when you register a sidebar
         echo $after_widget;
@@ -702,9 +836,14 @@ $ad_1 = '
 													<li>Set MouseOver text for each icon in Share Mode</li>
 												<li>Set MouseOver text for each icon in Profile Link Mode</li>
 											<li>Option to HIDE Invididual Share Icon</li>
+											<li>Option to hide icon on mobile devices</li>
+											<li>Option to hide icon on specific pages/post</li>
+											<li>Option to set icon size for mobile devices</li>
+											<li>Align icons on phpcode or shortcode</li>
 										<li><strong>Set Floating Icons in Vertical</strong></li>
 									<li><strong>Define how many icons in 1 row</strong></li>
-								<li class="ss_last_one"><strong>Add Custom Icons</strong></li>
+									<li><strong><strong>Add Unlimited # of Custom Icons</strong></strong></li>
+								<li class="ss_last_one"><strong>Custom Icons Can Link to Your Website Pages</strong></li>
 							</ul>
 						</div><!-- ss_features -->
 						
@@ -718,7 +857,12 @@ $ad_1 = '
 												<div class="ss_no"> </div><!-- ss_no -->
 											<div class="ss_no"> </div><!-- ss_no -->
 										<div class="ss_no"> </div><!-- ss_no -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_no"> </div><!-- ss_no -->
+										<div class="ss_no"> </div><!-- ss_no -->
+										<div class="ss_yes"> </div><!-- ss_yes -->										
 									<div class="ss_no"> </div><!-- ss_no -->
+								<div class="ss_no"> </div><!-- ss_no -->
 								<div class="ss_no"> </div><!-- ss_no -->
 							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
 						</div><!-- ss_y_n_holder -->
@@ -732,7 +876,12 @@ $ad_1 = '
 												<div class="ss_yes"> </div><!-- ss_yes -->
 											<div class="ss_yes"> </div><!-- ss_yes -->
 										<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
+										<div class="ss_yes"> </div><!-- ss_yes -->
 									<div class="ss_yes"> </div><!-- ss_yes -->
+								<div class="ss_yes"> </div><!-- ss_yes -->
 								<div class="ss_yes"> </div><!-- ss_yes -->
 							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
 						</div><!-- ss_y_n_holder -->						
@@ -747,17 +896,23 @@ $ad_1 = '
 						<div class="ss_features"> 
 							<ul>
 								<li>Link to Social Media Profile</li>
-								<li class="ss_last_one"><strong>Share On Social Media</strong></li>
+								<li><strong>Share On Social Media</strong></li>
+								<li>Option to add twitter username and hashtags to tweets</li>
+								<li class="ss_last_one">Option to Define Tweet Prefix and Suffix</li>
 							</ul>
 						</div><!-- ss_features -->
 						
 						<div class="tb_h1 mini"> <h3>FREE &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span style="color: #ffe400;">PREMIUM</span></h3> </div><!-- tb_h1 -->
 						<div class="ss_y_n_holder"> 
 							<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_no"> </div><!-- ss_no -->
+							<div class="ss_no"> </div><!-- ss_no -->
 							<div class="ss_no ss_last_one"> </div><!-- ss_no -->
 						</div><!-- ss_y_n_holder -->
 						
 						<div class="ss_y_n_holder"> 
+							<div class="ss_yes"> </div><!-- ss_yes -->
+							<div class="ss_yes"> </div><!-- ss_yes -->
 							<div class="ss_yes"> </div><!-- ss_yes -->
 							<div class="ss_yes ss_last_one"> </div><!-- ss_yes -->
 						</div><!-- ss_y_n_holder -->						
@@ -1020,14 +1175,14 @@ function acx_quick_request_submit_callback()
 	$acx_email =  $_POST['acx_email'];
 	$acx_phone =  $_POST['acx_phone'];
 	$acx_weburl =  $_POST['acx_weburl'];
-	$acx_subject =  $_POST['acx_subject'];
-	$acx_question =  $_POST['acx_question'];
+	$acx_subject =  stripslashes($_POST['acx_subject']);
+	$acx_question =  stripslashes($_POST['acx_question']);
 if($acx_name == "" || $acx_email == "" || $acx_weburl == "" || $acx_subject == "" || $acx_question == "")
 {
 echo 2;
 } else
 {
-$current_user_acx = wp_get_current_user();
+$current_user = wp_get_current_user();
 $current_user_acx = $current_user->user_email;
 if($current_user_acx == "")
 {
@@ -1043,6 +1198,7 @@ $message = $message . "Phone: ".$acx_phone . "\r\n <br>";
 }
 // In case any of our lines are larger than 70 characters, we should use wordwrap()
 $acx_question = wordwrap($acx_question, 70, "\r\n <br>");
+$message = $message . "Request From: FSMI - Expert Help Request Form \r\n <br>";
 $message = $message . "Website: ".$acx_weburl . "\r\n <br>";
 $message = $message . "Question: ".$acx_question . "\r\n <br>";
 $emailed = wp_mail( 'info@acurax.com', $acx_subject, $message, $headers );

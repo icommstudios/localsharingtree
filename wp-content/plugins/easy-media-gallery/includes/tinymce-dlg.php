@@ -19,6 +19,13 @@ array( "name" => "Choose media",
 	"type" => "selectmedia",
 	"options" => "",
 	"std" => "" ),	
+	
+array( "name" => "Choose Gallery",
+	"id" => $shortname."_select_gallery",
+	"type" => "selectgallery",
+	"options" => "",
+	"std" => "" ),	
+	
 );
 
 
@@ -29,15 +36,17 @@ if ( strstr( $_SERVER['REQUEST_URI'], 'wp-admin/post-new.php' ) || strstr( $_SER
 		function emg_editor_add_init() {
 			
 			if ( get_post_type( get_the_ID() ) != 'easymediagallery' ) {
-				
 				wp_enqueue_style( 'easymedia-tinymce' );
 				wp_enqueue_style( 'jquery-multiselect-css' );
 				wp_enqueue_style( 'jquery-ui-themes-redmond' );
-				wp_enqueue_script( 'jquery-ui' );
+				wp_enqueue_style( 'emg-tabs-css' );
+				wp_enqueue_style( 'emg-tabs-style' );
+				wp_enqueue_script( 'emg-tabs' );
 				wp_enqueue_script( 'jquery-multi-sel' );
 				wp_enqueue_script( 'easymedia-cpscript', plugins_url( 'functions/tinymce-dlg.js' , __FILE__ ) );
 				wp_enqueue_script( 'jquery-i-button', plugins_url( 'js/jquery/jquery.ibutton.js' , __FILE__ ) );
 				wp_enqueue_style( 'metabox-ibuttoneditor', plugins_url( 'css/ibutton.css' , __FILE__ ), false, EASYMEDIA_VERSION );
+	
 		?>
         <?php
 			}
@@ -70,8 +79,69 @@ if ( get_post_type( get_the_ID() ) != 'easymediagallery' ) {
 ?>
 <div id="modal" style="display:none;">
 <div id="tinyform" style="width: 550px;">
+
+<div id="horizontalTab">
+<ul>
+<li><a href="#tab-1">Gallery, Album & Slider</a></li>
+<li><a href="#tab-2">Basic & Categories</a></li>
+</ul>
+
 <form method="post">
 
+<div id="tab-1"> 
+<label class="label_optionglry" for="listgallery">Select Gallery</label>
+	<select class="tinymce_select" name="listgallery" id="listcustomgallery">
+<?php
+
+global $post;
+$args = array(
+	'post_type' => 'easymediagallery',
+	'order' => 'ASC',
+  	'post_status' => 'publish',
+  	'posts_per_page' => -1,
+	'meta_query' => array(
+		array(
+			'key' => 'easmedia_metabox_media_type',
+			'value' => 'Multiple Images (Slider)',
+			'compare' => '='
+		),
+
+	)
+ );
+ 
+$myposts = get_posts( $args );
+foreach( $myposts as $post ) :	setup_postdata($post); ?>
+<option id="<?php echo $post->ID; ?>" type="text" value="<?php echo $post->ID; ?>" /><?php echo esc_html( esc_js( the_title(NULL, NULL, FALSE) ) ); ?></option>
+<?php endforeach; 
+
+?>
+</select>
+                
+               <div id="markas_div" style="margin-left:25px; margin-top: 20px;">
+               <div class="emgspacer">
+               <input id="defgallery" class="emgradiogalltype" type="radio" name="emgtinymce_mark_as" value="easymedia-gallery" checked="checked"/>Set as Simple Gallery</div>
+               <div class="emgspacer">
+               <input id="emgspacer" class="emgradiogalltype setaspro" type="radio" name="emgtinymce_mark_as" value="easymedia-gallery" checked="checked"/>Set as Filterable Gallery --- <span class="promarker">(PRO Version)</span> - <a href="http://goo.gl/kUTxQa" target="_blank">see demo</a>
+                </div>
+                <div class="emgspacer">
+                <input class="emgradiogalltype setaspro" type="radio" name="emgtinymce_mark_as" value="easy-media-album"/>Set as Album --- <span class="promarker">(PRO Version)</span> - <a href="http://goo.gl/Tid7jL" target="_blank">see demo</a>
+                </div>
+                <div class="emgspacer">
+                <input class="emgradiogalltype setaspro" type="radio" name="emgtinymce_mark_as" value="easymedia-slider-one" />Set as Slider --- <span class="promarker">(PRO Version)</span> - <a href="http://goo.gl/VMFnKc" target="_blank">see demo</a>
+                </div>
+                <div class="emgspacer">
+                <input class="emgradiogalltype setaspro" type="radio" name="emgtinymce_mark_as" value="easymedia-fotorama" />Set as Fotorama Slider --- <span class="promarker">(PRO Version)</span> - <a href="http://goo.gl/k3tcl8" target="_blank">see demo</a>
+                </div>                
+                <div class="emgspacer">
+                <input class="emgradiogalltype setaspro" type="radio" name="emgtinymce_mark_as" value="easymedia-carousel" />Set as Carousel --- <span class="promarker">(PRO Version)</span> - <a href="http://goo.gl/K1HGkR" target="_blank">see demo</a>
+                </div>                   
+               </div>
+<div style="display:none;" id="thisgallresult"></div>            
+</div><!-- #TAB-1 END  -->
+
+
+
+<div id="tab-2">
 <?php 
 
 global $optn;
@@ -113,6 +183,7 @@ case 'selectcat':
 <label class="label_optionttl" for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label>
 <?php $states = get_terms( 'emediagallery', array( 'hide_empty' => true ) ); ?>
 <select class="tinymce_select" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>">
+ <option id="default" value="default">Select</option>
     <?php foreach ( $states as $state ){ ?>
         <option id="<?php echo $state->term_id; ?>" value="<?php echo $state->term_id; ?>"><?php echo $state->name; ?></option>
     <?php }
@@ -193,18 +264,31 @@ break;
 <div class="clearfix"></div>
 </div>
 
+<div style="display:none;" id="thisresult"></div>
+</div><!-- #TAB-2 END  -->
+
+<?php 
+if ( easy_get_option( 'easymedia_disen_admnotify' ) == '1' ) { ?>
 <div class="sc_input sc_select" id="upd_topro">
 <p class="emg_blink" style="color:#F00;">UPGRADE to PRO Version and get Advanced Shortcode, <a target="_blank" href="<?php echo plugins_url( 'includes/images/pro-version-shortcode-manager.png' , dirname(__FILE__) ) ?>" style="text-decoration:underline !important;">Click for Screenshot</a></p>
 <div class="clearfix"></div>
-</div>
+</div> <?php } ?>
+
+</form>
+
+
+
+
+
+
+</div> <!-- #TAB END  -->
+
 
 <div class="sc_button1">
 <input type="button" value="Insert Shortcode" name="emg_insert_scrt" id="emg_insert_scrt" class="button-secondary" />	
 <div class="clearfix"></div>
 </div>
-<div style="display:none;" id="thisresult"></div>
 
-</form>
 </div>
 </div>
 <?php 

@@ -5,7 +5,7 @@ Author URI: http://www.dreamwire.nl
 Version: 1.0
 */
 
-.message {
+.custom-message {
     position: relative;
     display: inline-block;
     margin: 20px 0 0 0;
@@ -18,44 +18,44 @@ Version: 1.0
     zoom: 1;
 }
 
-.message:hover {
+.custom-message:hover {
     opacity: 0.7;
     filter: alpha(opacity=70);
 }
 
-.message span {
+.custom-message span {
     display: block;
     /*background : url(../images/icons/system-icon.png) no-repeat 98% center;*/
     padding: 13px 0;
     font: 12px/1.0em Arial;
 }
 
-.message.inner {
+.custom-message.inner {
     margin: 0 0 20px;
 }
 
-.message.red {
+.custom-message.red {
     display: block;
     background : #F8E9E9;
     border: 1px solid #E4BBBC;
     color: #b80000;
 }
 
-.message.green {
+.custom-message.green {
     display: block;
     background: url(../images/icons/icon-succes.png) no-repeat 1px 8px #EBF9E2;
     border: 1px solid #BEE4A5;
     color: #6aa500;
 }
 
-.message.blue {
+.custom-message.blue {
     display: block;
     /*background : url(../images/icons/icon-info.png) no-repeat 10px 8px #E9F3F8;*/
     border: 1px solid #BBD7E4;
     color: #136bc5;
 }
 
-.message.orange {
+.custom-message.orange {
     display: block;
     /*background : url(../images/icons/icon-warning.png) no-repeat 10px 8px #FFF8D8;*/
     border: 1px solid #F3D97E;

@@ -5,7 +5,7 @@
  */
 define( 'SEC_THEME_NAME', 'Prime' );
 define( 'SEC_THEME_SLUG', 'prime_theme' ); // theme slug for updater
-define( 'SEC_THEME_VERSION', '5.1' );
+define( 'SEC_THEME_VERSION', '5.1.1' );
 define( 'SEC_THEME_COMPAT_VERSION', '4.7' );
 define( 'SEC_THEME_CHILD_THEME', 'https://github.com/GroupBuyingSite/gbs-prime-child-theme/zipball/master' );
 

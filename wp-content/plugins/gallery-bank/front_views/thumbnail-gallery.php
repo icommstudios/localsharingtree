@@ -1,16 +1,8 @@
 <style>
-<?php
-if($img_title == "true")
+.<?php echo $class_images_in_row ?> > a
 {
-	?>
-	.gb_overlay
-	{
-		width:<?php echo $thumbnails_width;?>px !important;
-		height:<?php echo $thumbnails_height;?>px !important;
-	}
-	<?php
+ text-decoration:none !important;
 }
-?>
 </style>
 <div class="<?php echo $class_images_in_row;?>" id="gallery-bank-thumbnails_<?php echo $unique_id;?>">
 <?php

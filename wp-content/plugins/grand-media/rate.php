@@ -1,7 +1,8 @@
 <?php
 //ini_set( 'display_errors', 0 );
 //ini_set( 'error_reporting', 0 );
-@ require_once ('config.php');
+define('WP_USE_THEMES', false);
+@require_once (dirname(__FILE__).'/config.php');
 
 if ( empty( $_SERVER['HTTP_REFERER'] ) ) {
 	die();
@@ -57,7 +58,7 @@ if ( isset($_POST['rate']) ) {
 	} else{
 		$transient_value = array($uip => array($gmid => $rate));
 	}
-	set_transient($transient_key, $transient_value, 10);
+	set_transient($transient_key, $transient_value, 18 * HOUR_IN_SECONDS);
 
 	$rating_votes = $old_rate? $rating['votes'] : $rating['votes'] + 1;
 	$rating_value = ($rating['value']*$rating['votes'] + $rate - $old_rate)/$rating_votes;
@@ -75,7 +76,7 @@ if ( isset($_POST['rate']) ) {
  */
 function gm_hitcounter($gmID, $meta) {
 	/** @var wpdb $wpdb */
-	global $wpdb, $gmDB;
+	global $gmDB;
 	if( isset($_POST['vote']) ) {
 		$meta['likes'] +=1;
 		$gmDB->update_metadata('gmedia', $gmID, 'likes', $meta['likes']);

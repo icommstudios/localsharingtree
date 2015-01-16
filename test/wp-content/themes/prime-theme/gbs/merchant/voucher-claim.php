@@ -27,7 +27,7 @@
 		<tbody>
 			<tr>
 				<td>
-					<?php gb_form_label('claim', array('label'=>'Security Code'), 'voucher'); ?>
+					<?php gb_form_label('claim', array('label'=>gb__('Security Code')), 'voucher'); ?>
 				</td>
 				<td class="gb-form-field gb-form-field-text">
 					<?php 
@@ -38,13 +38,13 @@
 			</tr>
 			<tr>
 				<td>
-					<?php gb_form_label('data[name]', array('label'=>'Redeemers Name'), 'voucher_redemption'); ?>
+					<?php gb_form_label('data[name]', array('label'=>gb__('Redeemers Name')), 'voucher_redemption'); ?>
 				</td>
 				<td class="gb-form-field gb-form-field-text"><?php gb_form_field('data[name]', array('type'=>'text'), 'voucher_redemption'); ?></td>
 			</tr>
 			<tr>
 				<td>
-					<?php gb_form_label('data[date]', array('label'=>'Redeemers Date'), 'voucher_redemption'); ?>
+					<?php gb_form_label('data[date]', array('label'=>gb__('Redeemers Date')), 'voucher_redemption'); ?>
 				</td>
 				<td class="gb-form-field gb-form-field-text">
 					<?php gb_form_field('data[date]', array('type'=>'text'), 'voucher_redemption'); ?>
@@ -52,7 +52,7 @@
 			</tr>
 			<tr>
 				<td>
-					<?php gb_form_label('data[total]', array('label'=>'Total Paid'), 'voucher_redemption'); ?>
+					<?php gb_form_label('data[total]', array('label'=>gb__('Total Paid')), 'voucher_redemption'); ?>
 				</td>
 				<td class="gb-form-field gb-form-field-text">
 					<?php gb_form_field('data[total]', array('type'=>'text'), 'voucher_redemption'); ?>
@@ -60,7 +60,7 @@
 			</tr>
 			<tr>
 				<td>
-					<?php gb_form_label('data[notes]', array('label'=>'Notes'), 'voucher_redemption'); ?>
+					<?php gb_form_label('data[notes]', array('label'=>gb__('Notes')), 'voucher_redemption'); ?>
 				</td>
 				<td class="gb-form-field gb-form-field-text">
 					<?php gb_form_field('data[notes]', array('type'=>'textarea'), 'voucher_redemption'); ?>

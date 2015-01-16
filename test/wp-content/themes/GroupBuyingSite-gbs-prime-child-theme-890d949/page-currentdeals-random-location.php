@@ -35,6 +35,7 @@ get_header(); ?>
 				$args=array(
 					'post_type' => gb_get_deal_post_type(),
 					'post_status' => 'publish',
+					'sf_page_main_query' => true,
 					'paged' => $paged,
 					'orderby' => 'rand',
 					'meta_query' => array(
@@ -43,12 +44,11 @@ get_header(); ?>
 							'value' => array(0, current_time('timestamp')),
 							'compare' => 'NOT BETWEEN'
 						)),
-					
 				);
 				// get prefered location if it's set
 				if ( gb_has_location_preference() ) {
 					$location = gb_get_preferred_location();
-					$args = array_merge( array(gb_get_deal_location_tax() => $location), $args);
+					$args = array_merge( array(gb_get_deal_location_tax() => $location), $args);	
 				}
 				
 				// Randomly order posts upon home page load and allow pagination

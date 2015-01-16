@@ -30,14 +30,14 @@ switch ($album_type) {
 			                    queue: false
 			                },
 			                masonry : {
-			                    columnWidth: 4
+			                	columnWidth: ".gallery-sizer"
 			                }
 			            });
 			        });
 			        jQuery(window).smartresize(function(){
 					  $container1_<?php echo $unique_id;?>.isotope({
 					    // update columnWidth to a percentage of container width
-					    masonry: { columnWidth: 4 }
+					    masonry: { columnWidth: ".gallery-sizer" }
 					  });
 					});
 					<?php

@@ -3,7 +3,7 @@ Contributors: jackdewey
 Donate link: http://yannickcorner.nayanna.biz/wordpress-plugins/modal-dialog/
 Tags: modal, dialog, pop-up, window, multiple
 Requires at least: 2.8
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 
 The purpose of this plugin is to allow users to create one or more modal dialog(s) / pop-up window(s) that will appear when a user visits their site. The number of times that these can load is configurable. They can load content from external sites or custom HTML code into the dialog.
@@ -21,6 +21,45 @@ The purpose of this plugin is to allow users to create one or more modal dialog(
 1. Dialogs can also be assigned to posts/pages within the editor
 
 == Changelog ==
+
+= 3.2.1 =
+* Fixed problem with plugin activation introduced in version 3.2
+
+= 3.2 =
+* Re-arranged admin panel in multiple sections of related settings
+* Fixed to display logic when multiple dialogs are present
+* New configuration to suppress display by URL name
+
+= 3.1.1 =
+* Added new option to control transition mode
+
+= 3.1 =
+* Changed code to only increment cookie values when the dialog actually appears
+* Added new options to be able to specify dialog position when using Colorbox library
+
+= 3.0.9 =
+* Added new option to allow admin to give access to other user levels to the Modal Dialog configuration dialog
+
+= 3.0.8 =
+* Fix to support plugins installed in directory other than default
+
+= 3.0.7 =
+* Small update to allow width and height to be specified in percentages
+
+= 3.0.6 =
+* Corrected issue with new mobile detection library
+
+= 3.0.5 =
+* Updated Mobile Detect library
+
+= 3.0.4 =
+* Set default active value to false for multisite installations
+
+= 3.0.3 =
+* Fix issue with page jump on dialog exit in some browsers
+
+= 3.0.2 =
+* Added new option to ignore esc key to close the dialog
 
 = 3.0.1 =
 * Fix PHP warnings

@@ -21,7 +21,7 @@ requires:
 provides: [Mediabox.open, Mediabox.close, Mediabox.recenter, Mediabox.scanPage]
 
 --------------------------------------------------------------------------------------+
-Easy Media Gallery Lite v1.2.59 rev.1.1.3.25
+Easy Media Gallery Lite v1.2.93 rev.1.1.3.25
 
 http://ghozylab.com/
 http://wordpress.org/extend/plugins/easy-media-gallery/

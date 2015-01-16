@@ -29,9 +29,12 @@ function easymedia_reg_script() {
 	wp_register_style( 'easymedia-cpstyles', plugins_url( 'css/funcstyle.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION, 'all');
 	wp_register_style( 'easymedia-colorpickercss', plugins_url( 'css/colorpicker.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
 	wp_register_style( 'easymedia-sldr', plugins_url( 'css/slider.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
-	wp_register_style( 'easymedia-ibutton', plugins_url( 'css/ibutton.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );	
+	wp_register_style( 'easymedia-ibutton', plugins_url( 'css/ibutton.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
+	wp_register_style( 'emg-bootstrap-css', plugins_url( 'css/bootstrap/css/bootstrap.min.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
 	wp_register_style( 'easymedia-tinymce', plugins_url( 'css/tinymce.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
 	wp_register_style( 'jquery-ui-themes-redmond', plugins_url( 'css/jquery/jquery-ui/themes/smoothness/jquery-ui-1.10.0.custom.min.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
+	wp_register_style( 'emg-tabs-css', plugins_url( 'css/jquery/responsivetabs/responsive-tabs.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
+	wp_register_style( 'emg-tabs-style', plugins_url( 'css/jquery/responsivetabs/style.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
 	wp_register_style( 'easymedia-tinymce', plugins_url( 'css/tinymce.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );	
 	wp_register_style( 'jquery-multiselect-css', plugins_url( 'css/jquery/multiselect/jquery.multiselect.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
 	wp_register_style( 'easymedia-comparison-css', plugins_url( 'css/compare.css' , dirname(__FILE__) ), false, EASYMEDIA_VERSION );
@@ -49,6 +52,11 @@ function easymedia_reg_script() {
 	// JS ( metaboxes.php, ) 
 	wp_register_script( 'easymedia-comparison-js', plugins_url( 'js/func/compare.js' , dirname(__FILE__) ) );
 	wp_register_script( 'jquery-messi-js', plugins_url( 'js/jquery/jquery.messi.min.js' , dirname(__FILE__) ) );
+	wp_register_script( 'emg-bootstrap-js', plugins_url( 'js/bootstrap/bootstrap.min.js' , dirname(__FILE__) ) );	
+	wp_register_script( 'cpscript', plugins_url( 'functions/funcscript.js' , dirname(__FILE__) ) );	
+	wp_register_script( 'emg-tabs', plugins_url( 'js/jquery/responsivetabs/jquery.responsiveTabs.min.js' , dirname(__FILE__) ) );		
+		
+	
 		
 }
 add_action( 'admin_init', 'easymedia_reg_script' );
@@ -202,6 +210,37 @@ add_action( 'wp_ajax_easmedia_img_media_remv', 'easmedia_img_media_remv' );
 
 /*
 |--------------------------------------------------------------------------
+| Generate Gallery Query
+|--------------------------------------------------------------------------
+*/
+function emg_gallery_gen( $id, $paged ) {
+
+	$emargs = array(
+	'post__in' => $id, 
+	'post_type' => 'easymediagallery',
+	'posts_per_page' => 2,
+	'order' => 'ASC',
+	'orderby' => 'menu_order',
+  	'paged' => $paged
+	);
+	
+	return $emargs;
+}	
+
+/*
+|--------------------------------------------------------------------------
+| Generate Gallery Markup
+|--------------------------------------------------------------------------
+*/
+function emg_gallery_markup( $iw, $ih, $aclass, $ahref, $thumb, $alt, $ttl  ) {
+	
+	echo '<div style="width:'.$iw.'px; height:'.$ih.'px;" class="view da-thumbs"><div class="iehand"><a class="'.$aclass.'" rel="easymedia[grid]" href="'.$ahref.'"><img src="'.$thumb.'" alt="'.$alt.'" /><article class="da-animate da-slideFromRight"><p class="emgfittext">'.$ttl.'</p><div class="forspan"><span class="zoom"></span></div></article></a></div></div>';	
+	
+	return;
+}
+
+/*
+|--------------------------------------------------------------------------
 | Easymedia Custom Category Box (Metabox)
 |--------------------------------------------------------------------------
 */
@@ -326,6 +365,15 @@ function easymedia_hex2rgb($hex) {
    return implode(",", $rgb); // returns an array with the rgb values
 }
 
+/*-------------------------------------------------------------------------------*/
+/*  Random String
+/*-------------------------------------------------------------------------------*/
+function emgRandomString($length) {
+        $original_string = array_merge(range(0,9), range('a','z'), range('A', 'Z'));
+        $original_string = implode('', $original_string);
+        return substr(str_shuffle($original_string), 0, $length);
+    }
+	
 /*-------------------------------------------------------------------------------*/
 /*  Shortcode Handler
 /*-------------------------------------------------------------------------------*/
@@ -617,10 +665,12 @@ function emg_download_count() {
     $request = array( 'action' => 'plugin_information', 'timeout' => 15, 'request' => serialize( $args) );
     $url = 'http://api.wordpress.org/plugins/info/1.0/';
     $response = wp_remote_post( $url, array( 'body' => $request ) );
+	if ( !is_wp_error( $response ) ) {
     $plugin_info = unserialize( $response['body'] );
 	$ttldl = $plugin_info->downloaded;
     $ttldls = 'Downloaded : ' .number_format( $ttldl ) . ' times';
-	return $ttldls;
+	return $ttldls; }
+	
 }
 
 if ( easy_get_option( 'easymedia_disen_dasnews' ) == '1' ) {
@@ -705,6 +755,40 @@ function emg_hide_noty() {
 }
 add_action( 'wp_ajax_emg_hide_noty', 'emg_hide_noty' );
 
+/*-------------------------------------------------------------------------------*/
+/*  Create Upgrade Metabox @since 1.2.61
+/*-------------------------------------------------------------------------------*/
+function emg_upgrade_metabox () {
+	$enobuy = '<div style="text-align:center;">';
+	$enobuy .= '<a id="prcngtableclr" style="outline: none !important;" href="#"><img style="cursor:pointer; margin-top: 7px;" src="'.plugins_url( 'images/buy-now.png' , dirname(__FILE__) ).'" width="241" height="95" alt="Buy Now!" ></a>';
+	$enobuy .= '</div>';
+echo $enobuy;	
+}
+
+/*-------------------------------------------------------------------------------*/
+/*  Post Counter
+/*-------------------------------------------------------------------------------*/
+function emg_pcnt() {
+	global $post;
+	$args = array(
+		'post_type' => 'easymediagallery',
+		'order' => 'ASC',
+  		'post_status' => 'all',
+  		'posts_per_page' => -1,
+		'meta_query' => array(
+			array(
+				'key' => 'easmedia_metabox_media_type',
+				'value' => 'Multiple Images (Slider)',
+				'compare' => '='
+			),
+		)
+ 	);
+ 
+$myposts = get_posts( $args );
+	if ( $myposts ) {
+		return (count($myposts));	
+		}
+}
 
 /*-------------------------------------------------------------------------------*/
 /*   Admin Notifications
@@ -721,8 +805,13 @@ function emg_admin_bar_menu(){
                     'meta'   => array('class' => 'emg-upgrade-to-pro', 'target' => '_blank' ),
                 ) );
 }
+
+/* Since @1.2.61 ( Respect Wordpress Guidelines)*/
 if ( easy_get_option( 'easymedia_disen_admnotify' ) == '1' ) {
-add_action( 'admin_bar_menu', 'emg_admin_bar_menu', 1000);
+	
+	if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'easymediagallery' ) {
+		add_action( 'admin_bar_menu', 'emg_admin_bar_menu', 1000);
+		}
 }
 
 /*-------------------------------------------------------------------------------*/
@@ -748,7 +837,7 @@ function easmedia_put_notify_head() {
 	/* Easy Media Gallery */
 function generate(e){
 	var emgNews = new Array(); /* Random Heading temporary disabled */
-      emgNews[0] = "#1 Best Selling Gallery Plugin for WordPress<br />19,800+ PRO users from around the World can not be wrong...";
+      emgNews[0] = "#1 Best Selling Gallery Plugin for WordPress<br />23,000+ PRO users from around the World can not be wrong...";
       emgNews[1] = "Easy to use, looks nice and has a very good feel";
       emgNews[2] = "Powerfull control panel and Shortcode Manager make getting started super easy";
       emgNews[3] = "Easy Media Gallery PRO can be used to embed more than 12 video. Not only from Youtube and Vimeo";
@@ -810,12 +899,12 @@ function easmedia_easymedia_docs() {
         <h2><?php _e('Documentation', 'easmedia'); ?></h2>
         <p><?php _e('This plugin comes with instructional training videos that walk you through every aspect of setting up your new media gallery. We recommend following these videos to setup your media gallery. This user manual is only intended to be a reference guide.', 'easmedia'); ?></p>
 
-    <div class="metabox-holder" style="display:inline-block; max-width: 30%; float:right; vertical-align:top;">
+    <!--<div class="metabox-holder" style="display:inline-block; max-width: 30%; float:right; vertical-align:top;">
 			<div class="postbox">
-            <h3><?php _e( 'Check it Out!', 'easmedia' ); ?></h3>
-            <?php easmedia_news_metabox(); ?>
+            <h3><?php //_e( 'Check it Out!', 'easmedia' ); ?></h3> 
+            <?php //easmedia_news_metabox(); ?>
            </div>
-      </div>
+      </div>--><!-- @since 1.2.79 -->
 <div class="metabox-holder" style="max-width:65%; display:block;">
 			<div class="postbox">
 				<h3><?php _e( 'Subscribe and Get Free Updates', 'easmedia' ); ?></h3>
@@ -841,35 +930,81 @@ function easmedia_easymedia_docs() {
 			<div class="postbox">
 				<h3><?php _e( 'Video Tutorials', 'easmedia' ); ?></h3>
         <div id="easymedia_docs1" style="padding-left:10px !important;">
-        <ul style="list-style: square; position:relative; margin-left:15px; margin-bottom:25px">
-        <li><a href="http://www.youtube.com/watch?v=dXFBNY5t6E8" target="_blank" >How to Create Single Image Media</a></li>
-        <li><a href="http://www.youtube.com/watch?v=htxwZw_aPF0" target="_blank" >How to Create Video Media Types</a></li>  
-        <li><a href="http://www.youtube.com/watch?v=Bsn-CB5Hpbw" target="_blank" >How to Create Audio (mp3) Media Types</a></li>
-        <li><a href="http://www.youtube.com/watch?v=Z2qwXz7GIRw" target="_blank" >How to Publish Easy Media Gallery</a></li>                  
-        <li><a href="http://www.youtube.com/watch?v=2T73wvt_wOA" target="_blank" >How to Change Media Border Size and Color</a></li>
-        <li><a href="http://www.youtube.com/watch?v=56f_C7OXiAE" target="_blank" >How to Change Media Columns</a></li>
-        <li><a href="http://www.youtube.com/watch?v=TQ1MMxhsyD8" target="_blank" >How to Create Grid Gallery</a>&nbsp;&nbsp;<i>(Pro version)</i></li> 
-		<li><a href="http://www.youtube.com/watch?v=OEoNB2LpnSE" target="_blank" >How to Create Filterable Media</a>&nbsp;&nbsp;<i>(Pro version)</i></li>
+        <ul id="vidlist" style="list-style: square; position:relative; margin-left:15px; margin-bottom:25px">
+        <li><a href="#" data-toggle="modal" data-target="#videoModal" data-theVideo="http://www.youtube.com/embed/H1Z3fidyEbE">How to Create Simple Gallery</a>&nbsp;&nbsp;<i>(NEW Feature @since version 1.2.79)</i></li>
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/dXFBNY5t6E8">How to Create Single Image Media</a></li>
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/htxwZw_aPF0">How to Create Video Media Types</a></li>  
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/Bsn-CB5Hpbw">How to Create Audio (mp3) Media Types</a></li>
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/Z2qwXz7GIRw">How to Publish Easy Media Gallery</a></li>                  
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/2T73wvt_wOA">How to Change Media Border Size and Color</a></li>
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/56f_C7OXiAE">How to Change Media Columns</a></li>
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/TQ1MMxhsyD8">How to Create Grid Gallery</a>&nbsp;&nbsp;<i>(Pro version)</i></li> 
+		<li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/OEoNB2LpnSE">How to Create Filterable Media</a>&nbsp;&nbsp;<i>(Pro version)</i></li>
         
-		<li><a href="http://www.youtube.com/watch?v=-N0JNcToHOI" target="_blank" >How to Create Grid Gallery with Pagination</a>&nbsp;&nbsp;<i>(Pro version)</i></li>        
+		<li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/-N0JNcToHOI">How to Create Grid Gallery with Pagination</a>&nbsp;&nbsp;<i>(Pro version)</i></li>        
         
-		<li><a href="http://www.youtube.com/watch?v=skCMKvVLD5o" target="_blank" >How to Set Order of Image</a>&nbsp;&nbsp;<i>(Pro version)</i></li>
-        <li><a href="http://www.youtube.com/watch?v=Oee2cpKT-kE" target="_blank" >How to Create Audio Soundcloud</a>&nbsp;&nbsp;<i>(Pro version)</i></li>
+		<li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/skCMKvVLD5o">How to Set Order of Image</a>&nbsp;&nbsp;<i>(Pro version)</i></li>
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/Oee2cpKT-kE">How to Create Audio Soundcloud</a>&nbsp;&nbsp;<i>(Pro version)</i></li>
         
-<li><a href="http://www.youtube.com/watch?v=uAGWUcs5ofE" target="_blank" >How to Fetch Youtube or Vimeo Thumbnail</a>&nbsp;&nbsp;<i>(Pro version)</i></li>        
+<li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/uAGWUcs5ofE">How to Fetch Youtube or Vimeo Thumbnail</a>&nbsp;&nbsp;<i>(Pro version)</i></li>        
         
-        <li><a href="http://www.youtube.com/watch?v=SYH8Yl2SQd4" target="_blank" >How to Create Audio Reverbnation</a>&nbsp;&nbsp;<i>(Pro version)</i></li>    
-        <li><a href="http://www.youtube.com/watch?v=PEgfleRf6hg" target="_blank" >How to Create Google Maps</a>&nbsp;&nbsp;<i>(Pro version)</i></li>               
-        <li><a href="http://www.youtube.com/watch?v=9cuYyBMKx2k" target="_blank" >How to Insert Image into Media Description</a>&nbsp;&nbsp;<i>(Pro version)</i></li>        
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/SYH8Yl2SQd4">How to Create Audio Reverbnation</a>&nbsp;&nbsp;<i>(Pro version)</i></li>    
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/PEgfleRf6hg">How to Create Google Maps</a>&nbsp;&nbsp;<i>(Pro version)</i></li>               
+        <li><a data-toggle="modal" data-target="#videoModal" href="#" data-theVideo="http://www.youtube.com/embed/9cuYyBMKx2k">How to Insert Image into Media Description</a>&nbsp;&nbsp;<i>(Pro version)</i></li>        
                           
         </ul>
     </div>
   </div> 
+  
+ <!-- Video on Modal  -->
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div>
+                    <iframe width="100%" height="350" src=""></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+ <!-- End Video on Modal  -->  
+ 
+<script type="text/javascript">// <![CDATA[
+jQuery(document).ready(function($) {
+
+      var trigger =jQuery("body").find('[data-toggle="modal"]');
+      trigger.click(function () {
+          var theModal = jQuery(this).data("target"),
+              videoSRC = jQuery(this).attr("data-theVideo"),
+              videoSRCauto = videoSRC + "?autoplay=1";
+          jQuery(theModal + ' iframe').attr('src', videoSRCauto);
+          jQuery(theModal + ' button.close').click(function () {
+              jQuery(theModal + ' iframe').attr('src', videoSRC);
+          });
+          jQuery('.modal').click(function () {
+              jQuery(theModal + ' iframe').attr('src', videoSRC);
+          });
+      });
+	  
+});
+// ]]></script>
+ 
+  
  </div>     
 
   </div> 
 	<?php 
 }
+
+
+/*-------------------------------------------------------------------------------*/
+/*   Featured Plugins Page
+/*-------------------------------------------------------------------------------*/
+if ( is_admin() ){
+	require_once( EASYMEDG_PLUGIN_DIR . 'includes/emg-featured.php' );
+	}
 
 /*-------------------------------------------------------------------------------*/
 /*   Comparison Page
@@ -912,14 +1047,14 @@ function easymedia_comparison() {
         <li class="row_style_4"><span>Audio Media</span></li>
         <li class="row_style_2"><span>HTML5 Video/Audio (mp4, webm, ogv)</span></li>   
         <li class="row_style_4"><span>Auto Fetch Youtube/Vimeo Thumbnail</span><span class="newftr"></span></li>    
-        <li class="row_style_2"><span>Photo Albums</span><a target="_blank" href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/best-gallery-and-photo-albums-demo/" style="text-decoration:underline !important;"> Click for Sample</a>&nbsp;&nbsp;<span class="newftr"></span></li>                 
-        <li class="row_style_4"><span>Image Slider</span><a target="_blank" href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/best-wordpress-image-slider-plugin/" style="text-decoration:underline !important;"> Click for Sample</a>&nbsp;&nbsp;<span class="newftr"></span></li>
-        <li class="row_style_2"><span>Grid Gallery</span><a target="_blank" href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/best-gallery-grid-galleries-plugin/" style="text-decoration:underline !important;"> Click for Sample</a></li>  
-         <li class="row_style_4"><span>Filterable Media</span><a target="_blank" href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/best-wordpress-portfolio-plugin/" style="text-decoration:underline !important;"> Click for Sample</a></li>                     
-        <li class="row_style_2"><span>Pagination</span><a target="_blank" href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/best-wordpress-plugin-gallery-using-pagination/" style="text-decoration:underline !important;"> Click for Sample</a>&nbsp;&nbsp;<span class="newftr"></span></li>
-        <li class="row_style_4"><span>Carousel</span><a target="_blank" href="http://ghozylab.com/plugins/easy-media-gallery-pro/demo/best-wordpress-carousel-image-plugin/" style="text-decoration:underline !important;"> Click for Sample</a>&nbsp;&nbsp;<span class="newftr"></span></li>
-        <li class="row_style_2"><span>Backup & Restore Settings</span></li>        
-        <li class="row_style_4"><span>Link Media</span></li>
+        <li class="row_style_2"><span>Photo Albums</span><a target="_blank" href="http://goo.gl/B6WraQ" style="text-decoration:underline !important;"> Click for Sample</a>&nbsp;&nbsp;<span class="newftr"></span></li>                 
+        <li class="row_style_4"><span>Image Slider</span><a target="_blank" href="http://goo.gl/kica46" style="text-decoration:underline !important;"> Click for Sample</a>&nbsp;&nbsp;<span class="newftr"></span></li>
+        <li class="row_style_2"><span>Image Gallery</span><a target="_blank" href="http://goo.gl/CLoA4r" style="text-decoration:underline !important;"> Click for Sample</a></li>  
+         <li class="row_style_4"><span>Filterable Media</span><a target="_blank" href="http://goo.gl/XprVz6" style="text-decoration:underline !important;"> Click for Sample</a></li>                     
+        <li class="row_style_2"><span>Pagination</span><a target="_blank" href="http://goo.gl/Bk0gUE" style="text-decoration:underline !important;"> Click for Sample</a>&nbsp;&nbsp;<span class="newftr"></span></li>
+        <li class="row_style_4"><span>Carousel</span><a target="_blank" href="http://goo.gl/Zyy6DE" style="text-decoration:underline !important;"> Click for Sample</a>&nbsp;&nbsp;<span class="newftr"></span></li>
+        <li class="row_style_2"><span>10+ Lightbox styles</span><a target="_blank" href="http://goo.gl/4oz80i" style="text-decoration:underline !important;"> Click for Sample</a>&nbsp;&nbsp;<span class="newftr"></span></li>      
+        <li class="row_style_4"><span>Backup & Restore Settings</span></li>
         <li class="row_style_2"><span>Google Maps / Street View</span></li>
         <li class="row_style_4"><span>Custom CSS</span></li>
         <li class="row_style_2"><span>Custom Columns</span></li>
@@ -928,8 +1063,6 @@ function easymedia_comparison() {
         <li class="row_style_4"><span>Custom Thumbnail Size</span></li>
         <li class="row_style_2"><span>Image &amp; Video Custom Size</span></li>
         <li class="row_style_4"><span>Unlimited colors and layout</span></li>
-        <li class="row_style_2"><span>Place media wherever you want</span></li>
-        <li class="row_style_4"><span>Media Style</span><a target="_blank" href="http://ghozylab.com/" style="text-decoration:underline !important;"> Click for Sample</a></li>
         <li class="row_style_2"><span>Pattern Overlay</span></li>
         <li class="row_style_4"><span>Powerfull Control Panel </span> <a href="<?php echo plugins_url( 'images/pro-version-control-panel.png' , dirname(__FILE__) ) ?>   " style="text-decoration:underline !important;">Screenshot</a></li>
         <li class="row_style_2"><span>Advanced Shortcode </span><a href="<?php echo plugins_url( 'images/pro-version-shortcode-manager.png' , dirname(__FILE__) ) ?>" style="text-decoration:underline !important;">Screenshot</a></li>
@@ -957,7 +1090,7 @@ function easymedia_comparison() {
         <li class="row_style_1 align_center"><span class="pricing_no"></span></li>      
         <li class="row_style_3 align_center"><span class="pricing_no"></span></li>
         <li class="row_style_1 align_center"><span class="pricing_no"></span></li>
-        <li class="row_style_3 align_center"><span class="pricing_no"></span></li>        
+        <li class="row_style_3 align_center"><span class="pricing_yes"></span></li>        
         <li class="row_style_1 align_center"><span class="pricing_no"></span></li>        
         <li class="row_style_3 align_center"><span class="pricing_no"></span></li>
         <li class="row_style_1 align_center"><span class="pricing_no"></span></li>
@@ -971,8 +1104,6 @@ function easymedia_comparison() {
         <li class="row_style_1 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_3 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_1 align_center"><span class="pricing_no"></span></li>
-        <li class="row_style_3 align_center"><span class="pricing_no"></span></li>
-        <li class="row_style_1 align_center"><span>light</span></li>
         <li class="row_style_3 align_center"><span>3 patterns</span></li>
         <li class="row_style_1 align_center"><span class="pricing_no"></span></li>
         <li class="row_style_3 align_center"><span class="pricing_no"></span></li>
@@ -1016,8 +1147,6 @@ function easymedia_comparison() {
         <li class="row_style_2 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_4 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_2 align_center"><span class="pricing_yes"></span></li>
-        <li class="row_style_4 align_center"><span class="pricing_yes"></span></li>
-        <li class="row_style_2 align_center"><span>light, dark &amp; transparent</span></li>
         <li class="row_style_4 align_center"><span>15 patterns</span></li>
         <li class="row_style_2 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_4 align_center"><span class="pricing_yes"></span></li>
@@ -1060,8 +1189,6 @@ function easymedia_comparison() {
         <li class="row_style_2 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_4 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_2 align_center"><span class="pricing_yes"></span></li>
-        <li class="row_style_4 align_center"><span class="pricing_yes"></span></li>
-        <li class="row_style_2 align_center"><span>light, dark &amp; transparent</span></li>
         <li class="row_style_4 align_center"><span>15 patterns</span></li>
         <li class="row_style_2 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_4 align_center"><span class="pricing_yes"></span></li>
@@ -1103,8 +1230,6 @@ function easymedia_comparison() {
         <li class="row_style_2 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_4 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_2 align_center"><span class="pricing_yes"></span></li>
-        <li class="row_style_4 align_center"><span class="pricing_yes"></span></li>
-        <li class="row_style_2 align_center"><span>light, dark &amp; transparent</span></li>
         <li class="row_style_4 align_center"><span>15 patterns</span></li>
         <li class="row_style_2 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_4 align_center"><span class="pricing_yes"></span></li>
@@ -1146,8 +1271,6 @@ function easymedia_comparison() {
         <li class="row_style_1 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_3 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_1 align_center"><span class="pricing_yes"></span></li>
-        <li class="row_style_3 align_center"><span class="pricing_yes"></span></li>
-        <li class="row_style_1 align_center"><span>light, dark &amp; transparent</span></li>
         <li class="row_style_3 align_center"><span>15 patterns</span></li>
         <li class="row_style_1 align_center"><span class="pricing_yes"></span></li>
         <li class="row_style_3 align_center"><span class="pricing_yes"></span></li>
@@ -1176,30 +1299,6 @@ function easmedia_news_metabox () {
 	$new .= '<a style="outline: none !important;" href="https://wordpress.org/plugins/easy-notify-lite/" target="_blank"><img style="cursor:pointer; margin-top: 7px; margin-bottom: 7px;" src="'.plugins_url( 'images/new-release.png' , dirname(__FILE__) ).'" width="241" height="500" alt="New Release!" ></a>';
 	$new .= '</div>';
 echo $new;	
-}
-
-/*-------------------------------------------------------------------------------*/
-/*   Metabox Donation
-/*-------------------------------------------------------------------------------*/
-function easmedia_donate_metabox() {
-$emgdonate = '<p>';
-$emgdonate .= '<span style="color:#666666;margin-left:2px; font-size:12px;">If you love Easy Media Gallery, any donation would be appreciated! It helps to continue the development and support of the plugin.</span><br /><br />
-<a id="easymediadonatebtn" class="thickbox"><img style="cursor:pointer;" src="'.plugins_url( 'images/btn_donate_LG.gif' , dirname(__FILE__) ).'" width="92" height="26" alt="Donate Us" ></a>';
-$emgdonate .= '</p>';
-echo $emgdonate;
-}
-
-add_filter('admin_footer','easmedia_donate_metabox_form');
-function easmedia_donate_metabox_form(){
-$emgdonatefrm = '<div id="easymedia_donate" style="display:none">';	
-$emgdonatefrm .= '<p style="padding:1px;"><span style="color:#666666;margin-left:2px; font-size:12px;">If you love Easy Media Gallery, any donation would be appreciated! It helps to continue the development and support of the plugin.</span></p><form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="BDUYH4QK698CY">
-<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal — The safer, easier way to pay online.">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>';
-$emgdonatefrm .= '</div>';
-echo $emgdonatefrm;
 }
 
 /*-------------------------------------------------------------------------------*/
@@ -1253,6 +1352,17 @@ if (typeof(jQuery().pointer) != 'undefined') {
 // ]]></script>
 <?php
 }
+
+/*-------------------------------------------------------------------------------*/
+/*   Enqueue script/styles based on custom page
+/*-------------------------------------------------------------------------------*/
+function emg_enqueue_on_custom_page() {
+	if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] == 'docs' ){
+		wp_enqueue_style( 'emg-bootstrap-css' );
+		wp_enqueue_script( 'emg-bootstrap-js' );
+		}
+}
+add_action( 'admin_enqueue_scripts', 'emg_enqueue_on_custom_page' );
 
 
 ?>

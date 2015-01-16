@@ -314,6 +314,7 @@ function gmediaLib(){
 	}
 
 	foreach ($gmediaQuery as $item) {
+
 	$meta = $gmDB->get_metadata('gmedia', $item->ID);
 	$type = explode('/', $item->mime_type);
 	$item_url = $gmCore->upload['url'] . '/' . $gmGallery->options['folder'][$type[0]] . '/' . $item->gmuid;
@@ -332,10 +333,20 @@ function gmediaLib(){
 	$tags = $gmDB->get_the_gmedia_terms($item->ID, 'gmedia_tag');
 	$albs = $gmDB->get_the_gmedia_terms($item->ID, 'gmedia_album');
 	$cats = $gmDB->get_the_gmedia_terms($item->ID, 'gmedia_category');
-	?>
+
+    $list_row_class = '';
+    if ('public' != $item->status) {
+        if('private' == $item->status){
+            $list_row_class = ' list-group-item-info';
+        } elseif('draft' == $item->status){
+            $list_row_class = ' list-group-item-warning';
+        }
+    }
+
+    ?>
 	<?php if (!$gmProcessor->mode){
 	$is_selected = in_array($item->ID, $gmProcessor->selected_items)? true : false; ?>
-		<div class="list-group-item d-row clearfix<?php echo $is_selected? ' active' : ''; ?>" id="list-item-<?php echo $item->ID; ?>" data-id="<?php echo $item->ID; ?>" data-type="<?php echo $type[0]; ?>">
+		<div class="list-group-item d-row clearfix<?php echo ($is_selected? ' active' : '') . $list_row_class; ?>" id="list-item-<?php echo $item->ID; ?>" data-id="<?php echo $item->ID; ?>" data-type="<?php echo $type[0]; ?>">
 			<div class="gmedia_id">#<?php echo $item->ID; ?></div>
 			<label class="cb_media-object">
 				<input name="doaction[]" type="checkbox"<?php echo $is_selected? ' checked="checked"' : ''; ?> data-type="<?php echo $type[0]; ?>" class="hidden" value="<?php echo $item->ID; ?>"/>
@@ -398,7 +409,10 @@ function gmediaLib(){
 				</div>
 				<div class="col-md-6">
 					<div class="media-meta">
-						<span class="label label-default"><?php _e('Type', 'gmLang'); ?>:</span> <?php echo $item->mime_type; //echo ucfirst($type[0]); ?>
+						<span class="label label-default"><?php _e('Status', 'gmLang'); ?>:</span> <?php echo $item->status; ?>
+					</div>
+					<div class="media-meta">
+						<span class="label label-default"><?php _e('Type', 'gmLang'); ?>:</span> <?php echo $item->mime_type; ?>
 					</div>
 					<?php if('image' == $type[0]){
 						$_metadata = unserialize($meta['_metadata'][0]);
@@ -453,103 +467,106 @@ function gmediaLib(){
 			<div class="gmedia_id">#<?php echo $item->ID; ?></div>
 			<div class="li_media-object">
 				<span data-target="<?php echo $item_url; ?>" class="thumbnail">
-					<img class="gmedia-thumb" src="<?php echo $gmCore->gm_get_media_image($item, 'thumb'); ?>" alt=""/>
-					<?php if(('image' != $type[0]) && isset($meta['cover'][0]) && !empty($meta['cover'][0])){ ?>
-						<img class="gmedia-typethumb" src="<?php echo $gmCore->gm_get_media_image($item, 'thumb', false); ?>" alt=""/>
-					<?php } ?>
+                    <img class="gmedia-thumb" src="<?php echo $gmCore->gm_get_media_image($item, 'thumb'); ?>" alt=""/>
+                    <?php if(('image' != $type[0]) && isset($meta['cover'][0]) && !empty($meta['cover'][0])){ ?>
+                        <img class="gmedia-typethumb" src="<?php echo $gmCore->gm_get_media_image($item, 'thumb', false); ?>" alt=""/>
+                    <?php } ?>
 				</span>
 			</div>
 
 			<div class="media-body">
-				<div class="col-md-6">
-					<p class="media-title"><?php echo esc_html($item->title); ?>&nbsp;</p>
+                <div class="col-md-6">
+                    <p class="media-title"><?php echo esc_html($item->title); ?>&nbsp;</p>
 
-					<p class="media-caption"><?php echo esc_html($item->description); ?></p>
+                    <p class="media-caption"><?php echo esc_html($item->description); ?></p>
 
-					<p class="media-meta"><span class="label label-default"><?php _e('Album', 'gmLang'); ?>:</span>
-						<?php
-						if($albs){
-							$terms_album = array();
-							foreach($albs as $c){
-								$terms_album[] = sprintf('<span class="album">%s</span>', esc_html($c->name));
-							}
-							$terms_album = join(', ', $terms_album);
-						} else{
-							$terms_album = '<span class="album">&#8212;</span>';
-						}
-						echo $terms_album;
+                    <p class="media-meta"><span class="label label-default"><?php _e('Album', 'gmLang'); ?>:</span>
+                        <?php
+                        if($albs){
+                            $terms_album = array();
+                            foreach($albs as $c){
+                                $terms_album[] = sprintf('<span class="album">%s</span>', esc_html($c->name));
+                            }
+                            $terms_album = join(', ', $terms_album);
+                        } else{
+                            $terms_album = '<span class="album">&#8212;</span>';
+                        }
+                        echo $terms_album;
 
-						if($is_webimage){
-							?>
-							<br/><span class="label label-default"><?php _e('Category', 'gmLang'); ?>:</span>
-							<?php
-							if($cats){
-								$terms_category = array();
-								foreach($cats as $c){
-									$terms_category[] = sprintf('<span class="category">%s</span>', esc_html($gmGallery->options['taxonomies']['gmedia_category'][$c->name]));
-								}
-								$terms_category = join(', ', $terms_category);
-							} else{
-								$terms_category = sprintf('<span class="category">%s</span>', __('Uncategorized'));
-							}
-							echo $terms_category;
-						} ?>
-						<br/><span class="label label-default"><?php _e('Tags', 'gmLang'); ?>:</span>
-						<?php
-						if($tags){
-							$terms_tag = array();
-							foreach($tags as $c){
-								$terms_tag[] = sprintf('<span class="tag">%s</span>', esc_html($c->name));
-							}
-							$terms_tag = join(', ', $terms_tag);
-						} else{
-							$terms_tag = '&#8212;';
-						}
-						echo $terms_tag;
-						?>
-					</p>
-				</div>
-				<div class="col-md-6">
-					<div class="media-meta">
-						<span class="label label-default"><?php _e('Type', 'gmLang'); ?>:</span> <?php echo $item->mime_type; //echo ucfirst($type[0]); ?>
-					</div>
-					<?php if('image' == $type[0]){
-						$_metadata = unserialize($meta['_metadata'][0]);
-						?>
-						<div class="media-meta">
-							<span class="label label-default"><?php _e('Size', 'gmLang'); ?>
-								:</span> <?php echo $_metadata['original']['width'] . ' × ' . $_metadata['original']['height']; ?>
-						</div>
-					<?php } ?>
-					<div class="media-meta"><span class="label label-default"><?php _e('Filename', 'gmLang'); ?>:</span>
-						<a href="<?php echo $item_url; ?>"><?php echo $item->gmuid; ?></a></div>
-					<div class="media-meta">
-						<span class="label label-default"><?php _e('Author', 'gmLang'); ?>
-							:</span> <?php printf('<span class="gmedia-author">%s</a>', get_user_option('display_name', $item->author)); ?>
-					</div>
-					<div class="media-meta"><span class="label label-default"><?php _e('Date', 'gmLang'); ?>:</span> <?php echo $item->date;
-						echo ' <small class="modified" title="' . __('Last Modified Date', 'gmLang') . '">' . (($item->modified != $item->date)? $item->modified : '') . '</small>';
-						?></div>
-					<div class="media-meta"><span class="label label-default"><?php _e('Link', 'gmLang'); ?>:</span>
-						<?php if(!empty($item->link)){ ?>
-							<a href="<?php echo $item->link; ?>"><?php echo $item->link; ?></a>
-						<?php
-						} else{
-							echo '&#8212;';
-						} ?></div>
-					<?php if('image' == $type[0]){ ?>
-						<p class="media-meta" style="margin:5px 4px;">
-							<a href="<?php echo $gmCore->gm_get_media_image($item, 'original'); ?>" data-target="#previewModal" class="preview-modal" title="<?php echo esc_attr($item->title); ?>">
-								<?php _e('View Original', 'gmLang'); ?>
-							</a>
-						</p>
-					<?php } ?>
-				</div>
+                        if($is_webimage){
+                            ?>
+                            <br/><span class="label label-default"><?php _e('Category', 'gmLang'); ?>:</span>
+                            <?php
+                            if($cats){
+                                $terms_category = array();
+                                foreach($cats as $c){
+                                    $terms_category[] = sprintf('<span class="category">%s</span>', esc_html($gmGallery->options['taxonomies']['gmedia_category'][$c->name]));
+                                }
+                                $terms_category = join(', ', $terms_category);
+                            } else{
+                                $terms_category = sprintf('<span class="category">%s</span>', __('Uncategorized'));
+                            }
+                            echo $terms_category;
+                        } ?>
+                        <br/><span class="label label-default"><?php _e('Tags', 'gmLang'); ?>:</span>
+                        <?php
+                        if($tags){
+                            $terms_tag = array();
+                            foreach($tags as $c){
+                                $terms_tag[] = sprintf('<span class="tag">%s</span>', esc_html($c->name));
+                            }
+                            $terms_tag = join(', ', $terms_tag);
+                        } else{
+                            $terms_tag = '&#8212;';
+                        }
+                        echo $terms_tag;
+                        ?>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <div class="media-meta">
+                        <span class="label label-default"><?php _e('Status', 'gmLang'); ?>:</span> <?php echo $item->status; ?>
+                    </div>
+                    <div class="media-meta">
+                        <span class="label label-default"><?php _e('Type', 'gmLang'); ?>:</span> <?php echo $item->mime_type; ?>
+                    </div>
+                    <?php if('image' == $type[0]){
+                        $_metadata = unserialize($meta['_metadata'][0]);
+                        ?>
+                        <div class="media-meta">
+                            <span class="label label-default"><?php _e('Size', 'gmLang'); ?>
+                                :</span> <?php echo $_metadata['original']['width'] . ' × ' . $_metadata['original']['height']; ?>
+                        </div>
+                    <?php } ?>
+                    <div class="media-meta"><span class="label label-default"><?php _e('Filename', 'gmLang'); ?>:</span>
+                        <a href="<?php echo $item_url; ?>"><?php echo $item->gmuid; ?></a></div>
+                    <div class="media-meta">
+                        <span class="label label-default"><?php _e('Author', 'gmLang'); ?>
+                            :</span> <?php printf('<span class="gmedia-author">%s</a>', get_user_option('display_name', $item->author)); ?>
+                    </div>
+                    <div class="media-meta"><span class="label label-default"><?php _e('Date', 'gmLang'); ?>:</span> <?php echo $item->date;
+                        echo ' <small class="modified" title="' . __('Last Modified Date', 'gmLang') . '">' . (($item->modified != $item->date)? $item->modified : '') . '</small>';
+                        ?></div>
+                    <div class="media-meta"><span class="label label-default"><?php _e('Link', 'gmLang'); ?>:</span>
+                        <?php if(!empty($item->link)){ ?>
+                            <a href="<?php echo $item->link; ?>"><?php echo $item->link; ?></a>
+                        <?php
+                        } else{
+                            echo '&#8212;';
+                        } ?></div>
+                    <?php if('image' == $type[0]){ ?>
+                        <p class="media-meta" style="margin:5px 4px;">
+                            <a href="<?php echo $gmCore->gm_get_media_image($item, 'original'); ?>" data-target="#previewModal" class="preview-modal" title="<?php echo esc_attr($item->title); ?>">
+                                <?php _e('View Original', 'gmLang'); ?>
+                            </a>
+                        </p>
+                    <?php } ?>
+                </div>
 			</div>
 		</div>
 		<?php
-		continue;
-	}
+		    continue;
+	    }
 		?>
 		<form class="list-group-item row d-row edit-gmedia" id="list-item-<?php echo $item->ID; ?>" data-id="<?php echo $item->ID; ?>" data-type="<?php echo $type[0]; ?>" role="form">
 			<div class="col-sm-4" style="max-width:350px;">
@@ -621,20 +638,20 @@ function gmediaLib(){
 						<?php } ?>
 						<?php if($gmCore->caps['gmedia_terms']){ ?>
 							<?php if($is_webimage){ ?>
-								<div class="form-group">
-									<?php
-									$cat_name = empty($cats)? 0 : reset($cats)->name;
-									$term_type = 'gmedia_category';
-									$gm_terms = $gmGallery->options['taxonomies'][$term_type];
+                                <?php
+                                $cat_name = empty($cats)? 0 : reset($cats)->name;
+                                $term_type = 'gmedia_category';
+                                $gm_terms = $gmGallery->options['taxonomies'][$term_type];
 
-									$terms_category = '';
-									if(count($gm_terms)){
-										foreach($gm_terms as $term_name => $term_title){
-											$selected_option = ($cat_name === $term_name)? ' selected="selected"' : '';
-											$terms_category .= '<option' . $selected_option . ' value="' . $term_name . '">' . esc_html($term_title) . '</option>' . "\n";
-										}
-									}
-									?>
+                                $terms_category = '';
+                                if(count($gm_terms)){
+                                    foreach($gm_terms as $term_name => $term_title){
+                                        $selected_option = ($cat_name === $term_name)? ' selected="selected"' : '';
+                                        $terms_category .= '<option' . $selected_option . ' value="' . $term_name . '">' . esc_html($term_title) . '</option>' . "\n";
+                                    }
+                                }
+                                ?>
+								<div class="form-group">
 									<label><?php _e('Category', 'gmLang'); ?> </label>
 									<select name="terms[gmedia_category]" class="gmedia_category form-control input-sm">
 										<option<?php echo $cat_name? '' : ' selected="selected"'; ?> value=""><?php _e('Uncategorized', 'gmLang'); ?></option>
@@ -643,50 +660,59 @@ function gmediaLib(){
 								</div>
 							<?php } ?>
 
-							<div class="form-group">
-								<?php
-								$alb_id = empty($albs)? 0 : reset($albs)->term_id;
-								$term_type = 'gmedia_album';
-								$args = array();
-								if(!$gmCore->caps['gmedia_edit_others_media']){
-									$args = array('global' => array(0, $user_ID), 'orderby' => 'global_desc_name');
-								}
-								$gm_terms = $gmDB->get_terms($term_type, $args);
+							<?php
+                            $alb_id = empty($albs)? 0 : reset($albs)->term_id;
+                            $term_type = 'gmedia_album';
+                            $args = array();
+                            if(!$gmCore->caps['gmedia_edit_others_media']){
+                                $args = array('global' => array(0, $user_ID), 'orderby' => 'global_desc_name');
+                            }
+                            $gm_terms = $gmDB->get_terms($term_type, $args);
 
-								$terms_album = '';
-								if(count($gm_terms)){
-									foreach($gm_terms as $term){
-										$author_name = '';
-										if($term->global){
-											if($gmCore->caps['gmedia_edit_others_media']){
-												$author_name .= ' &nbsp; ' . sprintf(__('by %s', 'gmLang'), get_the_author_meta('display_name', $term->global));
-											}
-										} else{
-											$author_name .= ' &nbsp; (' . __('shared', 'gmLang') . ')';
-										}
-										$selected_option = ($alb_id == $term->term_id)? ' selected="selected"' : '';
-										$terms_album .= '<option' . $selected_option . ' value="' . $term->term_id . '">' . esc_html($term->name) . $author_name . '</option>' . "\n";
-									}
-								}
-								?>
+                            $terms_album = '';
+                            $album_status = 'none';
+                            if(count($gm_terms)){
+                                foreach($gm_terms as $term){
+                                    $author_name = '';
+                                    if($term->global){
+                                        if($gmCore->caps['gmedia_edit_others_media']){
+                                            $author_name .= ' &nbsp; ' . sprintf(__('by %s', 'gmLang'), get_the_author_meta('display_name', $term->global));
+                                        }
+                                    } else{
+                                        $author_name .= ' &nbsp; (' . __('shared', 'gmLang') . ')';
+                                    }
+                                    if ('public' != $term->status) {
+                                        $author_name .= ' [' . $term->status . ']';
+                                    }
+
+                                    $selected_option = '';
+                                    if($alb_id == $term->term_id) {
+                                        $selected_option = ' selected="selected"';
+                                        $album_status = $term->status;
+                                    }
+                                    $terms_album .= '<option' . $selected_option . ' value="' . $term->term_id . '">' . esc_html($term->name) . $author_name . '</option>' . "\n";
+                                }
+                            }
+                            ?>
+                            <div class="form-group status-album bg-status-<?php echo $album_status; ?>">
 								<label><?php _e('Album ', 'gmLang'); ?></label>
 								<select name="terms[gmedia_album]" class="combobox_gmedia_album form-control input-sm" placeholder="<?php _e('Album Name...', 'gmLang'); ?>">
 									<option<?php echo $alb_id? '' : ' selected="selected"'; ?> value=""></option>
 									<?php echo $terms_album; ?>
 								</select>
 							</div>
+                            <?php
+                            if(!empty($tags)){
+                                $terms_tag = array();
+                                foreach($tags as $c){
+                                    $terms_tag[] = esc_html($c->name);
+                                }
+                                $terms_tag = join(', ', $terms_tag);
+                            } else{
+                                $terms_tag = '';
+                            }
+                            ?>
 							<div class="form-group">
-								<?php
-								if(!empty($tags)){
-									$terms_tag = array();
-									foreach($tags as $c){
-										$terms_tag[] = esc_html($c->name);
-									}
-									$terms_tag = join(', ', $terms_tag);
-								} else{
-									$terms_tag = '';
-								}
-								?>
 								<label><?php _e('Tags ', 'gmLang'); ?></label>
 								<textarea name="terms[gmedia_tag]" class="gmedia_tags_input form-control input-sm" rows="1" cols="50"><?php echo $terms_tag; ?></textarea>
 							</div>
@@ -710,12 +736,23 @@ function gmediaLib(){
 										<span class="glyphicon glyphicon-calendar"></span></button></span>
 							</div>
 						</div>
+						<div class="form-group status-item bg-status-<?php echo $item->status; ?>">
+							<label><?php _e('Status', 'gmLang'); ?></label>
+                            <select name="status" class="form-control input-sm">
+                                <option <?php selected($item->status, 'public'); ?> value="public"><?php _e('Public', 'gmLang'); ?></option>
+                                <option <?php selected($item->status, 'private'); ?> value="private"><?php _e('Private', 'gmLang'); ?></option>
+                                <option <?php selected($item->status, 'draft'); ?> value="draft"><?php _e('Draft', 'gmLang'); ?></option>
+                            </select>
+						</div>
 					</div>
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label><?php _e('Author', 'gmLang'); ?></label>
-							<?php $user_ids = $gmCore->caps['gmedia_edit_others_media']? $gmCore->get_editable_user_ids() : false;
+							<?php $user_ids = $gmCore->caps['gmedia_delete_others_media']? $gmCore->get_editable_user_ids() : false;
 							if($user_ids){
+                                if(!in_array($user_ID, $user_ids)){
+                                    array_push($user_ids, $user_ID);
+                                }
 								wp_dropdown_users(array(
 									'include' => $user_ids,
 									'include_selected' => true,
@@ -732,14 +769,15 @@ function gmediaLib(){
 						</div>
 						<div class="media-meta"><span class="label label-default"><?php _e('ID', 'gmLang') ?>:</span> <strong><?php echo $item->ID; ?></strong></div>
 						<div class="media-meta"><span class="label label-default"><?php _e('Type', 'gmLang') ?>
-								:</span> <?php echo $item->mime_type; //echo ucfirst($type[0]); ?></div>
+								:</span> <?php echo $item->mime_type; ?></div>
 						<div class="media-meta"><span class="label label-default"><?php _e('File Size', 'gmLang') ?> :</span> <?php echo $gmCore->filesize($item_path); ?>
 						</div>
 						<?php if('image' == $type[0]){
 							$_metadata = unserialize($meta['_metadata'][0]); ?>
 							<div class="media-meta"><span class="label label-default"><?php _e('Dimensions', 'gmLang') ?>
-									:</span> <?php echo $_metadata['original']['width'] . ' × ' . $_metadata['original']['height']; ?></div>
+									:</span> <span title="<?php echo $_metadata['web']['width'] . ' × ' . $_metadata['web']['height'] . ', ' . $_metadata['thumb']['width'] . ' × ' . $_metadata['thumb']['height']; ?>"><?php echo $_metadata['original']['width'] . ' × ' . $_metadata['original']['height']; ?></span></div>
 						<?php } ?>
+						<div class="media-meta"><span class="label label-default"><?php _e('Uploaded', 'gmLang') ?>:</span><?php echo $item->date; ?></div>
 						<div class="media-meta"><span class="label label-default"><?php _e('Last Edited', 'gmLang') ?>:</span>
 							<span class="gm-last-edited modified"><?php echo $item->modified; ?></span></div>
 					</div>

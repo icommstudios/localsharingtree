@@ -19,6 +19,8 @@ require_once('customfunctions/sf-custom-csv-reports/SF_CustomDealExport.class.ph
 require_once('customfunctions/sf-custom-csv-reports/SF_CustomSalesExport.class.php');
 require_once('customfunctions/sf-credit-codes/SF_CreditCodes.class.php');
 require_once('customfunctions/SF_CustomSearch.php');
+require_once('customfunctions/SF_CustomTaxonomies.php');
+require_once('customfunctions/sf-deal-filters/SF_DealFilters.php');
 
 // This theme uses wp_nav_menu() in one location.
 register_nav_menus( array(
@@ -430,12 +432,23 @@ function custom_gb_redirect_away_from_home() {
 //Handle Merchant Register & Submit Deal links & redirect
 add_action( 'init', 'custom_handle_merchant_register_deals', 99 );
 function custom_handle_merchant_register_deals() {
+	//Check if merchant register form and already hase mechant registered
+	if ( stripos($_SERVER['REQUEST_URI'], 'merchant/register') !== false && is_user_logged_in() ) { //Group_Buying_Merchants_Registration::is_merchant_registration_page()
+		//On merchant registration page and already has merchant
+		if ( gb_get_merchants_by_account( get_current_user_id() ) ) {
+			Group_Buying_Controller::set_message( gb__( 'You have already registered your business. <br>If you need to make changes, you can do so on your <a style="color: #FFF; text-decoration: underline;" href="'.gb_get_account_url().'">Account page</a>.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
+			wp_redirect( gb_get_merchant_account_url() );
+			//wp_redirect( gb_get_account_url() );
+			exit();
+		}
+	}
+	
 	if ( !isset( $_GET['action_page'] ) ) return;
 	
 	//Register merchant
 	if ( $_GET['action_page'] == 'register_merchant' ) {
 		if ( !is_user_logged_in() ) {
-			Group_Buying_Controller::set_message( gb__( 'In order to Register Your Business, You Must Register as a User, or Log In First.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
+			Group_Buying_Controller::set_message( gb__( 'In order to Register Your Business You Must Register as a User, or Log In First.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
 			//Redirect to login
 			Group_Buying_Controller::login_required();
 		} else {
@@ -445,9 +458,9 @@ function custom_handle_merchant_register_deals() {
 				wp_redirect( gb_get_merchant_registration_url() );
 				exit();
 			} else {
-				Group_Buying_Controller::set_message( gb__( 'You have already registered your business, if you need to make changes, you can do so on your Account page.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
-				//wp_redirect( gb_get_merchant_account_url() );
-				wp_redirect( gb_get_account_url() );
+				Group_Buying_Controller::set_message( gb__( 'You have already registered your business. <br>If you need to make changes, you can do so on your <a style="color: #FFF; text-decoration: underline;" href="'.gb_get_account_url().'">Account page</a>.' ), Group_Buying_Controller::MESSAGE_STATUS_INFO );
+				wp_redirect( gb_get_merchant_account_url() );
+				//wp_redirect( gb_get_account_url() );
 				exit();
 					
 			}
@@ -691,7 +704,8 @@ function wp_pagination($this_query = null) {
 function custom_show_filter_letters() {
 
 	//Also show locations filter
-	$locations = get_terms("gb_location", array('hide_empty' => false, 'fields' => 'all'));
+	//$locations = get_terms("gb_location", array('hide_empty' => false, 'fields' => 'all'));
+	$locations = gb_get_locations(); //Use gb_get_locations so territory filters are applied
 	
 	$selected_locations = ( !empty($_GET['sf_filter_loc']) ) ? explode(',', $_GET['sf_filter_loc']) : array();
 	echo '<div class="filter_by_location">';

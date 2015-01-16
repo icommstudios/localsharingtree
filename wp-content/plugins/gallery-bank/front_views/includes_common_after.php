@@ -30,14 +30,14 @@ switch ($album_type) {
 			                    queue: false
 			                },
 			                masonry : {
-			                    columnWidth: 4
+			                	columnWidth: ".gallery-sizer"
 			                }
 			            });
 			        });
 			        jQuery(window).smartresize(function(){
 					  $container1_<?php echo $unique_id;?>.isotope({
 					    // update columnWidth to a percentage of container width
-					    masonry: { columnWidth: 4 }
+					    masonry: { columnWidth: ".gallery-sizer" }
 					  });
 					});
 					<?php
@@ -238,9 +238,27 @@ if($album_type == "images")
 		        autoplay_slideshow: <?php echo $autoplay;?>,
 		        opacity: 0.80,
 		        show_title: false,
-		        allow_resize: true
+		        allow_resize: true,
+		        changepicturecallback: onPictureChanged
 		    });
 		});
+		
+		function onPictureChanged() 
+		{
+
+			jQuery('.pp_social').append('<div style="margin-left:5px; display:inline-block;"><g:plusone data-action="share" href="'+ encodeURIComponent(location.href.replace(location.hash,"")) +'" width="160px" ></g:plusone></div>');
+
+			jQuery('.pp_social').append("<script type='text/javascript'> \
+			(function() { \
+			var po = document.createElement('script'); \
+			po.type = 'text/javascript'; \
+			po.async = true; \
+			po.src = 'https://apis.google.com/js/plusone.js'; \
+			var s = document.getElementsByTagName('script')[0]; \
+			s.parentNode.insertBefore(po, s); \
+			})(); <" + "/" +  "script>");
+
+		}
 	</script>
 	<?php
 }

@@ -3,8 +3,8 @@
 Contributors: johnbillion  
 Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 Requires at least: 3.1  
-Tested up to: 4.0  
-Stable tag: 1.0  
+Tested up to: 4.1  
+Stable tag: 1.0.2  
 License: GPL v2 or later  
 
 Instant switching between user accounts in WordPress.
@@ -40,21 +40,28 @@ See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information
 = Translations Included =
 
  * العربية (Arabic)
+ * Български (Bulgarian)
  * 中文 (Chinese Simplified)
+ * Nederlands (Dutch)
+ * Suomi (Finnish)
  * Français (French)
  * Deutsch (German)
+ * Ελληνικά (Greek)
  * עִבְרִית (Hebrew)
  * Bahasa Indonesia (Indonesian)
+ * Italiano (Italian)
  * 日本語 (Japanese)
  * Lietuvių kalba (Lithuanian)
  * فارسی (Persian)
  * Polski (Polish)
  * Português do Brasil (Brazilian Portuguese)
+ * Română (Romanian)
  * Русский (Russian)
  * Slovenčina (Slovak)
  * Español (Spanish)
+ * Türkçe (Turkish)
 
-Thanks to translations by Hassan Hisham, Tunghsiao Liu, Fx Bénard, Ralph Stenzel, Rami Y, Yusuke Hayasaki, Tommixoft, Amin Ab, Bartosz Arendt, Raphael Mendonça, R J, Max Samael, Eko Ikhyar, and Marcelo Pedra!
+Thanks to translations by Hassan Hisham, Tunghsiao Liu, Francois-Xavier Bénard, Ralph Stenzel, Rami Y, Yusuke Hayasaki, Tommixoft, Amin Ab, Bartosz Arendt, Raphael Mendonça, R J, Max Samael, Eko Ikhyar, Marcelo Pedra, Abdullah Pazarbasi, ArianServ, SilverXp, Evi Giannakou, Petya Raykovska, Martin Sauter, Yaser Tallo, Enrique Errando, Sami Keijonen, Ishka Michocka, Alessandro Curci, and Alessandro Tesoro!
 
 == Screenshots ==
 
@@ -76,7 +83,7 @@ Alternatively, you can install this plugin directly from your WordPress dashboar
 
 = What does "Switch off" mean? =
 
-Switching off logs you out of your account but retains your user ID in an authorisation cookie so you can switch straight back without having to log in again manually. It's akin to switching to no user, and being able to switch back.
+Switching off logs you out of your account but retains your user ID in an authentication cookie so you can switch straight back without having to log in again manually. It's akin to switching to no user, and being able to switch back.
 
 The *Switch Off* link can be found in your profile menu in the WordPress toolbar. Once you've switched off you'll see a *Switch back* link in the footer of your site.
 
@@ -114,11 +121,27 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 == Upgrade Notice ==
 
-= 1.0 =
+= 1.0.2 =
 
-* Security hardening for sites that use HTTPS in the admin area and HTTP on the front end.
+* New translations: Türkçe (Turkish), Română (Romanian), Nederlands (Dutch), Ελληνικά (Greek), Български (Bulgarian), Suomi (Finnish), and Italiano (Italian).
 
 == Changelog ==
+
+= 1.0.2 =
+
+* Turkish translation by Abdullah Pazarbasi.
+* Romanian translation by ArianServ.
+* Dutch translation by Thom.
+* Greek translation by evigiannakou.
+* Bulgarian translation by Petya Raykovska.
+* Finnish translation by Sami Keijonen.
+* Italian translation by Alessandro Curci and Alessandro Tesoro.
+* Updated Arabic, Spanish, German, and Polish translations.
+
+= 1.0.1 =
+
+* Shorten the names of User Switching's cookies to avoid problems with Suhosin's over-zealous default rules.
+* Add backwards compatibility for the deprecated `OLDUSER_COOKIE` constant.
 
 = 1.0 =
 

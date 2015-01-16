@@ -4,7 +4,7 @@
  */
 
 function gmedia_image_editor(){
-	global $gmCore, $gmDB, $user_ID, $gmGallery;
+	global $gmCore;
 	$gmid = $gmCore->_get('id');
 	//$gmedia = $gmDB->get_gmedia($gmid);
 	$gmedia_src = $gmCore->gm_get_media_image($gmid, 'original');
@@ -15,12 +15,12 @@ function gmedia_image_editor(){
 	<div class="panel panel-default" id="gmedit" data-src="<?php echo $gmedia_src; ?>">
 		<div class="panel-heading clearfix">
 			<div class="btn-toolbar pull-right">
-				<?php if(file_exists($fileinfo['filepath_original'].'_backup')){ ?>
+				<?php if(file_exists($fileinfo['filepath_original'] . '_backup')){ ?>
 					<button type="button" id="gmedit-restore" name="gmedit_restore" class="btn btn-warning pull-left" data-confirm="<?php _e('Do you really want restore original image?') ?>"><?php _e('Restore Original', 'gmLang'); ?></button>
 				<?php } ?>
 				<div class="btn-group pull-left">
 					<button type="button" id="gmedit-reset" name="gmedit_reset" class="btn btn-default" data-confirm="<?php _e('Do you really want reset all changes?') ?>"><?php _e('Reset', 'gmLang'); ?></button>
-					<button type="button" id="gmedit-save" name="gmedit_save" data-loading-text="<?php _e('Working', 'gmLang'); ?>" class="btn btn-primary"><?php _e('Save image', 'gmLang'); ?></button>
+					<button type="button" id="gmedit-save" name="gmedit_save" data-loading-text="<?php _e('Working', 'gmLang'); ?>" data-reset-text="<?php _e('Save image', 'gmLang'); ?>" class="btn btn-primary"><?php _e('Save image', 'gmLang'); ?></button>
 				</div>
 				<?php wp_nonce_field('gmedit-save'); ?>
 			</div>
@@ -177,21 +177,26 @@ function gmedia_image_editor(){
 			$('.gmedit-tool-button').tooltip({placement: 'bottom'});
 
 			var gmeditSave = function(a, b){
-				$('#gmedit-save').button('loading').prop('disabled', true);
+				var btn = $('#gmedit-save');
+				btn.text(btn.data('loading-text')).prop('disabled', true);
 				var post_data = {
 					action: 'gmedit_save', id: gmid, image: a, applyto: $('#applyto').val(), _wpnonce: $('#_wpnonce').val()
 				};
-				$.post(ajaxurl, post_data, function(c){
-					if(!c.error){
+				$.post(ajaxurl, post_data).always(function(c){
+					if(c.msg && !c.error){
 						var parent_doc = window.parent.document;
-						$('#list-item-'+gmid, parent_doc)
+						$('#list-item-' + gmid, parent_doc)
 							.find('.gmedia-thumb').attr('src', '<?php echo $gmedia_thumb_src; ?>?' + time)
 							.end().find('.modified').text(c.modified);
 						$('#gmedia-panel', parent_doc).before(c.msg);
 						window.parent.closeModal('gmeditModal');
 					} else{
-						$('#gmedit-save').button('reset').prop('disabled', false);
-						$('#media-edit-form-container .alert-box').html(c.error).show();
+						btn.text(btn.data('reset-text')).prop('disabled', false);
+						if(c.error){
+							$('#media-edit-form-container .alert-box').html(c.error).show();
+						} else{
+							$('#media-edit-form-container .alert-box').text(c).show();
+						}
 					}
 				});
 			};
@@ -203,14 +208,15 @@ function gmedia_image_editor(){
 
 			jQuery("#gmedit").on("click", "#gmedit-restore", function(){
 				$('#applyto').val('original');
-				$('#gmedit-save').button('loading').prop('disabled', true);
+				var btn = $('#gmedit-save');
+				btn.text(btn.data('loading-text')).prop('disabled', true);
 				var post_data = {
 					action: 'gmedit_restore', id: gmid, _wpnonce: $('#_wpnonce').val()
 				};
-				$.post(ajaxurl, post_data, function(c){
-					if(!c.error){
+				$.post(ajaxurl, post_data).always(function(c){
+					if(c.msg && !c.error){
 						var parent_doc = window.parent.document;
-						$('#list-item-'+gmid, parent_doc)
+						$('#list-item-' + gmid, parent_doc)
 							.find('.gmedia-thumb').attr('src', '<?php echo $gmedia_thumb_src; ?>?' + time)
 							.end().find('.modified').text(c.modified);
 						$('#gmedia-panel', parent_doc).before(c.msg);
@@ -219,9 +225,13 @@ function gmedia_image_editor(){
 						$('#media-edit-form-container .alert-box').html(c.msg).show();
 						$("#gmedit-restore").remove();
 					} else{
-						$('#media-edit-form-container .alert-box').html(c.error).show();
+						if(c.error){
+							$('#media-edit-form-container .alert-box').html(c.error).show();
+						} else{
+							$('#media-edit-form-container .alert-box').text(c).show();
+						}
 					}
-					$('#gmedit-save').button('reset').prop('disabled', false);
+					btn.text(btn.data('reset-text')).prop('disabled', false);
 				});
 			});
 

@@ -196,7 +196,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
 		$submission_data = $this->get_submission_data( $feed, $form, $entry );
 
 		//Do not process payment if payment amount is 0 or less
-		if ( intval( $submission_data['payment_amount'] ) <= 0 ) {
+		if ( floatval( $submission_data['payment_amount'] ) <= 0 ) {
 
 			$this->log_debug( 'Payment amount is $0.00 or less. Not sending to payment gateway.' );
 
@@ -573,8 +573,10 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
             $options = array();
             if(is_array(rgar($product, "options"))){
                 foreach($product["options"] as $option){
-                    $options[] = $option["option_name"];
-                    $product_price += $option["price"];
+					if ( isset( $option['option_name'] ) ){
+                    	$options[] = $option["option_name"];
+                    	$product_price += $option["price"];
+					}
                 }
             }
 
@@ -617,7 +619,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
         }
 
         if ($trial_field == "enter_amount"){
-			$trial_amount = rgar($feed["meta"], "trial_amount") ? rgar($feed["meta"], "trial_amount") : 0;
+			$trial_amount = rgar($feed["meta"], "trial_amount") ? GFCommon::to_number(rgar($feed["meta"], "trial_amount")) : 0;
         }
 
         if(!empty($products["shipping"]["name"]) && !is_numeric($payment_field)){
@@ -657,7 +659,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
         if(is_wp_error( $callback_action )) {
             $this->display_callback_error($callback_action);
         }
-        else if($callback_action && is_array( $callback_action ) && rgar( $callback_action, 'type' ) ) {
+        else if($callback_action && is_array( $callback_action ) && rgar( $callback_action, 'type' ) && ! rgar($callback_action, 'abort_callback') ) {
 
             $result = $this->process_callback_action( $callback_action );
 
@@ -826,7 +828,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
         return true;
     }
 
-    public function complete_payment( $entry, $action ) {
+    public function complete_payment( &$entry, $action ) {
 
 		if ( ! rgar($action, 'payment_status') ) {
             $action['payment_status'] = 'Paid';
@@ -1148,7 +1150,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
                             array("label" => __("Products and Services", "gravityforms"), "value" => "product"),
                             array("label" => __("Subscription", "gravityforms"), "value" => "subscription")
                         ),
-                        "tooltip" => "<h6>" . __("Transaction Type", "gravityforms") . "</h6>" . __("Select a transaction type")
+                        'tooltip'  => '<h6>' . __( 'Transaction Type', 'gravityforms' ) . '</h6>' . __( 'Select a transaction type', 'gravityforms' )
                     )
                 )
             ),
@@ -1191,7 +1193,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
                         "label" => __("Trial", "gravityforms"),
                         "type" => "trial",
                         "hidden" => $this->get_setting("setupFee_enabled"),
-                        "tooltip" => "<h6>" . __("Trial Period", "gravityformspaypal") . "</h6>" . __("Enable a trial period.  The users recurring payment will not begin until after this trial period.", "gravityforms")
+                        "tooltip" => "<h6>" . __("Trial Period", "gravityforms") . "</h6>" . __("Enable a trial period.  The users recurring payment will not begin until after this trial period.", "gravityforms")
                     )
                 )
             ),
@@ -1464,8 +1466,8 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
     public function get_results_page_config() {
 
         return array(
-            "title"         => "Sales",
-            "search_title"  => "Filter",
+            "title"         => _x( 'Sales', 'toolbar label', 'gravityforms' ),
+            "search_title"  => _x( 'Filter', 'metabox title', 'gravityforms' ),
             "capabilities"  => array("gravityforms_view_entries"),
             "callbacks"     => array(
 				"fields"    => array($this, "results_fields"),
@@ -1865,7 +1867,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
         $payment_method_markup = "
                 <div>
                     <select id='gaddon-sales-group' name='payment_method'>
-                        <option value=''>" . __("Any", "gravityforms") . "</option>";
+                        <option value=''>" . _x( "Any", "regarding a payment method", "gravityforms" ) . "</option>";
 
                     foreach($payment_methods as $payment_method){
                         $payment_method_markup .= "<option value='" . esc_attr($payment_method) . "' " . selected($payment_method, rgget('payment_method'), false) . ">" . $payment_method . "</option>";
@@ -2118,7 +2120,9 @@ class GFPaymentStatsTable extends WP_List_Table {
         if ( empty( $this->_pagination_args ) )
             return;
 
-        extract( $this->_pagination_args, EXTR_SKIP );
+		$total_items = $this->_pagination_args['total_items'];
+		$total_pages = $this->_pagination_args['total_pages'];
+		$per_page = $this->_pagination_args['per_page'];
 
         $output = '<span class="displaying-num">' . sprintf( _n( '1 item', '%s items', $total_items, 'gravityforms' ), number_format_i18n( $total_items ) ) . '</span>';
 

@@ -204,7 +204,7 @@ if ( is_admin() && ( isset( $_GET['page'] ) == 'emg_settings' ) && $_GET['page']
 		var hash = window.location.hash.replace('#', '');
 		var currentTab = $('ul.navigationTabs a')
 							.bind('click', showTab)
-							.filter('a[rel=' + hash + ']');
+							.filter("a[rel='" + hash + "']");
 		if (currentTab.size() == 0) {
 			currentTab = $('ul.navigationTabs a:first');
 		}
@@ -325,6 +325,7 @@ if ( isset( $_REQUEST['reset'] ) ) { echo '<script type="text/javascript">
     </div>
 
 <div id="main">
+<div class="infoboxdemo"><a target='_blank' href='http://demo.ghozylab.com/content/pro.html?utm_source=procp&utm_medium=settingspage&utm_campaign=gotodemoprocp'>See Amazing Pro Version Features Here</a></div>
 <div class="infoboxsaveorreset"><?php echo $saveresmsg; ?></div>
 <form method="post">
 <div class="sps_wrap">
@@ -523,8 +524,6 @@ $i++;
 
 <?php
 }
-?>
-<?php
 //add_action('admin_init', 'add_cp_stylesheet');
 add_action('admin_menu', 'spg_add_admin');
 

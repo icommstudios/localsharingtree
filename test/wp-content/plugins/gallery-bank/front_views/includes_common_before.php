@@ -297,6 +297,11 @@ switch ($album_type) {
                     box-sizing: border-box !important;
 				}
 			    /*noinspection ALL*/
+			    .images-in-row_<?php echo $unique_id;?> a, 
+				.widget-images-in-row_<?php echo $unique_id;?> a
+			    {
+			    	border-bottom: none !important;
+			    }
 			   <?php
 			    if($widget != "true")
 				{

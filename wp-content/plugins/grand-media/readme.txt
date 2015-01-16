@@ -1,9 +1,9 @@
-=== Gmedia Gallery - Photo Gallery, Image Slider, Music Player, Media Library ===
+=== Gmedia Gallery - Photo Gallery, Image Slider, Music Player, Video Player, Media Library ===
 Contributors: Rattus
-Donate link: http://codeasily.com/wordpress-plugins/gmedia-gallery/
-Tags: gallery, image, images, library, files, music, video, slideshow, responsive, admin, Post, posts, easy gallery, iphone gallery, best gallery, portfolio, image gallery, photo gallery, photo, slider, admin, page, relative image
+Donate link: http://codeasily.com/donate/
+Tags: gallery, image, images, library, music, video, slideshow, responsive, admin, Post, posts, easy gallery, iphone gallery, best gallery, portfolio, image gallery, photo gallery, photo, slider, header slider, admin, page, relative image, gallery slider
 Requires at least: 3.5
-Tested up to: 3.9.1
+Tested up to: 4.1.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,22 +21,38 @@ Create Slideshow Galleries with using tags and automatically add images to sever
 
 Easily add related photos from Gmedia Library to the Post by using Add Media -> Gmedia Gallery tab MetaBox. One click for inserting image or gallery right in your page.
 
+Set Post Featured Image (Post Thumbnail) from Gmedia Library if your theme support post thumbnail.
+
 Friendly for iPad and iPhone. Doesn’t slow down your website. **Unlimited galleries** on your website with **unlimited customizations** for each gallery.
 
 With our versatile plugin you can magically change the look and feel of your photo gallery, a huge selection of modules will help you embed the gallery in your posts and web pages making them feel complete. You will appreciate user friendly interface of admin panel, making the creation of unique and contemporary style gallery an easy and funny process, and attracting increasing attention from viewers.
 
-**[Home Page](http://codeasily.com/), [More Info and Screens](http://codeasily.com/wordpress-plugins/gmedia-gallery/), [Skins Portfolio](http://codeasily.com/portfolio/), [Support Forum](http://codeasily.com/community/forum/gmedia-gallery-wordpress-plugin/)**
+**[Home Page](http://codeasily.com/), [More Info and Screens](http://codeasily.com/wordpress-plugins/gmedia-gallery/), [Skins Portfolio](http://codeasily.com/portfolio/gmedia-gallery-modules/), [Support Forum](http://codeasily.com/community/forum/gmedia-gallery-wordpress-plugin/)**
 
 Gmedia Gallery is the result of hundreds of hours of working to bring you the ultimate photo managing tool. With a lot of features, flexible options and a wide range of customizations, editing and publishing galleries, Gmedia Gallery is a smart addition to any blogger's arsenal. Whether you're photographer or a blogger, you'll like the Gmedia Gallery plugin.
 
 See demo of Gmedia Gallery Modules:
 
-*   [Afflux Module](http://codeasily.com/portfolio-item/gmedia-afflux/) with touch/swipe interface on mobile browsers. Multi-tab professional photo gallery module with autoslideshow feature.
+*   [RealSlider Module](http://codeasily.com/portfolio-item/gmedia-realslider/) is an image/video gallery slider module built on jQuery. RealSlider module is responsive and touch friendly gallery with 50+ options for customization.
 *   [Phantom Module](http://codeasily.com/portfolio-item/gmedia-phantom/) is the Wall/Grid Gallery with social sharing - you can easily change thumbnail sizes, colors, navigation, borders, add stylish labels to thumbnails ... and much more. PhotoSwipe like theme on touch devices.. only better.
 *   [PhotoBox Module](http://codeasily.com/portfolio-item/gmedia-photobox/) - a lightweight image gallery which uses only CSS3 for silky-smooth animations and transitions.
-*   [Slider Module](http://codeasily.com/portfolio-item/gmedia-slider/) - shows your images in one line sliding them one by one + LightBox for big images & Link to other pages or files.
 *   [Music Player Module](http://codeasily.com/portfolio-item/gmedia-music-player/) - beautiful audio player with playlist is totally written in jQuery and HTML5.
+*   [Afflux Module](http://codeasily.com/portfolio-item/gmedia-afflux/) with touch/swipe interface on mobile browsers. Multi-tab professional photo gallery module with autoslideshow feature.
+*   [Slider Module](http://codeasily.com/portfolio-item/gmedia-slider/) - shows your images in one line sliding them one by one + LightBox for big images & Link to other pages or files.
 *   [Optima Module](http://codeasily.com/portfolio-item/gmedia-optima/) - is multi-tab premium gallery module with slideshow, background music support, views counter, image like button, etc.
+*   [PhotoPro Module](http://codeasily.com/portfolio-item/gmedia-photo-pro/) - is multi-categorized professional image gallery module with slideshow feature.
+*   [PhotoBlog Module](http://codeasily.com/portfolio-item/gmedia-photo-blog/) - is awesome for showing portfolio on your website.
+*   [GreenStyle Module](http://codeasily.com/portfolio-item/gmedia-green-style/) - is multi-categorized gallery with awesome wave effect when you move mouse over thumbnails.
+*   [3D FlatWall Module](http://codeasily.com/portfolio-item/gmedia-flatwall/) - is 3D image gallery which arranges your images in beautiful wall which rotates and interacts on mouse drag and mouse wheel.
+*   [3D Cube Module](http://codeasily.com/portfolio-item/gmedia-cube/) - is 3D photo gallery which arranges your images in beautiful cube which rotates and interacts on your mouse move.
+*   [3D Sphere Module](http://codeasily.com/portfolio-item/gmedia-sphere/) - is 3D picture gallery which arranges your images in beautiful sphere which rotates and interacts on your mouse move.
+*   ...
+
+Translations:
+
+*   English (default)
+*   Serbian by Ogi Djuraskovic (http://firstsiteguide.com/)
+*   French by Serge Couture (http://www.choeurlabruyante.org/)
 
 Help me make it best gallery plugin: test it and [write suggestions](http://codeasily.com/community/forum/gmedia-gallery-wordpress-plugin/) how it could be improved in feature versions.
 
@@ -45,23 +61,33 @@ Features:
 *   Mobile friendly, responsive galleries
 *   Add tags, assign categories and group images in albums
 *   Drag'n'drop sorting for files in Album
-*   Easy bulk editing media files data with Edit Mode
+*   Easy editing media files data in Edit Mode
 *   Image Editor with Filters
 *   Create many galleries with different options
 *   Easily adding shortcode to post in one click
 *   Easily adding images from Gmedia Library to post
+*   Set Featured Post Image (Post Thumbnail) from Gmedia Library
 *   Import Wordpress Media Library files
 *   Uses WordPress' native Image Resizer
 *   Import files from server folder or from others gallery plugins
+*   Full Window Gallery Page permalinks (like GRAND Page in Flagallery) - you can copy gallery permalink and insert it in the website menu
+*   (NEW) Role/Capability Manager intergrated
+*   (NEW) Statuses: public, private (only for logged in users), etc. for files, albums
+*   (NEW) Batch operations with selected Gmedia items
 
 
 TODO List:
 
+*   iOS manage application (work in progress.. finish stage)
+*   Cover for Album. It will be also used for music without cover (work in progress..)
+*   More Batch operations with selected Gmedia items (work in progress..)
+*   Related Post images on Edit Post. Option to automatically create gallery in Post with related images (work in progress..)
+*   Share albums to socials from admin panel (in queue)
+*   Different templates to display Gmedia Library (something like GRAND Pages in Flagallery plugin) (in queue)
 *   More modules for creating photo gallery, audio playlist, video playlist
-*   Make Full Window Gallery Template (like GRAND Page in Flagallery)
 *   Easily add to Post audio and video files with tags related to post tags
-*   Intergration with social services
 *   Watermark feature
+*   Intergration with social services (plans)
 
 
 == Installation ==
@@ -90,6 +116,121 @@ Use [Gmedia Gallery support forum](http://codeasily.com/community/forum/gmedia-g
 8. Admin Area - Gmedia Library Filters
 
 == Changelog ==
+
+= Photobox module =
+* Updated Photobox module. Added option to set thumbs size, fixed problems with portrait images.
+
+= 1.3.5 =
+* Added ability to generate gallery shortcode from collections. Just choose term, then choose module with preset and click Insert.
+* Now you can show album, tag or category on fronted without creating gallery.
+
+= 1.3.4 =
+* Added Module Presets
+* Added Module Default Preset
+* Fixed compatibility with Wordpress MU
+
+= 1.3.2 =
+* Added French language
+* Added option to Batch Edit for Description: 'replace', 'append', 'prepend'
+* Added auth_redirect() function to avoid error when login session expire
+
+= 1.3.1 =
+* Added Serbian language
+* Fix for roles and save album
+* Fix for import files
+
+= 1.3.0 =
+* Add Set Post Featured Image
+* Add Upload from Edit Post
+* Change/Improve process of Gallery's Shortcode Insert
+* Improve multiuser experience (Roles and Capabilities)
+* Improve upload security
+
+= 1.2.6 =
+* Disable PHP error reporting on update.php file
+
+= 1.2.5 =
+* Improved "edit status" for albums and gmedia items
+* New options on upload form
+* Different colors depended on item status
+* Fixed preview template
+* Check PHP Memory Limit on update images
+
+= 1.2.4 =
+* Compatibility with WP 4.0
+* Added status for gmedia files (public, private)
+* Added status for albums (public, private, draft)
+* Fixed compatibility with Lazy load (unveil.js) plugin and alternative gallery
+* Added icon to assets
+
+= 1.2.3 =
+* Added Batch Edit in Gmedia Library
+* Fixed bugs with multiauthor usage
+* Fixed update from old versions
+* Fixed compatibility with Visual Composer plugin
+
+= 1.2.2 =
+* Fixed Music Player in Chrome > v35
+* Updated jPlayer script
+* Updated Plupload script
+* Forbid upload dangerous files via uploader
+* Allowed to choose albums without author for Galleries
+
+= 1.2.1 =
+* Fixed galleries meta box on Posts and Pages
+* Fixed check capabilities on some admin pages
+* Fixed after plugin install not administrators can't access WP Dashboard
+
+= 1.2.0 =
+* Major update: Added User Role Manager
+* Added Filter by Author
+* Added Screen Option on Edit Mode to enable/disable quicktags panel for image description
+* Improvements for touch screens
+* Added quick actions for single media
+* Added pager to gmedia list footer
+* Added option to leave data when uninstall plugin
+* Fixed PHP notices and warnings on some operations
+
+= 1.1.3 =
+* Fixed Music Player module
+
+= 1.1.2 =
+* Added search media by ID (just type # bedore digit in search field)
+* Added search in Edit Mode
+* Improved Preview gallery template for latest module
+* Updated Phantom Module
+
+= 1.1.1 =
+* Fixed Gallery Preview
+
+= 1.1.0 =
+* Fixed Gmedia permalinks
+* Gallery reset button now not showing if there is no changes
+* Added option to update media metadata in database
+* Removed Edit Image link from non images
+* Improved Gmedia Preview Template
+* Improved code for gallery settings
+* Improved code for shortcodes
+* Updated modules
+* Small fixes and improvements
+
+= 1.0.0 =
+* Clean plugin code
+* Improve image sorting in Albums
+* Added permalinks for galleries
+* Fixed Import errors and warnings
+* Fixed compatibility with iTheme Security (Better Security) plugin
+* Fix Music Player - force download button if link ends with .mp3 or .ogg
+* Added Video Player with playlist
+
+= 0.9.23 =
+* Add setting to "no format" shortcode's content
+* Update all modules
+* Added manual height option to gallery modules
+
+= 0.9.22 =
+* Update jPlayer library to latest version
+* Fix multiple Music Player instances on one page
 
 = 0.9.21 =
 * Fix Minima module

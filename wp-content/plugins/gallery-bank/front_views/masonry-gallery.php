@@ -5,7 +5,8 @@
 	?>
 		.width_thumb
 		{
-			width:<?php echo $thumbnails_width;?>px !important;
+			width:<?php echo $thumbnails_width+1;?>px !important;
+			border-radius:0px !important;
 	        display: block !important;
 	        box-sizing: border-box !important;
             max-width: 100% !important;
@@ -17,7 +18,8 @@
 		?>
 		.widget_width_thumb<?php echo $unique_id;?>
 		{
-			width:<?php echo $thumbnails_width;?>px !important;
+			width:<?php echo $thumbnails_width+1;?>px !important;
+			border-radius:0px !important;
 	        display: block !important;
 	        box-sizing: border-box !important;
             max-width: 100% !important;
@@ -25,6 +27,11 @@
 		<?php
 	}
 	?>
+	.gallery-sizer { width:<?php echo $thumbnails_width + 10;?>px !important; }
+
+	@media screen and (min-width: 720px) {
+		.gallery-sizer { width:<?php echo $thumbnails_width + 10;?>px !important; } 
+	}
 </style>
 <div  class="<?php echo $class_images_in_row;?>" id="masonry-gallery-thumbnails_<?php echo $unique_id;?>" >
 <?php
@@ -38,20 +45,20 @@
 			if($pics[$flag]->video == 1)
 			{
 				?>
-				<a rel="<?php echo $unique_id;?>prettyPhoto[gallery]" class="element " href="<?php echo stripcslashes($pics[$flag]->pic_name); ?>" data-title="<?php echo $image_title.$image_description;?>" id="ux_img_div_<?php echo $unique_id;?>">
+				<a rel="<?php echo $unique_id;?>prettyPhoto[gallery]" class="element gallery-sizer" href="<?php echo stripcslashes($pics[$flag]->pic_name); ?>" data-title="<?php echo $image_title.$image_description;?>" id="ux_img_div_<?php echo $unique_id;?>">
 				<?php
 			}
 			else
 			{
 				?>
-				<a rel="<?php echo $unique_id;?>prettyPhoto[gallery]" class="element " href="<?php echo stripcslashes(GALLERY_BK_THUMB_URL.$pics[$flag]->thumbnail_url); ?>" data-title="<?php echo $image_title.$image_description;?>" id="ux_img_div_<?php echo $unique_id;?>">
+				<a rel="<?php echo $unique_id;?>prettyPhoto[gallery]" class="element gallery-sizer" href="<?php echo stripcslashes(GALLERY_BK_THUMB_URL.$pics[$flag]->thumbnail_url); ?>" data-title="<?php echo $image_title.$image_description;?>" id="ux_img_div_<?php echo $unique_id;?>">
 				<?php
 			}
 		}
 		else 
 		{
 			?>
-			<a class="element" href="<?php echo $pics[$flag]->url; ?>" id="ux_img_div_<?php echo $unique_id;?>" target="_blank" data-title="<?php echo $image_title;?>">
+			<a class="element gallery-sizer" href="<?php echo $pics[$flag]->url; ?>" id="ux_img_div_<?php echo $unique_id;?>" target="_blank" data-title="<?php echo $image_title;?>">
 			<?php
 		}
 		if($img_title == "true" || $img_desc == "true")

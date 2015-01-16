@@ -11,7 +11,7 @@
 				<div class="page_title business_page clearfix"><!-- Begin #page_title -->
 						<h1 class="featured_tag">Featured Deal:</h1>
 						<h1 class="gb_ff deal_title"><?php the_title() ?></h1>
-						<div class="button_reset_filters_wrap"><a href="<?php echo site_url('moredeals'); ?>" class="button font_small">← View More Deals</a></div>
+						<div class="button_reset_filters_wrap"><a href="<?php echo site_url('moredeals'); ?>" class="button font_small">← Search More Deals</a></div>
 					</div><!-- End #page_title -->
 				<div id="main_deal_wrap" <?php post_class('clearfix'); ?>>
 

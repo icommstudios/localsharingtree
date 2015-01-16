@@ -28,11 +28,29 @@
 			    <select id="add_album_id" class="layout-span9">
 			        <option value=""> <?php _e("Select an Album", gallery_bank); ?>  </option>
 			        <?php
-			        global $wpdb;
-			        $albums = $wpdb->get_results
-		            (
-	                    "SELECT * FROM ".gallery_bank_albums()." order by album_order asc "
-		            );
+			       global $wpdb,$current_user;
+			        
+			        $gb_role = $wpdb->prefix . "capabilities";
+			        $current_user->role = array_keys($current_user->$gb_role);
+			        $gb_role = $current_user->role[0];
+			        if($gb_role == "administrator")
+			        {
+			        	$albums = $wpdb->get_results
+			        	(
+			        		"SELECT * FROM ".gallery_bank_albums()." order by album_order asc "
+			        	);
+			        }
+			        else 
+			        {
+			        	$albums = $wpdb->get_results
+			        	(
+		        			$wpdb->prepare
+		        			(
+	        					"SELECT * FROM ".gallery_bank_albums()." where author = %s order by album_order asc ",
+	        					$current_user->display_name
+		        			)
+			        	);
+			        }
 			        for ($flag = 0; $flag < count($albums); $flag++) {
 			            ?>
 			            <option value="<?php echo intval($albums[$flag]->album_id); ?>"><?php echo esc_html($albums[$flag]->album_name) ?></option>
@@ -46,9 +64,9 @@
 			    <select id="ux_gallery_format" class="layout-span9" onchange="select_images_in_row();">
 			        <option value=""> <?php _e("Select Gallery Format ", gallery_bank); ?>  </option>
 			        <option value="masonry">Masonry Gallery</option>
-			        <option value="filmstrip" style="color: #FF0000;">Filmstrip Gallery (Available only in Premium Versions)</option>
-			        <option value="blog" style="color: #FF0000;">Blog Style Gallery (Available only in Premium Versions)</option>
-			        <option id="slide_show" value="slideshow" style="color: #FF0000;">Slideshow Gallery (Available only in Premium Versions)</option>
+			        <option value="filmstrip" disabled="disabled" style="color: #FF0000;">Filmstrip Gallery (Available only in Premium Versions)</option>
+			        <option value="blog" disabled="disabled" style="color: #FF0000;">Blog Style Gallery (Available only in Premium Versions)</option>
+			        <option id="slide_show" disabled="disabled" value="slideshow" style="color: #FF0000;">Slideshow Gallery (Available only in Premium Versions)</option>
 			        <option value="thumbnail">Thumbnail Gallery</option>
 			    </select>
 			</div>

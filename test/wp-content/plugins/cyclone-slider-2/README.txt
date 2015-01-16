@@ -3,8 +3,8 @@ Contributors: kosinix
 Donate link: http://www.codefleet.net/donate/
 Tags: slider, slideshow, drag-and-drop, wordpress-slider, wordpress-slideshow, cycle 2, jquery, responsive, translation-ready, custom-post, cyclone-slider
 Requires at least: 3.5
-Tested up to: 3.9.2
-Stable tag: 2.8.3
+Tested up to: 4.1
+Stable tag: 2.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,7 +49,7 @@ Cyclone Slider 2 is an easy-to-use slider plugin with an intuitive user interfac
 * [Hassan](http://wordpress.org/support/profile/hassanhamm) for the Arabic translation.
 * Javad for the Persian translation.
 * [Borisa Djuraskovic](http://www.webhostinghub.com/) for the Serbo-Croatian translation.
-* [Gabriel Gil](http://gabrielgil.es/) for the Spanish translation.
+* [Gabriel Gil](http://gabrielgil.es/) and [Digital03](http://digital03.net/) for the Spanish translation.
 
 Do you want to translate Cyclone Slider into your language? Go to the project page at [transifex](https://www.transifex.com/projects/p/cyclone-slider-2/), create a free account, and join.
 
@@ -102,6 +102,40 @@ Inside `wp-content` create a folder named "cycloneslider". Add your templates in
 5. Slideshow Settings
 
 == Changelog ==
+
+= 2.9.5 - 2015-01-03 =
+* Fix. Thumbnail template thumb images now working.
+* New. Added support for custom image sizes.
+* Change. Removed cyclone_slide_image_url function from Thumbnail template and used $slide['image_thumbnails']['40_40_crop'] instead.
+* Change. Refactored Data and ImageResizer class.
+* Fix. Wrong class name Image_Resizer changed to CycloneSlider_ImageResizer.
+
+= 2.9.4 - 2015-01-02 =
+* Fix. Improved safety checks for POST data when saving sliders.
+* Fix. Deleting a single slide now works. This was a regression bug due to previous POST data safety check code.
+* Fix. Safety check for array keys when displaying a slider.
+* Fix. Restored $cyclone_slider_saved_done global variable.
+
+= 2.9.3 - 2014-12-19 =
+* Fix. Templates config now use json instead of ini format. Solves the problem with hosting that has parse_ini_file disabled for security reasons.
+* Change. Code cleanup. Removed commented and unused codes.
+* Change. Improved view class. Change codes related to view rendering.
+* Change. Moved template location declaration to main plugin file.
+* Change. Moved global function responsibility in templates to Data class.
+* Change. Use DI container for image editor class
+* Change. Change autoloader and hook names.
+* Change. Updated language files.
+* Change. Updated screen icon code.
+
+= 2.9.1 - 2014-12-10 =
+* Fix. Restored missing widget code.
+
+= 2.9.0 - 2014-12-09 =
+* Change. Major code refactoring for future features to be easily added
+
+= 2.8.4 - 2014-09-04 =
+* Updated spanish language files
+* Added compatibility with WP 4.0
 
 = 2.8.3 - 2014-08-20 =
 * Fix. Admin menu icon for WP 3.9+.
@@ -316,6 +350,40 @@ Inside `wp-content` create a folder named "cycloneslider". Add your templates in
 
 
 == Upgrade Notice ==
+
+= 2.9.5 - 2015-01-03 =
+* Fix. Thumbnail template thumb images now working.
+* New. Added support for custom image sizes.
+* Change. Removed cyclone_slide_image_url function from Thumbnail template and used $slide['image_thumbnails']['40_40_crop'] instead.
+* Change. Refactored Data and ImageResizer class.
+* Fix. Wrong class name Image_Resizer changed to CycloneSlider_ImageResizer.
+
+= 2.9.4 - 2015-01-02 =
+* Fix. Improved safety checks for POST data when saving sliders.
+* Fix. Deleting a single slide now works. This was a regression bug due to previous POST data safety check code.
+* Fix. Safety check for array keys when displaying a slider.
+* Fix. Restored $cyclone_slider_saved_done global variable.
+
+= 2.9.3 - 2014-12-19 =
+* Fix. Templates config now use json instead of ini format. Solves the problem with hosting that has parse_ini_file disabled for security reasons.
+* Change. Code cleanup. Removed commented and unused codes.
+* Change. Improved view class. Change codes related to view rendering.
+* Change. Moved template location declaration to main plugin file.
+* Change. Moved global function responsibility in templates to Data class.
+* Change. Use DI container for image editor class
+* Change. Change autoloader and hook names.
+* Change. Updated language files.
+* Change. Updated screen icon code.
+
+= 2.9.1 - 2014-12-10 =
+* Fix. Restored missing widget code.
+
+= 2.9.0 - 2014-12-09 =
+* Change. Major code refactoring for future features to be easily added
+
+= 2.8.4 - 2014-09-04 =
+* Updated spanish language files
+* Added compatibility with WP 4.0
 
 = 2.8.3 - 2014-08-20 =
 * Fix. Admin menu icon for WP 3.9+.

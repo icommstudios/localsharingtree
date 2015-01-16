@@ -1,14 +1,17 @@
 <?php
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) )
 	exit();
+	
+function easy_gt_option( $name ){
+    $easymedia_values = get_option( 'easy_media_opt' );
+    if ( is_array( $easymedia_values ) && array_key_exists( $name, $easymedia_values ) ) return $easymedia_values[$name];
+    return false;
+} 		
 
 // Remove plugin options from wordpress database.
 function spg_clean_data() {
 	
-	    $easymedia_values = get_option( 'easy_media_opt' );
-		if ( is_array( $easymedia_values ) && array_key_exists( $name, $easymedia_values ) ) $keepornot = $easymedia_values['easymedia_disen_databk'];
-	
-	if ( $keepornot != '1' ) {	
+	if ( easy_gt_option('easymedia_disen_databk') != '1' ) {
 	
 	delete_option( 'easy_media_opt' );
 
@@ -19,7 +22,9 @@ function spg_clean_data() {
 		'post_status' => 'any' ) );
 
 			foreach ( $posts as $post )
+				{
 				wp_delete_post( $post->ID, true );
+					}
 	
 // Remove plugin-specific custom taxonomies and terms ( not work ).
 
@@ -32,10 +37,11 @@ function spg_clean_data() {
 						unset( $wp_taxonomies[$taxonomy] );
 						}
 			}
+			
+		delete_option( 'easy_media_opt' );
+				
 	}
-	else {
 		
-	}			
 }
 
 spg_clean_data();

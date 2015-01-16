@@ -176,6 +176,7 @@
 	background: url(../images/colorpicker/select.png);
 	display:inline-block;
 	top:9px;
+	cursor: pointer;
 	float:none !important;
 }
 .colorSelector div {

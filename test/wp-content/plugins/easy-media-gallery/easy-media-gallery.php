@@ -4,7 +4,7 @@ Plugin Name: Easy Media Gallery
 Plugin URI: http://www.ghozylab.com/plugins/
 Description: Easy Media Gallery (Lite) - Displaying your images, videos (MP4, Youtube, Vimeo) and audio mp3 in elegant and fancy lightbox with very easy. Allows you to customize all media to get it looking exactly what you want. <a href="http://ghozylab.com/plugins/easy-media-gallery-pro/pricing/" target="_blank"><strong> Upgrade to Pro Version Now</strong></a> and get a tons of awesome features.
 Author: GhozyLab, Inc.
-Version: 1.2.59
+Version: 1.2.93
 Author URI: http://www.ghozylab.com/plugins/
 */
 
@@ -59,8 +59,20 @@ if ( is_admin() ) {
 	    wp_die( "<strong>GD Library</strong> for PHP is not installed on your server. Easy Media Gallery requires it to function properly. The plugin has now disabled itself. Please ask your hosting provider for this issue.<br /><br />Back to <a href='".admin_url()."'>WordPress admin</a>" );
 		}
 }
-
 // Learn more here http://www.webassist.com/tutorials/Enabling-the-GD-library-setting
+
+
+/*-------------------------------------------------------------------------------*/
+/*  JetPack ( Photon Module ) Detect
+/*-------------------------------------------------------------------------------*/
+add_action( 'admin_notices', 'emg_jetpack_modules_photon' );
+
+function emg_jetpack_modules_photon() {
+	
+if( class_exists( 'Jetpack' ) && in_array( 'photon', Jetpack::get_active_modules() ) ) {
+    echo '<div class="updated"><p>You have to deactivate <strong>JetPack Photon</strong> module to make <strong>Easy Media Gallery</strong> work!</p><p><a href="'.admin_url().'admin.php?page=jetpack&action=deactivate&module=photon&_wpnonce='.wp_create_nonce( 'jetpack_deactivate-photon' ).'" >Deactivate Now!</a></p></div>';
+	}
+}
 
 
 /*
@@ -106,7 +118,7 @@ if ( !defined( 'EASYMEDIA_NAME' ) ) {
 
 // Plugin Version
 if ( !defined( 'EASYMEDIA_VERSION' ) ) {
-	define( 'EASYMEDIA_VERSION', '1.2.59' );
+	define( 'EASYMEDIA_VERSION', '1.2.93' );
 }
 
 // Pro Price
@@ -135,7 +147,10 @@ if ( !defined( 'EASYMEDIA_DEV_PRICE' ) ) {
 | I18N - LOCALIZATION
 |--------------------------------------------------------------------------
 */
-load_plugin_textdomain( 'easmedia', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+function emg_lang_init() {
+	load_plugin_textdomain( 'easmedia', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+add_action( 'init', 'emg_lang_init' );
 
 
 /*
@@ -303,7 +318,12 @@ function easmedia_custom_columns_easymedia( $easymedia_columns, $post_id ){
 			
 								case 'Audio':
 											 echo '<img class="imgthumblist" width="70" height="70" alt="Thumbnail" src="' . plugins_url( 'images/audio.png' , __FILE__ ) . '"></img>';
-												 break;		
+												 break;	
+												 
+								case 'Multiple Images (Slider)':
+											 echo '<img class="imgthumblist" width="70" height="70" alt="Thumbnail" src="' . plugins_url( 'images/gallery.png' , __FILE__ ) . '"></img>';
+												 break;										 
+												 	
 		
 			}
 			

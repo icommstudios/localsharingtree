@@ -67,6 +67,15 @@ div.p_table_responsive.p_table_hide_caption_column .css3_grid_vertical_align .cs
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
 	}
+	div.p_table_1.p_table_responsive.p_table_hide_caption_column.p_table_hover_disabled div.active_column:hover
+	{
+		left: 0;
+		top: 0;
+		/* shadow */
+		box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+		-webkit-box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+		-moz-box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+	}
 	div.p_table_1.p_table_responsive.p_table_hide_caption_column div.column_1:hover li.row_style_1,
 	div.p_table_1.p_table_responsive.p_table_hide_caption_column div.column_2:hover li.row_style_1,
 	div.p_table_1.p_table_responsive.p_table_hide_caption_column div.column_3:hover li.row_style_1,

@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Easy Media Gallery
-Plugin URI: http://www.ghozylab.com/
-Description: Easy Media Gallery (Lite) - Displaying your images, videos (MP4, Youtube, Vimeo) and audio mp3 in elegant and fancy lightbox with very easy. Allows you to customize all media to get it looking exactly what you want. <a href="http://ghozylab.com/order" target="_blank"><strong> Upgrade to Pro Version Now</strong></a> and get a tons of awesome features.
+Plugin URI: http://www.ghozylab.com/plugins/
+Description: Easy Media Gallery (Lite) - Displaying your images, videos (MP4, Youtube, Vimeo) and audio mp3 in elegant and fancy lightbox with very easy. Allows you to customize all media to get it looking exactly what you want. <a href="http://ghozylab.com/plugins/easy-media-gallery-pro/pricing/" target="_blank"><strong> Upgrade to Pro Version Now</strong></a> and get a tons of awesome features.
 Author: GhozyLab, Inc.
-Version: 1.2.35
-Author URI: http://www.ghozylab.com/
+Version: 1.2.93
+Author URI: http://www.ghozylab.com/plugins/
 */
 
 if ( ! defined('ABSPATH') ) {
@@ -59,8 +59,20 @@ if ( is_admin() ) {
 	    wp_die( "<strong>GD Library</strong> for PHP is not installed on your server. Easy Media Gallery requires it to function properly. The plugin has now disabled itself. Please ask your hosting provider for this issue.<br /><br />Back to <a href='".admin_url()."'>WordPress admin</a>" );
 		}
 }
-
 // Learn more here http://www.webassist.com/tutorials/Enabling-the-GD-library-setting
+
+
+/*-------------------------------------------------------------------------------*/
+/*  JetPack ( Photon Module ) Detect
+/*-------------------------------------------------------------------------------*/
+add_action( 'admin_notices', 'emg_jetpack_modules_photon' );
+
+function emg_jetpack_modules_photon() {
+	
+if( class_exists( 'Jetpack' ) && in_array( 'photon', Jetpack::get_active_modules() ) ) {
+    echo '<div class="updated"><p>You have to deactivate <strong>JetPack Photon</strong> module to make <strong>Easy Media Gallery</strong> work!</p><p><a href="'.admin_url().'admin.php?page=jetpack&action=deactivate&module=photon&_wpnonce='.wp_create_nonce( 'jetpack_deactivate-photon' ).'" >Deactivate Now!</a></p></div>';
+	}
+}
 
 
 /*
@@ -99,14 +111,29 @@ if ( version_compare($wp_version, "3.5", "<" ) ) {
 
 require_once( EASYMEDG_PLUGIN_DIR . 'includes/class/easymedia_resizer.php' ); 	
 
+// Plugin Name
+if ( !defined( 'EASYMEDIA_NAME' ) ) {
+	define( 'EASYMEDIA_NAME', 'Easy Media Gallery Lite' );
+}
+
 // Plugin Version
 if ( !defined( 'EASYMEDIA_VERSION' ) ) {
-	define( 'EASYMEDIA_VERSION', '1.2.35' );
+	define( 'EASYMEDIA_VERSION', '1.2.93' );
 }
 
 // Pro Price
+if ( !defined( 'EASYMEDIA_PRO_PRICE' ) ) {
+	define( 'EASYMEDIA_PRO_PRICE', '24' );
+}
+
+// Pro+
 if ( !defined( 'EASYMEDIA_PRICE' ) ) {
-	define( 'EASYMEDIA_PRICE', '24' );
+	define( 'EASYMEDIA_PRICE', '29' );
+}
+
+// Pro++ Price
+if ( !defined( 'EASYMEDIA_PLUS_PRICE' ) ) {
+	define( 'EASYMEDIA_PLUS_PRICE', '35' );
 }
 
 // Dev Price
@@ -120,7 +147,10 @@ if ( !defined( 'EASYMEDIA_DEV_PRICE' ) ) {
 | I18N - LOCALIZATION
 |--------------------------------------------------------------------------
 */
-load_plugin_textdomain( 'easmedia', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+function emg_lang_init() {
+	load_plugin_textdomain( 'easmedia', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+add_action( 'init', 'emg_lang_init' );
 
 
 /*
@@ -189,7 +219,7 @@ function easmedia_post_type() {
 	$post_type_args = array(
 		'labels' 			=> $labels,
 		'singular_label' 	=> __( 'Easy Media', 'easmedia' ),
-		'public' 			=> true,
+		'public' 			=> false,
 		'show_ui' 			=> true,
 		'publicly_queryable'=> true,
 		'query_var'			=> true,
@@ -288,7 +318,12 @@ function easmedia_custom_columns_easymedia( $easymedia_columns, $post_id ){
 			
 								case 'Audio':
 											 echo '<img class="imgthumblist" width="70" height="70" alt="Thumbnail" src="' . plugins_url( 'images/audio.png' , __FILE__ ) . '"></img>';
-												 break;		
+												 break;	
+												 
+								case 'Multiple Images (Slider)':
+											 echo '<img class="imgthumblist" width="70" height="70" alt="Thumbnail" src="' . plugins_url( 'images/gallery.png' , __FILE__ ) . '"></img>';
+												 break;										 
+												 	
 		
 			}
 			
@@ -407,24 +442,17 @@ add_filter( 'pre_get_posts', 'easmedia_set_custom_post_types_admin_order' );
 /*-------------------------------------------------------------------------------*/
 /*   Hide View, Quick Edit and Preview Button
 /*-------------------------------------------------------------------------------*/
-function emg_hide_post_view() {
-    global $post_type;
-    $post_types = array(
-                        'easymediagallery'
-                  );
-    if(in_array($post_type, $post_types))
-    echo '<style type="text/css">#post-preview, #view-post-btn{display: none;}</style>';
+function emg_remove_row_actions( $actions ) {
+	global $post;
+    if( $post->post_type == 'easymediagallery' ) {
+		unset( $actions['view'] );
+		unset( $actions['inline hide-if-no-js'] );
+	}
+    return $actions;
 }
 
-add_action( 'admin_head-post-new.php', 'emg_hide_post_view' );
-add_action( 'admin_head-post.php', 'emg_hide_post_view' );
-add_filter( 'post_row_actions', 'emg_remove_row_actions', 10, 1 ); // <--- comment this to show post quick edit.
-
-function emg_remove_row_actions( $actions )
-{
-    if( get_post_type() === 'easymediagallery' )
-        unset( $actions['view'] );
-    return $actions;
+if ( is_admin() ) {
+	add_filter( 'post_row_actions','emg_remove_row_actions', 10, 2 );
 }
 
 
@@ -434,6 +462,18 @@ function emg_remove_row_actions( $actions )
 add_filter('widget_text', 'do_shortcode', 11); // <--- comment this to disable media in widget.
 add_filter( 'the_excerpt', 'shortcode_unautop');
 add_filter( 'the_excerpt', 'do_shortcode');  
+
+
+/*
+|--------------------------------------------------------------------------
+| RENAME SUBMENU
+|--------------------------------------------------------------------------
+*/
+function emg_rename_submenu() {  
+    global $submenu;     
+	$submenu['edit.php?post_type=easymediagallery'][5][0] = __( 'Overview', 'easmedia' );  
+}  
+add_action( 'admin_menu', 'emg_rename_submenu' );  
 
 
 /*-------------------------------------------------------------------------------*/

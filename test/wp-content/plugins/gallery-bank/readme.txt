@@ -1,78 +1,83 @@
-=== WP Gallery Bank - Best Gallery Albums Plugin ===
-Contributors: contact-banker,Gallery-Bank
-Donate link : http://tech-banker.com/gallery-bank/
-Tags: admin, AJAX, album, albums, best gallery, best gallery plugin, best portfolio plugin, comments, easy media gallery, fancy gallery, filterable gallery, filterable portfolio, flash, foto, fotoalbum, gallery, gallery album, gallery bank, gallery image, Gallery Plugin, gallery wordpress plugin, google, grid gallery, html5 player, html5 video, html5-audio, image, image album, image slider, images, lightbox, links, media, modal, multiple pictures, nextgen, page, pagination gallery, pagination portfolio, photo, photo album, photo albums, photo gallery, Photo Slider, photoalbum, photogallery, photos, picture, pictures, plugin, plugin for gallery, plugin gallery, portfolio, portfolio gallery, portfolio wordpress plugin, Post, posts, responsive gallery, seo image, shortcode, sidebar, slideshow, thumbnail, thumbnails, twitter, videos, website gallery, widget, wordpress gallery plugin, wordpress portfolio plugin, wp gallery, wp gallery plugin
+=== WP Gallery Bank - Best Responsive Gallery ===
+Contributors: Gallery-Bank,contact-banker
+Tags: add album, add gallery, add picture, add pictures, admin, AJAX, album, best gallery, best gallery plugin, best image slider, best portfolio, bilder, comments, easy media gallery, fancy gallery, filterable gallery, filterable portfolio, foto, fotoalbum, galary, galerie, galerij, galery, gallary, Galleria, gallerie, gallery, gallery decription, gallery image, gallery lightbox, Gallery Plugin, gelary, gellary, gellery, google, grid gallery, html5 player, html5 video, html5-audio, image, image album, image gallery, image gallery plugin, image lightbox, image rotate, image slider, image slideshow, images, jquery, jquery gallery, jquery slider, jquery slideshow, lightbox, links, media gallery, multiple pictures, nextgen gallery, page, pagination gallery, pagination portfolio, photo, photo album, photo albums, photo gallery, Photo Slider, photoalbum, photogallery, photos, photoset, picture, pictures, plugin, plugin for gallery, plugin gallery, portfolio, portfolio gallery, portfolio plugin, Post, posts, responsive gallery, responsive image gallery, responsive slider, responsive slideshow, seo, seo image, shortcode, sidebar, slide show, slideshow, thumbnail, twitter, upload images, upload photos, view images, view pictures, website gallery, widget, wordpress gallery plugin, wordpress portfolio plugin, wordpress seo, wp gallery, wp gallery plugin, wp slider
 Requires at least: 3.3
-Tested up to: 3.9.2
-Stable tag: 3.0.62
+Tested up to: 4.1
+Stable tag: 3.0.87
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Gallery Bank is an easy to use Responsive WordPress Gallery Plugin for photos, videos, galleries and albums.
+WP Gallery Bank is an enhanced tool to create Responsive and Beautiful Galleries for WordPress Websites.
 
 == Description ==
-### [WordPress Gallery Bank - Best Gallery Albums Plugin](http://tech-banker.com/gallery-bank/)    
 
-Gallery Bank is a Wordpress Plugin designed to create elegant and beautiful gallery albums with images, videos using Grid Albums, List Albums, Individual Albums, Masonry Layouts and Thumbnail Layouts, Special Effects  & Animation Effects. 
+**Gallery Bank** is a WordPress Plugin designed to create Elegant and Beautiful Gallery Albums along with Images and videos using Grid Albums, List Albums, Individual Albums, Masonry Layouts and Thumbnail Layouts along with Special Effects and Animation Effects.
 
-###IMPORTANT: If you think you found a bug in Gallery Bank or have any problem or question concerning Gallery Bank, do not hesitate to contact us at [support@tech-banker.com](mailto:support@tech-banker.com).  
+**Gallery Bank** is the only available WordPress Plugin in the market with extra-ordinary features. It is loaded with 200+ features and creates stunning Photo Galleries on any WordPress site.
 
-Gallery Bank has become the **Best Plugin** in the world for WordPress sites to display images. It has been designed to provide easiness and simplicity to the end user. It is a very simple but fully loaded with 200+ features(**Premium Version**) Plugin.
+**Gallery Bank** provides a powerful engine for uploading and managing galleries of images & videos, with the ability to batch upload, delete, rearrange, sort images.
 
-> #### **Live Demos**
-
-> * [Gallery Bank](http://tech-banker.com/gallery-bank/)
-> * [Gallery Bank Demos](http://tech-banker.com/gallery-bank/demo/)
-> * [Demo Using Masonry Layout in Individual Images](http://tech-banker.com/gallery-bank/demo/individual-images-with-title-and-description-masonry-layout/)
-> * [Demo Using Masonry Layout with Animation Effects](http://tech-banker.com/gallery-bank/demo/individual-images-with-title-using-pulse-effect-masonry-layout/)
-> * [Demo Using Masonry Layout in Individual Album](http://tech-banker.com/gallery-bank/demo/individual-album-with-title-and-description-masonry-layout/)
-> * [Demo Using Masonry Layout in Grid Format](http://tech-banker.com/gallery-bank/demo/albums-in-grid-format-with-title-and-description-masonry-layout/)
-> * [Demo Using Masonry Layout in List Format](http://tech-banker.com/gallery-bank/demo/albums-in-list-format-with-title-and-description-masonry-layout/)
-> * [Demo Using Thumbnails Layout in Individual Images](http://tech-banker.com/gallery-bank/demo/individual-images-with-title-and-description-thumbnails-layout/)
-> * [Demo Using Thumbnails Layout in Individual Album](http://tech-banker.com/gallery-bank/demo/individual-album-with-title-and-description-thumbnails-layout/)
-> * [Demo Using Thumbnails Layout in Grid Format](http://tech-banker.com/gallery-bank/demo/abums-in-grid-format-with-title-and-description-thumbnails-layout/)
-> * [Demo Using Thumbnails Layout in List Format](http://tech-banker.com/gallery-bank/demo/albums-in-list-format-with-title-and-description-thumbnails-layout/)
-> * [Demo Using Filmstrip Layout in Individual Images](http://tech-banker.com/gallery-bank/demo/individual-images-with-title-and-description-filmstrip-layout/)
-> * [Demo Using Filmstrip Layout in Individual Album](http://tech-banker.com/gallery-bank/demo/individual-album-with-title-and-description-filmstrip-layout/)
-> * [Demo Using Filmstrip Layout in Grid Format](http://tech-banker.com/gallery-bank/demo/albums-in-grid-format-with-title-and-description-filmstrip-layout/)
-> * [Demo Using Filmstrip Layout in List Format](http://tech-banker.com/gallery-bank/demo/albums-in-list-format-with-title-and-description-filmstrip-layout/)
-> * [Demo Using Slideshow Layout in Individual Album](http://tech-banker.com/gallery-bank/demo/individual-album-with-title-and-description-slideshow-layout/)
-> * [Demo Using Slideshow Layout in Grid Format](http://tech-banker.com/gallery-bank/demo/albums-in-grid-format-with-title-and-description-slideshow-layout/)
-> * [Demo Using Slideshow Layout in List Format](http://tech-banker.com/gallery-bank/demo/albums-in-list-format-with-title-and-description-slideshow-layout/)
-> * [Demo Using Blog Style Layout in Individual Images](http://tech-banker.com/gallery-bank/demo/individual-images-with-title-and-description-blog-style-layout/)
-> * [Demo Using Blog Style Layout in Individual Album](http://tech-banker.com/gallery-bank/demo/individual-album-with-title-and-description-blog-style-layout/)
-> * [Demo Using Blog Style Layout in Grid Format](http://tech-banker.com/gallery-bank/demo/albums-in-grid-format-with-title-and-description-blog-style-layout/)
-> * [Demo Using Blog Style Layout in List Format](http://tech-banker.com/gallery-bank/demo/albums-in-list-format-with-title-and-description-blog-style-layout/)
+Gallery Bank Regular updates and simplicity of usage along with efficient functionality makes it a perfect choice for your wordpress site to have stunning look. There are also Premium Editions of the plugin with more useful features available.
 
 [vimeo https://vimeo.com/92378296]
 
-It provides a powerful engine for uploading and managing galleries of images & videos, with the ability to batch upload, add/delete/rearrange/sort images, edit thumbnails, 100+ settings, and even much more. It also provides different front-end display styles (filmstrips, slideshows, masonry, blog styles and thumbnail galleries), all of them comes with a wide array of options for controlling size, style, timing, transitions, controls, lightbox effects, and more.
+> #### **Live Demos - Gallery Bank**
 
-***The Gallery Bank WordPress Gallery Plugin is now proudly maintained by <a href="http://www.tech-banker.com">Tech Banker</a> since March 2014.***
+> * [Gallery Bank](http://tech-banker.com/products/wp-gallery-bank/)
+> * [Gallery Bank Demos](http://tech-banker.com/products/wp-gallery-bank/demo/)
+> * [Demo Using Masonry Layout in Individual Images](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-masonry-layout/)
+> * [Demo Using Masonry Layout in Individual Videos](http://tech-banker.com/products/wp-gallery-bank/demo/individual-videos-with-title-using-masonry-layout/)
+> * [Demo Using Masonry Layout in Individual Album](http://tech-banker.com/products/wp-gallery-bank/demo/individual-album-with-title-masonry-layout/)
+> * [Demo Using Masonry Layout with Albums in Grid Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-grid-format-with-title-masonry-layout/)
+> * [Demo Using Masonry Layout with Albums in List Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-list-format-with-title-masonry-layout/)
+> * [Demo Using Masonry Layout with Animation Effects](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-pulse-effect-masonry-layout/)
+> * [Demo Using Masonry Layout with Different Lightboxes](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-foo-box-masonry-layout/)
+> * [Demo Using Masonry Layout with Filters](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-filters-masonry-layout/)
+> * [Demo Using Thumbnail Layout in Individual Images](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-thumbnail-layout/)
+> * [Demo Using Thumbnail Layout in Individual Videos](http://tech-banker.com/products/wp-gallery-bank/demo/individual-videos-with-title-using-thumbnail-layout/)
+> * [Demo Using Thumbnail Layout in Individual Album](http://tech-banker.com/products/wp-gallery-bank/demo/individual-album-with-title-thumbnails-layout/)
+> * [Demo Using Thumbnail Layout with Albums in Grid Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-grid-format-with-title-thumbnails-layout/)
+> * [Demo Using Thumbnail Layout with Albums in List Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-list-format-with-title-thumbnails-layout/)
+> * [Demo Using Thumbnail Layout with Animation Effects](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-pulse-effect-thumbnail-layout/)
+> * [Demo Using Thumbnail Layout with Different Lightboxes](http://tech-banker.com/products/wp-gallery-bank/demo/vindividual-images-with-title-using-foo-box-thumbnail-layout/)
+> * [Demo Using Thumbnail Layout with Filters](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-with-filters-thumbnail-layout/)
+> * [Demo Using Thumbnail Layout with Pagination](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-with-pagination-thumbnail-layout/)
+> * [Demo Using Thumbnail Layout with Special Effects](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-without-title-and-description-using-lomo-effect-thumbnail-layout/)
+> * [Demo Using Filmstrip Layout in Individual Images](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-filmstrip-layout/)
+> * [Demo Using Filmstrip Layout in Individual Videos](http://tech-banker.com/products/wp-gallery-bank/demo/individual-videos-with-title-using-filmstrip-layout/)
+> * [Demo Using Filmstrip Layout in Individual Album](http://tech-banker.com/products/wp-gallery-bank/demo/individual-album-with-title-filmstrip-layout/)
+> * [Demo Using Filmstrip Layout with Albums in Grid Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-grid-format-with-title-filmstrip-layout/)
+> * [Demo Using Filmstrip Layout with Albums in List Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-list-format-with-title-filmstrip-layout/)
+> * [Demo Using Filmstrip Layout with Animation Effects](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-slide-in-down-effect-filmstrip-layout/)
+> * [Demo Using Slideshow Layout in Individual Videos](http://tech-banker.com/products/wp-gallery-bank/demo/individual-videos-with-title-using-slideshow-layout/)
+> * [Demo Using Slideshow Layout in Individual Album](http://tech-banker.com/products/wp-gallery-bank/demo/individual-album-with-title-slideshow-layout/)
+> * [Demo Using Slideshow Layout with Albums in Grid Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-grid-format-with-title-slideshow-layout/)
+> * [Demo Using Slideshow Layout with Albums in List Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-list-format-with-title-slideshow-layout/)
+> * [Demo Using Blog Style Layout in Individual Images](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-blog-style-layout/)
+> * [Demo Using Blog Style Layout in Individual Videos](http://tech-banker.com/products/wp-gallery-bank/demo/individual-videos-with-title-using-blog-layout/)
+> * [Demo Using Blog Style Layout in Individual Album](http://tech-banker.com/products/wp-gallery-bank/demo/individual-album-with-title-blog-style-layout/)
+> * [Demo Using Blog Style Layout with Albums in Grid Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-grid-format-with-title-blog-style-layout/)
+> * [Demo Using Blog Style Layout with Albums in List Format](http://tech-banker.com/products/wp-gallery-bank/demo/albums-in-list-format-with-title-blog-style-layout/)
+> * [Demo Using Blog Style Layout with Animation Effects](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-slide-in-right-blog-style-layout/)
+> * [Demo Using Blog Style Layout with Different Lightboxes](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-pretty-photo-blog-style-layout/)
+> * [Demo Using Blog Style Layout with Filters](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-with-filters-blog-style-layout/)
+> * [Demo Using Blog Style Layout with Pagination](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-pagination-blog-style-layout/)
+> * [Demo Using Blog Style Layout with Special Effects](http://tech-banker.com/products/wp-gallery-bank/demo/individual-images-with-title-using-grayscale-effect-blog-style-layout/)
 
-Gallery Bank is designed to adapt each portfolio to any situation and can be easily used on mobiles as it is a Responsive Plugin.
+**[Support Desk - Feel Free to ask your Queries](http://tech-banker.com/forums/forum/gallery-bank-support/)**
 
-***September 1, 2014: We're happy to announce that Gallery Bank reached 181,000+ plugin downloads in only 1 year. We frequently receive positive feedback from people using our Gallery Bank Plugin for WordPress. Thanks so much for your support!***
+**[Knowledge Base](http://tech-banker.com/products/wp-gallery-bank/knowledge-base/)**
 
-<a href="http://tech-banker.com/forum/gallery-bank-support/" target="_blank">Support Desk - feel free to ask your Queries</a>
+**[Upgrade to Pro Version](http://tech-banker.com/products/wp-gallery-bank/)**
 
-<a href="http://tech-banker.com/gallery-bank/" target="_blank">Upgrade to Pro Version</a>
+**[Like & Support Us on Facebook](https://www.facebook.com/TechBanker/)**
 
-<a href="https://www.facebook.com/TechBanker/" target="_blank">Like & Support us on Facebook</a>
-
-
-**The following are other famous Plugins developed and maintained by Tech Banker**
-
-* [Contact Bank](http://wordpress.org/extend/plugins/contact-bank/) - Contact Bank allows you to add a contact form easilly and simply to a post or a page.
-* [Captcha Bank](http://wordpress.org/extend/plugins/captcha-bank/) - An easy to use powerful wordpress Captcha Plugin to prevent spam on your site.lbums.
-
-
-### Key Features 
-
-* Multi-Lingual. Available now in 33 Languages.
+= Key Features in Gallery Bank Lite Edition =
+ 
+* Multi-Lingual. Available now in 36 Languages.
 * Responsive Gallery
 * Shortcode Wizard in your Page/Post.
-* Unlimited Albums Creation(**Premium Versions**). With Free Standard Version, you can only create upto 3 albums.
+* Unlimited Albums Creation(Premium Versions). With Free Standard Version, you can only create upto 3 albums.
 * Unlimited Images in each Album.
 * Edit Albums and add/edite/delete images.
 * Bulk Upload of Images
@@ -85,92 +90,75 @@ Gallery Bank is designed to adapt each portfolio to any situation and can be eas
 * Grid Album Format
 * Masonry Gallery Format
 * List Album Format
-* Filmstrip Gallery Format(**Premium Versions**)
-* Slideshow Gallery(**Premium Versions**)
-* Special Effects on Images & Albums(**Premium Versions**)
-* Animation Effects on Images & Albums(**Premium Versions**)
-* Bulk Deletion of Images(**Premium Versions**)
-* Sorting of Images(**Premium Versions**)
-* Sorting of Albums(**Premium Versions**)
-* Social Sharing(**Premium Versions**)
-* Commenting on Images(**Premium Versions**)
-* Widgets(**Premium Versions**)
-* Tags for each Image to make Filerable Gallery Album(**Premium Versions**)
-* Bulk Deletion of Albums(**Premium Versions**)
-* Purging Albums and Images(**Premium Versions**)
-* Restore Factory Settings(**Premium Versions**)
-* Global Settings(**Premium Versions**)
-* Thumbnail Settings(**Premium Versions**)
-* Album Settings(**Premium Versions**)
-* Lightbox Settings(**Premium Versions**)
-* Different Lightboxes like FooBox,ColorBox,FancyBox2,Lightbox2,Custom GB Lightbox,Pretty Photo(**Premium Versions**)
-* Pagination(**Premium Versions**)
-* Filter Settings(**Premium Versions**)
-* Roles & Capabilities(**Premium Versions**)
-* Front End Layout Settings(**Premium Versions**)
 
-> #### **Upgrade to Gallery Bank Premium Versions**
-> Take your media to the next level with [Gallery Bank Premium Versions](http://tech-banker.com/gallery-bank/), which gives you 200+ features such as:
+= Key Features in Gallery Bank Premium Editions =
 
-> * Unlimited Albums Creation
-> * Filmstrip Gallery Format
-> * Slideshow Gallery
-> * Special Effects on Images & Albums
-> * Animation Effects on Images & Albums
-> * Bulk Deletion of Images
-> * Fully CSS3 compliant with text shadowing, box shadowing, gradients, etc
-> * Sorting of Images
-> * Sorting of Albums
-> * Social Sharing
-> * Commenting on Images
-> * Widgets
-> * Tags for each Image to make Filerable Gallery Album
-> * Bulk Deletion of Albums
-> * Purging Albums and Images
-> * Restore Factory Settings
-> * Global Settings
-> * Thumbnail Settings
-> * Album Settings
-> * Lightbox Settings
-> * Different Lightboxes like FooBox,ColorBox,FancyBox2,Lightbox2,Custom GB Lightbox,Pretty Photo(**Premium Versions**)
-> * Pagination
-> * Filter Settings
-> * Roles & Capabilities
-> * Front End Layout Settings
-> * See your media on different theme and more.
-> * Powerfull control panel and Shortcode Manager make getting started super easy
-> * 24/7 Technical Support
+ Take your media to the next level with [Gallery Bank Premium Editions](http://tech-banker.com/products/wp-gallery-bank/), which gives you 200+ features such as:
 
-Visit [here](http://tech-banker.com/gallery-bank) to upgrade to Pro Version now.
+* Unlimited Albums Creation 
+* Filmstrip Gallery Format
+* Slideshow Gallery
+* Special Effects on Images & Albums
+* Animation Effects on Images & Albums
+* Bulk Deletion of Images
+* Fully CSS3 compliant with text shadowing, box shadowing, gradients, etc
+* Sorting of Images
+* Sorting of Albums
+* Social Sharing
+* Commenting on Images
+* Widgets
+* Tags for each Image to make Filerable Gallery Album
+* Bulk Deletion of Albums
+* Purging Albums and Images
+* Restore Factory Settings
+* Global Settings
+* Thumbnail Settings
+* Album Settings
+* Lightbox Settings
+* Different Lightboxes like FooBox, ColorBox, FancyBox2, Lightbox2, Custom GB Lightbox, Pretty Photo
+* Pagination
+* Filter Settings
+* Roles & Capabilities
+* Front End Layout Settings
+* See your media on different theme and more.
+* Powerfull control panel and Shortcode Manager make getting started super easy
+* 24/7 Technical Support
 
-= Add New Albums =
+Visit [here](http://tech-banker.com/products/wp-gallery-bank/) to upgrade to Pro Editions now.
 
-You can add upto 3 albums with unlimited images in your Gallery Bank. After that you need to upgrade to one of the premium versions for unlimited access with different features available according to different packages of Gallery Bank.
+= Add New Albums using Gallery Bank =
 
-= Editing Albums = 
+You can add upto 3 albums with unlimited images in your Gallery Bank. After that you need to upgrade to one of the Premium Editions for unlimited access with different features available according to different packages of Gallery Bank.
+
+= Editing Albums using Gallery Bank =
+
 In albums, editing can be done easily. You can edit or add more images/ pictures in your albums. You can change title/description of an album as well as title/description of each image uploaded in a particular album.
 
-= Sorting of Images in an Album = 
+= Sorting of Images in an Album using Gallery Bank =
+ 
 Sorting of Images can be done in your albums. With this feature, you can change the order of pictures according to your requirement/choice.
 
-= Sorting of Albums = 
+= Sorting of Albums using Gallery Bank =
+
 Sorting of Albums can be done in your albums. With this feature, you can re-arrange your order of albums to display on your website.
 
-= Album Preview =
+= Album Preview using Gallery Bank =
+
 In album preview you can view the pictures/images on your back-end before implementing the shortcodes on your Pages/Posts.
 
-= Cover Image = 
+= Cover Image using Gallery Bank =
+
 You can easily set the cover image in your album. This cover image would be used to display on your Pages/Post when using the Album shortcodes.
 
-= Short Codes = 
+= Short Codes using Gallery Bank =
+
 There is a Shortcode Editor availble in your Page/Post where you want to implement the Gallery Bank Shortcode. You just need to go to your Page/Post where you want to implement it and then above your Text Editor/ WP Editor, there would be a button called Gallery Bank. Once you click on it, you can generate your shortcode easily and quickly.
 
-= Global Settings =
+= Global Settings using Gallery Bank =
 
 With Global Settings, you can define different settings for Thumbnails, Albums, Lightboxes, Filters, Pagination and Slideshows.
 
-
-### Gallery Bank is now available in the following Languages
+= Gallery Bank is now available in the following Languages =
 
 * Albanian (sq_AL)
 * Arabic (ar)
@@ -178,6 +166,7 @@ With Global Settings, you can define different settings for Thumbnails, Albums, 
 * Brazilian Portuguese (pt_BR)
 * Bulgarian (bg_BG)
 * Chinese (zh_CN)
+* Croation (hr)
 * Czech (cs_CZ)
 * Danish (da_DK)
 * Dutch (nl_NL)
@@ -186,14 +175,15 @@ With Global Settings, you can define different settings for Thumbnails, Albums, 
 * Finnish (fi_FI)
 * French (fr_FR)
 * German (de_DE)
+* Greek (el_GR)
 * Hebrew (he_IL)
 * Hungarian (hu_HU)
-* Korean (ko_KR)
-* Malay Malaysia (ms_MY)
 * Indonesian (id_ID)
 * Italian (it_IT)
 * Japanese (ja)
-* Korean (hu_HU)
+* Korean (ko_KR)
+* Malay Malaysia (ms_MY)
+* Norwegian (nb)
 * Polish (pl_PL)
 * Portuguese (pt_PT)
 * Romanian (ro_RO)
@@ -207,31 +197,33 @@ With Global Settings, you can define different settings for Thumbnails, Albums, 
 * Thai (th)
 * Ukrainian (uk)
 
-= Technical support =
+= Technical Support =
 
-* Please email all your queries/issues at support@tech-banker.com or use
-* [Forum for Gallery Bank](http://tech-banker.com/forum/gallery-bank-support/), feel free to ask  your queries.
+If any problem occurs, please contact us at [support@tech-banker.com](mailto:support@tech-banker.com).
 
 == Installation ==
 
-### Minimum requirements.  
-*   Wordpress 3.3+  
-*   PHP 5.x  
-*   MySQL 5.x  
-
-### Performing a new installation  
+### Performing a new installation for Gallery Bank.
 
 After downloading the ZIP file,  
 
 1. Log in to the administrator panel.  
 2. Go to Plugins Add > New > Upload.  
-3. Click “Choose file” (“Browse”) and select the downloaded zip file.  
+3. Click "Choose file" ("Browse") and select the downloaded zip file.  
 
-*For Mac Users*  
-*Go to your Downloads folder and locate the folder with the plugin. Right-click on the folder and select Compress. Now you have a newly created .zip file which can be installed as described here.*  
+**For Mac Users**  
+> * Go to your Downloads folder and locate the folder with the plugin. 
+> * Right-click on the folder and select Compress. 
+> * Now you have a newly created .zip file which can be installed as described here.*  
+> * Click "Install Now" button.  
+> * Click "Activate Plugin" button for activating the plugin.  
 
-1. Click “Install Now” button.  
-2. Click “Activate Plugin” button for activating the plugin.  
+== Other Notes ==
+
+= Minimum requirements for Gallery Bank. =  
+*   Wordpress 3.3+  
+*   PHP 5.x  
+*   MySQL 5.x  
 
 If any problem occurs, please contact us at [support@tech-banker.com](mailto:support@tech-banker.com).
 
@@ -239,8 +231,7 @@ If any problem occurs, please contact us at [support@tech-banker.com](mailto:sup
 
 = How to add New Album in Gallery Bank? =
 
-In order to Add New Album in your Gallery Bank, locate Gallery Bank Menu on the left side of
-WordPress Dashboard Menus and then click on Add New Album link.
+In order to Add New Album in your Gallery Bank, locate Gallery Bank Menu on the left side of WordPress Dashboard Menus and then click on Add New Album link.
 
 Alternatively, you can also Add New Album from your Gallery Bank Dashboard Page.
 
@@ -259,10 +250,9 @@ Once you click on the button from any of the above mentioned methods, this page 
 [Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/add-new-album-explanation.png)
 
 
-= How to Edit an Album? =
+= How to Edit an Album in Gallery Bank? =
 
-In order to Edit an Album, you need to go to your Gallery Bank Dashboard Page and then
-click on Edit Album Button located at the right side of each album which you wish to edit.
+In order to Edit an Album, you need to go to your Gallery Bank Dashboard Page and then click on Edit Album Button located at the right side of each album which you wish to edit.
 
 [Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/Edit.png)
 
@@ -271,7 +261,7 @@ Once you Click on the button, this page will open.
 [Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/Edit_img-938x1024.png)
 
 
-= How to Preview an Album? =
+= How to Preview an Album in Gallery Bank? =
 
 In order to Preview your Album, you need to go to your Gallery Bank Dashboard Page
 and then click on Preview Album button at the right side of each album.
@@ -283,16 +273,13 @@ Once you click on the button, this page will open
 [Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/preview21-1024x487.png)
 
 
-= How to Delete an Album? =
+= How to Delete an Album in Gallery Bank? =
 
-You can Delete an Album if you wish to. In order to perform this action, you need to go to
-your Gallery Bank Dashboard Page and then click on Delete Album button at the right
-side of each album.
+You can Delete an Album if you wish to. In order to perform this action, you need to go to your Gallery Bank Dashboard Page and then click on Delete Album button at the right side of each album.
 
 [Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/delete11-1024x409.png)
 
-Once you click on the button, a confirmation message will appear stating
-"Are you sure you want to delete this Album?"
+Once you click on the button, a confirmation message will appear stating "Are you sure you want to delete this Album?"
 
 [Click here to view the Image](http://tech-banker.com/wp-content/uploads/2013/11/delete2-1024x406.png)
 
@@ -499,6 +486,135 @@ is False in shortcode.
 17. Displaying Individual Album with Images.
 
 == Changelog ==
+
+= 3.0.87 = 
+
+* Few Bugs Fixed
+
+= 3.0.86 =
+
+* Added Compatibility with 4.1 WordPress.
+* Fixed Bugs Related to Galleries Display.
+
+= 3.0.85 =
+
+* Changed variables to avoid confliction with other plugins.
+
+= 3.0.84 =
+
+* Minor Bugs Fixed Related to Galleries Display
+
+= 3.0.83 =
+
+* Added Update Message for New Versions.
+
+= 3.0.82 =
+
+* Major Bug Fixed Related to Multisite Wordpress.
+
+= 3.0.81 =
+
+* Multisite Compatibility Added.
+* Added Compatibility with 4.0.1 WordPress
+* Updated Pricing Table
+
+= 3.0.80 =
+
+* Conflict with JetPack discovered & fixed.
+* Optimized Code
+
+= 3.0.79 =
+
+* Udpated  Po & Mo Files for all Languages
+* Updated Css Fixes
+* Optimized Code
+
+= 3.0.78 =
+
+* Udpated  Po & Mo Files
+* Updated Css Fixes
+* Updated Our Services Section
+* Optimized Code
+* Removed unwanted Files
+
+= 3.0.76 =
+
+* CSS Conflictions Fixed after 3.0.75 update
+* Js Conflictions Fixed
+* Readme.txt Updated
+
+= 3.0.75 =
+
+* Demo Links Updated as per New Website
+* Readme.txt Changed as per New Website
+* Recommended Section Added
+* Other Services Section Added
+* Pricing Section Updated
+* Major Release before 4.0 update
+
+
+= 3.0.75 =
+
+* Masonry Colum Width Bug Fixed
+* Overlapping Masonry Layout Fixed 
+
+= 3.0.74 =
+
+* Banner Updated
+
+= 3.0.73 =
+
+* Banner Updated
+
+= 3.0.72 =
+
+* Danish Language Updated
+* Banner Updated
+
+= 3.0.71 =
+
+* Banner Updated
+
+= 3.0.70 =
+
+* Major Security Bug XSS Vulnerability Fixed related to Album Sorting
+
+= 3.0.69 =
+
+* Updated Existing Language - Romanian
+* Updated Existing Language - Indonesian
+* Roles Bugs Fixed
+
+= 3.0.68 =
+
+* Added New Language - Croatian
+* Added New Language - Norwegian
+* Banner Updated
+
+= 3.0.67 =
+
+* Added New Language - Greek
+* Updated Existing Language - Indonesian
+
+= 3.0.66 =
+
+* Compatibility Test with 4.0
+* Few Bugs Fixed
+* Banner Updated
+
+= 3.0.65 =
+
+* Few Bugs Fixed
+* Banner Updated
+
+= 3.0.64 =
+
+* Few Bugs Fixed
+* Banner Updated
+
+= 3.0.63 =
+
+* Major Security Bug Fixed
 
 = 3.0.62 =
 
@@ -809,28 +925,28 @@ is False in shortcode.
 * New Feature : Images in Row for displaying number of images per row
 * New Feature : Albums in Row for displaying number of albums per row
 * New Feature : Albums in Row for displaying number of albums per row
-* New Feature : Filmstrip Gallery Format(**Premium Versions**)
-* New Feature : Slideshow Gallery(**Premium Versions**)
-* New Feature : Special Effects on Images & Albums(**Premium Versions**)
-* New Feature : Animation Effects on Images & Albums(**Premium Versions**)
-* New Feature : Bulk Deletion of Images(**Premium Versions**)
-* New Feature : Sorting of Images(**Premium Versions**)
-* New Feature : Sorting of Albums(**Premium Versions**)
-* New Feature : Social Sharing(**Premium Versions**)
-* New Feature : Commenting on Images(**Premium Versions**)
-* New Feature : Widgets(**Premium Versions**)
-* New Feature : Tags for each Image to make Filerable Gallery Album(**Premium Versions**)
-* New Feature : Bulk Deletion of Albums(**Premium Versions**)
-* New Feature : Purging Albums and Images(**Premium Versions**)
-* New Feature : Restore Factory Settings(**Premium Versions**)
-* New Feature : Global Settings(**Premium Versions**)
-* New Feature : Thumbnail Settings(**Premium Versions**)
-* New Feature : Album Settings(**Premium Versions**)
-* New Feature : Lightbox Settings(**Premium Versions**)
-* New Feature : Different Lightboxes like FooBox,ColorBox,FancyBox2,Lightbox2,Custom GB Lightbox,Pretty Photo(**Premium Versions**)
-* New Feature : Pagination(**Premium Versions**)
-* New Feature : Filter Settings(**Premium Versions**)
-* New Feature : Roles & Capabilities(**Premium Versions**)
+* New Feature : Filmstrip Gallery Format(Premium Versions)
+* New Feature : Slideshow Gallery(Premium Versions)
+* New Feature : Special Effects on Images & Albums(Premium Versions)
+* New Feature : Animation Effects on Images & Albums(Premium Versions)
+* New Feature : Bulk Deletion of Images(Premium Versions)
+* New Feature : Sorting of Images(Premium Versions)
+* New Feature : Sorting of Albums(Premium Versions)
+* New Feature : Social Sharing(Premium Versions)
+* New Feature : Commenting on Images(Premium Versions)
+* New Feature : Widgets(Premium Versions)
+* New Feature : Tags for each Image to make Filerable Gallery Album(Premium Versions)
+* New Feature : Bulk Deletion of Albums(Premium Versions)
+* New Feature : Purging Albums and Images(Premium Versions)
+* New Feature : Restore Factory Settings(Premium Versions)
+* New Feature : Global Settings(Premium Versions)
+* New Feature : Thumbnail Settings(Premium Versions)
+* New Feature : Album Settings(Premium Versions)
+* New Feature : Lightbox Settings(Premium Versions)
+* New Feature : Different Lightboxes like FooBox,ColorBox,FancyBox2,Lightbox2,Custom GB Lightbox,Pretty Photo(Premium Versions)
+* New Feature : Pagination(Premium Versions)
+* New Feature : Filter Settings(Premium Versions)
+* New Feature : Roles & Capabilities(Premium Versions)
 * Bugs Fixed  : Wrong images displayed when videos added.
 
 = 2.0.26 =
@@ -1050,13 +1166,13 @@ is False in shortcode.
 
 = 1.2 =
 
-* Few Bugs Fixed
-* Lightbox logic changes
+* Few Bugs Fixed in Gallery Bank
+* Lightbox logic changed
 * Thumbnails Fixed
 
 = 1.1 =
 
-* Few Bugs Fixed
+* Few Bugs Fixed in Gallery Bank
 
 = 1.0 =
 

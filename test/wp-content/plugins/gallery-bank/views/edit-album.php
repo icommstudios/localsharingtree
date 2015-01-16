@@ -1,6 +1,6 @@
 <?php
 
-	switch($role)
+	switch($gb_role)
 	{
 		case "administrator":
 			$user_role_permission = "manage_options";
@@ -18,7 +18,6 @@
 	}
 	else
 	{
-
 		$album_id = intval($_REQUEST["album_id"]);
 		$last_albums_id = $wpdb->get_var
 		(
@@ -143,7 +142,7 @@
 		            -khtml-opacity: <?php echo $thumbnails_opacity; ?>;
 		        }
 		    </style>
-		<div class="message red" style="display: block;margin-top:30px">
+		<div class="custom-message red" style="display: block;margin-top:30px">
 			<span>
 				<strong>You will be only allowed to add 3 galleries. Kindly purchase Premium Version for full access.</strong>
 			</span>
@@ -161,7 +160,7 @@
 										<a class="btn btn-inverse" href="admin.php?page=gallery_bank"><?php _e("Back to Albums", gallery_bank); ?></a>
 										<button type="submit" class="btn btn-info" style="float:right"><?php _e("Save Album", gallery_bank); ?></button>
 										<div class="separator-doubled"></div>
-										<div id="update_album_success_message" class="message green" style="display: none;">
+										<div id="update_album_success_message" class="custom-message green" style="display: none;">
 											<span>
 												<strong><?php _e("Album Saved. Kindly wait for the redirect to happen.", gallery_bank); ?></strong>
 											</span>
@@ -421,7 +420,7 @@
 				</div>
 			</div>
 		</form>
-		    <script type="text/javascript">
+		<script type="text/javascript">
 		
 		    jQuery(".hovertip").tooltip();
 		    var url = "<?php echo plugins_url("/assets/",dirname(__FILE__)) ?>";
@@ -547,6 +546,11 @@
 		        },
 		        flash_swf_url: url + "Moxie.swf",
 		        silverlight_xap_url: url + "Moxie.xap",
+		        preinit : {
+		            UploadFile: function(up, file) {
+			            up.setOption('url', ajaxurl + "?file_type="+file.type+"&file_name="+file.name+"&param=upload_pic&action=upload_library");
+		            }
+		        },
 		        init: {
 		            FileUploaded: function (up, file) {
 		                

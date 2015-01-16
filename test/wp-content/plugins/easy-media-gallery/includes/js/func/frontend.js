@@ -12,3 +12,7 @@
 jQuery(function(){jQuery(window).scroll(function(){if(jQuery("#mbCenter").size()>0){var e=parseInt(jQuery(document).scrollTop());var t=jQuery("#mbCenter").offset();var n=parseInt(t.top+jQuery("#mbCenter").height()+90-e);var r=jQuery(window).height()-n;if(e<t.top-90){setTimeout(function(){jQuery("#mbCenter").stop().animate({top:jQuery(window).scrollTop()+340},500)},150)}if(r>1&&jQuery(window).height()<jQuery("#mbCenter").height()-90){setTimeout(function(){jQuery("#mbCenter").stop().animate({top:t.top+340},500)},150)}else if(r>1&&jQuery(window).height()>jQuery("#mbCenter").height()+90){setTimeout(function(){jQuery("#mbCenter").stop().animate({top:jQuery(window).scrollTop()+340},500)},150)}}})})
 
 jQuery(function($){$("div.da-thumbs").emghoverdir(); $(".emgfittext").fitText(1.2,{ maxFontSize: "12px" });});
+
+jQuery(document).ready(function(){setContainerWidth();});
+jQuery(window).resize(function(){setContainerWidth();});
+function setContainerWidth(){jQuery('.rig').css('width', 'auto');var windowWidth = jQuery('.easycontainer').width();var blockWidth = jQuery('.view').outerWidth(true);var maxBoxPerRow = Math.floor(windowWidth / blockWidth);jQuery('.rig').width(maxBoxPerRow * blockWidth);}

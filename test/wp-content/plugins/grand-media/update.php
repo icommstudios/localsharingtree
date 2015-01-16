@@ -1,4 +1,6 @@
 <?php
+//ini_set( 'display_errors', '1' );
+//ini_set( 'error_reporting', E_ALL );
 // If not called from WordPress, then exit
 if(!defined('ABSPATH')){
 	exit;
@@ -119,6 +121,7 @@ window.onload = function() {
   scroll_down = false;
 }
 </script>';
+
 	echo '<p>' . __('Start update images...', 'gmLang') . '</p>';
 	wp_ob_end_flush_all();
 
@@ -141,7 +144,7 @@ window.onload = function() {
 		}
 	}
 
-	$gmedias = $gmDB->get_gmedias(array('mime_type' => 'image/*'));
+	$gmedias = $gmDB->get_gmedias(array('mime_type' => 'image/*', 'cache_results' => false));
 	$files = array();
 	foreach($gmedias as $gmedia){
 		$files[] = array(
@@ -162,7 +165,7 @@ window.onload = function() {
 	$wpdb->update($wpdb->prefix . 'gmedia_term', array('taxonomy' => 'gmedia_album'), array('taxonomy' => 'gmedia_category'));
 	$wpdb->update($wpdb->prefix . 'gmedia_term', array('taxonomy' => 'gmedia_gallery'), array('taxonomy' => 'gmedia_module'));
 
-	$gmedias = $gmDB->get_gmedias(array('no_found_rows' => true, 'meta_key' => 'link'));
+	$gmedias = $gmDB->get_gmedias(array('no_found_rows' => true, 'meta_key' => 'link', 'cache_results' => false));
 	foreach($gmedias as $gmedia){
 		$link = $gmDB->get_metadata('gmedia', $gmedia->ID, 'link', true);
 		if($link){
@@ -266,12 +269,18 @@ function gmedia_images_update($files){
 		$prefix_ko = "\n<pre style='display:block;color:darkred;'>$i/$c - ";
 
 		if(!is_file($file)){
-			echo $prefix_ko . sprintf(__('File not exists: %s', 'gmLang'), $file) . $eol;
-			continue;
+            $fileinfo = $gmCore->fileinfo($file, false);
+            if(is_file($fileinfo['filepath_original'])){
+                @rename($fileinfo['filepath_original'], $fileinfo['filepath']);
+            } else {
+                echo $prefix_ko . sprintf(__('File not exists: %s', 'gmLang'), $file) . $eol;
+                continue;
+            }
 		}
 
 		$file_File = $file;
-		$fileinfo = $gmCore->fileinfo($file, false);
+        $fileinfo = $gmCore->fileinfo($file, false);
+
 		if($file_File != $fileinfo['filepath']){
 			@rename($file_File, $fileinfo['filepath']);
 			$wpdb->update($wpdb->prefix . 'gmedia', array('gmuid' => $fileinfo['basename']), array('gmuid' => basename($file_File)));
@@ -280,7 +289,45 @@ function gmedia_images_update($files){
 		if('image' == $fileinfo['dirname']){
 			$size = @getimagesize($fileinfo['filepath']);
 			if(!file_exists($fileinfo['filepath_thumb']) && file_is_displayable_image($fileinfo['filepath'])){
-				if(!wp_mkdir_p($fileinfo['dirpath_thumb'])){
+
+				if ( function_exists( 'memory_get_usage' ) ) {
+					$extensions = array( '1' => 'GIF', '2' => 'JPG', '3' => 'PNG', '6' => 'BMP' );
+					switch ( $extensions[ $size[2] ] ) {
+						case 'GIF':
+							$CHANNEL = 1;
+							break;
+						case 'JPG':
+							$CHANNEL = $size['channels'];
+							break;
+						case 'PNG':
+							$CHANNEL = 3;
+							break;
+						case 'BMP':
+						default:
+							$CHANNEL = 6;
+							break;
+					}
+					$MB                = 1048576;  // number of bytes in 1M
+					$K64               = 65536;    // number of bytes in 64K
+					$TWEAKFACTOR       = 1.8;     // Or whatever works for you
+					$memoryNeeded      = round( ( $size[0] * $size[1] * $size['bits'] * $CHANNEL / 8 + $K64 ) * $TWEAKFACTOR );
+					$memoryNeeded      = memory_get_usage() + $memoryNeeded;
+					$current_limit     = @ini_get( 'memory_limit' );
+					$current_limit_int = intval( $current_limit );
+					if ( false !== strpos( $current_limit, 'M' ) ) {
+						$current_limit_int *= $MB;
+					}
+					if ( false !== strpos( $current_limit, 'G' ) ) {
+						$current_limit_int *= 1024;
+					}
+
+					if ( - 1 != $current_limit && $memoryNeeded > $current_limit_int ) {
+						$newLimit = $current_limit_int / $MB + ceil( ( $memoryNeeded - $current_limit_int ) / $MB );
+						@ini_set( 'memory_limit', $newLimit . 'M' );
+					}
+				}
+
+                if(!wp_mkdir_p($fileinfo['dirpath_thumb'])){
 					echo $prefix_ko . sprintf(__('Unable to create directory `%s`. Is its parent directory writable by the server?', 'gmLang'), $fileinfo['dirpath_thumb']) . $eol;
 					continue;
 				}

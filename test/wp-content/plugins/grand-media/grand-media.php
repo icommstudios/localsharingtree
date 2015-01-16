@@ -3,7 +3,7 @@
 Plugin Name: Gmedia Gallery
 Plugin URI: http://wordpress.org/extend/plugins/grand-media/
 Description: Gmedia Gallery - powerfull media library plugin for creating beautiful galleries and managing files.
-Version: 1.2.3
+Version: 1.3.5
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -39,7 +39,7 @@ if(!class_exists('Gmedia')){
 	 */
 	class Gmedia{
 
-		var $version = '1.2.3';
+		var $version = '1.3.5';
 		var $dbversion = '0.9.6';
 		var $minium_WP = '3.5';
 		var $options = '';
@@ -252,8 +252,8 @@ if(!class_exists('Gmedia')){
 				'pluginPath' => $gmCore->gmedia_url
 			));
 
-			wp_register_style('grand-media', $gmCore->gmedia_url . '/admin/css/grand-media.css', array(), '1.2.0', 'all');
-			wp_register_script('grand-media', $gmCore->gmedia_url . '/admin/js/grand-media.js', array('jquery', 'gmedia-global-backend'), '1.2.0');
+			wp_register_style('grand-media', $gmCore->gmedia_url . '/admin/css/grand-media.css', array(), '1.3.5', 'all');
+			wp_register_script('grand-media', $gmCore->gmedia_url . '/admin/js/grand-media.js', array('jquery', 'gmedia-global-backend'), '1.3.4');
 			wp_localize_script('grand-media', 'grandMedia', array(
 				'error3' => __('Disable your Popup Blocker and try again.', 'gmLang'),
 				'download' => __('downloading...', 'gmLang'),
@@ -307,8 +307,9 @@ if(!class_exists('Gmedia')){
 
 		function load_module_scripts(){
 			$deps = array();
-			foreach($this->do_module as $module){
+			foreach($this->do_module as $m => $module){
 				$deps = array_merge($deps, explode(',', $module['info']['dependencies']));
+				$deps = apply_filters('gmedia_'.$m.'_dependencies', $deps);
 				foreach($deps as $handle){
 					if(wp_script_is($handle, 'registered')){
 						wp_enqueue_script($handle, $_src = false, $_deps = array('jquery'), $_ver = false, $_in_footer = true);

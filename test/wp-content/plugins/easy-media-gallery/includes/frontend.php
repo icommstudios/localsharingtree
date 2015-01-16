@@ -58,8 +58,6 @@ function easymedia_frontend_prop()
 		echo "<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"$dinstyle\" />\n"; //@since 1.2.29
 		
 ob_start(); ?>
-<!--@since 1.2.29-->
-<!--<link rel="stylesheet" href="<?php /* echo plugins_url('dynamic-style.php' , __FILE__) */?>" type="text/css" media="screen" />-->
 
 <!-- Easy Media Gallery Lite START (version <?php echo EASYMEDIA_VERSION; ?>)-->       
     

@@ -18,6 +18,22 @@ body.logged-in {
     padding-top: 0px;
 }
 
+@media (min-width: 768px) {
+    .hidden-desktop {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .hidden-mobile {
+        display: none;
+    }
+}
+
+.block {
+    display: block !important;
+}
+
 .container {
     max-width: 1020px;
     width: auto;
@@ -26,7 +42,7 @@ body.logged-in {
 .button-light {
     border-radius: 0.4em;
     background-color: rgba(0,0,0,.4) !important;
-
+    text-align: center;
     text-shadow: rgba(0,0,0,0.5) 0 1px 1px;
     border: none;
     padding: 8px;
@@ -34,6 +50,11 @@ body.logged-in {
     -webkit-appearance: none;
     font-size: 1em;
     line-height: 1.5em;
+    color: white;
+}
+
+.button-light:hover {
+    color: #ccc;
 }
 
 
@@ -62,6 +83,10 @@ body.logged-in {
 h2.section_heading, legend.section_heading, .section_heading a, .table_heading {
 display: inline-block;
 width: 100%;
+}
+
+.font_small {
+    font-size: .7em;
 }
 
 
@@ -288,6 +313,7 @@ font-size: 12px;
     position: relative;
     right:0; top:0;
     text-align: left;
+    max-width: 100%;
 }
 #login_wrap a {
     color: #025A78;
@@ -711,7 +737,7 @@ padding: 4px 8px;
     }
 
     #lst_logo {
-    max-width: 60%;
+    max-width: 50%;
     float: left;
     }
 

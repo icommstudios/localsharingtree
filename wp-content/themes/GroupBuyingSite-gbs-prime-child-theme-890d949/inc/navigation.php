@@ -48,9 +48,13 @@
 
 		</div>
 
-		<div class="lst-header-search" tabindex="2">
+		<div class="lst-header-search hidden-mobile" tabindex="2">
 				<?php get_search_form(); ?> 
 			</div>
+
+		<div class="lst-header-search hidden-desktop" tabindex="2">
+			<a class="button-light block" href="/moredeals/">Search Deals</a>
+		</div>
 
 	</div><!-- #header -->
 

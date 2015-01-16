@@ -1,6 +1,6 @@
 /*
  * Easy Media Gallery Lite
- * Frontend Style v.1.2.59
+ * Frontend Style v.1.2.93
  * Copyright (c) 2012 GhozyLab, Inc.
  * http://ghozylab.com/
  * http://wordpress.org/extend/plugins/easy-media-gallery/
@@ -155,6 +155,41 @@ span.link_post:hover{
 /*
  * RESPONSIVE MODE
 */
+
+/* ----- Image grids ----- */
+
+.easycontainer {
+	margin:0 auto;
+	}
+	
+.rig {
+	list-style: none;
+	font-size: 0px;
+	margin: 0 auto;
+}
+.rig .view {
+	float: left;
+	display:block;
+	margin: 0 0 2.5% 2.5%;
+	background: #fff;
+}
+.rig .view img {
+	max-width: 100%;
+	height: auto;
+	margin: 0 0 10px;
+	overflow: hidden !important;
+}
+
+@media (max-width: 480px) {
+
+	.rig {
+		margin-left: 0;
+	}
+	.rig .view {
+		width: 100% !important; /* over-ride all li styles */
+		margin: 0 0 20px;
+	}
+}
 
 @media only screen and (max-width: 480px) {
 	

@@ -1,4 +1,148 @@
 <?php
+/******************************************Code for Thumbnails Creation**********************/
+if(!function_exists("process_gallery_image_upload"))
+{
+	function process_gallery_image_upload($image, $width, $height)
+	{
+		$temp_image_path = GALLERY_MAIN_UPLOAD_DIR . $image;
+		$temp_image_name = $image;
+		list(, , $temp_image_type) = getimagesize($temp_image_path);
+		if ($temp_image_type === NULL) {
+			return false;
+		}
+		$uploaded_image_path = GALLERY_MAIN_UPLOAD_DIR . $temp_image_name;
+		move_uploaded_file($temp_image_path, $uploaded_image_path);
+		$type = explode(".", $image);
+		$thumbnail_image_path = GALLERY_MAIN_THUMB_DIR . preg_replace('{\\.[^\\.]+$}', '.'.$type[1], $temp_image_name);
+
+		$result = generate_gallery_thumbnail($uploaded_image_path, $thumbnail_image_path, $width, $height);
+		return $result ? array($uploaded_image_path, $thumbnail_image_path) : false;
+	}
+}
+if(!function_exists("process_gallery_album_upload"))
+{
+	function process_gallery_album_upload($album_image, $width, $height)
+	{
+		$temp_image_path = GALLERY_MAIN_UPLOAD_DIR . $album_image;
+		$temp_image_name = $album_image;
+		list(, , $temp_image_type) = getimagesize($temp_image_path);
+		if ($temp_image_type === NULL) {
+			return false;
+		}
+		$uploaded_image_path = GALLERY_MAIN_UPLOAD_DIR . $temp_image_name;
+		move_uploaded_file($temp_image_path, $uploaded_image_path);
+		$type = explode(".", $album_image);
+		$thumbnail_image_path = GALLERY_MAIN_ALB_THUMB_DIR . preg_replace("{\\.[^\\.]+$}", ".".$type[1], $temp_image_name);
+
+		$result = generate_gallery_thumbnail($uploaded_image_path, $thumbnail_image_path, $width, $height);
+		return $result ? array($uploaded_image_path, $thumbnail_image_path) : false;
+	}
+}
+/****************************** COMMON FUNCTION TO GENERATE THUMBNAILS********************************/
+if(!function_exists("generate_gallery_thumbnail"))
+{
+	function generate_gallery_thumbnail($source_image_path, $thumbnail_image_path, $imageWidth, $imageHeight)
+	{
+		list($source_image_width, $source_image_height, $source_image_type) = getimagesize($source_image_path);
+		$source_gd_image = false;
+		switch ($source_image_type) {
+
+			case IMAGETYPE_GIF:
+				$source_gd_image = imagecreatefromgif($source_image_path);
+				break;
+			case IMAGETYPE_JPEG:
+				$source_gd_image = imagecreatefromjpeg($source_image_path);
+				break;
+			case IMAGETYPE_PNG:
+				$source_gd_image = imagecreatefrompng($source_image_path);
+				break;
+		}
+		if ($source_gd_image === false) {
+			return false;
+		}
+		$source_aspect_ratio = $source_image_width / $source_image_height;
+		if ($source_image_width > $source_image_height) {
+			(int)$real_height = $imageHeight;
+			(int)$real_width = $imageHeight * $source_aspect_ratio;
+		} else if ($source_image_height > $source_image_width) {
+			(int)$real_height = $imageWidth / $source_aspect_ratio;
+			(int)$real_width = $imageWidth;
+
+		} else {
+
+			(int)$real_height = $imageHeight > $imageWidth ? $imageHeight : $imageWidth;
+			(int)$real_width = $imageWidth > $imageHeight ? $imageWidth : $imageHeight;
+		}
+		$thumbnail_gd_image = imagecreatetruecolor($real_width, $real_height);
+		$bg_color = imagecolorallocate($thumbnail_gd_image, 255, 255, 255);
+		imagefilledrectangle($thumbnail_gd_image, 0, 0, $real_width, $real_height, $bg_color);
+		imagecopyresampled($thumbnail_gd_image, $source_gd_image, 0, 0, 0, 0, $real_width, $real_height, $source_image_width, $source_image_height);
+
+		imagejpeg($thumbnail_gd_image, $thumbnail_image_path, 100);
+		imagedestroy($source_gd_image);
+		imagedestroy($thumbnail_gd_image);
+		return true;
+	}
+}
+/******************************************End of Code for Thumbnails Creation **********************/
+
+/****************************************** Code for Table Creation **********************/
+if(!function_exists("create_table_albums"))
+{
+	function create_table_albums()
+	{
+		$sql = "CREATE TABLE " . gallery_bank_albums() . "(
+            album_id INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+            album_name VARCHAR(100),
+            author VARCHAR(100),
+            album_date DATE,
+            description TEXT ,
+            album_order INTEGER(10),
+            PRIMARY KEY (album_id)
+            ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+		dbDelta($sql);
+	}
+}
+if(!function_exists("create_table_album_pics"))
+{
+	function create_table_album_pics()
+	{
+		$sql = "CREATE TABLE " . gallery_bank_pics() . "(
+            pic_id INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+            album_id INTEGER(10) UNSIGNED NOT NULL,
+            title TEXT,
+            description TEXT,
+            thumbnail_url TEXT NOT NULL,
+            sorting_order INTEGER(20),
+            date DATE,
+            url VARCHAR(250),
+            video INTEGER(10) NOT NULL,
+            tags TEXT,
+            pic_name TEXT NOT NULL,
+            album_cover INTEGER(1) NOT NULL,
+            PRIMARY KEY(pic_id)
+            ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+		dbDelta($sql);
+	}
+}
+if(!function_exists("create_table_album_settings"))
+{
+	function create_table_album_settings()
+	{
+		global $wpdb;
+		$sql = "CREATE TABLE " . gallery_bank_settings() . "(
+            setting_id INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+            setting_key VARCHAR(100) NOT NULL,
+            setting_value TEXT NOT NULL,
+            PRIMARY KEY (setting_id)
+            ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+		dbDelta($sql);
+
+		include (GALLERY_BK_PLUGIN_DIR . "/lib/include_settings.php");
+
+	}
+}
+/******************************************End of Code for Table Creation**********************/
 global $wpdb;
 require_once(ABSPATH . "wp-admin/includes/upgrade.php");
 update_option("gallery-bank-updation-check-url","http://tech-banker.com/wp-admin/admin-ajax.php");
@@ -109,7 +253,7 @@ if($version == "")
                     }
                     if(file_exists($destination))
                     {
-                        process_image_upload($file_name, 160, 120);
+                        process_gallery_image_upload($file_name, 160, 120);
                     }
 
                     $wpdb->query
@@ -135,7 +279,7 @@ if($version == "")
                     );
                     if($album_id != $album_pics[$flag]->album_id)
                     {
-                        process_album_upload($file_name, 160, 120);
+                        process_gallery_album_upload($file_name, 160, 120);
                     }
                     $album_id = $album_pics[$flag]->album_id;
                 }
@@ -159,128 +303,4 @@ else if($version == "3.0")
 {
 	update_option("gallery-bank-pro-edition", "3.1");
 }
-/******************************************Code for Thumbnails Creation**********************/
-
-	function process_image_upload($image, $width, $height)
-	{
-		$temp_image_path = GALLERY_MAIN_UPLOAD_DIR . $image;
-		$temp_image_name = $image;
-		list(, , $temp_image_type) = getimagesize($temp_image_path);
-		if ($temp_image_type === NULL) {
-			return false;
-		}
-		$uploaded_image_path = GALLERY_MAIN_UPLOAD_DIR . $temp_image_name;
-		move_uploaded_file($temp_image_path, $uploaded_image_path);
-		$type = explode(".", $image);
-		$thumbnail_image_path = GALLERY_MAIN_THUMB_DIR . preg_replace('{\\.[^\\.]+$}', '.'.$type[1], $temp_image_name);
-	
-		$result = generate_thumbnail($uploaded_image_path, $thumbnail_image_path, $width, $height);
-		return $result ? array($uploaded_image_path, $thumbnail_image_path) : false;
-	}
-	function process_album_upload($album_image, $width, $height)
-    {
-        $temp_image_path = GALLERY_MAIN_UPLOAD_DIR . $album_image;
-        $temp_image_name = $album_image;
-        list(, , $temp_image_type) = getimagesize($temp_image_path);
-        if ($temp_image_type === NULL) {
-            return false;
-        }
-		$uploaded_image_path = GALLERY_MAIN_UPLOAD_DIR . $temp_image_name;
-        move_uploaded_file($temp_image_path, $uploaded_image_path);
-		$type = explode(".", $album_image);
-		$thumbnail_image_path = GALLERY_MAIN_ALB_THUMB_DIR . preg_replace("{\\.[^\\.]+$}", ".".$type[1], $temp_image_name);
-        
-        $result = generate_thumbnail($uploaded_image_path, $thumbnail_image_path, $width, $height);
-        return $result ? array($uploaded_image_path, $thumbnail_image_path) : false;
-    }
-/****************************** COMMON FUNCTION TO GENERATE THUMBNAILS********************************/
-	function generate_thumbnail($source_image_path, $thumbnail_image_path, $imageWidth, $imageHeight)
-	{
-	    list($source_image_width, $source_image_height, $source_image_type) = getimagesize($source_image_path);
-	    $source_gd_image = false;
-	    switch ($source_image_type) {
-	
-	        case IMAGETYPE_GIF:
-	            $source_gd_image = imagecreatefromgif($source_image_path);
-	            break;
-	        case IMAGETYPE_JPEG:
-	            $source_gd_image = imagecreatefromjpeg($source_image_path);
-	            break;
-	        case IMAGETYPE_PNG:
-	            $source_gd_image = imagecreatefrompng($source_image_path);
-	            break;
-	    }
-	    if ($source_gd_image === false) {
-	        return false;
-	    }
-	    $source_aspect_ratio = $source_image_width / $source_image_height;
-	    if ($source_image_width > $source_image_height) {
-	        (int)$real_height = $imageHeight;
-	        (int)$real_width = $imageHeight * $source_aspect_ratio;
-	    } else if ($source_image_height > $source_image_width) {
-	        (int)$real_height = $imageWidth / $source_aspect_ratio;
-	        (int)$real_width = $imageWidth;
-
-	    } else {
-
-	        (int)$real_height = $imageHeight > $imageWidth ? $imageHeight : $imageWidth;
-	        (int)$real_width = $imageWidth > $imageHeight ? $imageWidth : $imageHeight;
-	    }
-        $thumbnail_gd_image = imagecreatetruecolor($real_width, $real_height);
-	    $bg_color = imagecolorallocate($thumbnail_gd_image, 255, 255, 255);
-	    imagefilledrectangle($thumbnail_gd_image, 0, 0, $real_width, $real_height, $bg_color);
-	    imagecopyresampled($thumbnail_gd_image, $source_gd_image, 0, 0, 0, 0, $real_width, $real_height, $source_image_width, $source_image_height);
-
-	    imagejpeg($thumbnail_gd_image, $thumbnail_image_path, 100);
-	    imagedestroy($source_gd_image);
-	    imagedestroy($thumbnail_gd_image);
-	    return true;
-    }
-    function create_table_albums()
-    {
-        $sql = "CREATE TABLE " . gallery_bank_albums() . "(
-            album_id INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-            album_name VARCHAR(100),
-            author VARCHAR(100),
-            album_date DATE,
-            description TEXT ,
-            album_order INTEGER(10),
-            PRIMARY KEY (album_id)
-            ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
-        dbDelta($sql);
-    }
-    function create_table_album_pics()
-    {
-        $sql = "CREATE TABLE " . gallery_bank_pics() . "(
-            pic_id INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-            album_id INTEGER(10) UNSIGNED NOT NULL,
-            title TEXT,
-            description TEXT,
-            thumbnail_url TEXT NOT NULL,
-            sorting_order INTEGER(20),
-            date DATE,
-            url VARCHAR(250),
-            video INTEGER(10) NOT NULL,
-            tags TEXT,
-            pic_name TEXT NOT NULL,
-            album_cover INTEGER(1) NOT NULL,
-            PRIMARY KEY(pic_id)
-            ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
-        dbDelta($sql);
-    }
-    function create_table_album_settings()
-    {
-        global $wpdb;
-        $sql = "CREATE TABLE " . gallery_bank_settings() . "(
-            setting_id INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-            setting_key VARCHAR(100) NOT NULL,
-            setting_value TEXT NOT NULL,
-            PRIMARY KEY (setting_id)
-            ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
-        dbDelta($sql);
-
-        include_once (GALLERY_BK_PLUGIN_DIR . "/lib/include_settings.php");
-
-    }
-   
 ?>

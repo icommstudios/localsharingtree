@@ -3,7 +3,7 @@
 Plugin Name: Easy Smooth Scroll Links
 Plugin URI: http://www.jeriffcheng.com/wordpress-plugins/easy-smooth-scroll-links
 Description: Create anchors and add up to to 30 scrolling animation effects to links that link to page anchors. You can set scroll speed and offset value. 
-Version: 1.8
+Version: 2.0
 Author: Jeriff Cheng
 Author URI: http://www.jeriffcheng.com/
 */
@@ -55,7 +55,7 @@ if ( $wp_version < 3.9 ) {
 //Shortcode
 if ( ! function_exists('essl_shortcode') ) {
 function essl_shortcode( $atts, $content = null ) {
-   return '<a name="' . $content . '">';
+   return '<a id="' . $content . '">';
 }
 add_shortcode( 'anchor', 'essl_shortcode' );
 }
@@ -89,6 +89,7 @@ define('ESSLPluginOptions_NICK', 'ESSL Settings');
 		*/
 		public static function register()
 		{
+			register_setting(ESSLPluginOptions_ID.'_options', 'enable_essl_aggressive');
 			register_setting(ESSLPluginOptions_ID.'_options', 'essl_speed');
 			register_setting(ESSLPluginOptions_ID.'_options', 'essl_offset');
 			register_setting(ESSLPluginOptions_ID.'_options', 'essl_easing');
@@ -101,12 +102,7 @@ define('ESSLPluginOptions_NICK', 'ESSL Settings');
 			register_setting(ESSLPluginOptions_ID.'_options', 'essl_exclude_match_2');
 			register_setting(ESSLPluginOptions_ID.'_options', 'essl_exclude_match_3');
 			register_setting(ESSLPluginOptions_ID.'_options', 'essl_exclude_match_4');			
-			register_setting(ESSLPluginOptions_ID.'_options', 'essl_exclude_match_5');	
-
-			register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_enabled');
-			register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_speed');
-			register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_easing');					
-			register_setting(ESSLPluginOptions_ID.'_options', 'essl_top_offset');				
+			register_setting(ESSLPluginOptions_ID.'_options', 'essl_exclude_match_5');				
 		}
 		/** function/method
 		* Usage: hooking (registering) the plugin menu
@@ -184,8 +180,45 @@ define('ESSLPluginOptions_NICK', 'ESSL Settings');
 			if(get_option('essl_exclude_match_5')){ $essl_exclude_match_5=":not([href='".get_option('essl_exclude_match_5')."'])";}						
 			$essl_exclude_begin= $essl_exclude_begin_1. $essl_exclude_begin_2. $essl_exclude_begin_3. $essl_exclude_begin_4. $essl_exclude_begin_5;
 			$essl_exclude_match= $essl_exclude_match_1. $essl_exclude_match_2. $essl_exclude_match_3. $essl_exclude_match_4. $essl_exclude_match_5;		
-		
-					?>	
+
+			if(get_option('enable_essl_aggressive')=='1'){ ?>	
+			<script type="text/javascript">
+				jQuery.noConflict();
+				(function($){
+				  
+					var jump=function(e)
+					{
+					   if (e){
+						   var target = $(this).attr("href");
+					   }else{
+						   var target = location.hash;
+					   }
+					   
+						var scrollToPosition = $(target).offset().top - <?php if (get_option('essl_offset')!='') {echo get_option('essl_offset');} else {echo '20';} ?>;
+					
+					   $('html,body').animate({scrollTop: scrollToPosition },<?php if (get_option('essl_speed')!='') {echo get_option('essl_speed');} else {echo '900';} ?> ,'<?php echo  get_option('essl_easing','easeInQuint');?>' );
+
+					}
+
+					$('html, body').hide()
+
+					$(document).ready(function()
+					{
+						$("area[href*=#],a[href*=#]:not([href=#]):not([href^='#tab']):not([href^='#quicktab']):not([href^='#pane'])<?php if($essl_exclude_begin) echo $essl_exclude_begin; ?><?php if($essl_exclude_match) echo $essl_exclude_match; ?>").bind("click", jump);
+
+						if (location.hash){
+							setTimeout(function(){
+								$('html, body').scrollTop(0).show()
+								jump()
+							}, 0);
+						}else{
+						  $('html, body').show()
+						}
+					});
+				  
+				})(jQuery)
+			</script>
+				<?php  } else {  ?>
 			<script type="text/javascript">
 				jQuery.noConflict();
 				(function( $ ) {
@@ -205,44 +238,8 @@ define('ESSLPluginOptions_NICK', 'ESSL Settings');
 						});
 					});
 				})(jQuery);	
-			</script>
-				<?php  }							
-					
-		if(get_option('essl_top_enabled')){			
-			
-			add_action('wp_footer', 'essl_go_to_top',100);			
-			function essl_go_to_top() { ?>	
-				<a id="esslgotop" href="#essltop">Back to Top</a>			
-				<style>#esslgotop{position:fixed;bottom:2em;right:2em;text-decoration:none;color:white;background-color:rgba(0,0,0,0.3); font-size:12px;padding:1em;display:none;} #esslgotop:hover{background-color:rgba(0,0,0,0.6);}</style>	
-				<script type="text/javascript">
-					jQuery.noConflict();
-					(function( $ ) {
-						$(function() {
-							//Go to Top Button Script
-							$(document).ready(function(){
-								$("#esslgotop").hide();
-								$(function () {
-									$(window).scroll(function () {
-										if ($(this).scrollTop() > 100) {
-										$('#esslgotop').fadeIn();
-										} else {
-										$('#esslgotop').fadeOut();
-										}
-									});
-									$('a[href=#essltop]').click(function () {
-										$('html, body').animate({scrollTop:<?php if (get_option('essl_top_offset')!='') {echo get_option('essl_top_offset');} else {echo '0';} ?>}, <?php if (get_option('essl_top_speed')!='') {echo get_option('essl_top_speed');} else {echo '900';} ?>,'<?php echo  get_option('essl_top_easing','easeInQuint');?>');
-										return false;
-									});
-								});
-							});
-						}); 
-					})(jQuery);	
-				</script>	
-			<?php }				
-		}		
+			</script>				
+				<?php }	
+		}					
 	}	
-	
-	
 endif;
-
-?>

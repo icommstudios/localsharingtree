@@ -24,6 +24,7 @@ if($gmedia){
 			$atts = array(
 				'id' => $term_id,
 				'preview' => $gmCore->_get('preview', ''),
+				'preset' => $gmCore->_get('preset', 0),
 				'_tax' => $type
 			);
 			$content = gmedia_shortcode($atts);
@@ -101,7 +102,7 @@ if($gmedia){
 		<?php echo $styles; ?>
 	</style>
 	<?php
-	//wp_enqueue_scripts();
+    do_action( 'wp_enqueue_scripts' );
 	$wp_styles->queue = array();
 	$wp_scripts->queue = array();
 

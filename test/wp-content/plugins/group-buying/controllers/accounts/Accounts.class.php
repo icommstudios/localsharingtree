@@ -340,13 +340,15 @@ class Group_Buying_Accounts extends Group_Buying_Controller {
 				'vouchers'    => sprintf( '<a href="admin.php?page=group-buying/voucher_records&account_id=%s">'.self::__( 'Vouchers').'</a>', $account_id ),
 				'gifts'    => sprintf( '<a href="admin.php?page=group-buying/gift_records&account_id=%s">'.self::__( 'Gifts').'</a>', $account_id )
 			);
+			
+			$wp_list_table = new Group_Buying_Accounts_Table();
 
 			//Return the title contents
 			return sprintf( self::__( '%1$s <span style="color:silver">(account&nbsp;id:%2$s)</span> <span style="color:silver">(user&nbsp;id:%3$s)</span>%4$s' ),
 				$name,
 				$account_id,
 				$user_id,
-				WP_List_Table::row_actions( $actions )
+				$wp_list_table->row_actions( $actions )
 			);
 			break;
 

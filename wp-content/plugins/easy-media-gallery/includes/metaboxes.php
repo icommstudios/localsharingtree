@@ -8,7 +8,11 @@ function emg_customposttype_image_box() {
 	remove_meta_box( 'postimagediv', 'easymediagallery', 'side' );
 	remove_meta_box( 'emediagallerydiv', 'easymediagallery', 'side' );
 	add_meta_box( 'categorydiv', __( 'Media Categories' ), 'easymediagallery_categories_meta_box', 'easymediagallery', 'normal', 'high' );
-	add_meta_box( 'donatediv', __( 'Donate Us' ), 'easmedia_donate_metabox', 'easymediagallery', 'side', 'default' );
+	
+	/* if ( easy_get_option( 'easymedia_disen_admnotify' ) == '1' ) { */
+			add_meta_box( 'emgbuydiv', __( 'Upgrade to Pro Version' ), 'emg_upgrade_metabox', 'easymediagallery', 'side', 'default' );
+		/* } */
+		
 }
 add_action( 'do_meta_boxes', 'emg_customposttype_image_box' );
 
@@ -32,27 +36,179 @@ if ( strstr( $_SERVER['REQUEST_URI'], 'wp-admin/post-new.php' ) || strstr( $_SER
 				
 				if ( get_post_type( get_the_ID() ) == 'easymediagallery' ) {
 					
+					$eparams = array(
+					'pcnt' => emg_pcnt(),
+					'psts' => get_post_status( get_the_ID()),
+					'pcurtp' => get_post_meta( get_the_ID(), 'easmedia_metabox_media_type', true ),
+					);
+
+					wp_localize_script( 'cpscript', 'easyMeta', $eparams );	
+					
 					if ( EMG_WP_VER == "g35" ) {wp_enqueue_media();}					
 					
 					wp_enqueue_script( 'jquery-multi-sel' );
 					wp_enqueue_style( 'jquery-multiselect-css' );
 					wp_enqueue_style( 'jquery-ui-themes-redmond' );
+					wp_enqueue_style( 'emg-bootstrap-css' );
 					wp_enqueue_script( 'jquery-ui' );
+					wp_enqueue_script( 'jquery-effects-highlight' );
 					wp_enqueue_script( 'easymedia-jplayer-js', plugins_url( 'js/jplayer/jquery.jplayer.min.js' , __FILE__ ) );
-					wp_enqueue_script( 'cpscript', plugins_url( 'functions/funcscript.js' , __FILE__ ) );
+					wp_enqueue_script( 'cpscript' );
 					wp_enqueue_script( 'jquery-i-button', plugins_url( 'js/jquery/jquery.ibutton.js' , __FILE__ ) );
 					wp_enqueue_style( 'metabox-ibuttoneditor', plugins_url( 'css/ibutton.css' , __FILE__ ), false, EASYMEDIA_VERSION );
 					wp_enqueue_style( 'easymedia-jplayer-css', plugins_url( 'css/jplayer/skin/pink.flag/jplayer.pink.flag.css' , __FILE__ ), false, EASYMEDIA_VERSION );	
 					wp_enqueue_style( 'jquery-messi-css' );
 					wp_enqueue_script( 'jquery-messi-js' );	
+					wp_enqueue_script( 'emg-bootstrap-js' );
+					wp_enqueue_script( 'easymedia-metascript', plugins_url( 'functions/metabox/metabox.js' , __FILE__ ) );
 									
 			}
 		}	
-	
+
 	add_action( "admin_footer", 'emg_showhide_metabox' );
 	function emg_showhide_metabox() { 
 	if ( get_post_type( get_the_ID() ) == 'easymediagallery' ) { 
 	?>
+    
+    
+    <!--  HTML (to Trigger Modal) -->
+
+    <div id="myModal" class="modal fade">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header type-info">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <h4 class="modal-title whitettl">Information</h4>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <p id="mutiplemsg"></p>
+
+                    <p class="text-warning" id="moreimages"></p>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModalupgrade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Pricing Table</h4>
+            </div>
+            <div class="modal-body" style="background-color: #f5f5f5;">
+            
+           
+            <div class="row flat"> <!-- Content Start -->
+            
+            
+              <div class="col-lg-3 col-md-3 col-xs-6">
+                <ul class="plan plan1">
+                    <li class="plan-name">
+                        Pro
+                    </li>
+                    <li class="plan-price">
+                        <strong>$<?php echo EASYMEDIA_PRO_PRICE;?></strong>
+                    </li>
+                    <li>
+                        <strong>1 site</strong>
+                    </li>
+                    <li class="plan-action">
+                        <a href="http://ghozylab.com/plugins/ordernow.php?order=pro&utm_source=lite&utm_medium=editor&utm_campaign=orderfromeditor" target="_blank" class="btn btn-danger btn-lg">BUY NOW</a>
+                    </li>
+                </ul>
+            </div> 
+            
+              <div class="col-lg-3 col-md-3 col-xs-6"><span class="featured"></span>
+                <ul class="plan plan1">
+                    <li class="plan-name">
+                        Pro+
+                    </li>
+                    <li class="plan-price">
+                        <strong>$<?php echo EASYMEDIA_PRICE;?></strong>
+                    </li>
+                    <li>
+                        <strong>3 sites</strong>
+                    </li>
+                    <li class="plan-action">
+                        <a href="http://ghozylab.com/plugins/ordernow.php?order=proplus&utm_source=lite&utm_medium=editor&utm_campaign=orderfromeditor" target="_blank" class="btn btn-danger btn-lg">BUY NOW</a>
+                    </li>
+                </ul>
+            </div> 
+            
+              <div class="col-lg-3 col-md-3 col-xs-6">
+                <ul class="plan plan1">
+                    <li class="plan-name">
+                        Pro++
+                    </li>
+                    <li class="plan-price">
+                        <strong>$<?php echo EASYMEDIA_PLUS_PRICE;?></strong>
+                    </li>
+                    <li>
+                        <strong>5 sites</strong>
+                    </li>
+                    <li class="plan-action">
+                        <a href="http://ghozylab.com/plugins/ordernow.php?order=proplusplus&utm_source=lite&utm_medium=editor&utm_campaign=orderfromeditor" target="_blank" class="btn btn-danger btn-lg">BUY NOW</a>
+                    </li>
+                </ul>
+            </div> 
+            
+              <div class="col-lg-3 col-md-3 col-xs-6">
+                <ul class="plan plan1">
+                    <li class="plan-name">
+                        Developer
+                    </li>
+                    <li class="plan-price">
+                        <strong>$<?php echo EASYMEDIA_DEV_PRICE;?></strong>
+                    </li>
+                    <li>
+                        <strong>15 sites</strong>
+                    </li>
+                    <li class="plan-action">
+                        <a href="http://ghozylab.com/plugins/ordernow.php?order=dev&utm_source=lite&utm_medium=editor&utm_campaign=orderfromeditor" target="_blank" class="btn btn-danger btn-lg">BUY NOW</a>
+                    </li>
+                </ul>
+            </div> 
+            
+            
+            </div><!-- Content End  --> 
+            
+            </div>
+        </div>
+    </div>
+</div>
+    
+<!--  END HTML (to Trigger Modal) -->
+
+
+
+
+    	<div class="emg-scroll-top-wrapper">
+    		<span class="emg-scroll-top-inner">
+        		<i class="enotyfa"></i>
+    			</span>
+			</div>
+    
+            <style type="text/css" media="screen">
+		   @media only screen and (min-width: 1150px) {
+			   #side-sortables.fixed { position: fixed; top: 55px; right: 20px; width: 280px; }
+			   }	
+				</style>   
     
         <script type="text/javascript">
 			/*<![CDATA[*/
@@ -60,6 +216,27 @@ if ( strstr( $_SERVER['REQUEST_URI'], 'wp-admin/post-new.php' ) || strstr( $_SER
 			
 jQuery(document).ready(function($) {
 	
+	jQuery(document).on( 'scroll', function(){
+		if (jQuery(window).scrollTop() > 700) {
+			jQuery('.emg-scroll-top-wrapper').addClass('show');
+			} else {
+				jQuery('.emg-scroll-top-wrapper').removeClass('show');
+				}
+			});
+ 
+    jQuery('.emg-scroll-top-wrapper').on('click', scrollToTop);
+	
+	var snpprevPosition = jQuery('#side-sortables').offset();
+	
+	jQuery(window).scroll(function(){
+		if(jQuery(window).scrollTop() > snpprevPosition.top) {
+			jQuery('#side-sortables').addClass('fixed');
+			    } 
+			 else {
+				 jQuery('#side-sortables').removeClass('fixed');
+			    }    
+		    });	
+
 		jQuery("#easmedia_metabox_media_video").change(function() {
 			vdo_url = jQuery("#easmedia_metabox_media_video").val();
 				if (vdo_url.match('http://new\.livestream\.com')) {
@@ -328,8 +505,8 @@ $curimgpth = explode(",", $curimgpth);
 	}	
 
 echo '<div id="medsingimgtut" style="text-decoration:underline;font-weight:bold;cursor:Pointer; color:#1A91F2 !important; margin-bottom:8px;">Video Tutorial</div><td id="imgupld"><input id="upload_image" type="text" name="easmedia_meta['. $field['id'] .']" value="'. ($meta ? $meta : $field['std']) .'" style="margin-bottom:5px;"/><div style="color:red;" id="notifynovalidimg"></div>
-<div class="addmed"><a rel="image-'.$emgepver.'" class="' . $uploaderclass . '" title="Add Media" '.$isdatacnt.' href="'.$emghref.'"><span class="emg-media-buttons-icon"></span>Add Media</a></div>
-<a onClick="return false;" style="'. $dsplynone .';" class="deleteimage button" title="Delete Image" href="#"><span class="emg-media-buttons-icon-del"></span>Delete Image</a><div style="'. $dsplynone .' width:'.$curimgpth[1].'px; height:'.$curimgpth[2].'px" id="imgpreviewbox" class="imgpreviewboxc">
+<div class="addmed"><a rel="image-'.$emgepver.'" class="' . $uploaderclass . '" title="Add Media" '.$isdatacnt.' href="'.$emghref.'"><span class="emg-media-buttons-icon"></span>Add Media</a>
+<a onClick="return false;" style="'. $dsplynone .';" class="deleteimage button" title="Delete Image" href="#"><span class="emg-media-buttons-icon-del"></span>Delete Image</a></div><div style="'. $dsplynone .' width:'.$curimgpth[1].'px; height:'.$curimgpth[2].'px" id="imgpreviewbox" class="imgpreviewboxc">
 <img id="imgthumbnailprv" src="' . $curimgpth[0] . '"/></div>
 </td>';
 			    break;
@@ -349,8 +526,8 @@ if ( $curaudiopth != '' ) { echo '
     </script>	
 '; }
 
-echo '<div id="medaudiotut" style="text-decoration:underline;font-weight:bold;cursor:Pointer; color:#1A91F2 !important; margin-bottom:8px;">Video Tutorial</div><td id="audioupld"><input id="upload_audio" type="text" name="easmedia_meta['. $field['id'] .']" value="'. ($meta ? $meta : $field['std']) .'" style="margin-bottom:5px;"/><div style="color:red;" id="notifynovalidaudio"></div><div class="addmed"><a rel="audio-'.$emgepver.'" class="' . $uploaderclass . '" title="Add Media" '.$isdatacnt.' href="'.$emghref.'"><span class="emg-media-buttons-icon"></span>Add Media</a></div>
-<a onClick="return false;" style="'. $adsplynone .';" class="deleteaudio button" title="Delete Audio" href="#"><span class="emg-media-buttons-icon-del"></span>Delete Audio</a>
+echo '<div id="medaudiotut" style="text-decoration:underline;font-weight:bold;cursor:Pointer; color:#1A91F2 !important; margin-bottom:8px;">Video Tutorial</div><td id="audioupld"><input id="upload_audio" type="text" name="easmedia_meta['. $field['id'] .']" value="'. ($meta ? $meta : $field['std']) .'" style="margin-bottom:5px;"/><div style="color:red;" id="notifynovalidaudio"></div><div class="addmed"><a rel="audio-'.$emgepver.'" class="' . $uploaderclass . '" title="Add Media" '.$isdatacnt.' href="'.$emghref.'"><span class="emg-media-buttons-icon"></span>Add Media</a>
+<a onClick="return false;" style="'. $adsplynone .';" class="deleteaudio button" title="Delete Audio" href="#"><span class="emg-media-buttons-icon-del"></span>Delete Audio</a></div>
 
 <div style="'. $adsplynone .';" id="audioprev" class="vidpreviewboxc">
 	<div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -511,7 +688,47 @@ echo '<div id="medaudiotut" style="text-decoration:underline;font-weight:bold;cu
 
 				';
 			    echo '</td>';
-			    break;				
+			    break;	
+				
+				
+			case 'gallery':
+
+				echo '<td>
+				<span class="emg_add_images button">Add Images</span>
+				<div id="emg_images_container">
+				<ul class="images_list ui-sortable">';
+
+				if ( is_array( $meta ) ) {
+					foreach( $meta as $img_id ) {
+						$img_data = get_post( $img_id );
+						$img_url = wp_get_attachment_thumb_url( $img_id );
+						
+						echo '
+						<li class="emgthumbhandler" data-attachment_id="'.$img_id.'">
+							<input type="hidden" name="easmedia_meta[easmedia_metabox_media_gallery][]" value="'.$img_id.'" />
+							<img src="'.$img_url.'" />
+							<span class="emg-del-images"></span>
+							
+						</li>';			
+						}
+				} else {echo '<p class="noimgs">No images selected... </p>';}
+
+				echo '</ul></div></td>';
+				
+				echo'<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				jQuery(".images_list").sortable({
+					opacity: 0.6,
+					cursor: "move",
+					placeholder: "emg-sortable-placeholder",
+					revert: 300,
+					update: function( event, ui ) {ui.item.effect( "highlight", {color:"#FC3"}, 700 );}
+					});
+				});
+             </script> 
+				';
+				
+				break;					
 				
 		}
 		
@@ -542,7 +759,7 @@ function easmedia_metabox_work(){
 	    $meta_box = array(
 		'id' => 'easmedia_metaboxmediatypeselect',
 		'title' =>  __( 'Media Options', 'easmedia' ),
-		'description' => __( '<div class="emginfobox"><span class="emg_blink">Upgrade to PRO</span> and you can select <a href="http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/" target="_blank">Grid Gallery</a>, <a href="http://ghozylab.com/best-photo-albums-wordpress-plugin/" target="_blank">Photo Albums</a>, <a href="http://ghozylab.com/wordpress-filterable-gallery-and-filterable-media-plugin/" target="_blank">Filterable Media</a>, HTML5 Video/Audio, Google Maps/Street View, embed from Soundcloud or Reverbnation and also Link to specific URL. You can learn more and see version comparison <a href="edit.php?post_type=easymediagallery&page=comparison">here</a> or go to Pro Version DEMO <a href="http://ghozylab.com/best-wordpress-grid-gallery-and-grid-portfolio-plugin/" target="_blank">here</a></div><br>Select videos, images, gallery or audio files.', 'easmedia' ),
+		'description' => __( ''.( easy_get_option( 'easymedia_disen_admnotify' ) == '1' ? '<div class="emginfobox"><span class="emg_blink">Upgrade to PRO</span> and you can select <a href="http://goo.gl/PLlJwS" target="_blank">Photo Albums</a>, <a href="http://goo.gl/bZ53YR" target="_blank">Grid Gallery</a>, <a href="http://goo.gl/JAvlsq" target="_blank">Filterable Media</a>, HTML5 Video/Audio, Google Maps/Street View, embed from Soundcloud or Reverbnation and also Link to specific URL. You can learn more and see version comparison <a href="edit.php?post_type=easymediagallery&page=comparison">here</a> or go to Pro Version DEMO <a href="http://goo.gl/qG29Me" target="_blank">here</a></div>': '').'<br>Select videos, images, gallery or audio files.', 'easmedia' ),
 		'page' => 'easymediagallery',
 		'context' => 'normal',
 		'priority' => 'default',
@@ -554,7 +771,7 @@ function easmedia_metabox_work(){
 					'id' => 'easmedia_metabox_media_type',
 					'type' => 'select',
 					'defflimit' => '0',
-					'options' => array( 'Select', 'Single Image', 'Video', 'Audio', 'Link (PRO ONLY)', 'Google Maps (PRO ONLY)', 'Multiple Images (PRO ONLY)' ),
+					'options' => array( 'Select', 'Multiple Images (Slider)', 'Single Image', 'Video', 'Audio', 'Link (PRO ONLY)', 'Google Maps (PRO ONLY)'),
 					'std' => 'Select')
 				),				
 				
@@ -598,6 +815,50 @@ function easmedia_metabox_work(){
 	);
     easmedia_add_meta_box( $meta_box );
 	
+	
+	// GALLERY METABOX
+	    $meta_box = array(
+		'id' => 'easmedia_metaboxmediagallery',
+		'title' =>  __( 'Select Multiple Images', 'easmedia' ),
+		'description' => __( 'Click Add Images button to select image from your Wordpress Media Library.', 'easmedia' ),
+		'page' => 'easymediagallery',
+		'context' => 'normal',
+		'priority' => 'default',
+		'fields' => array(
+		
+			array(
+		
+					'name' => __( '<span class="gtips">Tips:</span>', 'easmedia' ),
+					'desc' => __( '<ul class="gtipslist"><li>Use <b>Ctrl + Click</b> on each image to select multiple images at once.</li><li>You also can drag and drop images to re-order.</li><li>Click on image to edit title/subtitle ( <i>Pro Version only</i> )</li></ul>', 'easmedia' ),
+					'id' => 'easmedia_metabox_media_gallery',
+					'gallid' => 'easmedia_metabox_media_gallery_id',
+					'type' => 'gallery',
+					'defflimit' => '0',
+					'std' => ''
+					
+				 ),
+				 
+			array(
+					'name' => __( 'Full-size image control', 'easmedia' ),
+					'desc' => __( 'If ON, image which exceeds the specified size limit will be automatically resized. You can change image size limit through plugin control panel.', 'easmedia' ),
+					'id' => 'easmedia_metabox_media_gallery_opt1',
+					'type' => 'checkboxoptdef',
+					'defflimit' => '1',
+					'std' => 'on'
+					),
+				 
+			array(
+					'name' => __( 'Use information of each image', 'easmedia' ),
+					'desc' => __( 'If ON, each image will use individual title based on Wordpress Media informations. If OFF, this gallery will use title, sub title and description from Media Information below.', 'easmedia' ),
+					'id' => 'easmedia_metabox_media_gallery_opt2',
+					'type' => 'checkboxoptdef',
+					'defflimit' => '0',
+					'std' => 'off'
+					),
+					
+				)
+	);
+    easmedia_add_meta_box( $meta_box );	
 	
 	
 	// AUDIO METABOX		

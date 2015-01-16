@@ -140,73 +140,6 @@ font-weight:normal;
     padding: 5px;
     text-align: center;
 }
-/*
-#comparison
-{
-    border: 1px solid gray;
-    border-radius: 5px 5px 5px 5px;
-    display: inline-block;
-    font-family: arial;
-    font-size: 13px;
-    overflow: hidden;
-    width: 600px;
-}
-#c_left
-{
-    border-right: 1px solid gray;
-    float: left;
-    padding: 1%;
-    width: 47%;
-}
-#c_right
-{
-    float: left;
-    padding: 1%;
-    width: 48%;
-}
-#comparison .title
-{
-    background: none repeat scroll 0 0 Teal;
-    color: white;
-    font-family: arial;
-    font-size: 18px;
-	text-align: center !important;
-}
-#comparison .feature_free
-{
-    width: 150px;
-}
-#comparison .feature_paid
-{
-    width: 150px;
-}
-#comparison .label
-{
-    width: 266px;
-}
-#comparison td
-{
-    border-right: 1px solid;
-    padding: 5px;
-}
-#comparison tr
-{
-    border-bottom: 1px dashed lightgray !important;
-    display: block;
-}
-#c_tick
-{
-    background: url("images/check_mark.png") no-repeat scroll center center transparent;
-    height: 29px;
-    width: 97%;
-}
-#c_cross
-{
-    background: url("images/cross_mark.png") no-repeat scroll center center transparent;
-    height: 29px;
-    width: 97%;
-}
-*/
 #wtd
 {
     background: url("images/wtd.jpg") repeat scroll 0 0 transparent;
@@ -314,12 +247,16 @@ width: 283px;
     width: 601px;
 }
 #acx_fsmi_premium {
-    background-color: #FFF6D6;
-    border: 1px solid #FCC328;
-    height: 35px;
+    background: url("images/dyk.png") no-repeat scroll 20px 3px #fff6d6;
+    border: 1px solid #fcc328;
+    float: left;
     margin-bottom: 20px;
-    margin-top: 20px;
-    padding: 5px;
+    margin-top: 0;
+    min-height: 40px;
+    padding: 5px 0;
+    text-align: left;
+    text-indent: 105px;
+    width: 100%;
 	}
 #acx_fsmi_premium a
 {
@@ -336,170 +273,6 @@ width: 283px;
     padding: 0 5px;
 	margin-bottom:6px;
 }
-/* Comparison 
-#fsmi_landing_holder
-{
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-	margin-bottom: 10px;
-    width: 1006px;
-}
-#fsmi_lp_compare .highlighted
-{
-    background: none repeat scroll 0 0 azure;
-    font-weight: bold;
-}
-#float_left_100
-{
-width:100%;
-float:left;
-}
-#fsmi_lp_compare
-{
-    border: 1px solid black;
-    border-radius: 8px 8px 0 0;
-    float: left;
-    margin-left: 40px;
-    margin-top: 25px;
-    overflow: hidden;
-    width: 923px;
-}
-#fsmi_lp_compare .row_1
-{
-    float: left;
-    width: 529px;
-}
-#fsmi_lp_compare .row_2
-{
-    float: left;
-	width:192px;
-}
-#fsmi_lp_compare .row_3
-{
-    float: left;
-    width: 202px;
-}
-#fsmi_lp_compare .fsmi_lp_compare_row_1_1
-{
-    background-image: url("images/fsmi_lp_sprite.png");
-    background-position: -10px -710px;
-    border-bottom: 1px solid black;
-    height: 152px;
-    width: 529px;
-}
-#fsmi_lp_compare .fsmi_lp_compare_row_1_features
-{
-    border-bottom: 1px solid lightgray;
-    color: #414147;
-    float: left;
-    font-family: arial;
-    font-size: 13px;
-    height: 16px;
-    padding: 8px;
-    width: 319px;
-}
-#fsmi_lp_compare .fsmi_lp_compare_row_2_1
-{
-    background-image: url("images/fsmi_lp_sprite.png");
-    background-position: -10px -882px;
-    float: left;
-    height: 42px;
-    width: 192px;
-}
-#fsmi_lp_compare .fsmi_lp_compare_row_2_2
-{
-    background-image: url("images/fsmi_lp_sprite.png");
-    background-position: -10px -944px;
-    float: left;
-    height: 111px;
-    width: 191px;
-}
-#fsmi_lp_compare .row_2_border
-{
-    border-left: 1px solid black;
-    float: left;
-    width: 192px;
-	min-height: 1562px;
-}
-#fsmi_lp_compare .fsmi_lp_compare_row_3_1
-{
-    background-image: url("images/fsmi_lp_sprite.png");
-    background-position: -10px -1075px;
-    float: left;
-    height: 17px;
-    width: 202px;
-}
-#fsmi_lp_compare .row_3_shadow
-{
-    border-left: 1px solid black;
-    border-top: 1px solid black;
-    box-shadow: -2px -2px 10px -2px black;
-    float: left;
-    width: 201px;
-	min-height: 1586px;
-}
-#fsmi_lp_compare .fsmi_lp_compare_row_3_2
-{
-    background-image: url("images/fsmi_lp_sprite.png");
-    background-position: -10px -1113px;
-    float: left;
-    height: 135px;
-    width: 201px;
-}
-#fsmi_lp_compare .y
-{
-    background-color: #f3fdee;
-    background-image: url("images/fsmi_lp_sprite.png");
-    background-position: 75.4333px -1323px;
-    border-bottom: 1px solid lightgray;
-    float: left;
-    height: 32px;
-    width: 100%;
-}
-#fsmi_lp_compare .n
-{
-    background-color: #FEF1F3;
-    background-image: url("images/fsmi_lp_sprite.png");
-    background-position: 74.9667px -1287px;
-    border-bottom: 1px solid lightgray;
-    float: left;
-    height: 32px;
-    width: 100%;
-}
-#fsmi_lp_shadow
-{
-    background-image: url("images/fsmi_lp_sprite.png");
-    background-position: 123.5px -667px;
-	background-repeat: no-repeat;
-    float: left;
-    height: 24px;
-    width: 100%;
-	opacity: 0.7;
-}
-#fsmi_lp_f_group
-{
-    float: left;
-    width: 529px;
-}
-#fsmi_lp_f_group .left
-{
-    border-bottom: 1px solid lightgray;
-    border-right: 1px solid lightgray;
-    color: #414147;
-    float: left;
-    font-family: arial;
-    font-size: 14px;
-    font-weight: bold;
-    padding-left: 10px;
-    width: 183px;
-}
-#fsmi_lp_f_group .right
-{
-    float: left;
-    width: 335px;
-}
- Comparison Ends Here */
  /* Comparison 2014 Starts Here */
  #ss_middle_wrapper 
 {
@@ -759,14 +532,15 @@ padding: 4px 10px 4px 28px;
 /* Starting CSS for Quick Request Form */
 #acx_quick_request_form
 {
-background: none repeat scroll 0 0 #AFEEEE;
-border-radius: 5px;
-border-top: 3px solid #6495ED;
-height: 390px;
-margin-left: auto;
-margin-right: auto;
-padding: 10px;
-width: 350px;
+    background: none repeat scroll 0 0 white;
+    border: 1px solid lightgray;
+    border-radius: 1px;
+    height: 390px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    padding: 10px;
+    width: 350px;
 }
 #acx_quick_request_form input
 {
@@ -800,7 +574,7 @@ color:red;
 #acx_quick_request_form h2
 {
 font-family: arial;
-font-size: 20px;
+font-size: 17px;
 line-height: 28px;
 margin: 0 0 14px;
 text-align: center;
@@ -810,9 +584,11 @@ text-transform: capitalize;
 /* Starting Ad Banner Code */
 #acx_ad_banners_fsmi
 {
-height: 80px;
-margin-top: 10px;
-width: 100%;
+    float: left;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    min-height: 80px;
+    width: 100%;
 }
 #acx_ad_banners_fsmi .acx_ad_fsmi_1
 {
@@ -827,13 +603,14 @@ display:block;
 }
 #acx_ad_banners_fsmi .acx_ad_fsmi_title
 {
-background: none repeat scroll 0 0 #F0FFF0;
+background: none repeat scroll 0 0 inactivecaptiontext;
 border-bottom: 1px dashed #D3D3D3;
-color: #696969;
+color: #FFFFFF;
 float: left;
 font-family: 'Raleway',sans-serif;
-font-size: 16px;
+font-size: 15px;
 font-weight: normal;
+opacity: 0.8;
 padding-bottom: 6px;
 padding-top: 6px;
 text-align: center;
@@ -841,14 +618,16 @@ width: 100%;
 }
 #acx_ad_banners_fsmi .acx_ad_fsmi_desc
 {
-background: url("images/wp.png") no-repeat scroll 5px center rgba(0, 0, 0, 0);
-float: left;
-font-family: Courgette;
-height: 31px;
-padding-left: 42px;
-padding-top: 12px;
-text-transform: capitalize;
-width: 213px;
+    background: url("images/wp.png") no-repeat scroll 5px center rgba(0, 0, 0, 0);
+    float: left;
+    font-family: arial;
+    font-size: 13px;
+    height: 31px;
+    padding-left: 42px;
+    padding-top: 12px;
+    text-transform: capitalize;
+    width: 213px;
+	color: black;
 }
 #acx_ad_banners_fsmi .acx_ad_fsmi_desc2
 {
@@ -863,3 +642,33 @@ background: url("images/plug.png") no-repeat scroll 5px center rgba(0, 0, 0, 0);
 background: url("images/quick.png") no-repeat scroll 5px center rgba(0, 0, 0, 0);
 }
 /* Ending Ad Banner Code */
+#floating-social-media-icon, #floating-social-media-icon .column-description,#floating-social-media-icon  .check-column
+{
+background: url("images/plugin_page_bg.png") repeat-x scroll 0 0 #FFFFFF;
+}
+#plugin_page_links
+{
+background: none repeat scroll 0 0 #87CEFA;
+border-radius: 8px;
+color: #2F4F4F;
+min-height: 22px;
+margin-top: 15px;
+padding: 5px;
+text-align: center;
+}
+#floating-social-media-icon .plugin-title
+{
+    background: url("images/from.png") no-repeat scroll 45% 90% transparent;
+}
+#plugin_page_links a
+{
+color: #2F4F4F;
+font-family: arial;
+font-size: 13px;
+font-weight: bold;
+padding: 2px 10px;
+}
+#plugin_page_links a:hover
+{
+text-decoration:underline;
+}

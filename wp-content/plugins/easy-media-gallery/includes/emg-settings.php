@@ -17,22 +17,20 @@ global $emgplugname, $theshort, $theopt;
 	if ( is_admin() && ( isset( $_GET['page'] ) == 'emg_settings' ) && ( isset( $_GET['post_type'] ) == 'easymediagallery' ) ){		
 		if ( isset( $_REQUEST['action'] ) && 'save' == $_REQUEST['action'] ) {
 			$curtosv = get_option( 'easy_media_opt' );
-			foreach ( $theopt as $theval ) {
-				$curtosv[ $theval['id'] ] = $_REQUEST[ $theval['id'] ];
-				update_option( 'easy_media_opt', $curtosv ); }
-				header("Location: edit.php?post_type=easymediagallery&page=emg_settings&saved=true");
-				die;
+		foreach ( $theopt as $theval ) {
+			if ( isset( $theval['id'] ) ) {
+				if ( isset( $_REQUEST[ $theval['id'] ] ) ) {
+					$curtosv[ $theval['id'] ] = $_REQUEST[ $theval['id'] ];
+					}
+					else {
+						$curtosv[ $theval['id'] ] = '';
+						}
 				}
-/*								
-			else if ( isset( $_REQUEST['action'] ) && 'reset' == $_REQUEST['action'] ) {
- 
- // RESTORE DEFAULT SETTINGS
- easymedia_restore_to_default($_REQUEST['action']);
-// END
-
-header("Location: edit.php?post_type=easymediagallery&page=emg_settings&reset=true");
+				update_option( 'easy_media_opt', $curtosv );
+			}	
+	header("Location: edit.php?post_type=easymediagallery&page=emg_settings&saved=true");
 die;
-		}*/
+				}
 	}
 }
  
@@ -206,7 +204,7 @@ if ( is_admin() && ( isset( $_GET['page'] ) == 'emg_settings' ) && $_GET['page']
 		var hash = window.location.hash.replace('#', '');
 		var currentTab = $('ul.navigationTabs a')
 							.bind('click', showTab)
-							.filter('a[rel=' + hash + ']');
+							.filter("a[rel='" + hash + "']");
 		if (currentTab.size() == 0) {
 			currentTab = $('ul.navigationTabs a:first');
 		}
@@ -327,6 +325,7 @@ if ( isset( $_REQUEST['reset'] ) ) { echo '<script type="text/javascript">
     </div>
 
 <div id="main">
+<div class="infoboxdemo"><a target='_blank' href='http://demo.ghozylab.com/content/pro.html?utm_source=procp&utm_medium=settingspage&utm_campaign=gotodemoprocp'>See Amazing Pro Version Features Here</a></div>
 <div class="infoboxsaveorreset"><?php echo $saveresmsg; ?></div>
 <form method="post">
 <div class="sps_wrap">
@@ -511,7 +510,7 @@ $i++;
 ?>
  
 <input type="hidden" name="action" value="save" />
-<p><a target="_blank" href="http://ghozylab.com/order/?utm_source=easymediagallerylite&utm_medium=settingspage&utm_campaign=order" class="tsc_buttons2 red">Upgrade to Pro Version  &nbsp;for only $<?php echo EASYMEDIA_PRICE; ?></a> <span style="color:#666666;margin-left:2px; font-size:11px;">&nbsp; Need More Features? Upgrade to Pro Version!</span></p>
+<p><a target="_blank" href="http://ghozylab.com/plugins/ordernow.php?order=proplus&utm_source=lite&utm_medium=settingspage&utm_campaign=orderfromcp" class="tsc_buttons2 red">Upgrade to Pro Version  &nbsp;for only $<?php echo EASYMEDIA_PRICE; ?></a> <span style="color:#666666;margin-left:2px; font-size:11px;">&nbsp; Need More Features? Upgrade to Pro Version!</span></p>
  </div> </div>
  </form>
  </div>
@@ -525,8 +524,6 @@ $i++;
 
 <?php
 }
-?>
-<?php
 //add_action('admin_init', 'add_cp_stylesheet');
 add_action('admin_menu', 'spg_add_admin');
 
@@ -538,8 +535,12 @@ add_action('admin_menu', 'spg_add_admin');
 */	
 function easmedia_validate_options($input) {
 	 // strip html from textboxes
-	$input['text'] =  wp_filter_nohtml_kses($input['text']);
-	$input['textarea'] =  wp_filter_nohtml_kses($input['textarea']);
+	 if ( isset( $input['text'] ) ) {
+		 $input['text'] =  wp_filter_nohtml_kses($input['text']);
+		 }
+	if ( isset( $input['textarea'] ) ) {
+		$input['textarea'] =  wp_filter_nohtml_kses($input['textarea']);
+		}
 	return $input;
 }
 

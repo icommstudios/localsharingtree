@@ -4,7 +4,7 @@ Plugin Name: Floating Social Media Icon
 Plugin URI: http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/
 Description: An easy to use plugin to show social media icons which floats on your browsers right bottom, which links to your social media profiles, You have option in plugin settings to configure social media profile urls and also can select icon style,order and size.
 Author: Acurax 
-Version: 1.3.5
+Version: 1.3.8
 Author URI: http://www.acurax.com 
 License: GPLv2 or later
 */
@@ -28,6 +28,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */ 
  define('ACX_SOCIALMEDIA_TOTAL_THEMES', 24);
+ define('ACX_FSMI_TOTAL_STATIC_SERVICES', 7);
 ?>
 <?php
 //*************** Include JS in Header ********
@@ -50,9 +51,9 @@ function AcuraxLinks($links, $file) {
 	
 		return array_merge( $links, array( 
 			'<div id="plugin_page_links"><a href="http://www.acurax.com?utm_source=wp&utm_medium=link&utm_campaign=plugin-page&ref=' . $acx_installation_domain . '" target="_blank">' . __('Acurax International') . '</a>',
-			'<a href="https://twitter.com/#!/acuraxdotcom" target="_blank">' . __('Acurax on Twitter') . '</a>',
-			'<a href="http://www.facebook.com/AcuraxInternational" target="_blank">' . __('Acurax on Facebook') . '</a>',
-			'<a href="http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=wp&utm_medium=link&utm_campaign=plugin-page&ref=' . $acx_installation_domain . '" target="_blank">' . __('Wordpress Expert Support') . '</a>'
+			'<a href="http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=wp&utm_medium=link&utm_campaign=plugin-page&ref=' . $acx_installation_domain . '" target="_blank">' . __('Wordpress Expert Support') . '</a>',
+			'<a href="http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=wp&utm_medium=link&utm_campaign=plugin-page&ref=' . $acx_installation_domain . '" target="_blank">' . __('Need Help Configuring Plugins?') . '</a>',
+			'<a href="http://www.acurax.com/services/wordpress-designing-experts.php?utm_source=wp&utm_medium=link&utm_campaign=plugin-page&ref=' . $acx_installation_domain . '" target="_blank">' . __('Instant Quick Support') . '</a>'
 		));
 	}
 	return $links;
@@ -91,17 +92,17 @@ if ($acx_si_fsmi_hide_expert_support_menu == "") {	$acx_si_fsmi_hide_expert_supp
 function acx_social_icon_admin_actions()
 {
 global $acx_si_fsmi_hide_expert_support_menu;
-	add_menu_page(  'Acurax Social Icon Plugin Configuration', 'Floating Social Media Settings', 8, 'Acurax-Social-Icons-Settings','acx_social_icon_admin',plugin_dir_url( __FILE__ ).'/images/admin.png' ); // 8 for admin
+	add_menu_page(  'Acurax Social Icon Plugin Configuration', 'Floating Social Media Settings', 'manage_options', 'Acurax-Social-Icons-Settings','acx_social_icon_admin',plugin_dir_url( __FILE__ ).'/images/admin.png' ); // 8 for admin
 	
-	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Social Icon Premium', 'Premium', 8, 'Acurax-Social-Icons-Premium' ,'acx_social_icon_premium');
+	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Social Icon Premium', 'Premium', 'manage_options', 'Acurax-Social-Icons-Premium' ,'acx_social_icon_premium');
 	
-	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Social Icon Misc Settings', 'Misc', 8, 'Acurax-Social-Icons-Misc' ,'acx_social_icon_misc');
+	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Social Icon Misc Settings', 'Misc', 'manage_options', 'Acurax-Social-Icons-Misc' ,'acx_social_icon_misc');
 	
-	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Troubleshooter', 'Troubleshoot', 8, 'Acurax-Social-Icons-Troubleshooter' ,'acx_social_icon_troubleshoot');
+	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Troubleshooter', 'Troubleshoot', 'manage_options', 'Acurax-Social-Icons-Troubleshooter' ,'acx_social_icon_troubleshoot');
 	if($acx_si_fsmi_hide_expert_support_menu == "no") {
-	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Expert Support', 'Expert Support', 8, 'Acurax-Social-Icons-Expert-Support' ,'acx_social_icon_troubleshoot');
+	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Expert Support', 'Expert Support', 'manage_options', 'Acurax-Social-Icons-Expert-Support' ,'acx_social_icon_troubleshoot');
 	}
-	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Social Icon Help and Support', 'Help', 8, 'Acurax-Social-Icons-Help' ,'acx_social_icon_help');
+	add_submenu_page('Acurax-Social-Icons-Settings', 'Acurax Social Icon Help and Support', 'Help', 'manage_options', 'Acurax-Social-Icons-Help' ,'acx_social_icon_help');
 }
 	
 if ( is_admin() )
