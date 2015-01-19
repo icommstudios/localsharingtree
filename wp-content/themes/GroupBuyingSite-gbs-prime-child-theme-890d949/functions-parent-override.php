@@ -1114,5 +1114,62 @@ class Custom_Merchant_RecentDeals extends WP_Widget {
 }
 
 
+//Add amdmin button to Fix for bit.ly share link transient cache bug
+add_action('init', 'sf_fix_bitly_init_reset_deal_metabox', 20);
+function sf_fix_bitly_init_reset_deal_metabox() {
+	if ( is_admin() ) {
+		add_action( 'add_meta_boxes', 'sf_fix_bitly_add_reset_deal_metabox' );
+	}
+}
+function sf_fix_bitly_add_reset_deal_metabox() {
+	add_meta_box( 'sf_bitly_reset_box', 'Fix Admin bit.ly Share URL', 'sf_fix_bitly_show_reset_deal_metabox', Group_Buying_Deal::POST_TYPE, 'side', 'high' );
+}
+function sf_fix_bitly_show_reset_deal_metabox( $post, $metabox ) {
+	if ( $metabox['id'] == 'sf_bitly_reset_box' ) {
+		$reset_url = add_query_arg('resetsharelink', 1, get_permalink($post->ID));
+		?>
+		Fix & Reset bit.ly Share URL for Admin user:
+		<a type="button" class="button" target="_blank" href="<?php echo $reset_url; ?>" title="Reset Share Link"><?php gb_e( 'Reset Share Link' ); ?></a>
+		<?php
+	}
+}
+//Fix the bit.ly shareurl
+add_action('template_redirect', 'init_sf_fix_bitly_url');
+function init_sf_fix_bitly_url() {
+	if ( is_singular('gb_deal') && isset($_GET['resetsharelink']) && current_user_can('administrator') ) {
+		$deal_id = get_the_ID();
+	
+		$user_id = get_current_user_id();
+		$userdata = get_user_by( 'id', $user_id );
+		$member_login = $userdata->user_login;
+		
+		//Delete
+		$cache_key = 'gb_bitly_share_v2_'.$member_login.'_dealid_'.$deal_id;
+		$cache = get_transient( $cache_key );
+		delete_transient($cache_key);
+		
+		$link = gb_get_share_link();
+	}	
+}
+
+//add_filter('gb_get_share_link', 'sf_lst_bitly_fix_gb_get_share_link', 10, 4);
+function sf_lst_bitly_fix_gb_get_share_link( $link, $deal_id, $member_login, $directlink ) {
+	if ( $directlink == FALSE ) {
+		//if ( $member_login && current_user_can('manage_options') ) {
+		if ( is_singular('gb_deal') && $_GET['resetsharelink'] && current_user_can('administrator') ) {
+			
+			//Delete transient cache
+			$cache_key = 'gb_bitly_share_v2_'.$member_login.'_dealid_'.$deal_id;
+			$cache = get_transient( $cache_key );
+			delete_transient($cache_key);
+			
+			//Get new share link
+			$deal_url = get_permalink($deal_id);
+			$link = Group_Buying_Affiliates::maybe_short_share_url($deal_url, $member_login, $deal_id, TRUE);
+		}
+	}
+	return $link;
+}
+
 
 
