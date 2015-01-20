@@ -41,20 +41,35 @@ body.logged-in {
 
 .button-light {
     border-radius: 0.4em;
-    background-color: rgba(0,0,0,.4) !important;
+    background-color: rgba(255,255,255,1) !important;
     text-align: center;
-    text-shadow: rgba(0,0,0,0.5) 0 1px 1px;
     border: none;
     padding: 8px;
     -moz-appearance: none;
     -webkit-appearance: none;
     font-size: 1em;
-    line-height: 1.5em;
-    color: white;
+    color: #1c5d27;
 }
 
 .button-light:hover {
     color: #ccc;
+}
+
+.button-green {
+    border-radius: 0.4em;
+    background-color: #1c5d27 !important;
+    text-align: center;
+    border: none;
+    padding: 8px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    font-size: 1em;
+    color: white;
+}
+
+.button-green:hover {
+    background-color: #21722e !important;
+    color: white;
 }
 
 
@@ -366,9 +381,56 @@ background: url("img/sprite.png") no-repeat scroll -45px -246px transparent;
     font-size: 13px;
 }
 
-.lst-header-search {
-    clear: both;
+.lst-header-search, .lst-header-more-deals-btn {
     margin: 10px 0px;
+}
+
+.lst-header-more-deals-btn {
+text-transform: uppercase;
+line-height: 20px;
+}
+
+
+@media (max-width: 768px) {
+    .lst-header-more-deals-btn {
+    clear: both;
+    }
+}
+
+
+
+@media (min-width: 600px) {
+
+    .topnav li a {
+    font-size: 15px;
+    }
+
+    #lst_logo {
+    max-width: 50%;
+    float: left;
+    }
+
+    .lst_header_meta{
+    float: right;
+    }
+
+
+}
+
+@media (min-width: 768px) {
+    .lst-header-more-deals-btn, .lst-header-search {
+        float: left;
+        width: 49%;
+    }
+
+    .lst-header-search {
+        margin-left: 1%;
+    }
+
+    .lst-header-more-deals-btn {
+        margin-right: 1%;
+         clear: both;
+    }
 }
 
 #s {
@@ -376,9 +438,10 @@ width:78%;
 font-weight: normal;
 font-family: "Arvo", Arial, Helvetica, Geneva, sans-serif;
 font-size: 16px;
-background-color: #EAEAEA;
-border: none;
+background-color: #4D95D5;
+border: 1px solid rgba(0,0,0,0.2);
 text-shadow: none;
+box-shadow: none;
  -webkit-transition: all .3s ease-in-out;
 -moz-transition: all .3s ease-in-out;
 -ms-transition: all .3s ease-in-out;
@@ -386,9 +449,20 @@ text-shadow: none;
 transition: all .3s ease-in-out;
 }
 
+#s::-webkit-input-placeholder { color: #94cdff; }
+#s::-moz-placeholder { color: #94cdff; } /* firefox 19+ */
+#s:-ms-input-placeholder { color: #94cdff; } /* ie */
+#s input:-moz-placeholder { color: #94cdff; }
+
 #lst_header #s:focus {
 background: white;
+color:#333;
 }
+
+#s:focus::-webkit-input-placeholder { color: #555; }
+#s:focus::-moz-placeholder { color: #555; } /* firefox 19+ */
+#s:focus:-ms-input-placeholder { color: #555; } /* ie */
+#s:focus input:-moz-placeholder { color: #555; }
 
 #searchsubmit {
     width: 16%;
@@ -730,29 +804,6 @@ padding: 4px 8px;
         float: left;
         padding: 2%;
     }
-}
-
-
-@media (min-width: 600px) {
-
-    .topnav li a {
-    font-size: 15px;
-    }
-
-    #lst_logo {
-    max-width: 50%;
-    float: left;
-    }
-
-    .lst_header_meta{
-    float: right;
-    }
-
-    #s {
-    width:80%;
-    }
-
-
 }
 
    #navigation ul.sub-menu {

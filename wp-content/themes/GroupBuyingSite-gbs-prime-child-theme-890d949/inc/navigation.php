@@ -47,13 +47,13 @@
 			</div>
 
 		</div>
-
-		<div class="lst-header-search hidden-mobile" tabindex="2">
-				<?php get_search_form(); ?> 
+		<div class="container clearfix">
+			<div class="lst-header-more-deals-btn clearfix">
+				<a class="button-green block" href="/moredeals/"><span class="hidden-mobile">Click Here to </span>Search Deals in Your Area</a>
 			</div>
-
-		<div class="lst-header-search hidden-desktop" tabindex="2">
-			<a class="button-light block" href="/moredeals/">Search Deals</a>
+			<div class="lst-header-search hidden-mobile">
+					<?php get_search_form(); ?> 
+				</div>
 		</div>
 
 	</div><!-- #header -->
