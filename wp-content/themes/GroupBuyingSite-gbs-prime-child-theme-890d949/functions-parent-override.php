@@ -208,8 +208,6 @@ function custom_gb_get_current_report_csv_download_url( $url ) {
 // Account Registration fields
 add_filter('gb_account_register_contact_info_fields', 'custom_fields_changes', 999);
 add_filter('gb_account_edit_contact_fields', 'custom_fields_changes', 999);
-//add_filter('gb_checkout_fields_billing', 'custom_fields_changes', 999);
-//add_filter('gb_checkout_fields_shipping', 'custom_fields_changes', 999);
 function custom_fields_changes($fields) {
 	/*
 	if (isset($fields['first_name'])) {
@@ -219,6 +217,7 @@ function custom_fields_changes($fields) {
 		$fields['last_name']['attributes'] = array_merge((array)$fields['last_name']['attributes'], array('maxlength' => 100));
 	}
 	*/
+	/*
 	if (isset($fields['street'])) {
 		$fields['street']['required'] = FALSE;
 	}
@@ -234,10 +233,27 @@ function custom_fields_changes($fields) {
 	if (isset($fields['country'])) { //country 
 		$fields['country']['required'] = FALSE;
 	}
+	*/
+	unset($fields['street']);
+	unset($fields['city']);
+	unset($fields['zone']);
+	unset($fields['postal_code']);
+	unset($fields['country']);
 	
 	return $fields;
-	
 }
+add_filter('gb_checkout_fields_billing', 'custom_checkout_fields_changes', 999);
+//add_filter('gb_checkout_fields_shipping', 'custom_fields_changes', 999);
+function custom_checkout_fields_changes($fields) {
+	return array(); //no fields
+}
+//Remove billing pane
+add_filter('gb_checkout_panes', 'custom_sf_gb_checkout_panes', 999, 2);
+function custom_sf_gb_checkout_panes($panes, $checkout) {
+	unset($panes['billing']); //remove billing address fields
+	return $panes;
+}
+
 
 // Disable Guest Purchases
 add_filter( 'gb_account_register_user_fields', 'remove_guest_registration_field', 100, 1 );
