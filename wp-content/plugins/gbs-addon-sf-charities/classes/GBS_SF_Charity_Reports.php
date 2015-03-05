@@ -50,6 +50,7 @@ class GBS_SF_Charity_Reports extends Group_Buying_Controller {
 			array(
 			'id' => self::__( 'Order #' ),
 			'name' => self::__( 'Purchaser' ),
+			'source' => self::__( 'Share Source' ),
 			'deal' => self::__( 'Deal' ),
 			'quantity' => self::__( 'Qty.' ),
 			'price' => self::__( 'Price' ),
@@ -76,6 +77,12 @@ class GBS_SF_Charity_Reports extends Group_Buying_Controller {
 		if ( !empty( $pages ) ) {
 			foreach ( $pages[$showpage] as $purchase_id ) {
 				$purchase = Group_Buying_Purchase::get_instance( $purchase_id );
+				$payment_id = array_shift( $purchase->get_payments() );
+				$payment = Group_Buying_Payment::get_instance( $payment_id );
+				if ( is_a( $payment, 'Group_Buying_Payment' ) ) {
+					$source = $payment->get_source();
+				}
+				$source = ( empty( $source ) ) ? self::__( 'N/A' ) : $source;
 				$user_id = $purchase->get_user();
 				$deals = $purchase->get_products();
 				foreach ( $deals as $deal => $key ) {
@@ -121,6 +128,7 @@ class GBS_SF_Charity_Reports extends Group_Buying_Controller {
 							'quantity' => $key['quantity'],
 							'price' => gb_get_formatted_money( $key['price'] ),
 							'total' => gb_get_formatted_money( $purchase->get_total() ),
+							'source' => $source,
 							//'locations' => implode( ',', $location_array ),
 							//'tags' => implode( ',', $tags_array ),
 							//'cats' => implode( ',', $cats_array )
